@@ -39,7 +39,7 @@ Mobile application development will be equally divided.
 
 *How often will the team be in touch and what tools will be used to communicate?*
 
-Twice a week.
+Twice a week using Instagram or in-person. (during classes)
 
 ### Response delays
 
