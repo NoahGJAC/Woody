@@ -1,8 +1,6 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/ZKGepmmw)
-# <div align='center'> 420-6A6-AB Application Development III
-# <div align='center'> 420-6P3-AB Connected Objects 
-# <div align='center'> Winter 2024
+![Banner](https://i.imgur.com/9xQotbv.png)
+Introducing Woody, your ultimate solution for upgrading basic container greenhouses into smart farms.
 
-### <div align='center'> Final Project
+With Woody, fleet owners can easily keep tabs on all their containers, worry-free about fleet security. Meanwhile, farm technicians can conveniently manage plants from outside the container, thanks to various monitoring sensors and controls that can adjust environmental conditions. 
 
-Add a decription for your project here
+Our goal is to make it easier than ever to grow your crops in a smarter way!
