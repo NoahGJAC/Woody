@@ -1,4 +1,4 @@
-# Team Contract Template
+# Team Contract
 
 This is an informal contract to ensure that all team members have a common understanding of what is expected in terms of work standards, communication, division or work, and conflict resolution.
 
