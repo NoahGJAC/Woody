@@ -33,7 +33,7 @@ We would like to surpass the other teams and our own expectations. We want to cr
 - Noah: Security subsystem 
 - Cindy: Geo-location subsystem
 
-Mobile application development will be equally divided.
+Cloud infrastructure and mobile application development will be equally divided.
 
 ### Frequency of communication
 
