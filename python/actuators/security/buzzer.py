@@ -6,6 +6,8 @@ import time
 
 
 class BuzzerController():
+    """A class to control reterminal's built-in buzzer.
+    """
 
     def __init__(self) -> None:
         """Initializes the BuzzerController
@@ -24,24 +26,28 @@ class BuzzerController():
             bool: The state of the buzzer.
         """
         return rt.buzzer
-    
+
 
 if __name__ == "__main__":
     buzzer_controller = BuzzerController()
     try:
         while True:
-            print(f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+            print(
+                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
             time.sleep(1)
             # change state
             rt.buzzer = True
-            
-            print(f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+
+            print(
+                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
             time.sleep(1)
 
             rt.buzzer = False
-            print(f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+            print(
+                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
             time.sleep(1)
     except PermissionError as e:
-        print(f"{e}\nDid you forget permissions?\n$ sudo chmod a+rw /sys/class/leds/usr_buzzer/brightness")
+        print(
+            f"{e}\nDid you forget permissions?\n$ sudo chmod a+rw /sys/class/leds/usr_buzzer/brightness")
     finally:
         buzzer_controller.close()
