@@ -27,7 +27,7 @@ class AReading(ABC):
         FAHRENHEIT = '°F'
         HUMIDITY = '% HR'
         UNITLESS = 'unitless'
-        LUX =  'lx'
+        LUX = 'lx'
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
@@ -94,11 +94,11 @@ class MockSensor(ISensor):
         print('Mock sensor reading...')
         return [
             AReading(
-                AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0), 
+                AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0),
             AReading(
                 AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 101.0),
             AReading(
                 AReading.Type.LUMINOSITY, AReading.Unit.LUX, 3.846e26),
             AReading(
                 AReading.Type.BUZZER, AReading.Unit.UNITLESS, 'OFF')
-            ]
+        ]
