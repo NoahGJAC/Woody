@@ -34,7 +34,7 @@ class ACommand(ABC):
 class IActuator(ABC):
 
     # Class properties that must be set in constructor of implementation class
-    _current_state: str
+    _current_state: str | bool
     type: ACommand.Type
 
     @abstractmethod
