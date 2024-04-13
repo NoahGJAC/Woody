@@ -17,6 +17,7 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        MOTION = 'motion'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -42,7 +43,10 @@ class AReading(ABC):
     def __repr__(self) -> str:
         """String representation of a reading object
         """
-        return f"{self.reading_type}: {self.value} {self.reading_unit}"
+        return f"AReading(reading_type={self.reading_type}, value={self.value}, unit={self.reading_unit})"
+    
+    def __str__(self) -> str:
+        return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
 
 
 class ISensor(ABC):
@@ -65,7 +69,7 @@ class ISensor(ABC):
     def read_sensor(self) -> list[AReading]:
         """Takes a reading form the sensor
 
-        :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
+        :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
         """
         pass
 
