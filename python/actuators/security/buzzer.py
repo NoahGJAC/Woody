@@ -3,7 +3,7 @@
 # Imports
 import seeed_python_reterminal.core as rt
 import time
-from ..actuators import IActuator, ACommand
+from python.actuators.actuators import IActuator, ACommand
 
 
 class BuzzerController(IActuator):
