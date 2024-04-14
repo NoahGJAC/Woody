@@ -48,8 +48,9 @@ class GPSSensor(ISensor):
                         sentence.altitude))
 
             return readings
-        except pynmea2.ParseError:
-            print(f'{e}: could not parse the information from UART port')
+        except pynmea2.ParseError as e:
+            print(f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
+            self.close()
 
     def close(self) -> None:
         self.gps.close()
@@ -68,8 +69,9 @@ if __name__ == "__main__":
                         f'{reading.reading_type.value}: {reading.value}{reading.reading_unit.value}')
 
         except pynmea2.ParseError as e:
-            print(f'{e}: could not parse the information from UART port')
-            pass
+            print(f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
+            GPS_sensor.close()
+            
     except KeyboardInterrupt:
 
         GPS_sensor.close()
