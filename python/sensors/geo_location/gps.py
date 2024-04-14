@@ -64,10 +64,11 @@ class GPSSensor(ISensor):
 
     def close(self) -> None:
         self.gps.close()
-    
-    def change_location(self,lat: float, long: float)->None:
-        if self.current_latitude != lat | self.current_longitude !=long:
-            print(f'location changed for {self.current_latitude},{self.current_longitude} Lat/Long')
+
+    def change_location(self, lat: float, long: float) -> None:
+        if self.current_latitude != lat | self.current_longitude != long:
+            print(
+                f'location changed for {self.current_latitude},{self.current_longitude} Lat/Long')
 
 
 if __name__ == "__main__":
