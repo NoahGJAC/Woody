@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import serial
 import pynmea2
-from ..sensors import ISensor, AReading
+from python.sensors.sensors import ISensor, AReading
 
 
 class GPSSensor(ISensor):
@@ -38,7 +38,7 @@ class GPSSensor(ISensor):
                         sentence.latitude))
                 readings.append(
                     AReading(
-                        AReading.Type.LATITUDE,
+                        AReading.Type.LONGITUDE,
                         AReading.Unit.DEGREE,
                         sentence.longitude))
                 readings.append(
@@ -46,11 +46,19 @@ class GPSSensor(ISensor):
                         AReading.Type.ALTITUDE,
                         AReading.Unit.METERS,
                         sentence.altitude))
+            elif isinstance(sentence, pynmea2.types.talker.RMC):
+                # RMC sentence (Recommended Minimum Specific GPS Data)
+                readings.append(
+                    AReading(
+                        AReading.Type.DATE,
+                        AReading.Unit.UNITLESS,
+                        sentence.datetime))
 
             return readings
         except pynmea2.ParseError as e:
-            print(f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
-            self.close()
+            print(
+                f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
+            pass
 
     def close(self) -> None:
         self.gps.close()
@@ -63,15 +71,16 @@ if __name__ == "__main__":
         try:
             while True:
                 readings = GPS_sensor.read_sensor()
-
-                for reading in readings:
-                    print(
-                        f'{reading.reading_type.value}: {reading.value}{reading.reading_unit.value}')
+                if readings:
+                    for reading in readings:
+                        print(
+                            f'{reading.reading_type.value}: {reading.value} {reading.reading_unit.value}')
 
         except pynmea2.ParseError as e:
-            print(f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
-            GPS_sensor.close()
-            
+            print(
+                f"{e} \nCould not parse the information? you need to plug the GPS on UART port and wait 5 seconds")
+            pass
+
     except KeyboardInterrupt:
 
         GPS_sensor.close()
