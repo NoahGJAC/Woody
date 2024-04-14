@@ -17,6 +17,10 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        LATITUDE = 'latitude'
+        LONGITUDE ='longitude'
+        ALTITUDE = 'altitude'
+        GPS = 'GPS'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -28,6 +32,8 @@ class AReading(ABC):
         HUMIDITY = '% HR'
         UNITLESS = 'unitless'
         LUX = 'lx'
+        DEGREE = '°'
+        METERS = 'm'
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
@@ -54,7 +60,7 @@ class ISensor(ABC):
     reading_type: AReading.Type
 
     @abstractmethod
-    def __init__(self, gpio: int, model: str, type: AReading.Type):
+    def __init__(self, gpio: int | None, model: str, type: AReading.Type):
         """Constructor for Sensor  class. May be called from childclass.
 
         :param str model: specific model of sensor hardware. Ex. AHT20 or LTR-303ALS-01
