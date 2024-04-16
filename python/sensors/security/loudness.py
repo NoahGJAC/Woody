@@ -3,11 +3,17 @@
 
 from python.sensors.sensors import ISensor, AReading
 from grove.grove_loudness_sensor import GroveLoudnessSensor
+import time
+
+
+# TODO: set pin and test hardware
+LOUDNESS_GPIO_PIN: int = 0
 
 
 class LoudnessSensor(ISensor):
     """A class that represents a loudness sensor.
     """
+
     def __init__(self, gpio: int, model: str, type: AReading.Type):
         """Initialize the loudness sensor.
 
@@ -26,4 +32,29 @@ class LoudnessSensor(ISensor):
         Returns:
             list[AReading]: The list of AReadings taken by the sensor.
         """
-        return [AReading(type = self.reading_type, unit = AReading.Unit.LOUDNESS, value=float(self._sensor.value))]
+        return [
+            AReading(
+                type=self.reading_type,
+                unit=AReading.Unit.LOUDNESS,
+                value=float(
+                    self._sensor.value))]
+
+
+def main():
+    loudness_sensor = LoudnessSensor(
+        gpio=LOUDNESS_GPIO_PIN,
+        model='Grove - Loudness Sensor',
+        type=AReading.Type.LOUDNESS)
+    print('Listening...')
+    try:
+        while True:
+            readings = loudness_sensor.read_sensor()
+            for reading in readings:
+                print(reading)
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        print('Exiting')
+
+
+if __name__ == '__main__':
+    main()
