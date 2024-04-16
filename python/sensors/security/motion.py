@@ -39,7 +39,7 @@ class MotionSensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.UNITLESS,
-                value='Motion detected!' if self.pir.read() else 'No motion detected!')]
+                value=self.pir.read())]
 
 
 def main():

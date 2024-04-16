@@ -33,9 +33,9 @@ class AReading(ABC):
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
-    value: float | str
+    value: float | str | bool
 
-    def __init__(self, type: Type, unit: Unit, value: float | str) -> None:
+    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
