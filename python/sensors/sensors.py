@@ -17,6 +17,7 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        LOUDNESS = 'loudness'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -28,6 +29,7 @@ class AReading(ABC):
         HUMIDITY = '% HR'
         UNITLESS = 'unitless'
         LUX = 'lx'
+        LOUDNESS = '% loudness strength'
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
