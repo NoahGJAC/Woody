@@ -4,29 +4,35 @@
 import seeed_python_reterminal.core as rt
 import time
 from python.actuators.actuators import IActuator, ACommand
+from python.sensors.sensors import ISensor, AReading
 
-
-class BuzzerController(IActuator):
+class BuzzerController(IActuator, ISensor):
     """A class to control reterminal's built-in buzzer.
     """
 
     def __init__(
             self,
             gpio: int | None,
-            type: ACommand.Type,
+            actuator_type: ACommand.Type,
+            model: str,
+            sensor_type : AReading.Type,
             initial_state: str = 'off') -> None:
         """Initializes the buzzer controller.
 
         Args:
             gpio (int | None): The gpio of the buzzer, buzzer is internal, no gpio needed.
-            type (ACommand.Type): The type of command the buzzer accepts.
+            actuator_type (ACommand.Type): The type of command the buzzer accepts.
+            model (str): The model of the buzzer.
+            sensor_type (AReading.Type): The type of reading the buzzer produces.
             initial_state (str, optional): The initial state of the buzzer ('on' or 'off'). Defaults to 'off'.
 
         Raises:
             PermissionError: Raises when permission to write to or read '/sys/class/leds/usr_buzzer/brightness' is denied.
         """
         self._current_state = True if initial_state.lower() == 'on' else False
-        self.type = type
+        self._sensor_model = model
+        self.actuator_type = actuator_type
+        self.reading_type = sensor_type
 
         # set the buzzer state
         try:
@@ -45,7 +51,7 @@ class BuzzerController(IActuator):
         Returns:
             bool: True if the command is valid, False otherwise.
         """
-        return command.target_type == self.type and type(command.value) is str and (
+        return command.target_type == self.actuator_type and type(command.value) is str and (
             command.value.lower() == 'on' or command.value.lower() == 'off')
 
     def control_actuator(self, value: str) -> bool:
@@ -77,35 +83,38 @@ class BuzzerController(IActuator):
         """
         rt.buzzer = False
 
-    def read_state(self) -> bool:
-        """Returns true if the buzzer state is truthy, false otherwise.
+    def read_sensor(self) -> list[AReading]:
+        """Returns an AReading list from the sensor.
 
         Returns:
-            bool: The state of the buzzer.
+            list[AReading]: The list of readings measured by the buzzer.
         """
-        return rt.buzzer
+        return [AReading(type=self.reading_type, unit = AReading.Unit.UNITLESS, value = str(rt.buzzer))]
 
+
+def print_readings(readings: list[AReading]) -> None:
+    for reading in readings:
+        print(reading)
 
 if __name__ == "__main__":
     buzzer_controller = BuzzerController(
         gpio=None,
-        type=ACommand.Type.BUZZER_ON_OFF,
+        actuator_type=ACommand.Type.BUZZER_ON_OFF,
+        model='ReTerminal Buzzer',
+        sensor_type=AReading.Type.BUZZER,
         initial_state='off')
     try:
         while True:
-            print(
-                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+            print_readings(buzzer_controller.read_sensor())
             time.sleep(1)
             # change state
             buzzer_controller.control_actuator('on')
 
-            print(
-                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+            print_readings(buzzer_controller.read_sensor())
             time.sleep(1)
 
             buzzer_controller.control_actuator('off')
-            print(
-                f"Buzzer is {'on' if buzzer_controller.read_state() else 'off'}")
+            print_readings(buzzer_controller.read_sensor())
             time.sleep(1)
     except PermissionError as e:
         print(

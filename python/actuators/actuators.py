@@ -35,14 +35,14 @@ class IActuator(ABC):
 
     # Class properties that must be set in constructor of implementation class
     _current_state: str | bool
-    type: ACommand.Type
+    actuator_type: ACommand.Type
 
     @abstractmethod
-    def __init__(self, gpio: int, type: ACommand.Type,
+    def __init__(self, gpio: int, actuator_type: ACommand.Type,
                  initial_state: str) -> None:
         """Constructor for Actuator class. Must define interface's class properties
 
-        :param ACommand.Type type: Type of command the actuator can respond to.
+        :param ACommand.Type actuator_type: Type of command the actuator can respond to.
         :param str initial_state: initializes 'current_state' property of a new actuator.
         If not passed, actuator implementation is responsible for setting a default value.
         """
@@ -71,7 +71,7 @@ class MockActuator(IActuator):
     """A class that represents a mock actuator that implements the IActuator interface.
     """
 
-    def __init__(self, gpio: int, type: ACommand.Type,
+    def __init__(self, gpio: int, actuator_type: ACommand.Type,
                  initial_state: str) -> None:
         """Initialize the mock actuator. Set the parameters required by the interface.
 
@@ -81,7 +81,7 @@ class MockActuator(IActuator):
             initial_state (str): The initial state of the mock actuator.
         """
         self._current_state = initial_state
-        self.type = type
+        self.actuator_type = actuator_type
         return
 
     def validate_command(self, command: ACommand) -> bool:
