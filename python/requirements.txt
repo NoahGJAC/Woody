@@ -63,6 +63,7 @@ PyGObject==3.42.2
 pyinotify==0.9.6
 PyJWT==2.6.0
 pylint==2.16.2
+pynmea2==1.19.0
 PyOpenGL==3.1.6
 pyOpenSSL==23.0.0
 PyQt5==5.15.9
