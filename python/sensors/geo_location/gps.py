@@ -48,18 +48,11 @@ class GPSSensor(ISensor):
                         AReading.Type.ALTITUDE,
                         AReading.Unit.METERS,
                         sentence.altitude))
-            elif isinstance(sentence, pynmea2.types.talker.RMC):
-                # RMC sentence (Recommended Minimum Specific GPS Data)
-                readings.append(
-                    AReading(
-                        AReading.Type.DATE,
-                        AReading.Unit.UNITLESS,
-                        sentence.datetime))
 
             return readings
         except pynmea2.ParseError as e:
             print(
-                f"{e} \nCould not parse the information? you need to plug the GPS on UART port")
+                f"{e} \nCould not parse the information? you need to plug the GPS on UART port. Also make sure that your GPS is near an open window and replug your GPS after restarting your Raspberri Pi.")
             pass
 
     def close(self) -> None:
