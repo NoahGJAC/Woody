@@ -21,7 +21,6 @@ class AReading(ABC):
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
         GPS = 'GPS'
-        DATE = 'date'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
