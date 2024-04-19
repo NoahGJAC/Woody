@@ -3,15 +3,15 @@
 
 from python.sensors.sensors import ISensor, AReading
 from grove.grove_loudness_sensor import GroveLoudnessSensor
+import grove.i2c
 import time
 
 
-# TODO: set pin and test hardware
 LOUDNESS_GPIO_PIN: int = 0
 
 
 class LoudnessSensor(ISensor):
-    """A class that represents a loudness sensor.
+    """A class that represents a loudness sensor. (ANALOG)
     """
 
     def __init__(self, gpio: int, model: str, type: AReading.Type):
@@ -23,6 +23,11 @@ class LoudnessSensor(ISensor):
             type (AReading.Type): The type of reading the sensor takes.
         """
         self._sensor = GroveLoudnessSensor(gpio)
+
+        # bug with adc, need to manually update address and bus
+        self._sensor.adc.address = 0x04
+        self._sensor.adc.bus = grove.i2c.Bus(1)
+
         self._sensor_model: str = model
         self.reading_type: AReading.Type = type
 
