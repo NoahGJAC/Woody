@@ -48,7 +48,7 @@ class AReading(ABC):
     reading_unit: Unit
     value: float | str
 
-    def __init__(self, type: Type, unit: Unit, value: float | str) -> None:
+    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
