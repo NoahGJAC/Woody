@@ -21,7 +21,8 @@ class GPSSensor(ISensor):
             baudrate=9600,
             timeout=1
         )
-
+        self.gps.reset_input_buffer()
+        self.gps.flush()
     def read_sensor(self) -> list[AReading]:
 
         readings: list[AReading] = []
