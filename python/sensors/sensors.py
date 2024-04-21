@@ -23,7 +23,6 @@ class AReading(ABC):
         GPS = 'GPS'
         PITCH = 'pitch'
         ROLL = 'roll'
-        YAW = 'yaw'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
