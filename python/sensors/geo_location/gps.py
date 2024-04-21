@@ -7,7 +7,7 @@ from python.sensors.sensors import ISensor, AReading
 class GPSSensor(ISensor):
 
     def __init__(self, gpio: str | None, model: str, type: AReading.Type):
-        """Initializes the buzzer controller.
+        """Initializes the GPS sensor.
         Args:
             gpio (int | None): The gpio of the GPS, the GPS uses the UART port, no gpio needed.
             model (str): specific model of GPS hardware. i.e: GPS (Air 530)
