@@ -20,6 +20,10 @@ class PitchSensor(ISensor):
         self.device = rt.get_acceleration_device()
 
     def read_sensor(self) -> list[AReading]:
+        """Takes a reading form the pitch sensor
+
+        :return list[AReading]: List of readinds of type pitch and unit of degrees
+        """
         last_x = last_y = last_z = None
         readings: list[AReading] = []
         for event in self.device.read_loop():
