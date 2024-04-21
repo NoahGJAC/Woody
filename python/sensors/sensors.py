@@ -22,6 +22,8 @@ class AReading(ABC):
         ALTITUDE = 'altitude'
         GPS = 'GPS'
         VIBRATION = 'vibration'
+        PITCH = 'pitch'
+        ROLL = 'roll'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
