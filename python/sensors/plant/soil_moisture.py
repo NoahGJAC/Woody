@@ -12,7 +12,7 @@ class SoilMoistureSensor(ISensor):
     def __init__(
         self,
         gpio: int = None,
-        model: str = "AHT20 Temperature & Humidity Sensor",
+        model: str = "Soil Moisture Sensor",
         type: AReading.Type = AReading.Type.SOIL_MOISTURE,
     ):
         """Initializes the soil moisture sensor.
