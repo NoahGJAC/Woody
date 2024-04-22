@@ -17,6 +17,7 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        LOUDNESS = 'loudness'
         LATITUDE = 'latitude'
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
@@ -34,6 +35,7 @@ class AReading(ABC):
         HUMIDITY = '% HR'
         UNITLESS = 'unitless'
         LUX = 'lx'
+        LOUDNESS = '% loudness strength'
         DEGREE = '°'
         METERS = 'm'
 
