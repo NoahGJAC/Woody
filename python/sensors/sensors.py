@@ -21,9 +21,6 @@ class AReading(ABC):
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
         GPS = 'GPS'
-        DISPLACEMENT = 'displacement'
-        VELOCITY = 'velocity'
-        ACCELERATION = 'acceleration'
         VIBRATION = 'vibration'
 
     class Unit(str, Enum):
@@ -38,9 +35,6 @@ class AReading(ABC):
         LUX = 'lx'
         DEGREE = '°'
         METERS = 'm'
-        METER = 'm'
-        METER_PER_SECOND = 'm/s'
-        METER_PER_SECOND_SQUARE = 'm/s^2'
 
 
     # Class properties that must be defined in implementation classes
