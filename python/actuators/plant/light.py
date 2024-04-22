@@ -92,3 +92,39 @@ class LightController(IActuator):
                 return True
 
         return False
+
+    def clean_up(self) -> None:
+        # Sets the RGB led stick's state to False, meant for cleaning up.
+
+        self.rgb_stick.brightness = 0
+
+    def read_state(self) -> bool:
+        """
+        Returns true if the RGB led stick's state is truthy, false otherwise.
+
+        Returns:
+            bool: The state of the RGB led stick.
+        """
+        return self.rgb_stick.brightness
+
+
+if __name__ == "__main__":
+    light_controller = LightController(gpio=None, type=ACommand.Type.LIGHT_ON_OFF)
+
+    while True:
+        print(f"Light is {'on' if light_controller.read_state() else 'off'}")
+        time.sleep(1)
+
+        light_controller.control_actuator("on")
+
+        print(f"Light is {'on' if light_controller.read_state() else 'off'}")
+        time.sleep(1)
+
+        light_controller.control_actuator("off")
+
+        print(f"Light is {'on' if light_controller.read_state() else 'off'}")
+        time.sleep(1)
+
+    light_controller.clean_up()    
+
+    
