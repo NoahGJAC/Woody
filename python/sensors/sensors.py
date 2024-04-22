@@ -14,6 +14,8 @@ class AReading(ABC):
         TEMPERATURE_HUMIDITY = 'temperature humidity'
         SOIL_MOISTURE = 'soil moisture'
         WATER_LEVEL = 'water level'
+        TEMPERATURE = 'temperature'
+        HUMIDITY = 'humidity'
         LUMINOSITY = 'luminosity'
         BUZZER = 'buzzer state'
         DOOR = 'door state'
@@ -22,6 +24,8 @@ class AReading(ABC):
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
         GPS = 'GPS'
+        PITCH = 'pitch'
+        ROLL = 'roll'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
