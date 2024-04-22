@@ -15,6 +15,7 @@ class ACommand(ABC):
         LIGHT_ON_OFF = 'light-on-off'
         LIGHT_PULSE = 'light-pulse'
         BUZZER_ON_OFF = 'buzzer-on-off'
+        DOOR_LOCK = 'door-lock'
 
     # Class properties that must be defined in implementation classes
 
@@ -34,7 +35,7 @@ class ACommand(ABC):
 class IActuator(ABC):
 
     # Class properties that must be set in constructor of implementation class
-    _current_state: str
+    _current_state: str | bool
     type: ACommand.Type
 
     @abstractmethod
