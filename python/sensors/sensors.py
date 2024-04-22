@@ -17,9 +17,6 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
-        DISPLACEMENT = 'displacement'
-        VELOCITY = 'velocity'
-        ACCELERATION = 'acceleration'
         VIBRATION = 'vibration'
 
     class Unit(str, Enum):
@@ -33,8 +30,6 @@ class AReading(ABC):
         UNITLESS = 'unitless'
         LUX = 'lx'
         METER = 'm'
-        METER_PER_SECOND = 'm/s'
-        METER_PER_SECOND_SQUARE = 'm/s^2'
 
 
     # Class properties that must be defined in implementation classes

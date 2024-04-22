@@ -1,92 +1,104 @@
 #!/usr/bin/env python3
 import seeed_python_reterminal.core as rt
 import seeed_python_reterminal.acceleration as rt_accel
-from python.sensors.sensors import ISensor,AReading
+from python.sensors.sensors import ISensor, AReading
+import math
+
 
 class vibration(ISensor):
-    def __init__(self, gpio: int | None, model: str | None, type: AReading.Type):
+    def __init__(self, gpio: int | None, model: str, type: AReading.Type):
         """Initializes the vibration sensor.
 
         Args:
-            gpio (int | None): The gpio of the vibration, vibration is internal, no gpio needed.
+            gpio (int | None): The gpio of the vibration, accelerometer is internal, no gpio needed.
             type (AReading.Type): The type of reading the vibration accepts.
         """
-        type = AReading.Type.VIBRATION
+        self.reading_type = AReading.Type.VIBRATION
+        self._sensor_model = model
         self.device = rt.get_acceleration_device()
-    
+        self.first_x = self.first_y = self.first_z = None
+        # Initialize variables to store the last readings
+        self.last_x = self.last_y = self.last_z = None
+        self.variant = 19
+
     def read_sensor(self) -> list[AReading]:
-        """read all of the vibration levels aka: Velocity, Acceleration and Displacement.
+        """read all of the vibration level: aka if a vibration accured
 
         Return:
             returns the list of all the different readings
         """
-
-        readings : list[AReading] = []
+        readings: list[AReading] = []
         for event in self.device.read_loop():
-            # Create an AccelerationEvent object
             accelEvent = rt_accel.AccelerationEvent(event)
-            # Check if the event name is not None
-            if accelEvent.name != None:
+            if accelEvent.name is not None:
                 if accelEvent.name == rt_accel.AccelerationName.X:
-                    readings.append(AReading(AReading.Type.DISPLACEMENT,AReading.Unit.METER, accelEvent.value))
-                    return readings
+                    self.last_x = accelEvent.value
                 elif accelEvent.name == rt_accel.AccelerationName.Y:
-                    readings.append(AReading(AReading.Type.VELOCITY,AReading.Unit.METER_PER_SECOND, accelEvent.value))
-                    return readings
+                    self.last_y = accelEvent.value
                 elif accelEvent.name == rt_accel.AccelerationName.Z:
-                    readings.append(AReading(AReading.Type.ACCELERATION,AReading.Unit.METER_PER_SECOND_SQUARE, accelEvent.value))
-                    return readings
+                    self.last_z = accelEvent.value
+
+                # Calculate pitch and roll angles only if all readings are
+                # available
+                if self.last_x is not None and self.last_y is not None and self.last_z is not None and self.first_x is None and self.first_y is None and self.first_z is None:
+                    self.first_x = self.last_x
+                    self.first_y = self.last_y
+                    self.first_z = self.last_z
+
+                if self.first_x is not None and self.first_y is not None and self.first_z is not None:
+                    if self._range(self.last_x, self.first_x):
+                        self.first_x = self.last_x
+                        readings.append(
+                            AReading(
+                                AReading.Type.VIBRATION,
+                                AReading.Unit.UNITLESS,
+                                True))
+                    elif self._range(self.last_y, self.first_y):
+                        self.first_y = self.last_y
+                        readings.append(
+                            AReading(
+                                AReading.Type.VIBRATION,
+                                AReading.Unit.UNITLESS,
+                                True))
+                    elif self._range(self.last_z, self.first_z):
+                        self.first_z = self.last_z
+                        readings.append(
+                            AReading(
+                                AReading.Type.VIBRATION,
+                                AReading.Unit.UNITLESS,
+                                True))
+                    else:
+                        readings.append(
+                            AReading(
+                                AReading.Type.VIBRATION,
+                                AReading.Unit.UNITLESS,
+                                False))
+                    break
+
         return readings
-        
-        
-    
-    def clean_up(self) -> None:
-        """Sets the buzzer state to False, meant for cleaning up.
+
+    def _range(self, last_value: float, current_value: float) -> bool:
         """
-        self.device = False
-    
+        Return:
+            return a boolean if the current is not between the buffers then there is vibration
 
-if __name__ == "__main__":
+        """
+        return last_value - \
+            self.variant >= current_value or current_value >= last_value + self.variant
 
-    vib = vibration(None,None,AReading.Type.VIBRATION)
+
+def main():
+    vib = vibration(None, 'Built-in Accelerometer', AReading.Type.VIBRATION)
     try:
         while True:
             readings = vib.read_sensor()
             for reading in readings:
-                    print(f'{reading.reading_type.value}: {reading.value}{reading.reading_unit.value}')
+                print(
+                    f'{reading.reading_type.value}: {reading.value} {reading.reading_unit.value}')
 
     except KeyboardInterrupt:
-        vib.clean_up()
         print("Exiting...")
-        
 
 
-
-
-
-
-
-
-
-
-
-
-
-# 
-
-
-
-
-# Initialize the accelerometer device
-# device = rt.get_acceleration_device()
-
-# # Continuously read accelerometer data
-
-# # Read accelerometer data once
-# for event in device.read_loop(3):
-#     # Create an AccelerationEvent object
-#     accelEvent = rt_accel.AccelerationEvent(event)
-#     # Check if the event name is not None
-#     if accelEvent.name != None:
-#         # Print the name and value of the event
-#         print(f"name={str(accelEvent.name)} value={accelEvent.value}")
+if __name__ == "__main__":
+    main()
