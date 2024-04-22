@@ -31,9 +31,9 @@ class LightController(IActuator):
             count (int, optional): Number of strip LEDS. Defaults to one.
             brightness (int, optional): Brightness level (0 to 255) of the "ON" state. Defaults to 255.
             initial_state (str, optional): The initial state of the RGB led stick ('on' or 'off'). Defaults to 'off'.
-        
+
         Raises:
-           ValueError if gpio, count, brightness or initial state are invalid inputs. 
+           ValueError if gpio, count, brightness or initial state are invalid inputs.
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
@@ -131,6 +131,4 @@ if __name__ == "__main__":
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
         time.sleep(1)
 
-    light_controller.clean_up()    
-
-    
+    light_controller.clean_up()
