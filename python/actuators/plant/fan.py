@@ -6,12 +6,12 @@ from enum import Enum
 from rpi_ws281x import GroveWS2813RgbStrip, PixelStrip, Color
 
 
-class LightState(Enum):
+class FanState(Enum):
     ON = "on"
     OFF = "off"
 
 
-class LightController(IActuator):
+class FanController(IActuator):
     # A class to control a RGB led stick through the reterminal.
 
     def __init__(
@@ -20,7 +20,7 @@ class LightController(IActuator):
         type: ACommand.Type,
         count: int = 1,
         brightness: int = 255,
-        initial_state: LightState = LightState.OFF,
+        initial_state: FanState = FanState.OFF,
     ) -> None:
         """
         Initializes the RGB led stick.
@@ -31,25 +31,19 @@ class LightController(IActuator):
             count (int, optional): Number of strip LEDS. Defaults to one.
             brightness (int, optional): Brightness level (0 to 255) of the "ON" state. Defaults to 255.
             initial_state (str, optional): The initial state of the RGB led stick ('on' or 'off'). Defaults to 'off'.
-        
-        Raises:
-           ValueError if gpio, count, brightness or initial state are invalid inputs. 
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
         self._validate_integer(brightness, 0, 255, "Light brightness")
 
-        if not self.validate_command(initial_state):
-            raise ValueError("Initial state must be either 'on' or 'off'.")
-
         self.gpio = gpio
         self.count = count
         self.brightness = brightness
         self.type = type
-        self._current_state = initial_state == LightState.ON
+        self._current_state = initial_state == FanState.ON
         self.rgb_stick = GroveWS2813RgbStrip(self.gpio, self.count, self.brightness)
 
-        self.control_actuator(LightState.ON if self._current_state else LightState.OFF)
+        # TODO: set RGB led stick to initial state
 
     def _validate_integer(
         self, value: int, name: str, min_value: int = 0, max_value: int = None
@@ -74,7 +68,7 @@ class LightController(IActuator):
         return (
             command.target_type == self.type
             and isinstance(command.value, str)
-            and (command.value.lower() in (LightState.ON.value, LightState.OFF.value))
+            and (command.value.lower() in (FanState.ON.value, FanState.OFF.value))
         )
 
     def control_actuator(self, value: str) -> bool:
@@ -86,12 +80,12 @@ class LightController(IActuator):
         Returns:
             bool: True if RGB led stick state changes, False otherwise.
         """
-        if value.lower() == LightState.OFF.value:
+        if value.lower() == FanState.OFF.value:
             if self._current_state:
                 self.rgb_stick.brightness = 0
                 self._current_state = False
                 return True
-        elif value.lower() == LightState.ON.value:
+        elif value.lower() == FanState.ON.value:
             if not self._current_state:
                 self.rgb_stick.brightness = self.brightness
                 self._current_state = True
@@ -115,7 +109,7 @@ class LightController(IActuator):
 
 
 if __name__ == "__main__":
-    light_controller = LightController(gpio=None, type=ACommand.Type.LIGHT_ON_OFF)
+    light_controller = FanController(gpio=None, type=ACommand.Type.LIGHT_ON_OFF)
 
     while True:
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
@@ -132,5 +126,3 @@ if __name__ == "__main__":
         time.sleep(1)
 
     light_controller.clean_up()    
-
-    
