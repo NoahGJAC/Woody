@@ -86,18 +86,15 @@ class LightController(IActuator):
         Returns:
             bool: True if RGB led stick state changes, False otherwise.
         """
-        if value.lower() == LightState.OFF.value:
-            if self._current_state:
-                self.rgb_stick.brightness = 0
-                self._current_state = False
-                return True
-        elif value.lower() == LightState.ON.value:
-            if not self._current_state:
-                self.rgb_stick.brightness = self.brightness
-                self._current_state = True
-                return True
+        previous_state = self._current_state
 
-        return False
+        if value.lower() not in (LightState.ON.value, LightState.OFF.value):
+            raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
+
+        self.rgb_stick.brightness = self.brightness if value is LightState.ON else 0
+        self._current_state = value is LightState.ON
+
+        return previous_state != self._current_state
 
     def clean_up(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
