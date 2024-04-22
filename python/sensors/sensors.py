@@ -13,6 +13,8 @@ class AReading(ABC):
         # Add new reading types here.
         TEMPERATURE_HUMIDITY = 'temperature humidity'
         SOIL_MOISTURE = 'soil moisture'
+        TEMPERATURE = 'temperature'
+        HUMIDITY = 'humidity'
         LUMINOSITY = 'luminosity'
         BUZZER = 'buzzer state'
         DOOR = 'door state'
@@ -21,6 +23,8 @@ class AReading(ABC):
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
         GPS = 'GPS'
+        PITCH = 'pitch'
+        ROLL = 'roll'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
