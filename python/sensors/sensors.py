@@ -17,6 +17,7 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        VIBRATION = 'vibration'
         LOUDNESS = 'loudness'
         LATITUDE = 'latitude'
         LONGITUDE ='longitude'
