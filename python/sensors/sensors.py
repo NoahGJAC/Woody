@@ -35,6 +35,7 @@ class AReading(ABC):
         LUX = 'lx'
         DEGREE = '°'
         METERS = 'm'
+        PERCENTAGE = "%"
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
