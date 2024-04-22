@@ -2,7 +2,7 @@
 
 #Imports
 import time
-from python.sensors.sensors import ISensor, AReading
+from ..sensors import ISensor, AReading
 from grove.adc import ADC
 
 
