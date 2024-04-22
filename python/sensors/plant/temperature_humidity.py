@@ -61,9 +61,9 @@ def main():
             num_readings = len(readings)
             for i in range(num_readings):
                 if i % 2 == 0:
-                    print("Temperature in Celsius is {:.2f} °C".format(readings[i]))
+                    print("temperature: {:.2f} {0}".format(readings[i], AReading.Unit.CELCIUS))
                 else:
-                    print("Relative Humidity is {:.2f} % HR".format(readings[i]))
+                    print("humidity: {:.2f} {0}".format(readings[i], AReading.Unit.HUMIDITY))
             time.sleep(0.2)
     except KeyboardInterrupt:
         print("Exiting...")
