@@ -6,24 +6,30 @@ from time import sleep
 import math
 from gpiozero.pins.pigpio import PiGPIOFactory
 from python.actuators.actuators import IActuator, ACommand
+from python.sensors.sensors import ISensor, AReading
 
 
 DOOR_LOCK_PIN: int = 12
 
 
-class DoorLockController(IActuator):
+class DoorLockController(IActuator, ISensor):
 
     def __init__(
             self,
             gpio: int,
-            type: ACommand.Type,
+            model: str,
+            command_type: ACommand.Type,
+            reading_type: AReading.Type,            
             initial_state: str) -> None:
         """Initializes the door lock controller.
 
         Args:
             gpio (int): The pin of the door lock controller.
-            type (ACommand.Type): The type of commands the door lock responds to.
+            model (str): The model of the door lock.
+            command_type (ACommand.Type): The type of commands the door lock responds to.
+            reading_type (AReading.Type): The type of reading the door lock produces.
             initial_state (str): The starting state of the door lock. Should be a string representation of a float between -1.0 and 1.0.
+
         Except:
             IOError: When pigiod doesnt have a daemon running ($ sudo pigpiod). Needed to remove servo jitters.
         """
@@ -36,8 +42,10 @@ class DoorLockController(IActuator):
         except IOError as e:
             print(f'{e}\nDid you forget $ sudo pigpiod')
             exit(1)
-
-        self.type: ACommand.Type = type
+        
+        self._sensor_model: str = model
+        self.reading_type: AReading.Type = reading_type
+        self.type: ACommand.Type = command_type # should rename IActuator property from type to something more readable
         self._current_state: str = initial_state
 
         # Set initial state
@@ -87,6 +95,14 @@ class DoorLockController(IActuator):
         except ValueError:
             return False
 
+    def read_sensor(self) -> list[AReading]:
+        """_summary_
+
+        Returns:
+            list[AReading]: _description_
+        """
+        return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self._servo.value)]
+
     def __del__(self):
         """Destructor:
                 Cleans up servo.
@@ -94,27 +110,35 @@ class DoorLockController(IActuator):
         self._servo.close()
 
 
+def read(door_lock: DoorLockController)-> None:
+    readings: list[AReading] = door_lock.read_sensor()
+    for reading in readings:
+        print(reading)
+
+
 def main():
     door_lock_controller = DoorLockController(
+        model='180 degree servo',
         gpio=DOOR_LOCK_PIN,
-        type=ACommand.Type.DOOR_LOCK,
+        command_type=ACommand.Type.DOOR_LOCK,
+        reading_type=AReading.Type.DOOR_LOCK,
         initial_state='-1')
     try:
         while True:
             door_lock_controller.control_actuator('1')
-            print('1')
+            read(door_lock_controller)
             sleep(1)
             door_lock_controller.control_actuator('-1')
-            print('-1')
+            read(door_lock_controller)
             sleep(1)
-            door_lock_controller.control_actuator('0')
-            print('0')
+            door_lock_controller.control_actuator('-0')
+            read(door_lock_controller)
             sleep(1)
             door_lock_controller.control_actuator('0.5')
-            print('0.5')
+            read(door_lock_controller)
             sleep(1)
             door_lock_controller.control_actuator('-0.5')
-            print('-0.5')
+            read(door_lock_controller)
             sleep(1)
     except KeyboardInterrupt:
         print('exiting..')
