@@ -18,10 +18,10 @@ class vibration(ISensor):
         self.first_x = self.first_y = self.first_z = None
         # Initialize variables to store the last readings
         self.last_x = self.last_y = self.last_z = None
-        self.variant = 5
+        self.variant = 19
     
     def read_sensor(self) -> list[AReading]:
-        """read all of the vibration levels aka: Velocity, Acceleration and Displacement.
+        """read all of the vibration level: aka if a vibration accured
 
         Return:
             returns the list of all the different readings
@@ -44,13 +44,13 @@ class vibration(ISensor):
                     self.first_z = self.last_z
                 
                 if self.first_x is not None and self.first_y is not None and self.first_z is not None:
-                    if range(self.last_x,self.first_x):
+                    if self._range(self.last_x,self.first_x):
                         self.first_x = self.last_x
                         readings.append(AReading(AReading.Type.VIBRATION,AReading.Unit.UNITLESS,True))
-                    elif range(self.last_y, self.first_y):
+                    elif self._range(self.last_y, self.first_y):
                         self.first_y = self.last_y
                         readings.append(AReading(AReading.Type.VIBRATION,AReading.Unit.UNITLESS,True))
-                    elif range(self.last_z,self.first_z):
+                    elif self._range(self.last_z,self.first_z):
                         self.first_z = self.last_z
                         readings.append(AReading(AReading.Type.VIBRATION,AReading.Unit.UNITLESS,True))
                     else:
@@ -59,17 +59,18 @@ class vibration(ISensor):
 
         return readings
     
-    def range(self,num,value):
-        return num-self.variant<= value >= num+self.variant
+    def _range(self,last_value:float,current_value:float) -> bool:
+        """
+        Return:
+            return a boolean if the current is not between the buffers then there is vibration
+
+        """
+        return last_value-self.variant>= current_value or current_value >= last_value+self.variant
 
 
         
         
-    
-    
-
-if __name__ == "__main__":
-
+def main():
     vib = vibration(None,'Built-in Accelerometer',AReading.Type.VIBRATION)
     try:
         while True:
@@ -79,59 +80,10 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print("Exiting...")
+
+    
+
+if __name__ == "__main__":
+    main()
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # 
-
-# def range(num,value):
-#     return num-5<= value >= num+5
-
-
-# device = rt.get_acceleration_device()
-# varient = 10
-# first_x = first_y = first_z = None
-# # Initialize variables to store the last readings
-# last_x = last_y = last_z = None
-
-# # Continuously read and calculate pitch and roll angles
-# while True:
-#     for event in device.read_loop():
-#         accelEvent = rt_accel.AccelerationEvent(event)
-#         if accelEvent.name is not None:
-#             if accelEvent.name == rt_accel.AccelerationName.X:
-#                 last_x = accelEvent.value
-#             elif accelEvent.name == rt_accel.AccelerationName.Y:
-#                 last_y = accelEvent.value
-#             elif accelEvent.name == rt_accel.AccelerationName.Z:
-#                 last_z = accelEvent.value
-            
-#             # Calculate pitch and roll angles only if all readings are available
-#             if last_x is not None and last_y is not None and last_z is not None and first_x is None and first_y is None and first_z is None:
-#                 first_x = last_x
-#                 first_y = last_y
-#                 first_z = last_z
-            
-#             if first_x is not None and first_y is not None and first_z is not None:
-#                 if range(last_x,first_x):
-#                     first_x = last_x
-#                     print("vibration accured")
-#                 elif range(last_y, first_y):
-#                     first_y = last_y
-#                     print("vibration accured")
-#                 elif range(last_z,first_z):
-#                     first_z = last_z
-#                     print("vibration accured")
-
             
