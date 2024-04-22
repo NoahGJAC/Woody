@@ -39,7 +39,7 @@ class MotionSensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.UNITLESS,
-                value=self.pir.read())]
+                value=bool(self.pir.read()))]
 
 
 def main():
