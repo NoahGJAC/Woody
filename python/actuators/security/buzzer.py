@@ -13,17 +13,17 @@ class BuzzerController(IActuator, ISensor):
     def __init__(
             self,
             gpio: int | None,
-            actuator_type: ACommand.Type,
             model: str,
-            sensor_type : AReading.Type,
+            command_type: ACommand.Type,
+            reading_type : AReading.Type,
             initial_state: str = 'off') -> None:
         """Initializes the buzzer controller.
 
         Args:
             gpio (int | None): The gpio of the buzzer, buzzer is internal, no gpio needed.
-            actuator_type (ACommand.Type): The type of command the buzzer accepts.
+            command_type (ACommand.Type): The type of command the buzzer accepts.
             model (str): The model of the buzzer.
-            sensor_type (AReading.Type): The type of reading the buzzer produces.
+            reading_type (AReading.Type): The type of reading the buzzer produces.
             initial_state (str, optional): The initial state of the buzzer ('on' or 'off'). Defaults to 'off'.
 
         Raises:
@@ -31,8 +31,8 @@ class BuzzerController(IActuator, ISensor):
         """
         self._current_state = True if initial_state.lower() == 'on' else False
         self._sensor_model = model
-        self.actuator_type = actuator_type
-        self.reading_type = sensor_type
+        self.type = command_type # TODO: need to update interface IActuator
+        self.reading_type = reading_type
 
         # set the buzzer state
         try:
@@ -51,7 +51,7 @@ class BuzzerController(IActuator, ISensor):
         Returns:
             bool: True if the command is valid, False otherwise.
         """
-        return command.target_type == self.actuator_type and type(command.value) is str and (
+        return command.target_type == self.command_type and type(command.value) is str and (
             command.value.lower() == 'on' or command.value.lower() == 'off')
 
     def control_actuator(self, value: str) -> bool:
@@ -99,9 +99,9 @@ def print_readings(readings: list[AReading]) -> None:
 if __name__ == "__main__":
     buzzer_controller = BuzzerController(
         gpio=None,
-        actuator_type=ACommand.Type.BUZZER_ON_OFF,
+        command_type=ACommand.Type.BUZZER_ON_OFF,
         model='ReTerminal Buzzer',
-        sensor_type=AReading.Type.BUZZER,
+        reading_type=AReading.Type.BUZZER,
         initial_state='off')
     try:
         while True:
