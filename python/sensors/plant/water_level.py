@@ -22,7 +22,8 @@ class WaterLevelSensor(ISensor):
             model (str, optional): The model of the water level sensor. Defaults to 'Water Level Sensor'.
             type (AReading.Type, optional): The first reading type of the water level sensor. Defaults to AReading.Type.WATER_LEVEL.
         """
-        self.sensor = ADC()
+        self._address = 0x04
+        self.sensor = ADC(self._address)
         self._sensor_model = model
         self.reading_type = type
 
