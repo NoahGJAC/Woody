@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Imports
-from python.actuators.actuators import IActuator, ACommand
+from ..actuators import IActuator, ACommand
 from enum import Enum
 from gpiozero import OutputDevice
 from time import sleep
@@ -30,12 +30,10 @@ class FanController(IActuator):
             initial_state (str, optional): The initial state of the fan ('on' or 'off'). Defaults to 'off'.
         """
         self._validate_integer(gpio, " GPIO")
-        self.validate_command(initial_state)
-
         self.gpio = gpio
         self.type = type
         self.fan = OutputDevice(pin=gpio)
-        self._current_state = initial_state == FanState.ON
+        self._current_state = initial_state.value
 
         self.control_actuator(self._current_state)
 
@@ -79,7 +77,8 @@ class FanController(IActuator):
         if value.lower() not in (FanState.ON.value, FanState.OFF.value):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
-        self.fan.value = 1 if value is FanState.ON else 0
+        self.fan.value = 1 if value is FanState.ON.value else 0
+        
         self._current_state = value
 
         return previous_state != self._current_state
@@ -103,16 +102,16 @@ if __name__ == "__main__":
 
     while True:
         print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        time.sleep(2)
+        sleep(2)
 
         fan_controller.control_actuator("on")
 
         print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        time.sleep(2)
+        sleep(2)
 
         fan_controller.control_actuator("off")
 
         print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        time.sleep(2)
+        sleep(2)
 
     fan_controller.clean_up()
