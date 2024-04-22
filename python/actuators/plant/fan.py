@@ -78,7 +78,7 @@ class FanController(IActuator):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
         self.fan.value = 1 if value is FanState.ON.value else 0
-        
+
         self._current_state = value
 
         return previous_state != self._current_state
