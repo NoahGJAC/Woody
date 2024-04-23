@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 
-#Imports
+# Imports
 import time
+import grove.i2c
 from python.sensors.sensors import ISensor, AReading
 from grove.adc import ADC
+
+
+class customADC(ADC):
+    def __init__(self, address=0x04, bus=1):
+        self.address = address
+        self.bus = grove.i2c.Bus(bus)
 
 
 class WaterLevelSensor(ISensor):
@@ -22,8 +29,7 @@ class WaterLevelSensor(ISensor):
             model (str, optional): The model of the water level sensor. Defaults to 'Water Level Sensor'.
             type (AReading.Type, optional): The first reading type of the water level sensor. Defaults to AReading.Type.WATER_LEVEL.
         """
-        self._address = 0x04
-        self.sensor = ADC(self._address)
+        self.sensor = customADC()
         self._sensor_model = model
         self.reading_type = type
 
@@ -36,8 +42,8 @@ class WaterLevelSensor(ISensor):
         return [
             AReading(
                 type=self.reading_type,
-                unit=AReading.Unit.PERCENTAGE,
-                value=self.sensor.read_voltage(0)
+                unit=AReading.Unit.UNITLESS,
+                value=self.sensor.read_voltage(0),
             )
         ]
 
