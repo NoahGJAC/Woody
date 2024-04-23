@@ -2,9 +2,14 @@
 
 #Imports
 import time
+import grove.i2c
 from ..sensors import ISensor, AReading
 from grove.adc import ADC
 
+class customADC(ADC):
+    def __init__(self, address=0x04, bus=1):
+        self.address=address
+        self.bus=grove.i2c.Bus(bus)
 
 class SoilMoistureSensor(ISensor):
     # A class for soil moisture sensor readings.
@@ -23,7 +28,7 @@ class SoilMoistureSensor(ISensor):
             type (AReading.Type, optional): The first reading type of the soil moisture sensor. Defaults to AReading.Type.TEMPERATURE_HUMIDITY.
         """
         self._address = 0x04
-        self.sensor = ADC(self._address)
+        self.sensor = customADC()
         self._sensor_model = model
         self.reading_type = type
 

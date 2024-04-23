@@ -54,7 +54,7 @@ class AReading(ABC):
     def __repr__(self) -> str:
         """String representation of a reading object
         """
-        return f"{self.reading_type}: {self.value} {self.reading_unit}"
+        return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
 
 
 class ISensor(ABC):
