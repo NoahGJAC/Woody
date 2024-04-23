@@ -54,6 +54,7 @@ class GPSSensor(ISensor):
         except pynmea2.ParseError as e:
             print(
                 f"{e} \nCould not parse the information? you need to plug the GPS on UART port. Also make sure that your GPS is near an open window and replug your GPS after restarting your Raspberri Pi.")
+            return readings
             pass
 
     def close(self) -> None:
