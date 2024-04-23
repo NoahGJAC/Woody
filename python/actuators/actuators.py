@@ -11,10 +11,11 @@ class ACommand(ABC):
         """Enum defining types of actuators that can be targets for a command
         """
         # Add types as needed
-        FAN = 'fan'
+        FAN_ON_OFF = 'fan-on-off'
         LIGHT_ON_OFF = 'light-on-off'
         LIGHT_PULSE = 'light-pulse'
         BUZZER_ON_OFF = 'buzzer-on-off'
+        DOOR_LOCK = 'door-lock'
 
     # Class properties that must be defined in implementation classes
 
