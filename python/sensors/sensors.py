@@ -11,7 +11,8 @@ class AReading(ABC):
         """Enum defining all possible types of readings that sensors might make.
         """
         # Add new reading types here.
-        TEMPERATURE_HUMIDITY = 'temperature-humidity'
+        TEMPERATURE_HUMIDITY = 'temperature humidity'
+        SOIL_MOISTURE = 'soil moisture'
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
         LUMINOSITY = 'luminosity'
@@ -43,6 +44,7 @@ class AReading(ABC):
         LOUDNESS = '% loudness strength'
         DEGREE = '°'
         METERS = 'm'
+        PERCENTAGE = "%"
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
