@@ -1,96 +1,142 @@
 #!/usr/bin/env python
+
+
 from time import sleep
-import pynmea2
-from python.actuators.actuators import ACommand
-from python.controllers.device_controllers import IDevice_Controller
-from python.sensors.sensors import AReading
+from python.controllers.device_controllers import IDeviceController
+from python.sensors.sensors import AReading, ISensor
+from python.actuators.actuators import ACommand, IActuator
 from python.actuators.security.buzzer import BuzzerController
 from python.actuators.security.door_lock import DoorLockController
 from python.sensors.security.door import DoorSensor
 from python.sensors.security.loudness import LoudnessSensor
 from python.sensors.security.luminosity import LuminositySensor
 from python.sensors.security.motion import MotionSensor
+import colorama
 
-# TODO: Refactor
-class SecurityController(IDevice_Controller):
+
+class SecurityController(IDeviceController):
+    """A class that represents a security subsystem device controller."""
     def __init__(self) -> None:
-        self.door_sensor = DoorSensor(gpio=5, model='Magnetic door sensor reed switch', type=AReading.Type.DOOR)
-        
-        self.loudness = LoudnessSensor(
-        gpio=0,
-        model='Grove - Loudness Sensor',
-        type=AReading.Type.LOUDNESS)
-        
-        self.luminosity = LuminositySensor(
-        gpio=None,
-        model='Built-in Luminosity Sensor',
-        type=AReading.Type.LUMINOSITY)
+        """Initializes a SecurityController
+        """
+        super().__init__()
+    
+    def _initialize_actuators(self) -> list[IActuator]:
+        return [
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model='ReTerminal Buzzer',
+                reading_type=AReading.Type.BUZZER,
+                initial_state='off'),
+            DoorLockController(
+                model='180 degree servo',
+                gpio=12,
+                command_type=ACommand.Type.DOOR_LOCK,
+                reading_type=AReading.Type.DOOR_LOCK,
+                initial_state='-1')
+        ]
 
-        self.motion = MotionSensor(
-        gpio=22,
-        model='Adjustable PIR Motion Sensor',
-        type=AReading.Type.MOTION)
+    def _initialize_sensors(self) -> list[ISensor]:
+        return [
+            DoorSensor(
+                gpio=5, 
+                model='Magnetic door sensor reed switch', 
+                type=AReading.Type.DOOR),
+            LoudnessSensor(
+            gpio=0,
+            model='Grove - Loudness Sensor',
+            type=AReading.Type.LOUDNESS),
+            LuminositySensor(
+            gpio=None,
+            model='Built-in Luminosity Sensor',
+            type=AReading.Type.LUMINOSITY),
+            MotionSensor(
+            gpio=22,
+            model='Adjustable PIR Motion Sensor',
+            type=AReading.Type.MOTION),
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model='ReTerminal Buzzer',
+                reading_type=AReading.Type.BUZZER,
+                initial_state='off'),
+            DoorLockController(
+                model='180 degree servo',
+                gpio=12,
+                command_type=ACommand.Type.DOOR_LOCK,
+                reading_type=AReading.Type.DOOR_LOCK,
+                initial_state='-1')
+        ]
 
-        self.buzzer = BuzzerController(
-        gpio=None,
-        command_type=ACommand.Type.BUZZER_ON_OFF,
-        model='ReTerminal Buzzer',
-        reading_type=AReading.Type.BUZZER,
-        initial_state='off')
+    def control_actuators(self, commands: list[ACommand]) -> None:
+        """Runs the commands on their corresponding actuators.
 
-        self.door = DoorLockController(
-        model='180 degree servo',
-        gpio=12,
-        command_type=ACommand.Type.DOOR_LOCK,
-        reading_type=AReading.Type.DOOR_LOCK,
-        initial_state='-1')
+        Args:
+            commands (list[ACommand]): The list of commands to run.
+        """
+        actuator_dict = self._get_actuator_dict()
+        for command in commands:
+            actuator = actuator_dict.get(command.target_type)
+            if actuator is None:
+                print(
+                        colorama.Fore.RED + f"No actuator found for command: {command}" + colorama.Fore.RESET
+                    )
+                continue
 
+            if not actuator.validate_command(command=command):
+                print(
+                    colorama.Fore.RED + f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" + colorama.Fore.RESET
+                )
+                continue
+                
+            actuator.control_actuator(value=command.value)
+            print(
+                f"Executed command: {command}"
+            )
+    
 
-    def control_actuators(self) -> None:
-        self._print_readings(self.buzzer.read_sensor())
-        sleep(1)
-        # change state
-        self.buzzer.control_actuator('on')
+    def _get_actuator_dict(self) -> dict[ACommand.Type, IActuator]:
+        """Returns a dictionary with the actuators as values to their command type key.
 
-        self._print_readings(self.buzzer.read_sensor())
-        sleep(1)
+        Returns:
+            dict[ACommand.Type, IActuator]: The dictionary with the actuators as values.
+        """
+        return {actuator.type: actuator for actuator in self._actuators}
 
-        self.buzzer.control_actuator('off')
-        self._print_readings(self.buzzer.read_sensor())
-        sleep(1)
+    def read_sensors(self) -> list[AReading]:
+        """Returns a list of readings from all sensors.
 
-        self.door.control_actuator('1')
-        self._print_readings(self.door.read_sensor())
-        sleep(1)
-        self.door.control_actuator('-1')
-        self._print_readings(self.door.read_sensor())
-        sleep(1)
-        self.door.control_actuator('-0')
-        self._print_readings(self.door.read_sensor())
-        sleep(1)
-        self.door.control_actuator('0.5')
-        self._print_readings(self.door.read_sensor())
-        sleep(1)
-        self.door.control_actuator('-0.5')
-        self._print_readings(self.door.read_sensor())
-        sleep(1)
-
-    def read_sensors(self) -> None:
-        self._print_readings(self.motion.read_sensor())
-        self._print_readings(self.luminosity.read_sensor())
-        self._print_readings(self.door_sensor.read_sensor())
-        self._print_readings(self.loudness.read_sensor())
+        Returns:
+            list[AReading]: The readings from the sensors.
+        """
+        readings: list[AReading] = [reading for sensor in self._sensors for reading in sensor.read_sensor()]
+        return readings
 
     def loop(self):
+        """Loops through controlling actuators and reading sensors. Intended for testing.
+        """
+        pre_commands: list[ACommand] = [
+                ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='1'),
+                ACommand(target=ACommand.Type.DOOR_LOCK, value='1')
+            ]
+        post_commands: list[ACommand] = [
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='off'),
+            ACommand(target=ACommand.Type.DOOR_LOCK, value='-1')
+        ]
         while True:
-            self.control_actuators()
-            self.read_sensors()
+
+            self.control_actuators(commands=pre_commands)
+            readings = self.read_sensors()
+            for reading in readings:
+                print(reading)
             sleep(2)
 
-    def _print_readings(self,readings: list[AReading]) -> None:
-        for reading in readings:
-            print(reading)
-
+            self.control_actuators(commands=post_commands)
+            readings = self.read_sensors()
+            for reading in readings:
+                print(reading)
+            sleep(2)
 
 def main():
     controller = SecurityController()
@@ -102,7 +148,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("Exiting...")
-    except pynmea2.ParseError as e:
-        f"{e} \nCould not parse the information? you need to plug the GPS on UART port and wait 5 seconds"
-        pass
 
