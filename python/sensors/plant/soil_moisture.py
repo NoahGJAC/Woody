@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
-#Imports
+# Imports
 import time
 import grove.i2c
 from ..sensors import ISensor, AReading
 from grove.adc import ADC
 
+
 class customADC(ADC):
     def __init__(self, address=0x04, bus=1):
-        self.address=address
-        self.bus=grove.i2c.Bus(bus)
+        self.address = address
+        self.bus = grove.i2c.Bus(bus)
+
 
 class SoilMoistureSensor(ISensor):
     # A class for soil moisture sensor readings.
@@ -41,8 +43,8 @@ class SoilMoistureSensor(ISensor):
         return [
             AReading(
                 type=self.reading_type,
-                unit=AReading.Unit.PERCENTAGE,
-                value=self.sensor.read_voltage(0)
+                unit=AReading.Unit.UNITLESS,
+                value=self.sensor.read_voltage(0),
             )
         ]
 
