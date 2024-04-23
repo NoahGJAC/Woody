@@ -64,6 +64,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Exiting...")
     except pynmea2.ParseError as e:
-        f"{e} \nCould not parse the information? you need to plug the GPS on UART port and wait 5 seconds")
+        f"{e} \nCould not parse the information? you need to plug the GPS on UART port and wait 5 seconds"
         pass
 
