@@ -27,11 +27,11 @@ class AReading(ABC):
         PITCH = 'pitch'
         ROLL = 'roll'
 
+
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
-        CELSIUS_HUMIDITY = '°C - % HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
