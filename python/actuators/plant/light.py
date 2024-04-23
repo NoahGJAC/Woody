@@ -112,7 +112,7 @@ class LightController(IActuator):
 
 
 if __name__ == "__main__":
-    light_controller = LightController(gpio=None, type=ACommand.Type.LIGHT_ON_OFF)
+    light_controller = LightController(gpio=24, type=ACommand.Type.LIGHT_ON_OFF)
 
     while True:
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
