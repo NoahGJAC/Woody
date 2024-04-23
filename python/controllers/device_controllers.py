@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 
+
 class IDeviceController(ABC):
     """Interface for all device controllers.
     """
@@ -26,7 +27,7 @@ class IDeviceController(ABC):
         Returns:
             list[ISensor]: List of initialized sensors.
         """
-    
+
     @abstractmethod
     def _initialize_actuators(self) -> list[IActuator]:
         """Initializes all actuators and returns them as a list. Intended to be used in class constructor.
@@ -34,19 +35,17 @@ class IDeviceController(ABC):
         Returns:
             list[IActuator]: List of initialized actuators.
         """
-    
+
     @abstractmethod
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Controls actuators according to a list of commands. Each command is applied to it's respective actuator.
 
         :param list[ACommand] commands: List of commands to be dispatched to corresponding actuators.
         """
-    
+
     @abstractmethod
     def read_sensors(self) -> list[AReading]:
         """Reads data from all initialized sensors.
 
         :return list[AReading]: a list containing all readings collected from sensors.
         """
-
-

@@ -16,11 +16,12 @@ import colorama
 
 class SecurityController(IDeviceController):
     """A class that represents a security subsystem device controller."""
+
     def __init__(self) -> None:
         """Initializes a SecurityController
         """
         super().__init__()
-    
+
     def _initialize_actuators(self) -> list[IActuator]:
         return [
             BuzzerController(
@@ -40,21 +41,21 @@ class SecurityController(IDeviceController):
     def _initialize_sensors(self) -> list[ISensor]:
         return [
             DoorSensor(
-                gpio=5, 
-                model='Magnetic door sensor reed switch', 
+                gpio=5,
+                model='Magnetic door sensor reed switch',
                 type=AReading.Type.DOOR),
             LoudnessSensor(
-            gpio=0,
-            model='Grove - Loudness Sensor',
-            type=AReading.Type.LOUDNESS),
+                gpio=0,
+                model='Grove - Loudness Sensor',
+                type=AReading.Type.LOUDNESS),
             LuminositySensor(
-            gpio=None,
-            model='Built-in Luminosity Sensor',
-            type=AReading.Type.LUMINOSITY),
+                gpio=None,
+                model='Built-in Luminosity Sensor',
+                type=AReading.Type.LUMINOSITY),
             MotionSensor(
-            gpio=22,
-            model='Adjustable PIR Motion Sensor',
-            type=AReading.Type.MOTION),
+                gpio=22,
+                model='Adjustable PIR Motion Sensor',
+                type=AReading.Type.MOTION),
             BuzzerController(
                 gpio=None,
                 command_type=ACommand.Type.BUZZER_ON_OFF,
@@ -80,21 +81,24 @@ class SecurityController(IDeviceController):
             actuator = actuator_dict.get(command.target_type)
             if actuator is None:
                 print(
-                        colorama.Fore.RED + f"No actuator found for command: {command}" + colorama.Fore.RESET
-                    )
+                    colorama.Fore.RED +
+                    f"No actuator found for command: {command}" +
+                    colorama.Fore.RESET
+                )
                 continue
 
             if not actuator.validate_command(command=command):
                 print(
-                    colorama.Fore.RED + f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" + colorama.Fore.RESET
+                    colorama.Fore.RED +
+                    f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
+                    colorama.Fore.RESET
                 )
                 continue
-                
+
             actuator.control_actuator(value=command.value)
             print(
                 f"Executed command: {command}"
             )
-    
 
     def _get_actuator_dict(self) -> dict[ACommand.Type, IActuator]:
         """Returns a dictionary with the actuators as values to their command type key.
@@ -110,16 +114,17 @@ class SecurityController(IDeviceController):
         Returns:
             list[AReading]: The readings from the sensors.
         """
-        readings: list[AReading] = [reading for sensor in self._sensors for reading in sensor.read_sensor()]
+        readings: list[AReading] = [
+            reading for sensor in self._sensors for reading in sensor.read_sensor()]
         return readings
 
     def loop(self):
         """Loops through controlling actuators and reading sensors. Intended for testing.
         """
         pre_commands: list[ACommand] = [
-                ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='1'),
-                ACommand(target=ACommand.Type.DOOR_LOCK, value='1')
-            ]
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='1'),
+            ACommand(target=ACommand.Type.DOOR_LOCK, value='1')
+        ]
         post_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='off'),
             ACommand(target=ACommand.Type.DOOR_LOCK, value='-1')
@@ -138,14 +143,14 @@ class SecurityController(IDeviceController):
                 print(reading)
             sleep(2)
 
+
 def main():
     controller = SecurityController()
     controller.loop()
 
 
 if __name__ == "__main__":
-    try: 
+    try:
         main()
     except KeyboardInterrupt:
         print("Exiting...")
-
