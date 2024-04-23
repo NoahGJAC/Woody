@@ -11,6 +11,7 @@ class AReading(ABC):
         """Enum defining all possible types of readings that sensors might make.
         """
         # Add new reading types here.
+        TEMPERATURE_HUMIDITY = 'temperature-humidity'
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
         LUMINOSITY = 'luminosity'
@@ -27,10 +28,12 @@ class AReading(ABC):
         PITCH = 'pitch'
         ROLL = 'roll'
 
+
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
+        CELSIUS_HUMIDITY = '°C-% HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
