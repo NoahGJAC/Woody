@@ -38,14 +38,9 @@ class FanController(IActuator):
         self.control_actuator(self._current_state)
 
     def _validate_integer(
-        self, value: int, name: str, min_value: int = 0, max_value: int = None
+        self, value: int, name: str, min_value: int = 0
     ) -> None:
-        if max_value is not None:
-            if not min_value <= value <= max_value:
-                raise ValueError(
-                    f"{name} value must be between {min_value} and {max_value}"
-                )
-        elif value < min_value:
+        if value < min_value:
             raise ValueError(f"{name} value must be positive")
 
     def validate_command(self, command: ACommand) -> bool:
