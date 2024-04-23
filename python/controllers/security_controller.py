@@ -11,14 +11,16 @@ from python.sensors.security.loudness import LoudnessSensor
 from python.sensors.security.luminosity import LuminositySensor
 from python.sensors.security.motion import MotionSensor
 
-
-class Geo_Location_Controller(IDevice_Controller):
+# TODO: Refactor
+class SecurityController(IDevice_Controller):
     def __init__(self) -> None:
         self.door_sensor = DoorSensor(gpio=5, model='Magnetic door sensor reed switch', type=AReading.Type.DOOR)
+        
         self.loudness = LoudnessSensor(
         gpio=0,
         model='Grove - Loudness Sensor',
         type=AReading.Type.LOUDNESS)
+        
         self.luminosity = LuminositySensor(
         gpio=None,
         model='Built-in Luminosity Sensor',
@@ -91,9 +93,8 @@ class Geo_Location_Controller(IDevice_Controller):
 
 
 def main():
-    controller = Geo_Location_Controller()
+    controller = SecurityController()
     controller.loop()
-
 
 
 if __name__ == "__main__":
