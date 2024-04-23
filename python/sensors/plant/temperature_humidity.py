@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-from python.sensors.sensors import ISensor, AReading
+from ..sensors import ISensor, AReading
 from grove.grove_temperature_humidity_aht20 import GroveTemperatureHumidityAHT20
 
 
@@ -64,7 +64,7 @@ def main():
                     print("temperature: {:.2f} {0}".format(readings[i], AReading.Unit.CELCIUS))
                 else:
                     print("humidity: {:.2f} {0}".format(readings[i], AReading.Unit.HUMIDITY))
-            time.sleep(0.2)
+            sleep(0.2)
     except KeyboardInterrupt:
         print("Exiting...")
 
