@@ -39,7 +39,7 @@ class TemperatureHumiditySensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.CELSIUS_HUMIDITY,
-                value=list(self.sensor.read())
+                value=list(self.sensor.read()),
             )
         ]
 
@@ -49,16 +49,16 @@ def main():
     try:
         while True:
             readings = temperature_humidity_sensor.read_sensor()
-            print(readings)
 
             for reading in readings:
                 temperature, humidity = reading.value
-                print('Temperature in Celsius is {:.2f} C'.format(temperature))
-                print('Relative Humidity is {:.2f} %'.format(humidity))
+                print("Temperature in Celsius is {:.2f} C".format(temperature))
+                print("Relative Humidity is {:.2f} %".format(humidity))
 
             time.sleep(0.2)
     except KeyboardInterrupt:
         print("Exiting...")
+
 
 if __name__ == "__main__":
     main()
