@@ -13,7 +13,6 @@ class AReading(ABC):
         # Add new reading types here.
         TEMPERATURE_HUMIDITY = 'temperature humidity'
         SOIL_MOISTURE = 'soil moisture'
-        WATER_LEVEL = 'water level'
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
         LUMINOSITY = 'luminosity'
@@ -32,6 +31,7 @@ class AReading(ABC):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
+        CELSIUS_HUMIDITY = '°C - % HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
@@ -55,7 +55,7 @@ class AReading(ABC):
     def __repr__(self) -> str:
         """String representation of a reading object
         """
-        return f"{self.reading_type}: {self.value} {self.reading_unit}"
+        return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
 
 
 class ISensor(ABC):
