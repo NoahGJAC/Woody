@@ -122,7 +122,7 @@ class SecurityController(IDeviceController):
         """Loops through controlling actuators and reading sensors. Intended for testing.
         """
         pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='1'),
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='on'),
             ACommand(target=ACommand.Type.DOOR_LOCK, value='1')
         ]
         post_commands: list[ACommand] = [
