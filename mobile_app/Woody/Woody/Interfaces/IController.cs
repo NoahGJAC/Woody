@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Woody.Interfaces
 {
-    public interface IController<T>
+    public interface IController
     {
-        public List<ISensor<T>> Sensors { get; }
-        public List<IActuator<T>> Actuators { get; }
+        public List<ISensor> Sensors { get; }
+        public List<IActuator> Actuators { get; }
 
-        public List<IReading<T>> ReadSesnsors();
-        public void ControlActuators(List<ICommand<T>> commands);
+        public List<IReading> ReadSensors();
+        public void ControlActuators(List<ICommand> commands);
     }
 }

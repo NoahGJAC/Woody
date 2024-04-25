@@ -7,9 +7,12 @@ using Woody.Enums;
 
 namespace Woody.Interfaces
 {
-    public interface ICommand<T>
+    public interface ICommand
     {
         CommandType CommandType { get; set; }
+    }
+    public interface ICommand<T>: ICommand
+    {
         T Value { get; set; }
     }
 }

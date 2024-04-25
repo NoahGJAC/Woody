@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Woody.Interfaces
 {
-    public interface ISensor<T>
+    public interface ISensor
     {
         public string SensorID { get; set; }
         public string SensorModel { get; set; }
-
+    }
+    public interface ISensor<T> : ISensor
+    {
         public List<IReading<T>> ReadSensor();
     }
 }

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Woody.Interfaces
 {
-    public interface IActuator<T>
+    public interface IActuator
     {
         public string ActuatorID { get; set; }
         public string State { get; set; }
-
+    }
+    public interface IActuator<T> : IActuator
+    {
         public void ControlActuator(ICommand<T> command);
     }
 }

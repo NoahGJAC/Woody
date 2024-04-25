@@ -7,10 +7,13 @@ using Woody.Enums;
 
 namespace Woody.Interfaces
 {
-    public interface IReading<T>
+    public interface IReading
     {
         ReadingUnit Unit { get; set; }
         ReadingType ReadingType { get; set; }
+    }
+    public interface IReading<T> : IReading
+    {
         T Value { get; set; }
     }
 }
