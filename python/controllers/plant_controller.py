@@ -14,7 +14,7 @@ import colorama
 
 
 class PlantController(IDeviceController):
-    """A class that represents a plant subsystem device controller."""'
+    """A class that represents a plant subsystem device controller."""
 
     def __init__(self) -> None:
         """Initialize a PlantController
