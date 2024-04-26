@@ -3,7 +3,9 @@
 # Imports
 from python.actuators.actuators import IActuator, ACommand
 from enum import Enum
-from rpi_ws281x import GroveWS2813RgbStrip, PixelStrip, Color
+from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
+from rpi_ws281x import Color
+from time import sleep
 
 
 class LightState(Enum):
@@ -21,6 +23,7 @@ class LightController(IActuator):
         count: int = 1,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
+        color: Color = Color(255, 255, 255)
     ) -> None:
         """
         Initializes the RGB led stick.
@@ -31,25 +34,24 @@ class LightController(IActuator):
             count (int, optional): Number of strip LEDS. Defaults to one.
             brightness (int, optional): Brightness level (0 to 255) of the "ON" state. Defaults to 255.
             initial_state (str, optional): The initial state of the RGB led stick ('on' or 'off'). Defaults to 'off'.
+            color (Color, optional): Color of the light. Defaults to white.
 
         Raises:
            ValueError if gpio, count, brightness or initial state are invalid inputs.
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
-        self._validate_integer(brightness, 0, 255, "Light brightness")
-
-        if not self.validate_command(initial_state):
-            raise ValueError("Initial state must be either 'on' or 'off'.")
+        self._validate_integer(value=brightness, min_value=0, name="Light brightness", max_value=255)
 
         self.gpio = gpio
         self.count = count
         self.brightness = brightness
+        self.color = color
         self.type = type
         self._current_state = initial_state == LightState.ON
         self.rgb_stick = GroveWS2813RgbStrip(self.gpio, self.count, self.brightness)
 
-        self.control_actuator(LightState.ON if self._current_state else LightState.OFF)
+        self.control_actuator(initial_state.value)
 
     def _validate_integer(
         self, value: int, name: str, min_value: int = 0, max_value: int = None
@@ -91,16 +93,19 @@ class LightController(IActuator):
         if value.lower() not in (LightState.ON.value, LightState.OFF.value):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
-        self.rgb_stick.brightness = self.brightness if value is LightState.ON else 0
-        self._current_state = value is LightState.ON
-
+        if (value is LightState.ON.value):
+            theaterChase(self.rgb_stick, self.color)
+            self._current_state = value is LightState.ON
+        elif (value is LightState.OFF.value):
+            colorWipe(self.rgb_stick, Color(0,0,0), 10)
+            self._current_state = value is LightState.OFF
+        
         return previous_state != self._current_state
 
     def clean_up(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-
-        self.rgb_stick.brightness = 0
-
+        colorWipe(self.rgb_stick, Color(0,0,0), 10)
+        
     def read_state(self) -> bool:
         """
         Returns true if the RGB led stick's state is truthy, false otherwise.
@@ -108,24 +113,24 @@ class LightController(IActuator):
         Returns:
             bool: The state of the RGB led stick.
         """
-        return self.rgb_stick.brightness
+        return self._current_state
 
 
 if __name__ == "__main__":
-    light_controller = LightController(gpio=24, type=ACommand.Type.LIGHT_ON_OFF)
+    light_controller = LightController(gpio=12, type=ACommand(ACommand.Type.LIGHT_ON_OFF, LightState.OFF))
 
     while True:
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
-        time.sleep(1)
+        sleep(1)
 
         light_controller.control_actuator("on")
 
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
-        time.sleep(1)
+        sleep(1)
 
         light_controller.control_actuator("off")
 
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")
-        time.sleep(1)
+        sleep(1)
 
     light_controller.clean_up()
