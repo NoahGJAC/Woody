@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
-
 from time import sleep
-from actuators.plant.fan import FanController
-from actuators.plant.light import LightController
-from python.actuators.actuators import ACommand, IActuator
-from python.controllers.device_controllers import IDeviceController
-from python.sensors.sensors import AReading, ISensor
-from sensors.plant.soil_moisture import SoilMoistureSensor
-from sensors.plant.water_level import WaterLevelSensor
-from sensors.plant.temperature_humidity import TemperatureHumiditySensor
+from ..actuators.plant.fan import FanController
+from ..actuators.plant.light import LightController
+from ..actuators.actuators import ACommand, IActuator
+from device_controllers import IDeviceController
+from ..sensors.sensors import AReading, ISensor
+from ..sensors.plant.soil_moisture import SoilMoistureSensor
+from ..sensors.plant.water_level import WaterLevelSensor
+from ..sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
 
 
@@ -22,13 +21,13 @@ class PlantController(IDeviceController):
         super().__init__()
 
     def _initialize_actuators(self) -> list[IActuator]:
-        return [LightController(gpio=5, type=ACommand.Type.LIGHT_ON_OFF),
+        return [LightController(gpio=12, type=ACommand.Type.LIGHT_ON_OFF),
                 FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)]
 
     def _initialize_sensors(self) -> list[ISensor]:
-        return [SoilMoistureSensor(gpio=18),
-                WaterLevelSensor(gpio=22),
-                TemperatureHumiditySensor(gpio=24)]
+        return [SoilMoistureSensor(),
+                WaterLevelSensor(),
+                TemperatureHumiditySensor()]
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
