@@ -4,7 +4,7 @@ from time import sleep
 from ..actuators.plant.fan import FanController
 from ..actuators.plant.light import LightController
 from ..actuators.actuators import ACommand, IActuator
-from device_controllers import IDeviceController
+from .device_controllers import IDeviceController
 from ..sensors.sensors import AReading, ISensor
 from ..sensors.plant.soil_moisture import SoilMoistureSensor
 from ..sensors.plant.water_level import WaterLevelSensor
@@ -21,8 +21,11 @@ class PlantController(IDeviceController):
         super().__init__()
 
     def _initialize_actuators(self) -> list[IActuator]:
+        """
         return [LightController(gpio=12, type=ACommand.Type.LIGHT_ON_OFF),
                 FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)]
+        """
+        return [FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)]
 
     def _initialize_sensors(self) -> list[ISensor]:
         return [SoilMoistureSensor(),
@@ -77,6 +80,7 @@ class PlantController(IDeviceController):
     def loop(self):
         """Loops through controlling actuators and reading sensors. Intended for testing.
         """
+        """
         pre_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='on'),
             ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
@@ -85,17 +89,33 @@ class PlantController(IDeviceController):
             ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='off'),
             ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
         ]
+        """
+
+        pre_commands: list[ACommand] = [
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
+        ]
+        post_commands: list[ACommand] = [
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
+        ]
+
         while True:
             self.control_actuators(commands=pre_commands)
             readings = self.read_sensors()
             for reading in readings:
-                print(reading)
+                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
+                    temperature, humidity = reading.value
+                    print("temperature: {:.2f} C".format(temperature))
+                    print("humidity: {:.2f} %".format(humidity))
+                else:     
+                    print(reading)
+            print("\n")
             sleep(2)
 
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
                 print(reading)
+            print("\n")
             sleep(2)
 
 
