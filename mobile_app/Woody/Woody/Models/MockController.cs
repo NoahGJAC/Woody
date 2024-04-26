@@ -8,18 +8,17 @@ using Woody.Interfaces;
 
 namespace Woody.Models
 {
-    public class SecurityController : INotifyPropertyChanged, IController
+    public class MockController : INotifyPropertyChanged, IController
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         public List<ISensor> Sensors { get; private set; }
 
         public List<IActuator> Actuators { get; private set; }
 
-        // Don't think the models should have methods like this idk..
+
         public void ControlActuators(List<ICommand> commands)
         {
-            
+            throw new NotImplementedException();
         }
 
         public List<IReading> ReadSensors()
