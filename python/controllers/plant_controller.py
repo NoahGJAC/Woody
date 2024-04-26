@@ -2,7 +2,7 @@
 
 from time import sleep
 from ..actuators.plant.fan import FanController
-from ..actuators.plant.light import LightController
+#from ..actuators.plant.light import LightController
 from ..actuators.actuators import ACommand, IActuator
 from .device_controllers import IDeviceController
 from ..sensors.sensors import AReading, ISensor
@@ -114,7 +114,12 @@ class PlantController(IDeviceController):
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
-                print(reading)
+                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
+                    temperature, humidity = reading.value
+                    print("temperature: {:.2f} C".format(temperature))
+                    print("humidity: {:.2f} %".format(humidity))
+                else:     
+                    print(reading)
             print("\n")
             sleep(2)
 
