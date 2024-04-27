@@ -15,5 +15,6 @@ namespace Woody.Interfaces
     public interface IReading<T> : IReading
     {
         T Value { get; set; }
+        DateTime TimeStamp { get; set; }
     }
 }

@@ -58,7 +58,6 @@
 	  <Folder Include="Files\" />
 	  <Folder Include="Converters\" />
 	  <Folder Include="ViewModels\" />
-	  <Folder Include="Repos\" />
 	</ItemGroup>
 
 	<ItemGroup>
