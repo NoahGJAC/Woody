@@ -6,13 +6,8 @@
     xmlns:local="clr-namespace:Woody"
     xmlns:views="clr-namespace:Woody.Views">
 
-    <!-- FOR TESTING REMOVE WHEN DONE -->
-    <!--<ShellContent
-    Title="Security"
-    ContentTemplate="{DataTemplate views:SecurityPage}"
-    Route="SecurityPage"/>-->
+
     <!--landing page-->
-    
     <ShellContent
     Title="Login"
     ContentTemplate="{DataTemplate views:LoginPage}"
