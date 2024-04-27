@@ -6,18 +6,26 @@
     xmlns:local="clr-namespace:Woody"
     xmlns:views="clr-namespace:Woody.Views">
 
+    <!-- FOR TESTING REMOVE WHEN DONE -->
+    <!--<ShellContent
+    Title="Security"
+    ContentTemplate="{DataTemplate views:SecurityPage}"
+    Route="SecurityPage"/>-->
     <!--landing page-->
+    
     <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage"/>
+    Title="Login"
+    ContentTemplate="{DataTemplate views:LoginPage}"
+    Route="LoginPage"/>
+    
     
     <TabBar Route="Index">
         <Tab Title="Home" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
         </Tab>
         <Tab Title="Dashboard" Route="DashboardPage">
-            <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
         </Tab>
         <Tab Title="Map" Route="MapPage">
             <ShellContent ContentTemplate="{DataTemplate views:MapPage}" />
