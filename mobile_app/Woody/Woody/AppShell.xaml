@@ -6,6 +6,12 @@
     xmlns:local="clr-namespace:Woody"
     xmlns:views="clr-namespace:Woody.Views">
 
+    <!--landing page-->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"/>
+    
     <TabBar Route="Index">
         <Tab Title="Home" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
