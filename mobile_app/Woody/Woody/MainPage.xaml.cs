@@ -7,6 +7,7 @@
         public MainPage()
         {
             InitializeComponent();
+            Navigation.PushAsync(new Views.Map());
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.0-preview.3.10457" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -60,8 +61,14 @@
 	  <Folder Include="Converters\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="ViewModels\" />
-	  <Folder Include="Views\" />
 	  <Folder Include="Repos\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\Map.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+	
 
 </Project>
