@@ -1,4 +1,6 @@
-﻿namespace Woody
+﻿using Woody.Views;
+
+namespace Woody
 {
     public partial class App : Application
     {
