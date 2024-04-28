@@ -72,7 +72,7 @@
                                     FontFamily="OpenSansBold"
                                    HorizontalOptions="Center"/>
                             <Label 
-                                    Text="34"
+                                    Text="{Binding Roll.Value}"
                                     FontSize="Title"
                                     HorizontalOptions="Center"
                                     FontAttributes="Bold"
@@ -94,7 +94,7 @@
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
                             <Label 
-                                    Text="34"
+                                    Text="{Binding Pitch.Value}"
                                     FontSize="Title"
                                     HorizontalOptions="Center"
                                     FontAttributes="Bold"
@@ -115,7 +115,7 @@
                             <!--Uncomment and add into vibrating label when backend setup 
                             Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"-->
                             <Label 
-                                Text="NO VIBRATION DETECTED"
+                                Text="{Binding Vibration.Value, Converter={StaticResource BoolToVibrationConverter}}"
                                 FontSize="12"
                                 HorizontalOptions="Center"
                                 FontFamily="OpenSansBold"
@@ -134,7 +134,7 @@
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                             <Label Text="LAT" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                            <Label Text="45.399222" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="{Binding GPS.Value.Latitude.Value, StringFormat='{0:F6}'}" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                     </Frame>
 
@@ -142,7 +142,7 @@
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                             <Label Text="LONG" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                            <Label Text="-74.043186" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="{Binding GPS.Value.Longitude.Value, StringFormat='{0:F6}'}" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                     </Frame>
                 </HorizontalStackLayout>

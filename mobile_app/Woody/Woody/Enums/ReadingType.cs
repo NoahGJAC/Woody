@@ -22,7 +22,8 @@ namespace Woody.Enums
         LATITUDE,
         LONGITUDE,
         ALTITUDE,
-        GPS
+        GPS,
+        VIBRATION
 
     }
 }

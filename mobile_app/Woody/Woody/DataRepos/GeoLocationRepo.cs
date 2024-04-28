@@ -25,6 +25,7 @@ namespace Woody.DataRepos
         public IReading<double> Pitch { get; set; }
         public IReading<double> Roll { get; set; }
         public IReading<bool> BuzzerState { get; set; }
+        public IReading<bool> Vibration { get; set; }
         public IReading<GPSCoordinates> GPS { get; set; }
 
         public GeoLocationRepo()
@@ -48,6 +49,7 @@ namespace Woody.DataRepos
             Pitch = new SensorReading<double>(random.Next(-90,90), DateTime.Today,ReadingUnit.DEGREES,ReadingType.PITCH);
             Roll = new SensorReading<double>(random.Next(-90, 90), DateTime.Today,ReadingUnit.DEGREES,ReadingType.ROLL);
             BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Today,ReadingUnit.UNITLESS,ReadingType.BUZZER);
+            Vibration = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Today,ReadingUnit.UNITLESS,ReadingType.VIBRATION);
             GPS = new SensorReading<GPSCoordinates>(coordinates, DateTime.Today,ReadingUnit.UNITLESS,ReadingType.GPS);
             
         }
