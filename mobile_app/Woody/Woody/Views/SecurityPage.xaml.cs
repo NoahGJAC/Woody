@@ -1,12 +1,14 @@
 using LiveChartsCore.SkiaSharpView.Maui;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Woody.DataRepos;
 
 namespace Woody.Views;
 
 public partial class SecurityPage : ContentPage
 {
-	public ObservableCollection<CartesianChart> Charts { get; set; }
+
+    public ObservableCollection<CartesianChart> Charts { get; set; }
 	public SecurityPage()
 	{
 		InitializeComponent();
@@ -17,6 +19,8 @@ public partial class SecurityPage : ContentPage
 		};
 		// ChartNoise.BindingContext = ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels);
 		ChartCarousel.BindingContext = this;
-
+		IndicatorView.BindingContext = this;
     }
+
+
 }
