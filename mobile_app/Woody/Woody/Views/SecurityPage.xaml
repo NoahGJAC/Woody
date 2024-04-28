@@ -2,11 +2,32 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Woody.Views.SecurityPage"
+             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             BindingContext="App.SecurityRepo"
              Title="SecurityPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <StackLayout>
+        <!-- Carousel for Graphs -->
+        <CarouselView x:Name="ChartCarousel" ItemsSource="{Binding Charts}" Loop="True">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <charts:CartesianChart
+                       Series="{Binding Series}" 
+                       XAxes="{Binding XAxes}" 
+                       YAxes="{Binding YAxes}"
+                       Title="{Binding Title}" 
+                       ZoomMode="ZoomX"
+                       HeightRequest="280"/>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Carousel navigation-->
+        <IndicatorView x:Name="IndicatorView" Count="{Binding Charts.Count}" Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" HorizontalOptions="Center"/>
+
+        <!-- Indicators -->
+        <Label Text="{Binding DoorLockStatus}" />
+        <Label Text="{Binding DoorOpenClosedStatus}" />
+        <Label Text="{Binding MotionDetected}" />
+        <Label Text="{Binding SecurityBuzzerStatus}" />
+    </StackLayout>
 </ContentPage>
