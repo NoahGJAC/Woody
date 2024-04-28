@@ -5,7 +5,7 @@
              xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              xmlns:converter="clr-namespace:Woody.Converters"
              BindingContext="App.SecurityRepo"
-             Title="SecurityPage">
+             Title="">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:BoolToLockUnlockConverter x:Key="BoolToLockUnlockConverter"/>
@@ -15,83 +15,127 @@
             <converter:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <StackLayout>
-        <!--  Carousel for Graphs  -->
-        <CarouselView
-            x:Name="ChartCarousel"
-            ItemsSource="{Binding Charts}"
-            Loop="True">
-            <CarouselView.ItemTemplate>
-                <DataTemplate>
-                    <charts:CartesianChart
-                        Title="{Binding Title}"
-                        HeightRequest="280"
-                        Series="{Binding Series}"
-                        XAxes="{Binding XAxes}"
-                        YAxes="{Binding YAxes}"
-                        ZoomMode="ZoomX" />
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
+    <ScrollView>
+        
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+            <Frame Margin="15,30,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="30">
+                <StackLayout>
+                    <!-- Header -->
+                    <HorizontalStackLayout>
+                        <Image
+                        Margin="5,0,0,0"
+                        HeightRequest="30"
+                        Source="warning.png"
+                        VerticalOptions="Center" />
+                        <Label
+                        Margin="15,0,0,0"
+                        FontFamily="OpenSansBold"
+                        FontSize="20"
+                        Text="Security Sensors" />
+                    </HorizontalStackLayout>
+                    <!--  Carousel for Graphs  -->
+                    <CarouselView
+                        x:Name="ChartCarousel"
+                        ItemsSource="{Binding Charts}"
+                        Loop="True">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <charts:CartesianChart
+                                    Title="{Binding Title}"
+                                    HeightRequest="280"
+                                    Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    ZoomMode="ZoomX" />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <!--  Carousel navigation  -->
+                    <IndicatorView
+                    x:Name="IndicatorView"
+                    Count="{Binding Charts.Count}"
+                    HorizontalOptions="Center"
+                    Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
+                </StackLayout>
+            </Frame>
 
-        <!--  Carousel navigation  -->
-        <IndicatorView
-            x:Name="IndicatorView"
-            Count="{Binding Charts.Count}"
-            HorizontalOptions="Center"
-            Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
 
+            <Frame Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="30">
+                <StackLayout Spacing="10" Padding="10">
+                    
+                    <!-- Header -->
+                    <HorizontalStackLayout>
+                        <Image
+                        Margin="5,0,0,0"
+                        HeightRequest="30"
+                        Source="warning.png"
+                        VerticalOptions="Center" />
+                        <Label
+                        Margin="15,0,0,0"
+                        FontFamily="OpenSansBold"
+                        FontSize="20"
+                        Text="Control Panel" />
+                    </HorizontalStackLayout>
+                    
+                    <!-- Buzzer -->
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="BUZZER" FontSize="12" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
+                        <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="OFF" Grid.Column="0" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
+                            <Switch x:Name="BuzzerSwitch" IsToggled="{Binding BuzzerState.Value}" Toggled="BuzzerSwitch_Toggled" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Label Text="ON" Grid.Column="2" FontFamily="OpenSansBold" HorizontalOptions="Start" VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
 
-        <StackLayout Spacing="10" Padding="10">
-            <!-- Buzzer -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="BUZZER" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="OFF" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Center" />
-                    <Switch x:Name="BuzzerSwitch" IsToggled="{Binding BuzzerState.Value}" Toggled="BuzzerSwitch_Toggled" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
-                    <Label Text="ON" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" />
-                </Grid>
-            </Grid>
+                    <!-- Motion Sensor -->
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="MOTION SENSOR" Grid.Column="0" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
+                        <Label Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}" Grid.Column="1" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
+                    </Grid>
 
-            <!-- Lock -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="DOOR LOCK" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                <Button Text="{Binding LockState.Value, Converter={StaticResource BoolToLockUnlockConverter}}"
-                Clicked="ButtonLock_Clicked" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" />
-            </Grid>
+                    <!-- Door -->
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="DOOR" Grid.Column="0" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
+                        <Label Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}" Grid.Column="1" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
+                    </Grid>
 
-            <!-- Door -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="DOOR" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                <Label Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" />
-            </Grid>
+                    
 
-            <!-- Motion Sensor -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="MOTION SENSOR" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                <Label Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" />
-            </Grid>
-        </StackLayout>
-    </StackLayout>
+                    <!-- Lock -->
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="DOOR LOCK" Grid.Column="0" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
+                        <Button Text="{Binding LockState.Value, Converter={StaticResource BoolToLockUnlockConverter}}"
+                            Clicked="ButtonLock_Clicked" Grid.Column="1" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" WidthRequest="90"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
