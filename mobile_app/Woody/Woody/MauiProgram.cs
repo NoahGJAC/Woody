@@ -1,6 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Handlers.Compatibility;
+using Microsoft.Maui.Controls.Platform.Compatibility;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+#if ANDROID
+using Android.OS;
+#endif
 
 namespace Woody
 {
@@ -21,7 +28,15 @@ namespace Woody
                     fonts.AddFont("OpenSans-Medium.ttf", "OpenSansMedium");
                     fonts.AddFont("OpenSans-ExtraBold.ttf", "OpenSansExtraBold");
                     fonts.AddFont("OpenSans-Light.ttf", "OpenSansLight");
-                });
+                })
+                .ConfigureMauiHandlers( 
+                handlers =>
+                {
+#if ANDROID
+                    handlers.AddHandler(typeof(Shell), typeof(CustomShellRenderer));
+#endif
+                }
+                );
 
 #if DEBUG
             builder.Logging.AddDebug();
@@ -30,5 +45,35 @@ namespace Woody
             return builder.Build();
         }
     }
+
+    // BUG FIX FOR TOP BAR SWIPING WORKING IMPROPERLY FOR ANDROID
+    // SOLUTION FOUND HERE: https://github.com/dotnet/maui/issues/10182#issuecomment-1879833309
+#if ANDROID
+
+    public class CustomShellRenderer : ShellRenderer
+    {
+        protected override IShellSectionRenderer CreateShellSectionRenderer(ShellSection shellSection)
+        {
+            return new CustomShellSectionRenderer(this);
+        }
+    }
+
+    public class CustomShellSectionRenderer : ShellSectionRenderer
+    {
+        public CustomShellSectionRenderer(IShellContext shellContext) : base(shellContext)
+        {
+        }
+
+        public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Bundle savedInstanceState)
+        {
+            var result =  base.OnCreateView(inflater, container, savedInstanceState);
+            SetViewPager2UserInputEnabled(false);
+            return result;
+        }
+        protected override void SetViewPager2UserInputEnabled(bool value)
+        {
+            base.SetViewPager2UserInputEnabled(false);
+        }
+    }
+#endif
 }
- 
