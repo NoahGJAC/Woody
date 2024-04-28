@@ -36,7 +36,7 @@ namespace Woody.DataRepos
                     MinLimit = 0,
                     MaxLimit = 100,
                     Name = noiseReadings[0].Unit.GetReadingUnitValue(),
-                    NameTextSize = 18
+                    NameTextSize = 14
                 }
             };
 
@@ -55,10 +55,10 @@ namespace Woody.DataRepos
 
             var labelVisual = new LabelVisual()
             {
-                Text = "Noise Levels",
+                Text = "Noise",
                 TextSize = 18,
                 Padding = new LiveChartsCore.Drawing.Padding(15),
-                Paint = new SolidColorPaint(SKColors.DarkSlateGray)
+                Paint = new SolidColorPaint(SKColors.Black),
             };
 
             var cartesianChart = new CartesianChart()
@@ -97,7 +97,8 @@ namespace Woody.DataRepos
                 // may need to tweak the max value
                 MaxLimit = 100000,
                 Name = luminosityReadings[0].Unit.GetReadingUnitValue(),
-                NameTextSize = 18
+                TextSize = 12,
+                NameTextSize = 14
 
             }
             };
@@ -115,10 +116,10 @@ namespace Woody.DataRepos
 
             var labelVisual = new LabelVisual()
             {
-                Text = "Luminosity Levels",
+                Text = "Luminosity",
                 TextSize = 18,
                 Padding = new LiveChartsCore.Drawing.Padding(15),
-                Paint = new SolidColorPaint(SKColors.DarkSlateGray)
+                Paint = new SolidColorPaint(SKColors.Black)
             };
 
             var cartesianChart = new CartesianChart()
