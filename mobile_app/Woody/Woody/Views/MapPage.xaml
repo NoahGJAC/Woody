@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:converters="clr-namespace:Woody.Converters"
              x:Class="Woody.Views.MapPage"
              Title="">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
         <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
             <x:Arguments>
@@ -105,50 +110,41 @@
                     <!--  Vibration  -->
                     <Frame BackgroundColor="{StaticResource LightWarningYellow}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            
+
+                            <!--Uncomment and add into vibrating label when backend setup 
+                            Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"-->
                             <Label 
-                                   Text="Vibration" 
-                                   FontSize="Small"
-                                   HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"/>
-                            <Label 
-                                    Text="True"
-                                    FontSize="Title"
-                                    HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"
-                                    FontAttributes="Bold"/>
-                            <Label 
-                                   Text="Boolean" 
-                                   FontSize="Small"
-                                   HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"/>
+                                Text="NO VIBRATION DETECTED"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                FontFamily="OpenSansBold"
+                                FontAttributes="Bold"
+                                LineBreakMode="WordWrap"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center"
+                                WidthRequest="70"/>
                         </VerticalStackLayout>
                     </Frame>
                 </HorizontalStackLayout>
 
                 <!-- Coordinates -->
-                <HorizontalStackLayout Spacing="7">
+                <HorizontalStackLayout Spacing="7" VerticalOptions="Center" HorizontalOptions="Center">
+                    <!-- Latitude -->
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label 
-                                    Text="45.399222487535"
-                                    FontSize="Small"
-                                    HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"
-                                    FontAttributes="Bold"/>
+                            <Label Text="LAT" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="45.399222" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- Longitude -->
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label 
-                                    Text="-74.04318606215"
-                                    FontSize="Small"
-                                    HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"
-                                    FontAttributes="Bold"/>
+                            <Label Text="LONG" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="-74.043186" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                     </Frame>
-
                 </HorizontalStackLayout>
 
             </StackLayout>

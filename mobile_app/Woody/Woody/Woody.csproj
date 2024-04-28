@@ -73,7 +73,6 @@
 	  <Folder Include="Models\" />
 	  <Folder Include="Files\" />
 	  <Folder Include="DataRepos\" />
-	  <Folder Include="Converters\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
