@@ -21,6 +21,11 @@ namespace Woody.DataRepos
 
         public List<IReading<int>> LuminosityLevels { get; set; }
 
+        public IReading<bool> DoorState { get; set; }
+        public IReading<bool> MotionState { get; set; }
+        public IReading<bool> BuzzerState { get; set; }
+        public IReading<bool> LockState { get; set; }
+
 
         public SecurityRepo()
         {
@@ -34,8 +39,14 @@ namespace Woody.DataRepos
         {
             NoiseLevels = new List<IReading<float>>();
             LuminosityLevels = new List<IReading<int>>();
-
+            
             Random random = new Random();
+
+            DoorState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR);
+            MotionState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.MOTION);
+            BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.BUZZER);
+            LockState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR_LOCK);
+
             DateTime day;
 
             for (int i = 0; i < sample_points; i++)

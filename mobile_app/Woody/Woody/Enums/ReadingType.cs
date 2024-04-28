@@ -15,6 +15,9 @@ namespace Woody.Enums
         HUMIDITY,
         TEMPERATURE,
         LUMINOSITY,
-        LOUDNESS
+        LOUDNESS,
+        DOOR,
+        DOOR_LOCK,
+        MOTION
     }
 }
