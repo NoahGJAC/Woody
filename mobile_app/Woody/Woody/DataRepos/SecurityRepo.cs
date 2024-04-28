@@ -43,7 +43,7 @@ namespace Woody.DataRepos
                 day = DateTime.Now.AddDays(-i);
 
                 // Generate random noise level
-                var noiseValue = (float)(random.NextDouble() * 1000);
+                var noiseValue = (float)(random.NextDouble() * 100);
                 var noiseReading = new SensorReading<float>(noiseValue, day, ReadingUnit.LOUDNESS, ReadingType.LOUDNESS);
                 NoiseLevels.Add(noiseReading);
 

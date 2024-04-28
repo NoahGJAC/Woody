@@ -1,10 +1,12 @@
 ﻿using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.VisualElements;
 using SkiaSharp;
 using System.Collections.ObjectModel;
+using Woody.Enums;
 using Woody.Interfaces;
 
 namespace Woody.DataRepos
@@ -32,7 +34,9 @@ namespace Woody.DataRepos
                 new Axis
                 {
                     MinLimit = 0,
-                    MaxLimit = 1000
+                    MaxLimit = 100,
+                    Name = noiseReadings[0].Unit.GetReadingUnitValue(),
+                    NameTextSize = 18
                 }
             };
 
@@ -42,6 +46,7 @@ namespace Woody.DataRepos
                      unit: TimeSpan.FromDays(1),
                     formatter: date => date.ToString("MM-dd")
              );
+            
 
             var xAxis = new Axis[]
             {
@@ -90,7 +95,10 @@ namespace Woody.DataRepos
             {
                 MinLimit = 0,
                 // may need to tweak the max value
-                MaxLimit = 100000
+                MaxLimit = 100000,
+                Name = luminosityReadings[0].Unit.GetReadingUnitValue(),
+                NameTextSize = 18
+
             }
             };
 
