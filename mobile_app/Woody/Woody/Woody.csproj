@@ -49,8 +49,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\OpenSans-Bold.ttf" />
+	  <None Remove="Resources\Fonts\OpenSans-ExtraBold.ttf" />
+	  <None Remove="Resources\Fonts\OpenSans-Light.ttf" />
+	  <None Remove="Resources\Fonts\OpenSans-Medium.ttf" />
 	  <None Remove="Resources\Images\dashboard.png" />
 	  <None Remove="Resources\Images\home (1).png" />
+	  <None Remove="Resources\Images\home (2).png" />
 	  <None Remove="Resources\Images\pie-chart.png" />
 	  <None Remove="Resources\Images\pin.png" />
 	  <None Remove="Resources\Images\task.png" />
