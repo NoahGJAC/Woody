@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              x:Class="Woody.Views.MapPage"
              Title="MapPage">
     <Grid>
         <VerticalStackLayout>
-            <Map HeightRequest="300"/>
+            <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
+                <x:Arguments>
+                    <MapSpan>
+                        <x:Arguments>
+                            <sensors:Location>
+                                <x:Arguments>
+                                    <x:Double>45.399222487535</x:Double>
+                                    <x:Double>-74.04318606215</x:Double>
+                                </x:Arguments>
+                            </sensors:Location>
+                            <x:Double>0.01</x:Double>
+                            <x:Double>0.01</x:Double>
+                        </x:Arguments>
+                    </MapSpan>
+                </x:Arguments>
+                <Map.Pins>
+                    <Pin Label="Container 1" Type="SavedPin">
+                        <Pin.Location>
+                            <sensors:Location>
+                                <x:Arguments>
+                                    <x:Double>45.399222487535</x:Double>
+                                    <x:Double>-74.04318606215</x:Double>
+                                </x:Arguments>
+                            </sensors:Location>
+                        </Pin.Location>
+                    </Pin>
+                </Map.Pins>
+            </Map>
             <!--  Container status  -->
             <!--  TODO: Make icons bigger  -->
             <Frame
                 BackgroundColor="Gray"
                 BorderColor="Transparent"
-                CornerRadius="40"
-                HeightRequest="300">
+                CornerRadius="40">
                 <StackLayout Margin="15,5,15,5" Spacing="15">
 
                     <!--  Header  -->
