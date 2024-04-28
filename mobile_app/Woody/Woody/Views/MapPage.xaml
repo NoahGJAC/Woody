@@ -130,7 +130,7 @@
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                             <Label 
-                                    Text="45.399222487535"
+                                    Text="{Binding GPS.Value.Latitude.Value, StringFormat='{0:F6}'}"
                                     FontSize="Small"
                                     HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"
@@ -141,7 +141,7 @@
                     <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                             <Label 
-                                    Text="-74.04318606215"
+                                    Text="{Binding GPS.Value.Longitude.Value, StringFormat='{0:F6}'}"
                                     FontSize="Small"
                                     HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"

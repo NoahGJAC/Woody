@@ -34,7 +34,7 @@ namespace Woody.DataRepos
             //for testing purposes
             AddTestData();
         }
-        private void AddTestData(int sample_points = 40)
+        private void AddTestData()
         {
             Random random = new Random();
 
@@ -49,6 +49,7 @@ namespace Woody.DataRepos
             Roll = new SensorReading<double>(random.Next(-90, 90), DateTime.Today,ReadingUnit.DEGREES,ReadingType.ROLL);
             BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Today,ReadingUnit.UNITLESS,ReadingType.BUZZER);
             GPS = new SensorReading<GPSCoordinates>(coordinates, DateTime.Today,ReadingUnit.UNITLESS,ReadingType.GPS);
+            
         }
     }
 }
