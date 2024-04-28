@@ -5,147 +5,153 @@
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              x:Class="Woody.Views.MapPage"
              Title="MapPage">
-    <Grid>
-        <VerticalStackLayout>
-            <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
-                <x:Arguments>
-                    <MapSpan>
-                        <x:Arguments>
-                            <sensors:Location>
-                                <x:Arguments>
-                                    <x:Double>45.399222487535</x:Double>
-                                    <x:Double>-74.04318606215</x:Double>
-                                </x:Arguments>
-                            </sensors:Location>
-                            <x:Double>0.01</x:Double>
-                            <x:Double>0.01</x:Double>
-                        </x:Arguments>
-                    </MapSpan>
-                </x:Arguments>
-                <Map.Pins>
-                    <Pin Label="Container 1" Type="SavedPin">
-                        <Pin.Location>
-                            <sensors:Location>
-                                <x:Arguments>
-                                    <x:Double>45.399222487535</x:Double>
-                                    <x:Double>-74.04318606215</x:Double>
-                                </x:Arguments>
-                            </sensors:Location>
-                        </Pin.Location>
-                    </Pin>
-                </Map.Pins>
-            </Map>
-            <!--  Container status  -->
-            <!--  TODO: Make icons bigger  -->
-            <Frame
-                BackgroundColor="Gray"
+
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
+        <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
+            <x:Arguments>
+                <MapSpan>
+                    <x:Arguments>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </MapSpan>
+            </x:Arguments>
+            <Map.Pins>
+                <Pin Label="Container 1" Type="SavedPin">
+                    <Pin.Location>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                    </Pin.Location>
+                </Pin>
+            </Map.Pins>
+        </Map>
+        <!--  Container status  -->
+        <!--  TODO: Make icons bigger  -->
+        <Frame
+                BackgroundColor="{StaticResource BackgroundAccent200}"
                 BorderColor="Transparent"
                 CornerRadius="40">
-                <StackLayout Margin="15,5,15,5" Spacing="15">
+            <StackLayout Margin="15,5,15,5">
 
-                    <!--  Header  -->
+                <!--  Header  -->
+                <HorizontalStackLayout Margin="0,0,0,15">
+                    <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="30"
+                            Source="warning.png"
+                            VerticalOptions="Center" />
                     <Label
-                        FontAttributes="Bold"
-                        FontFamily="OpenSansBold"
-                        FontSize="Large"
-                        Text="Nursery" />
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Large"
+                            Text="Nursery" />
+                </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="17" >
-                        <!--  Roll  -->
-                        <Frame BackgroundColor="LightGray" BorderColor="Transparent" CornerRadius="15">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label 
+                <HorizontalStackLayout Spacing="5" Margin="0,0,0,15" >
+                    <!--  Roll  -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
                                    Text="ROLL" 
                                    FontSize="Small"
                                     FontFamily="OpenSansBold"
                                    HorizontalOptions="Center"/>
-                                <Label 
+                            <Label 
                                     Text="34"
                                     FontSize="Title"
                                     HorizontalOptions="Center"
                                     FontAttributes="Bold"
                                     FontFamily="OpenSansBold"/>
-                                <Label 
+                            <Label 
                                    Text="Degrees" 
                                    FontSize="Small"
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                        <!--  Pitch  -->
-                        <Frame BackgroundColor="LightGray" BorderColor="Transparent" CornerRadius="15">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label 
+                    <!--  Pitch  -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
                                    Text="PITCH" 
                                    FontSize="Small"
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
-                                <Label 
+                            <Label 
                                     Text="34"
                                     FontSize="Title"
                                     HorizontalOptions="Center"
                                     FontAttributes="Bold"
                                     FontFamily="OpenSansBold"/>
-                                <Label 
+                            <Label 
                                    Text="Degrees" 
                                    FontSize="Small"
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                        <!--  Vibration  -->
-                        <Frame BackgroundColor="LightGray" BorderColor="Transparent" CornerRadius="15">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label 
+                    <!--  Vibration  -->
+                    <Frame BackgroundColor="{StaticResource LightWarningYellow}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
                                    Text="Vibration" 
                                    FontSize="Small"
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
-                                <Label 
+                            <Label 
                                     Text="True"
                                     FontSize="Title"
                                     HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"
                                     FontAttributes="Bold"/>
-                                <Label 
+                            <Label 
                                    Text="Boolean" 
                                    FontSize="Small"
                                    HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
 
-                    <!-- Coordinates -->
-                    <HorizontalStackLayout Spacing="7">
-                        <Frame BackgroundColor="LightGray" BorderColor="Transparent" CornerRadius="15">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label 
+                <!-- Coordinates -->
+                <HorizontalStackLayout Spacing="7">
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
                                     Text="45.399222487535"
                                     FontSize="Small"
                                     HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"
                                     FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                        <Frame BackgroundColor="LightGray" BorderColor="Transparent" CornerRadius="15">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label 
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
                                     Text="-74.04318606215"
                                     FontSize="Small"
                                     HorizontalOptions="Center"
                                     FontFamily="OpenSansBold"
                                     FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
 
-                </StackLayout>
-            </Frame>
-        </VerticalStackLayout>
-    </Grid>
+            </StackLayout>
+        </Frame>
+    </VerticalStackLayout>
 </ContentPage>
