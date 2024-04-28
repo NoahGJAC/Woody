@@ -24,7 +24,7 @@
             Title="Dashboard"
             Icon="dashboard.png"
             Route="DashboardPage">
-            <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Overview" ContentTemplate="{DataTemplate views:DashboardPage}" />
             <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
         </Tab>
         <Tab

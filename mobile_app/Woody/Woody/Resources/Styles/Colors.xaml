@@ -11,7 +11,9 @@
     <Color x:Key="BackgroundAccent400">#F5F2FD</Color>
     <Color x:Key="BackgroundAccent500">#FAF9FE</Color>
     <Color x:Key="AllGoodGreen">#76AD4B</Color>
+    <Color x:Key="LightAllGoodGreen">#ABC477</Color>
     <Color x:Key="WarningYellow">#FFC048</Color>
+    <Color x:Key="LightWarningYellow">#FFD485</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>

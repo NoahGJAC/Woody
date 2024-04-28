@@ -58,6 +58,7 @@
 	  <None Remove="Resources\Images\home (2).png" />
 	  <None Remove="Resources\Images\pie-chart.png" />
 	  <None Remove="Resources\Images\pin.png" />
+	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\task.png" />
 	</ItemGroup>
 

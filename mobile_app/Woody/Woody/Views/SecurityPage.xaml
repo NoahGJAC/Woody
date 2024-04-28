@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Woody.Views.SecurityPage"
-             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             BindingContext="App.SecurityRepo"
-             Title="SecurityPage">
+<ContentPage
+    x:Class="Woody.Views.SecurityPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+    Title="Dashboard"
+    BindingContext="App.SecurityRepo">
     <StackLayout>
-        <!-- Carousel for Graphs -->
-        <CarouselView x:Name="ChartCarousel" ItemsSource="{Binding Charts}" Loop="True">
+        <!--  Carousel for Graphs  -->
+        <CarouselView
+            x:Name="ChartCarousel"
+            ItemsSource="{Binding Charts}"
+            Loop="True">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <charts:CartesianChart
-                       Series="{Binding Series}" 
-                       XAxes="{Binding XAxes}" 
-                       YAxes="{Binding YAxes}"
-                       Title="{Binding Title}" 
-                       ZoomMode="ZoomX"
-                       HeightRequest="280"/>
+                        Title="{Binding Title}"
+                        HeightRequest="280"
+                        Series="{Binding Series}"
+                        XAxes="{Binding XAxes}"
+                        YAxes="{Binding YAxes}"
+                        ZoomMode="ZoomX" />
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <!-- Carousel navigation-->
-        <IndicatorView x:Name="IndicatorView" Count="{Binding Charts.Count}" Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" HorizontalOptions="Center"/>
+        <!--  Carousel navigation  -->
+        <IndicatorView
+            x:Name="IndicatorView"
+            Count="{Binding Charts.Count}"
+            HorizontalOptions="Center"
+            Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
 
-        <!-- Indicators -->
+        <!--  Indicators  -->
         <Label Text="{Binding DoorLockStatus}" />
         <Label Text="{Binding DoorOpenClosedStatus}" />
         <Label Text="{Binding MotionDetected}" />
