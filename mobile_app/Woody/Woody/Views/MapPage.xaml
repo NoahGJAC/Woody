@@ -1,12 +1,153 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:converters="clr-namespace:Woody.Converters"
              x:Class="Woody.Views.MapPage"
-             Title="MapPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
+        <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
+            <x:Arguments>
+                <MapSpan>
+                    <x:Arguments>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </MapSpan>
+            </x:Arguments>
+            <Map.Pins>
+                <Pin Label="Container 1" Type="SavedPin">
+                    <Pin.Location>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                    </Pin.Location>
+                </Pin>
+            </Map.Pins>
+        </Map>
+        <!--  Container status  -->
+        <!--  TODO: Make icons bigger  -->
+        <Frame
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BorderColor="Transparent"
+                CornerRadius="40">
+            <StackLayout Margin="15,5,15,5">
+
+                <!--  Header  -->
+                <HorizontalStackLayout Margin="0,0,0,15">
+                    <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="30"
+                            Source="warning.png"
+                            VerticalOptions="Center" />
+                    <Label
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Large"
+                            Text="Nursery" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="5" Margin="0,0,0,15" >
+                    <!--  Roll  -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
+                                   Text="ROLL" 
+                                   FontSize="Small"
+                                    FontFamily="OpenSansBold"
+                                   HorizontalOptions="Center"/>
+                            <Label 
+                                    Text="34"
+                                    FontSize="Title"
+                                    HorizontalOptions="Center"
+                                    FontAttributes="Bold"
+                                    FontFamily="OpenSansBold"/>
+                            <Label 
+                                   Text="Degrees" 
+                                   FontSize="Small"
+                                   HorizontalOptions="Center"
+                                    FontFamily="OpenSansBold"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!--  Pitch  -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label 
+                                   Text="PITCH" 
+                                   FontSize="Small"
+                                   HorizontalOptions="Center"
+                                    FontFamily="OpenSansBold"/>
+                            <Label 
+                                    Text="34"
+                                    FontSize="Title"
+                                    HorizontalOptions="Center"
+                                    FontAttributes="Bold"
+                                    FontFamily="OpenSansBold"/>
+                            <Label 
+                                   Text="Degrees" 
+                                   FontSize="Small"
+                                   HorizontalOptions="Center"
+                                    FontFamily="OpenSansBold"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!--  Vibration  -->
+                    <Frame BackgroundColor="{StaticResource LightWarningYellow}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            
+
+                            <!--Uncomment and add into vibrating label when backend setup 
+                            Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"-->
+                            <Label 
+                                Text="NO VIBRATION DETECTED"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                FontFamily="OpenSansBold"
+                                FontAttributes="Bold"
+                                LineBreakMode="WordWrap"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center"
+                                WidthRequest="70"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+                <!-- Coordinates -->
+                <HorizontalStackLayout Spacing="7" VerticalOptions="Center" HorizontalOptions="Center">
+                    <!-- Latitude -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="LAT" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="45.399222" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Longitude -->
+                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="LONG" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                            <Label Text="-74.043186" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+            </StackLayout>
+        </Frame>
     </VerticalStackLayout>
 </ContentPage>
