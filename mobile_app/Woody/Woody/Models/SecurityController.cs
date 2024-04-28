@@ -16,6 +16,11 @@ namespace Woody.Models
 
         public List<IActuator> Actuators { get; private set; }
 
+        public string DoorLockState { get; set; }
+        public string DoorOpenClosedState { get; set; }
+        public string MotionState { get; set; }
+        public string SecurityBuzzerState { get; set; }
+
         // Don't think the models should have methods like this idk..
         public void ControlActuators(List<ICommand> commands)
         {

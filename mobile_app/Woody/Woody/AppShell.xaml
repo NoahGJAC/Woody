@@ -4,20 +4,24 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Woody"
-    xmlns:views="clr-namespace:Woody.Views">
+    xmlns:views="clr-namespace:Woody.Views"
+    FlyoutBehavior="Disabled">
+
 
     <!--landing page-->
     <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage"/>
+    Title="Login"
+    ContentTemplate="{DataTemplate views:LoginPage}"
+    Route="LoginPage"/>
+    
     
     <TabBar Route="Index">
         <Tab Title="Home" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
         </Tab>
         <Tab Title="Dashboard" Route="DashboardPage">
-            <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
         </Tab>
         <Tab Title="Map" Route="MapPage">
             <ShellContent ContentTemplate="{DataTemplate views:MapPage}" />
