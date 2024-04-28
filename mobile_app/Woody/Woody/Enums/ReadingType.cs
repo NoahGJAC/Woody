@@ -13,6 +13,11 @@ namespace Woody.Enums
         PITCH,
         ROLL,
         HUMIDITY,
-        TEMPERATURE
+        TEMPERATURE,
+        LUMINOSITY,
+        LOUDNESS,
+        DOOR,
+        DOOR_LOCK,
+        MOTION
     }
 }
