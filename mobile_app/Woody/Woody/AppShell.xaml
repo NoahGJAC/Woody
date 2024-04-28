@@ -7,29 +7,42 @@
     xmlns:views="clr-namespace:Woody.Views"
     FlyoutBehavior="Disabled">
 
-
-    <!--landing page-->
+    <!--  Landing page  -->
     <ShellContent
-    Title="Login"
-    ContentTemplate="{DataTemplate views:LoginPage}"
-    Route="LoginPage"/>
-    
-    
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
+
     <TabBar Route="Index">
-        <Tab Title="Home" Route="HomePage">
+        <Tab
+            Title="Home"
+            Icon="home.png"
+            Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
         </Tab>
-        <Tab Title="Dashboard" Route="DashboardPage">
-            <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
+        <Tab
+            Title="Dashboard"
+            Icon="dashboard.png"
+            Route="DashboardPage">
+            <ShellContent Title="Overview" ContentTemplate="{DataTemplate views:DashboardPage}" />
             <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
         </Tab>
-        <Tab Title="Map" Route="MapPage">
+        <Tab
+            Title="Map"
+            Icon="map.png"
+            Route="MapPage">
             <ShellContent ContentTemplate="{DataTemplate views:MapPage}" />
         </Tab>
-        <Tab Title="Analytics" Route="AnalyticsPage">
+        <Tab
+            Title="Analytics"
+            Icon="pie_chart.png"
+            Route="AnalyticsPage">
             <ShellContent ContentTemplate="{DataTemplate views:AnalyticsPage}" />
         </Tab>
-        <Tab Title="Tasks" Route="TasksPage">
+        <Tab
+            Title="Tasks"
+            Icon="task.png"
+            Route="TasksPage">
             <ShellContent ContentTemplate="{DataTemplate views:TasksPage}" />
         </Tab>
     </TabBar>

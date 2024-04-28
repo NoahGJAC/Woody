@@ -16,10 +16,14 @@ namespace Woody
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("OpenSans-Bold.ttf", "OpenSansBold");
+                    fonts.AddFont("OpenSans-Medium.ttf", "OpenSansMedium");
+                    fonts.AddFont("OpenSans-ExtraBold.ttf", "OpenSansExtraBold");
+                    fonts.AddFont("OpenSans-Light.ttf", "OpenSansLight");
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

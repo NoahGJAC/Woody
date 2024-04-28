@@ -16,23 +16,31 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <!-- Carousel for Graphs -->
-        <CarouselView x:Name="ChartCarousel" ItemsSource="{Binding Charts}" Loop="True">
+        <!--  Carousel for Graphs  -->
+        <CarouselView
+            x:Name="ChartCarousel"
+            ItemsSource="{Binding Charts}"
+            Loop="True">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <charts:CartesianChart
-                       Series="{Binding Series}" 
-                       XAxes="{Binding XAxes}" 
-                       YAxes="{Binding YAxes}"
-                       Title="{Binding Title}" 
-                       ZoomMode="ZoomX"
-                       HeightRequest="280"/>
+                        Title="{Binding Title}"
+                        HeightRequest="280"
+                        Series="{Binding Series}"
+                        XAxes="{Binding XAxes}"
+                        YAxes="{Binding YAxes}"
+                        ZoomMode="ZoomX" />
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <!-- Carousel navigation-->
-        <IndicatorView x:Name="IndicatorView" Count="{Binding Charts.Count}" Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" HorizontalOptions="Center"/>
+        <!--  Carousel navigation  -->
+        <IndicatorView
+            x:Name="IndicatorView"
+            Count="{Binding Charts.Count}"
+            HorizontalOptions="Center"
+            Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
+
 
         <StackLayout Spacing="10" Padding="10">
             <!-- Buzzer -->
@@ -85,6 +93,5 @@
                 <Label Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" />
             </Grid>
         </StackLayout>
-
     </StackLayout>
 </ContentPage>
