@@ -56,7 +56,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Files\" />
-	  <Folder Include="Converters\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 

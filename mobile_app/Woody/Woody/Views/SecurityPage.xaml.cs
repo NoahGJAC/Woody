@@ -7,7 +7,6 @@ namespace Woody.Views;
 
 public partial class SecurityPage : ContentPage
 {
-
     public ObservableCollection<CartesianChart> Charts { get; set; }
 	public SecurityPage()
 	{
@@ -17,10 +16,19 @@ public partial class SecurityPage : ContentPage
 			ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
 			ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
 		};
-		// ChartNoise.BindingContext = ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels);
+
+		BindingContext = App.SecurityRepo;
 		ChartCarousel.BindingContext = this;
 		IndicatorView.BindingContext = this;
     }
 
+    private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+		App.SecurityRepo.BuzzerState.Value = e.Value;
+    }
 
+    private void ButtonLock_Clicked(object sender, EventArgs e)
+    {
+		App.SecurityRepo.LockState.Value = !App.SecurityRepo.LockState.Value;
+    }
 }
