@@ -4,7 +4,7 @@
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              x:Class="Woody.Views.MapPage"
-             Title="MapPage">
+             Title="">
 
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
         <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
