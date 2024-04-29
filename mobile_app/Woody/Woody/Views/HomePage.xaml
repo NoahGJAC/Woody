@@ -2,39 +2,13 @@
 <ContentPage
     x:Class="Woody.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Home">
-    <Shell.TitleView>
-        <!--  User settings and profile  -->
-        <HorizontalStackLayout Margin="0,0,0,10" HorizontalOptions="End">
-            <ImageButton
-                x:Name="btn_user_options"
-                Margin="0,0,5,0"
-                HeightRequest="25"
-                HorizontalOptions="Center"
-                Source="settings.png"
-                VerticalOptions="Center" />
-            <Image
-                Aspect="AspectFill"
-                HeightRequest="45"
-                HorizontalOptions="CenterAndExpand"
-                Source="dummy_user.png"
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="45">
-                <Image.Clip>
-                    <EllipseGeometry
-                        Center="25,25"
-                        RadiusX="25"
-                        RadiusY="25" />
-                </Image.Clip>
-            </Image>
-        </HorizontalStackLayout>
-    </Shell.TitleView>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
     <ScrollView BackgroundColor="{StaticResource BackgroundAccent500}">
         <VerticalStackLayout>
             <!--  Greeting  -->
             <Label
-                Margin="30,30,0,0"
+                Margin="30,80,0,0"
                 FontAttributes="Bold"
                 FontFamily="OpenSansBold"
                 FontSize="Title"
@@ -43,7 +17,7 @@
                 Text="It's good to see you!"
                 VerticalOptions="Center" />
             <Label
-                Margin="30,0,0,50"
+                Margin="30,0,0,25"
                 CharacterSpacing="0.5"
                 FontAttributes="Bold"
                 FontFamily="OpenSansBold"
