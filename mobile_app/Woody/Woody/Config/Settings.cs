@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Woody.Config
 {
     public class Settings
-    {   
+    {
+        public string FirebaseAuthorizedDomain { get; set; }
+        public string FireBaseApiKey { get; set; }
     }
 }
