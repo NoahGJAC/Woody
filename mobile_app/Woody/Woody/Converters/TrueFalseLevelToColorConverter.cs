@@ -22,10 +22,10 @@ namespace Woody.Converters
 
             string sValue = value as string;
             if (sValue == "True")
-                return LightAllGoodGreen;
+                return LightWarningYellow;
 
 
-            return LightWarningYellow;
+            return LightAllGoodGreen;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
