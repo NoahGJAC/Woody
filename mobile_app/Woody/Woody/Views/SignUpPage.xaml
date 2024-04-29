@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model ="clr-namespace:Woody.Models"
              x:Class="Woody.Views.SignUpPage"
+             Shell.NavBarIsVisible="False"
              Title="SignUpPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout x:DataType="model:User">
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        
+        <!--Username-->
         <Label Text="userName" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
         <Frame>
-            <Entry x:Name="user_name" Placeholder="Username" PlaceholderColor="Black" BackgroundColor="Transparent"/>
+            <Entry x:Name="user_name" Placeholder="Username" Text="{Binding Username}" PlaceholderColor="Black" BackgroundColor="Transparent"/>
         </Frame>
+        <!--Email-->
         <Label Text="Email Address" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
         <Frame>
             <Entry x:Name="email" Placeholder="Email" PlaceholderColor="Black" BackgroundColor="Transparent"/>
         </Frame>
+        <!--Password-->
         <Label Text="Password" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
         <Frame>
             <Entry x:Name="password"  Placeholder="Password"  IsPassword="True"  PlaceholderColor="Black" BackgroundColor="Transparent"/>
         </Frame>
+        <Switch x:Name="toggleSwitch" Toggled="toggleSwitch_Toggled" Grid.Column="0"/>
+        <Label x:Name="toggleLabel" Grid.Column="1"/>
         <Button Clicked="Btn_SignUp_Clicked"/>
+        
     </VerticalStackLayout>
 </ContentPage>

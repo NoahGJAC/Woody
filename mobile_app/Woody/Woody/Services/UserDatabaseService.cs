@@ -40,9 +40,20 @@ namespace Woody.Services
 
         }
 
-        public Task<bool> AddItemsAsync(T item)
+        public async Task<bool> AddItemsAsync(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                item.Key = _realtimeDb.Post(item); //returns the unique key 
+
+                _realtimeDb.Put(item.Key, item); //Update the entry in the database to maintain the key
+                Items.Add(item); //place new item in the observable collection for UI display
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(false);
+            }
+            return await Task.FromResult(true);
         }
 
         public Task<bool> DeleteItemsAsync(T item)

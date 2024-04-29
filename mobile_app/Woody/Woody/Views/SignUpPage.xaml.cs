@@ -53,4 +53,9 @@ public partial class SignUpPage : ContentPage
             await DisplayAlert("Error", "Wrong username or password ", "OK");
         }
     }
+
+    private void toggleSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+        toggleLabel.Text = e.Value ? UserType.FARMER.ToString() : UserType.OWNER.ToString();
+    }
 }
