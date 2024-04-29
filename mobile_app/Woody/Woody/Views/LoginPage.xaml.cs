@@ -3,12 +3,19 @@ using Woody.Services;
 
 namespace Woody.Views;
 
+/// <summary>
+/// Represents a login page for the user.
+/// </summary>
 public partial class LoginPage : ContentPage
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LoginPage"/> class.
+    /// </summary>
 	public LoginPage()
 	{
 		InitializeComponent();
 	}
+
     private async void Btn_Login_Clicked(object sender, EventArgs e)
     {
         NetworkAccess accessType = Connectivity.Current.NetworkAccess;

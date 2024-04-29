@@ -5,9 +5,17 @@ using Woody.Services;
 
 namespace Woody.Views;
 
+/// <summary>
+/// Represents a Sign in page for the user.
+/// </summary>
 public partial class SignUpPage : ContentPage
 {
     Models.User user_ { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SignUpPage"/> class.
+    /// </summary>
+    /// <param name="item">The user model.</param>
 	public SignUpPage(Models.User item = null)
 	{
 		InitializeComponent();
