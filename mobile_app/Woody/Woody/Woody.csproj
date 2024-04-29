@@ -56,21 +56,38 @@
 	  <None Remove="Resources\Images\dashboard.png" />
 	  <None Remove="Resources\Images\home (1).png" />
 	  <None Remove="Resources\Images\home (2).png" />
+	  <None Remove="Resources\Images\latitude.png" />
+	  <None Remove="Resources\Images\lighting_bulb.png" />
+	  <None Remove="Resources\Images\longetitude.png" />
+	  <None Remove="Resources\Images\open_door.png" />
 	  <None Remove="Resources\Images\pie-chart.png" />
 	  <None Remove="Resources\Images\pin.png" />
+	  <None Remove="Resources\Images\radar.png" />
+	  <None Remove="Resources\Images\security.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\sprout.png" />
 	  <None Remove="Resources\Images\task.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
+		<PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.58" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Files\" />
 	  <Folder Include="ViewModels\" />
+	</ItemGroup>
+   
+	<ItemGroup>
+		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -93,11 +110,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingPage.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TasksPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
 
 </Project>

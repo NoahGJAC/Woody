@@ -11,10 +11,15 @@ namespace Woody.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "MOTION DETECTED" : "NO MOTION DETECTED";
+            return (bool)value ? "MOTION" : "NO MOTION";
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture
+        )
         {
             return value.ToString().ToUpper() == "MOTION DETECTED";
         }
