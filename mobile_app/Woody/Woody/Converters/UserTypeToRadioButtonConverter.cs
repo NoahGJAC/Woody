@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Woody.Converters
 {
-    internal class UserTypeToRadioButtonConverter : IValueConverter
+    public class UserTypeToRadioButtonConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
