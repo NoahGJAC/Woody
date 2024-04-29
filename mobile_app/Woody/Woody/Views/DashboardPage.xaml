@@ -16,15 +16,15 @@
 
             <!--  Plant Wellbeing Card  -->
             <Frame
-                Margin="15,30,15,0"
+                Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
-                CornerRadius="30">
+                CornerRadius="10">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
                             Margin="5,0,0,0"
-                            HeightRequest="30"
+                            HeightRequest="25"
                             Source="warning.png"
                             VerticalOptions="Center" />
                         <Label
@@ -38,7 +38,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource LightAllGoodGreen}"
+                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -56,7 +56,7 @@
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    FontSize="30"
+                                    FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="15.4" />
@@ -74,7 +74,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource LightWarningYellow}"
+                            BackgroundColor="{StaticResource ZestyGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -89,7 +89,7 @@
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    FontSize="30"
+                                    FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="83.7" />
@@ -106,7 +106,7 @@
                         <!--  Soil Moist.  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource LightAllGoodGreen}"
+                            BackgroundColor="{StaticResource MediumWarningYellow}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -121,7 +121,7 @@
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    FontSize="30"
+                                    FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="73.2" />
@@ -144,12 +144,13 @@
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
+
                 CornerRadius="30" BindingContext="App.SecurityRepo">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
                             Margin="5,0,0,0"
-                            HeightRequest="30"
+                            HeightRequest="25"
                             Source="check.png"
                             VerticalOptions="Center" />
                         <Label
@@ -241,32 +242,148 @@
                             </StackLayout>
                         </Frame>
                     </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
 
-                    <!--  Door States  -->
-                    <Frame
-                        Margin="0,10,0,0"
-                        BackgroundColor="{StaticResource LightAllGoodGreen}"
-                        CornerRadius="30"
-                        WidthRequest="350">
-                        <HorizontalStackLayout>
-                            <Label
-                                FontFamily="OpenSansSemiBold"
-                                FontSize="Header"
-                                Text="Door is " />
-                            <Label
-                                FontFamily="OpenSansBold"
-                                FontSize="Header"
-                                Text="closed " />
-                            <Label
-                                FontFamily="OpenSansSemiBold"
-                                FontSize="Header"
-                                Text="and " />
-                            <Label
-                                FontFamily="OpenSansBold"
-                                FontSize="Header"
-                                Text="locked." />
-                        </HorizontalStackLayout>
-                    </Frame>
+            <!--  Door States  -->
+            <Frame
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="open_door.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Door is "
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="closed "
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="and "
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="locked."
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!--  Location Card  -->
+            <Frame
+                Margin="15,15,15,15"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="check.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Location" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <!--  Roll  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout
+                                Padding="0"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="11.5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Roll Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="34.0°" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Vibration Levels  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Vibration" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Low" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Pitch  -->
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{StaticResource LightAllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Pitch Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="34.0°" />
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
                 </StackLayout>
             </Frame>
         </VerticalStackLayout>
