@@ -16,11 +16,11 @@ namespace Woody.DataRepos
         public event PropertyChangedEventHandler PropertyChanged;
         public GeoLocationController GeoLocationController { get; set; }
 
-        private ContainerDatabaseService<GeoLocationController> securityDb;
+        private ContainerDatabaseService<GeoLocationController> geoDb;
 
-        public ContainerDatabaseService<GeoLocationController> SecurityDb
+        public ContainerDatabaseService<GeoLocationController> GeoDb
         {
-            get { return securityDb; }
+            get { return geoDb; }
         }
         public IReading<double> Pitch { get; set; }
         public IReading<double> Roll { get; set; }
@@ -30,7 +30,7 @@ namespace Woody.DataRepos
 
         public GeoLocationRepo()
         {
-            securityDb = new ContainerDatabaseService<GeoLocationController>();
+            geoDb = new ContainerDatabaseService<GeoLocationController>();
 
             //for testing purposes
             AddTestData();
