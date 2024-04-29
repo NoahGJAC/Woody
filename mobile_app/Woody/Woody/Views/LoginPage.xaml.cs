@@ -68,4 +68,9 @@ public partial class LoginPage : ContentPage
             await DisplayAlert("Alert", ex.Message, "OK");
         }
     }
+
+    private async void Btn_SignUp_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SignUpPage");
+    }
 }
