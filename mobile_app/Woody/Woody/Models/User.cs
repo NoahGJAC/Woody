@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Woody.Enums;
+using Woody.Interfaces;
 
 namespace Woody.Models
 {
-    public class User
+    public class User : INotifyPropertyChanged, IHasUKey
     {
-        string Username { get; set; }
-        string Password { get; set; } //password for now, removed later
+        public string Key { get; set; }
+        public Guid Uid { get; set; }
+        public string Username { get; set; }
+        public UserType UserType { get; set; }
         public List<Container> Containers { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

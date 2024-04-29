@@ -10,6 +10,14 @@ namespace Woody
     {
         public static Settings Settings { get; private set; }
         private static SecurityRepo securityRepo;
+        private static UserRepo userRepo;
+        public static UserRepo UserRepo
+        {
+            get
+            {
+                return userRepo ??= new UserRepo();
+            }
+        }
         public static SecurityRepo SecurityRepo
         {
             get

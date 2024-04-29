@@ -10,5 +10,6 @@ namespace Woody.Config
     {
         public string FirebaseAuthorizedDomain { get; set; }
         public string FireBaseApiKey { get; set; }
+        public string FirebaseDatabaseUrl { get; set; }
     }
 }
