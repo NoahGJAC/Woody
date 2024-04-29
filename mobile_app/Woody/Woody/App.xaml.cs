@@ -9,7 +9,13 @@ namespace Woody
     public partial class App : Application
     {
         public static Settings Settings { get; private set; }
+        
         private static SecurityRepo securityRepo;
+        public static SecurityRepo SecurityRepo
+        {
+            get { return securityRepo ??= new SecurityRepo(); }
+        }
+        
         private static UserRepo userRepo;
         public static UserRepo UserRepo
         {
@@ -18,21 +24,13 @@ namespace Woody
                 return userRepo ??= new UserRepo();
             }
         }
-        public static SecurityRepo SecurityRepo
+        
+        private static PlantRepo plantRepo;
+        public static PlantRepo PlantRepo
         {
-            get
-            {
-                return securityRepo ??= new SecurityRepo();
-            }
+            get { return plantRepo ??= new PlantRepo(); }
         }
-        private static GeoLocationRepo geoLocationRepo;
-        public static GeoLocationRepo GeoLocationRepo
-        {
-            get
-            {
-                return geoLocationRepo ??= new GeoLocationRepo();
-            }
-        }
+
         public App()
         {
             InitializeComponent();

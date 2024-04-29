@@ -13,7 +13,37 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
-        <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
+        <Map
+            x:Name="map"
+            HeightRequest="365"
+            IsShowingUser="True"
+            MapType="Street">
+            <x:Arguments>
+                <MapSpan>
+                    <x:Arguments>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </MapSpan>
+            </x:Arguments>
+            <Map.Pins>
+                <Pin Label="Container 1" Type="SavedPin">
+                    <Pin.Location>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>45.399222487535</x:Double>
+                                <x:Double>-74.04318606215</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                    </Pin.Location>
+                </Pin>
+            </Map.Pins>
         </Map>
         <!--  Container status  -->
         <!--  TODO: Make icons bigger  -->
@@ -58,10 +88,10 @@
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    Text="{Binding Roll.Value}"
                                     FontSize="25"
                                     HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"/>
+                                    HorizontalTextAlignment="Center"
+                                    Text="34.0°" />
                             </StackLayout>
                         </Frame>
 
@@ -82,13 +112,17 @@
                                     HorizontalTextAlignment="Center"
                                     Text="Vibration" />
 
+                                <!--
+                                    Uncomment and add into vibrating label when backend setup
+                                    Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"
+                                -->
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="{Binding Vibration.Value, Converter={StaticResource BoolToVibrationConverter}}" />
+                                    Text="None" />
                             </StackLayout>
                         </Frame>
 
@@ -113,7 +147,7 @@
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="{Binding Pitch.Value}" />
+                                    Text="34.0°" />
                             </StackLayout>
                         </Frame>
                     </HorizontalStackLayout>
@@ -144,7 +178,7 @@
                             <Label
                                 FontFamily="OpenSansBold"
                                 FontSize="16"
-                                Text="{Binding GPS.Value.Latitude.Value, StringFormat='{0:F6}'}"
+                                Text="45.399222"
                                 VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Frame>
@@ -172,7 +206,7 @@
                             <Label
                                 FontFamily="OpenSansBold"
                                 FontSize="16"
-                                Text="{Binding GPS.Value.Longitude.Value, StringFormat='{0:F6}'}"
+                                Text="-74.043186"
                                 VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Frame>

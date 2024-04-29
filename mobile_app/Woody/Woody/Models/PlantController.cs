@@ -8,21 +8,19 @@ using Woody.Interfaces;
 
 namespace Woody.Models
 {
-    public class GeoLocationController : INotifyPropertyChanged, IController
+    public class PlantController : INotifyPropertyChanged, IController
     {
-        public List<ISensor> Sensors { get; private set; }
-
-        public List<IActuator> Actuators { get; private set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Don't think the models should have methods like this idk..
-        public void ControlActuators(List<ICommand> commands)
+        public List<ISensor> Sensors { get; private set; }
+        public List<IActuator> Actuators { get; private set; }
+
+        public List<IReading> ReadSensors()
         {
             throw new NotImplementedException();
         }
 
-        public List<IReading> ReadSensors()
+        public void ControlActuators(List<ICommand> commands)
         {
             throw new NotImplementedException();
         }
