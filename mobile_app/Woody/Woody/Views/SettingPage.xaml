@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Woody.Views.SettingPage"
-             Title="SettingPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             x:Class="Woody.Views.SettingPage">
+    <VerticalStackLayout BackgroundColor="{DynamicResource BackgroundAccent500}" Margin="0,150,0,0">
+        <HorizontalStackLayout Spacing="40">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="45"
+                HorizontalOptions="CenterAndExpand"
+                Source="dummy_user.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="45">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="25,25"
+                        RadiusX="25"
+                        RadiusY="25" />
+                </Image.Clip>
+            </Image>
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Margin="10,0,0,0" Text="Cindy Coulibaly" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
+                <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout>
+            <Frame 
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BorderColor="Transparent"
+                CornerRadius="25">
+                
+            </Frame>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
