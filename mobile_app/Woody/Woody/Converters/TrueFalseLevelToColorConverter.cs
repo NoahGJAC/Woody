@@ -16,7 +16,7 @@ namespace Woody.Converters
             List<string> WarningColorNames = new List<string> { "WarningYellow", "MediumWarningYellow", "LightWarningYellow" };
             Random random = new Random();
 
-            if (value == null || value as string == "True")
+            if (value == null || value as string == "False")
             {
                 //get random good color from array
                 Application.Current.Resources.TryGetValue(GoodColorNames[random.Next(0, GoodColorNames.Count)], out object colorResource);
