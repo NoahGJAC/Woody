@@ -56,9 +56,16 @@
 	  <None Remove="Resources\Images\dashboard.png" />
 	  <None Remove="Resources\Images\home (1).png" />
 	  <None Remove="Resources\Images\home (2).png" />
+	  <None Remove="Resources\Images\latitude.png" />
+	  <None Remove="Resources\Images\lighting_bulb.png" />
+	  <None Remove="Resources\Images\longetitude.png" />
+	  <None Remove="Resources\Images\open_door.png" />
 	  <None Remove="Resources\Images\pie-chart.png" />
 	  <None Remove="Resources\Images\pin.png" />
+	  <None Remove="Resources\Images\radar.png" />
+	  <None Remove="Resources\Images\security.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\sprout.png" />
 	  <None Remove="Resources\Images\task.png" />
 	</ItemGroup>
 
@@ -71,12 +78,18 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.58" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Models\" />
 	  <Folder Include="Files\" />
+	  <Folder Include="DataRepos\" />
+	  <Folder Include="Services\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
+   
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
@@ -107,5 +120,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
 
 </Project>
