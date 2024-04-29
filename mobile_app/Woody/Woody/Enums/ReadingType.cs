@@ -19,9 +19,11 @@ namespace Woody.Enums
         DOOR,
         DOOR_LOCK,
         MOTION,
-        FAN,
-        LIGHT,
-        SOIL_MOISTURE,
-        WATER_LEVEL
+        LATITUDE,
+        LONGITUDE,
+        ALTITUDE,
+        GPS,
+        VIBRATION
+
     }
 }
