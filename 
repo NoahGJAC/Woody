@@ -1,0 +1,476 @@
+[33mcommit 401fd10fc05500377a228b6d42fc39404cff6ed0[m[33m ([m[1;36mHEAD -> [m[1;32mmaui_dev[m[33m)[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Mon Apr 29 15:00:46 2024 -0400
+
+    Revert "attempt revert"
+    
+    This reverts commit d536ed8b2a0833515f3cf5d84aac76f985525bd7.
+
+[33mcommit d536ed8b2a0833515f3cf5d84aac76f985525bd7[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Mon Apr 29 14:55:11 2024 -0400
+
+    attempt revert
+
+[33mcommit a4b3f9e085eeff8f18fce5086a11d40ec68a5fd6[m[33m ([m[1;31morigin/maui_dev[m[33m)[m
+Merge: c2992c7 2350e16
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Mon Apr 29 13:33:05 2024 -0400
+
+    Merge pull request #117 from JAC-Final-Project-W24-6A6-6P3/cindy/ms3/maui_dev/geo_location
+    
+    Cindy/ms3/maui dev/geo location
+
+[33mcommit 2350e1669dff9e908dc0d92a6fe230b15f18b467[m[33m ([m[1;31morigin/cindy/ms3/maui_dev/geo_location[m[33m)[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Mon Apr 29 09:33:28 2024 -0400
+
+    Update GeoLocationRepo.cs
+    
+    added random latitude longitude randomization
+
+[33mcommit 025cf363879a57d787ef9480416bec51ab5d955e[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Mon Apr 29 09:15:37 2024 -0400
+
+    needs testing: map moves to pin
+
+[33mcommit df735c698a724b5d5bf412faecd1a07758ab2d68[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 20:18:55 2024 -0400
+
+    refactoring property names
+
+[33mcommit 41af88bf5e25825be2fb54081f75865d3c4d45a0[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 20:08:18 2024 -0400
+
+    did the most but need to figure out the mapSpan
+
+[33mcommit 4718158e65ea80e00899a8f5dbffd8a556d808e4[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 17:35:54 2024 -0400
+
+    most of it is in the binding
+    now just have to figure out the map binding location
+
+[33mcommit cb784c8bf8b27740bbddd7794df54d814ab605a6[m
+Merge: c33f782 2c68e21
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 17:21:59 2024 -0400
+
+    Merge branch 'cindy/ms3/maui_dev/map/view' of https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody into cindy/ms3/maui_dev/geo_location
+
+[33mcommit c33f78217ab14f818170f5d4e420d0c823ab2ceb[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 17:00:21 2024 -0400
+
+    started the binding
+
+[33mcommit 6899dcd1f18205c173af4fbfa45fc3fb1d2db9dc[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 16:25:15 2024 -0400
+
+    added the classes and the repos
+
+[33mcommit 2c68e210aefc5041d75d23e34330e2873e48c15f[m[33m ([m[1;31morigin/cindy/ms3/maui_dev/map/view[m[33m)[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 16:20:48 2024 -0400
+
+    add converter for vibration text, update ui
+
+[33mcommit d5a20d51ec0a658bd7fe32ae03405ed696cfc95e[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 15:32:01 2024 -0400
+
+    FIX: see desc
+    
+    swiping on a top tab bar page would change pages instead of  swiping the UI element on the page (i.e. map or carousel)
+
+[33mcommit 61448e09b454121fb5ffa126b0837f20447aec25[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 15:19:15 2024 -0400
+
+    add map navigation to dashboard
+
+[33mcommit 3b02bcacd7ee881723570080df171fafa91bc288[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 14:40:55 2024 -0400
+
+    fixed format
+
+[33mcommit 9d63a272d4ebeff7ba60bd0a4bce0290bfd52f36[m
+Merge: 30dc984 c2992c7
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 14:05:11 2024 -0400
+
+    Merge branch 'maui_dev' of https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody into cindy/ms3/maui_dev/map/view
+
+[33mcommit c2992c7c7bf6505f1aba3feb3d4040af1a4a1990[m
+Merge: 1b89530 6c7c129
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 14:01:27 2024 -0400
+
+    Merge pull request #111 from JAC-Final-Project-W24-6A6-6P3/noah/ms3/maui_dev/security
+    
+    Noah/ms3/maui dev/security
+
+[33mcommit 30dc98482ac3886cd1ee2da332f6085659dc6fed[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 13:48:16 2024 -0400
+
+    finished the MapPage without the binding just have to do so after the model is done
+
+[33mcommit c6806767fbcfe2560ed0b217c0a7cecaa5736ccb[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 13:04:23 2024 -0400
+
+    nursery thingy is done
+
+[33mcommit 0706e5fb42e7597bb888d09d016516d936f760c9[m
+Merge: e6b0def 1b89530
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 12:00:42 2024 -0400
+
+    Merge branch 'maui_dev' of https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody into cindy/ms3/maui_dev/map/view
+
+[33mcommit e6b0defad57f471ad7ed0920fed0f6a60837b36f[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 28 11:52:57 2024 -0400
+
+    the display of a map is done
+
+[33mcommit 6c7c129f6d42eb3515b82b0f00b179db15749094[m[33m ([m[1;31morigin/noah/ms3/maui_dev/security[m[33m, [m[1;31morigin/noah/maui_dev[m[33m)[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 10:19:38 2024 -0400
+
+    update ui for security, need to update frame icons
+
+[33mcommit a897a0639a3f7edb6a477f667fb859b98d513f8b[m
+Merge: d7f9b22 38666a6
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 09:35:25 2024 -0400
+
+    Merge pull request #110 from JAC-Final-Project-W24-6A6-6P3/diana/ms3/maui_dev/views
+    
+    Get Diana's UI implementations
+
+[33mcommit 38666a640975f292bde6573a319caee177f5c986[m
+Merge: 0624ab6 d7f9b22
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 09:34:54 2024 -0400
+
+    Merge branch 'noah/maui_dev' into diana/ms3/maui_dev/views
+
+[33mcommit d7f9b227c537e3bae498e3c951c44aadb712f512[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 28 09:32:24 2024 -0400
+
+    add all needed hardware readings in security page
+
+[33mcommit 0624ab6f577b42ae35bb4b5240179bceb926b30e[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Sun Apr 28 09:18:16 2024 -0400
+
+    init dashboard overview
+
+[33mcommit b8f92fe614318a6bdffb1f96458600228c624208[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Sun Apr 28 01:43:47 2024 -0400
+
+    finish home view
+
+[33mcommit a901e6a8f87fce6a4698e881ff6d79b92293f047[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Sat Apr 27 23:26:29 2024 -0400
+
+    add icons to navbar
+
+[33mcommit 76f7d85547db009bca8d35294dbf68a4aad6f718[m
+Merge: faa8b63 fc66ef7
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Sat Apr 27 21:57:55 2024 -0400
+
+    merge noah's changes
+
+[33mcommit faa8b638bb141790ac747acb4cea83a1faf2a4a7[m
+Author: Diana Karpeev <2059788@johnabbottcollege.net>
+Date:   Sat Apr 27 21:56:36 2024 -0400
+
+    init home page
+
+[33mcommit fc66ef787ed43a012e008670f913eddc7b7c0bfb[m
+Merge: 1b89530 c9f9af3
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sat Apr 27 21:55:31 2024 -0400
+
+    Merge pull request #109 from JAC-Final-Project-W24-6A6-6P3/noah/maui_dev
+    
+    merge noah's changes
+
+[33mcommit c9f9af3cb2b94bec811f109a06afa1f06e75498f[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 20:35:13 2024 -0400
+
+    improve security charts
+
+[33mcommit 94c69d640596d1c3216b8b6599199079effdef90[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 20:11:04 2024 -0400
+
+    improve carousel
+
+[33mcommit 0aacec7187eaad9807f5d759300f6076313584e1[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 19:24:40 2024 -0400
+
+    add chart carousel to security page w/ fake data
+
+[33mcommit e76b07a6faf4d56c2b0f6cf21a6fc55a78114c3f[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 16:53:57 2024 -0400
+
+    add LiveChartsCore.SkiaSharpView.Maui package
+
+[33mcommit d83a4b89569bed4fa87631048a84eb8803a0fe9d[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 16:35:51 2024 -0400
+
+    Update navigation for top tab bar in Dashboard
+
+[33mcommit 1b895303bf6f1d537c86d7c14c3ff00ce34068bc[m
+Merge: 25ee64a 140d743
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sat Apr 27 15:40:26 2024 -0400
+
+    Merge pull request #93 from JAC-Final-Project-W24-6A6-6P3/noah/maui_dev
+    
+    noah/maui_dev project setup
+
+[33mcommit 140d74320ac90e9597d1618cc887000d3704e23f[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 14:53:08 2024 -0400
+
+    add login/sign up page files
+
+[33mcommit 59b2b3ea225c9aeb502e3849e526d315358d9a33[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 11:13:28 2024 -0400
+
+    add empty views, add tab bar navigation
+    
+    wireframes ask for basic navigation but I decided to add tab bar now since it is a key part of our wireframes
+
+[33mcommit aa76da59b35698d3d3b32c9465d73bcf82f40e6a[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 10:00:47 2024 -0400
+
+    add empty db services, start Security DataRepo
+
+[33mcommit d72d40e1097cb8cec94f4bc2f66d7083aaf58bc6[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 09:16:11 2024 -0400
+
+    add basic user models
+
+[33mcommit 47c23588296cd82e3c1af1b985865e97b99f0e28[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sat Apr 27 09:02:40 2024 -0400
+
+    add container model
+    
+    users can have in theory zero to many containers, in reality it will most likely just be one container for simplicity.
+
+[33mcommit 2f95e4a31506dc2b9c649a2afbf833deb335e340[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Fri Apr 26 22:11:17 2024 -0400
+
+    started the map
+
+[33mcommit d149c151b7de4450225402e83e2bb28fd5d93536[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 20:41:03 2024 -0400
+
+    mock controller for testing
+
+[33mcommit aabc977a5aee4f63b913c97c1fce3fa2ada1992c[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 20:33:27 2024 -0400
+
+    update readingunit enum to have string values
+
+[33mcommit c299941fc34336f1af2fb063c51a3afe78a8b5e5[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 19:53:29 2024 -0400
+
+    Create SecurityController.cs
+
+[33mcommit 99956ea724781fdaaa95969a2af4c12f9b62f502[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 18:50:31 2024 -0400
+
+    add propertychanged.fody nuget package
+
+[33mcommit b15c5ac17a744d78e33b2a4473848fe5e6ff6fd3[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 18:02:20 2024 -0400
+
+    remove generics from IController, this may be insanely cursed
+
+[33mcommit 4b9082777d23f0435c4e2c520c719156db132458[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Thu Apr 25 17:50:28 2024 -0400
+
+    add interfaces and enums
+
+[33mcommit 25ee64ac512c44cb4cdd9f7bd6cc8c56a97d55ef[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Tue Apr 23 18:10:07 2024 -0400
+
+    add gitkeeps to folders
+
+[33mcommit c16fa3a48636a1c55abf65ce400f03cf153d4336[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Tue Apr 23 17:59:46 2024 -0400
+
+    added the folders
+
+[33mcommit 0bca31a4dbc05987ed399e74d321b172fc956883[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Mon Apr 22 10:32:21 2024 -0400
+
+    Initialize Maui app
+
+[33mcommit 21c7546380fc30a4fa6b512853898db448a9eed2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: d0d4b5a ac5f928
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Tue Apr 9 16:50:03 2024 -0400
+
+    Merge pull request #68 from JAC-Final-Project-W24-6A6-6P3/file_structure
+    
+    Simple file structure for project
+
+[33mcommit ac5f9288560e448d7c207cab2a27ffba4dc4749d[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Tue Apr 9 09:40:55 2024 -0400
+
+    Add .gitkeep to empty directories to track them
+
+[33mcommit 64c227e9a22c49c2e016d1227a6f83aed48061ca[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Tue Apr 9 09:36:37 2024 -0400
+
+    Add hierarchy folders and update .gitignore for python
+    
+    May need to update .gitignore for C# project in new maui_app folder
+
+[33mcommit d0d4b5a4417c06dc42f3075fc6ed885f2f26b6f9[m
+Merge: 564ce64 3c20795
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Mon Apr 8 08:39:48 2024 -0400
+
+    Merge pull request #67 from JAC-Final-Project-W24-6A6-6P3/readme_changes
+    
+    Update README.md to include epic links
+
+[33mcommit 564ce6472597f932de5f5970d62149fae5643aba[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Mon Apr 8 08:38:42 2024 -0400
+
+    Update TEAM_CONTRACT.md to include cloud
+
+[33mcommit 7d6a296ad205a67cd3894abd949a633730d659e2[m
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Sun Apr 7 18:04:18 2024 -0400
+
+    update pdf
+
+[33mcommit 5d32504d1e70f91d099b1d831cbe56d2f53c9e3b[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 7 16:24:57 2024 -0400
+
+    :ambulance:  update pdf - was corrupted
+
+[33mcommit 3c2079504ba1e37e0120eeb8ca533f8c761a3815[m
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Sun Apr 7 16:15:00 2024 -0400
+
+    Update README.md to include epic links
+
+[33mcommit 8ac32b7f0f51914cd86850b3704de488a921c660[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:06:49 2024 -0400
+
+    Rename Woody - Design Document.pdf to DESIGN_DOCUMENT.pdf
+
+[33mcommit aef67f226dcf2b63df6e24480c02a37b1111780d[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:05:29 2024 -0400
+
+    rename team-contract.md to TEAM_CONTRACT.md
+
+[33mcommit 69272a79630d3e71a791e360f9e0e78a57881949[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:03:52 2024 -0400
+
+    reorder again images in readme
+
+[33mcommit cd2a6d36193b29a1174e3da02298f4647b8daa91[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:02:41 2024 -0400
+
+    reorder images urgh in readme
+
+[33mcommit 97f81217ab03159e85d5ec59602a10f91803fbaa[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:01:55 2024 -0400
+
+    delete team contract template
+
+[33mcommit 8462f8abd7ad70f62431824b37c80e4bfd905df1[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 11:00:21 2024 -0400
+
+    add documents and names to readme
+
+[33mcommit cec0f6c9576c337a01162006968310c065810c4d[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 10:46:28 2024 -0400
+
+    add mockups to readme
+
+[33mcommit aa9e7dd2b504df3646b822ed584bbe4110defc7b[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 10:06:43 2024 -0400
+
+    add key features to readme
+
+[33mcommit b1f18c9549a4c420ff90f863c0cabfcafb9e05f4[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 09:50:45 2024 -0400
+
+    add introduction to readme
+
+[33mcommit 6da46220a9bf0b5461b4af63ff1b96ff0d6a8682[m
+Author: Diana Karpeev <dianakarpeeva@gmail.com>
+Date:   Sun Apr 7 07:56:54 2024 -0400
+
+    add design file
+
+[33mcommit 618c157feeb3215f662b4dbffadfddbebc56e645[m
+Merge: 42a15c5 c0c0015
+Author: Noah Groleau <98351050+NoahGJAC@users.noreply.github.com>
+Date:   Tue Mar 26 19:23:19 2024 -0400
+
+    Merge pull request #12 from JAC-Final-Project-W24-6A6-6P3/team-contract
+    
+    Team contract
+
+[33mcommit 42a15c5e56d00f4e7ce87e2aa1240ec3919ca061[m
+Merge: 310759b e1492aa
+Author: Cindy-Coulibaly <98350788+Cindy-Coulibaly@users.noreply.github.com>
+Date:   Mon Mar 25 15:46:49 2024 -0400
+
+    Merge pull request #1 from JAC-Final-Project-W24-6A6-6P3/NoahGJAC-custom-issue-templates
+    
+    Update issue templates to have a template for user stories
