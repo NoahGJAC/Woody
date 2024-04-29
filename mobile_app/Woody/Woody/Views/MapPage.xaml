@@ -55,8 +55,8 @@
                 <HorizontalStackLayout>
                     <Image
                         Margin="5,0,0,0"
-                        HeightRequest="25"
-                        Source="warning.png"
+                        HeightRequest="30"
+                        Source="sprout.png"
                         VerticalOptions="Center" />
                     <Label
                         Margin="15,0,0,0"
@@ -64,7 +64,7 @@
                         FontSize="20"
                         Text="Details" />
                 </HorizontalStackLayout>
-                <HorizontalStackLayout Margin="0,0,0,15" Spacing="5">
+                <HorizontalStackLayout Margin="0,0,0,10" Spacing="5">
                     <HorizontalStackLayout Margin="0,15,0,0">
                         <!--  Roll  -->
                         <Frame
@@ -166,7 +166,7 @@
                         <HorizontalStackLayout>
                             <!--  Latitude  -->
                             <Image
-                                HeightRequest="30"
+                                HeightRequest="25"
                                 HorizontalOptions="Center"
                                 Source="latitude.png"
                                 VerticalOptions="Center" />
@@ -194,7 +194,7 @@
                         <HorizontalStackLayout>
                             <!--  Longetitude  -->
                             <Image
-                                HeightRequest="30"
+                                HeightRequest="25"
                                 HorizontalOptions="Center"
                                 Source="longetitude.png"
                                 VerticalOptions="Center" />
