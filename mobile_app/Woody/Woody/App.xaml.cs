@@ -13,14 +13,6 @@ namespace Woody
                 return securityRepo ??= new SecurityRepo();
             }
         }
-        private static GeoLocationRepo geoLocationRepo;
-        public static GeoLocationRepo GeoLocationRepo
-        {
-            get
-            {
-                return geoLocationRepo ??= new GeoLocationRepo();
-            }
-        }
         public App()
         {
             InitializeComponent();
