@@ -8,8 +8,24 @@ using System.Threading.Tasks;
 
 namespace Woody.Converters
 {
+    /// <summary>
+    /// Converts a low/high level string value to a corresponding color resource and vice versa.
+    /// </summary>
+    /// <remarks>
+    /// This converter is useful for scenarios where a string value indicating a level (e.g., "Low" or "High")
+    /// needs to be represented as a color in UI elements, such as indicators for status levels.
+    /// </remarks>
     public class LowHighLevelToColorConverter : IValueConverter
     {
+
+        /// <summary>
+        /// Converts a low/high level string value to a corresponding color resource.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <param name="targetType">The type of the binding target property.</param>
+        /// <param name="parameter">The converter parameter to use.</param>
+        /// <param name="culture">The culture to use in the converter.</param>
+        /// <returns>Returns a color resource based on the input value. If the value is "Low", returns A good light; otherwise, returns a warning light. If the value is null, returns a good light.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Application.Current.Resources.TryGetValue("LightAllGoodGreen", out object colorResource);
@@ -29,6 +45,15 @@ namespace Woody.Converters
             return LightWarningYellow;
         }
 
+        /// <summary>
+        /// Converts a color resource back to a low/high level string value.
+        /// </summary>
+        /// <param name="value">The color resource to convert.</param>
+        /// <param name="targetType">The type of the binding target property.</param>
+        /// <param name="parameter">The converter parameter to use.</param>
+        /// <param name="culture">The culture to use in the converter.</param>
+        /// <returns>Not implemented.</returns>
+        /// <exception cref="NotImplementedException">Thrown when the method is called.</exception>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

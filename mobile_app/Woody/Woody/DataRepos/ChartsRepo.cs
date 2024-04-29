@@ -11,8 +11,17 @@ using Woody.Interfaces;
 
 namespace Woody.DataRepos
 {
+    /// <summary>
+    /// Provides methods to generate charts.
+    /// </summary>
     public static class ChartsRepo
     {
+
+        /// <summary>
+        /// Generates a noise chart from a list of noise readings.
+        /// </summary>
+        /// <param name="noiseReadings">The list of noise readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display noise readings.</returns>
         public static CartesianChart GetNoiseChart(List<IReading<float>> noiseReadings)
         {
             var dateTimePoints = noiseReadings.Select(x => new DateTimePoint(x.TimeStamp, x.Value)).ToList();
@@ -72,7 +81,11 @@ namespace Woody.DataRepos
             return cartesianChart;
         }
 
-
+        /// <summary>
+        /// Generates a luminosity chart from a list of luminosity readings.
+        /// </summary>
+        /// <param name="luminosityReadings">The list of luminosity readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display luminosity readings.</returns>
         public static CartesianChart GetLuminosityChart(List<IReading<int>> luminosityReadings)
         {
             var dateTimePoints = luminosityReadings.Select(x => new DateTimePoint(x.TimeStamp, x.Value)).ToList();
