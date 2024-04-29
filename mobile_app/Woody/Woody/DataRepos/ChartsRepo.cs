@@ -113,7 +113,6 @@ namespace Woody.DataRepos
             {
                 dateTimeAxis
             };
-
             var labelVisual = new LabelVisual()
             {
                 Text = "Luminosity",

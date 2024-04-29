@@ -2,7 +2,15 @@
 <ContentPage
     x:Class="Woody.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:Woody.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter"/>
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
 
@@ -132,10 +140,12 @@
 
             <!--  Security Card  -->
             <Frame
+                x:Name="FrameSecurity"
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
-                CornerRadius="10">
+
+                CornerRadius="30" BindingContext="App.SecurityRepo">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -154,7 +164,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource LightAllGoodGreen}"
+                            BackgroundColor="{Binding Source={x:Reference LabelLuminosity}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -169,13 +179,13 @@
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="Luminosity" />
-                                <Label
+                                <Label x:Name="LabelLuminosity"
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    FontSize="25"
+                                    FontSize="22"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Low" />
+                                    Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}" />
                             </StackLayout>
                         </Frame>
 
@@ -183,7 +193,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
+                            BackgroundColor="{Binding Source={x:Reference LabelNoise}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -196,19 +206,20 @@
                                     HorizontalTextAlignment="Center"
                                     Text="Noise Levels" />
                                 <Label
+                                    x:Name="LabelNoise"
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    FontSize="25"
+                                    FontSize="22"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Low" />
+                                    Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter }}" />
                             </StackLayout>
                         </Frame>
 
                         <!--  Motion  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -219,14 +230,15 @@
                                     FontSize="12"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Motion Levels" />
+                                    Text="Motion Detected" />
                                 <Label
+                                    x:Name="LabelMotion"
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Low" />
+                                    Text="{Binding MotionState.Value}" />
                             </StackLayout>
                         </Frame>
                     </HorizontalStackLayout>
