@@ -6,5 +6,6 @@ public partial class DashboardPage : ContentPage
 	{
 		InitializeComponent();
 		FrameSecurity.BindingContext = App.SecurityRepo;
+		FrameSecurityDoor.BindingContext = App.SecurityRepo;
 	}
 }

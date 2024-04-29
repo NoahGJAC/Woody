@@ -10,6 +10,8 @@
             <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
             <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
             <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter"/>
+            <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
+            <converter:BoolToUnlockedLockedConverter x:Key="BoolToUnlockedLockedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
@@ -248,13 +250,15 @@
 
             <!--  Door States  -->
             <Frame
+                x:Name="FrameSecurityDoor"
                 Margin="0,15,0,0"
                 Padding="20,0,0,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
                 CornerRadius="10"
                 HeightRequest="60"
-                WidthRequest="360">
+                WidthRequest="360"
+                BindingContext="App.SecurityRepo">
                 <HorizontalStackLayout>
                     <Image
                         HeightRequest="30"
@@ -270,17 +274,22 @@
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
-                        Text="closed "
+                        Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
-                        Text="and "
+                        Text=" and "
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
-                        Text="locked."
+                        Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="."
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
