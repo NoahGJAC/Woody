@@ -39,12 +39,12 @@
             Route="AnalyticsPage">
             <ShellContent ContentTemplate="{DataTemplate views:AnalyticsPage}" />
         </Tab>
-        <Tab
+        <!--<Tab
             Title="Tasks"
             Icon="task.png"
             Route="TasksPage">
             <ShellContent ContentTemplate="{DataTemplate views:TasksPage}" />
-        </Tab>
+        </Tab>-->
         <Tab
             Title="Settings"
             Icon="settings.png"
