@@ -13,16 +13,6 @@
     </ContentPage.Resources>
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
         <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
-            <x:Arguments>
-                <MapSpan x:Name="mapSpan">
-                    <x:Arguments>
-                        <sensors:Location Latitude="53.24586357201233" Longitude="-1.6171050737883514">
-                        </sensors:Location>
-                        <x:Double>0.01</x:Double>
-                        <x:Double>0.01</x:Double>
-                    </x:Arguments>
-                </MapSpan>
-            </x:Arguments>
         </Map>
         <!--  Container status  -->
         <!--  TODO: Make icons bigger  -->

@@ -24,7 +24,7 @@ public partial class MapPage : ContentPage
             Type = PinType.SavedPin,
             Location = location
         };
-        
+        map.MoveToRegion(new MapSpan(location,0.01, 0.01));
         map.Pins.Add(pin);
     }
 }
