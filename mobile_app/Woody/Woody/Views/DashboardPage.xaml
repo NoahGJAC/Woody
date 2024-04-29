@@ -9,6 +9,7 @@
             <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter"/>
             <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
             <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
+            <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
@@ -219,7 +220,7 @@
                         <!--  Motion  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
+                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource TrueFalseLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
