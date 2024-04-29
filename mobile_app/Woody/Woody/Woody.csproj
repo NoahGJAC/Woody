@@ -67,6 +67,7 @@
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\sprout.png" />
 	  <None Remove="Resources\Images\task.png" />
+	  <None Remove="Resources\Images\water_drop.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,7 +83,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Interfaces\" />
 	  <Folder Include="Files\" />
+	  <Folder Include="Services\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
    
@@ -120,5 +123,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\PlantPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 
 </Project>

@@ -1,3 +1,5 @@
+using Microsoft.Maui.Maps;
+
 namespace Woody.Views;
 
 public partial class MapPage : ContentPage

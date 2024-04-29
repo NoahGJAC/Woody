@@ -18,6 +18,10 @@ namespace Woody.Enums
         LOUDNESS,
         DOOR,
         DOOR_LOCK,
-        MOTION
+        MOTION,
+        FAN,
+        LIGHT,
+        SOIL_MOISTURE,
+        WATER_LEVEL
     }
 }
