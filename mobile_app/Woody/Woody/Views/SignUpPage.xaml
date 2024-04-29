@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model ="clr-namespace:Woody.Models"
+             xmlns:converter="clr-namespace:Woody.Converters"
+             xmlns:enum="clr-namespace:Woody.Enums"
+             x:Class="Woody.Views.SignUpPage"
+             Title="SignUpPage">
+    <VerticalStackLayout x:DataType="model:User">
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <!--Username-->
+        <Label Text="userName" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
+        <Frame>
+            <Entry x:Name="user_name" Placeholder="Username" Text="{Binding Username}" PlaceholderColor="Black" BackgroundColor="Transparent"/>
+        </Frame>
+        <!--Email-->
+        <Label Text="Email Address" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
+        <Frame>
+            <Entry x:Name="email" Placeholder="Email" PlaceholderColor="Black" BackgroundColor="Transparent"/>
+        </Frame>
+        <!--Password-->
+        <Label Text="Password" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
+        <Frame>
+            <Entry x:Name="password"  Placeholder="Password"  IsPassword="True"  PlaceholderColor="Black" BackgroundColor="Transparent"/>
+        </Frame>
+
+        <VerticalStackLayout>
+            <RadioButton Content="Farmer"
+                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
+            <RadioButton Content="Owner"
+                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
+        </VerticalStackLayout>
+        <Button Text="Sign Up" Clicked="Btn_SignUp_Clicked"/>
+        
+    </VerticalStackLayout>
+</ContentPage>
