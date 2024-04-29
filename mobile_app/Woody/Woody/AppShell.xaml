@@ -45,5 +45,11 @@
             Route="TasksPage">
             <ShellContent ContentTemplate="{DataTemplate views:TasksPage}" />
         </Tab>
+        <Tab
+            Title="Settings"
+            Icon="settings.png"
+            Route="SettingPage">
+                    <ShellContent ContentTemplate="{DataTemplate views:SettingPage}" />
+        </Tab>
     </TabBar>
 </Shell>
