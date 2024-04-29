@@ -41,8 +41,8 @@ namespace Woody.DataRepos
 
             var coordinates = new GPSCoordinates()
             {
-                Latitude = new SensorReading<double>(53.24586357201233, DateTime.Today, ReadingUnit.DEGREES, ReadingType.LATITUDE),
-                Longitude = new SensorReading<double>(-1.6171050737883514, DateTime.Today, ReadingUnit.DEGREES, ReadingType.LONGITUDE),
+                Latitude = new SensorReading<double>((random.NextDouble()*(90-(-90)))+(-90), DateTime.Today, ReadingUnit.DEGREES, ReadingType.LATITUDE),
+                Longitude = new SensorReading<double>((random.NextDouble() * (180 - (-180))) + (-180), DateTime.Today, ReadingUnit.DEGREES, ReadingType.LONGITUDE),
                 Altitude = new SensorReading<double>(4, DateTime.Today, ReadingUnit.DEGREES, ReadingType.ALTITUDE)
             };
 
