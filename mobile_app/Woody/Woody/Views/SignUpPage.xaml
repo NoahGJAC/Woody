@@ -6,6 +6,11 @@
              xmlns:enum="clr-namespace:Woody.Enums"
              x:Class="Woody.Views.SignUpPage"
              Title="SignUpPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:UserTypeToRadioButtonConverter x:Key="UserTypeToRadioButtonConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout x:DataType="model:User">
         <Label 
             Text="Welcome to .NET MAUI!"
@@ -29,9 +34,9 @@
 
         <VerticalStackLayout>
             <RadioButton Content="Farmer"
-                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
+                IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
             <RadioButton Content="Owner"
-                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
+                IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
         </VerticalStackLayout>
         <Button Text="Sign Up" Clicked="Btn_SignUp_Clicked"/>
         
