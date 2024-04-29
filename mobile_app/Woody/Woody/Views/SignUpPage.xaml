@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model ="clr-namespace:Woody.Models"
+             xmlns:converter="clr-namespace:Woody.Converters"
+             xmlns:enum="clr-namespace:Woody.Enums"
              x:Class="Woody.Views.SignUpPage"
-             Shell.NavBarIsVisible="False"
              Title="SignUpPage">
     <VerticalStackLayout x:DataType="model:User">
         <Label 
@@ -25,9 +26,14 @@
         <Frame>
             <Entry x:Name="password"  Placeholder="Password"  IsPassword="True"  PlaceholderColor="Black" BackgroundColor="Transparent"/>
         </Frame>
-        <Switch x:Name="toggleSwitch" Toggled="toggleSwitch_Toggled" Grid.Column="0"/>
-        <Label x:Name="toggleLabel" Grid.Column="1"/>
-        <Button Clicked="Btn_SignUp_Clicked"/>
+
+        <VerticalStackLayout>
+            <RadioButton Content="Farmer"
+                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
+            <RadioButton Content="Owner"
+                IsChecked="{Binding UserType, Converter={StaticResource UsertTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
+        </VerticalStackLayout>
+        <Button Text="Sign Up" Clicked="Btn_SignUp_Clicked"/>
         
     </VerticalStackLayout>
 </ContentPage>

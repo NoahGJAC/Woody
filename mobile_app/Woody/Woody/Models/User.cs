@@ -12,10 +12,9 @@ namespace Woody.Models
     public class User : INotifyPropertyChanged, IHasUKey
     {
         public string Key { get; set; }
-        public Guid Uid { get; set; }
+        public string Uid { get; set; }
         public string Username { get; set; }
         public UserType UserType { get; set; }
-        public List<Container> Containers { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

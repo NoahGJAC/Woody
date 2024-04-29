@@ -19,9 +19,10 @@ public partial class SignUpPage : ContentPage
         {
             user_ = new Models.User();
         }
+
 	}
 
-    private async Task Btn_SignUp_ClickedAsync(object sender, EventArgs e)
+    private async void Btn_SignUp_Clicked(object sender, EventArgs e)
     {
         NetworkAccess accessType = Connectivity.Current.NetworkAccess;
         if (accessType != NetworkAccess.Internet)
@@ -33,9 +34,16 @@ public partial class SignUpPage : ContentPage
         {
             //create the user
             var user = await AuthService.Client.CreateUserWithEmailAndPasswordAsync(email.Text, password.Text);
-
             // add the UID and the rest of the info here
             //user.User.Uid
+            AuthService.UserCreds = user;
+            user_.Uid = user.User.Uid;
+            await App.UserRepo.UserDb.AddItemsAsync(user_);
+            await DisplayAlert("Success", "Successfully sign up", "OK");
+            await Shell.Current.GoToAsync($"//Index");
+            await AuthService.Client.SignInWithEmailAndPasswordAsync(email.Text, password.Text);
+
+
 
 
 
@@ -52,10 +60,5 @@ public partial class SignUpPage : ContentPage
         {
             await DisplayAlert("Error", "Wrong username or password ", "OK");
         }
-    }
-
-    private void toggleSwitch_Toggled(object sender, ToggledEventArgs e)
-    {
-        toggleLabel.Text = e.Value ? UserType.FARMER.ToString() : UserType.OWNER.ToString();
     }
 }
