@@ -19,6 +19,7 @@ public partial class SignUpPage : ContentPage
         {
             user_ = new Models.User();
         }
+        BindingContext = user_;
 
 	}
 

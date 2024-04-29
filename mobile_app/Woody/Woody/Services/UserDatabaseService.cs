@@ -46,11 +46,12 @@ namespace Woody.Services
             {
                 item.Key = _realtimeDb.Post(item); //returns the unique key 
 
-                _realtimeDb.Put(item.Key, item); //Update the entry in the database to maintain the key
+                //_realtimeDb.Put(item.Key, item); //Update the entry in the database to maintain the key
                 Items.Add(item); //place new item in the observable collection for UI display
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return await Task.FromResult(false);
             }
             return await Task.FromResult(true);
