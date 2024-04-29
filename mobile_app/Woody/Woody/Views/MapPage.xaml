@@ -14,31 +14,15 @@
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
         <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
             <x:Arguments>
-                <MapSpan>
+                <MapSpan x:Name="mapSpan">
                     <x:Arguments>
-                        <sensors:Location>
-                            <x:Arguments>
-                                <x:Double>45.399222487535</x:Double>
-                                <x:Double>-74.04318606215</x:Double>
-                            </x:Arguments>
+                        <sensors:Location Latitude="53.24586357201233" Longitude="-1.6171050737883514">
                         </sensors:Location>
                         <x:Double>0.01</x:Double>
                         <x:Double>0.01</x:Double>
                     </x:Arguments>
                 </MapSpan>
             </x:Arguments>
-            <Map.Pins>
-                <Pin Label="Container 1" Type="SavedPin">
-                    <Pin.Location>
-                        <sensors:Location>
-                            <x:Arguments>
-                                <x:Double>45.399222487535</x:Double>
-                                <x:Double>-74.04318606215</x:Double>
-                            </x:Arguments>
-                        </sensors:Location>
-                    </Pin.Location>
-                </Pin>
-            </Map.Pins>
         </Map>
         <!--  Container status  -->
         <!--  TODO: Make icons bigger  -->
