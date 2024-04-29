@@ -12,6 +12,12 @@
         Title="Login"
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="LoginPage" />
+    <!-- Sign Up page-->
+    <ShellContent
+        Title="SignUp"
+        ContentTemplate="{DataTemplate views:SignUpPage}"
+        IsEnabled="False"
+        Route="SignUpPage" />
 
     <TabBar Route="Index">
         <Tab
