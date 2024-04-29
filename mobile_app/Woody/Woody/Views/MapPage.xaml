@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
-             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
-             xmlns:converters="clr-namespace:Woody.Converters"
-             x:Class="Woody.Views.MapPage"
-             Title="">
+<ContentPage
+    x:Class="Woody.Views.MapPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Woody.Converters"
+    xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+    Title="">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent500}">
-        <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+        <Map
+            x:Name="map"
+            HeightRequest="365"
+            IsShowingUser="True"
+            MapType="Street">
             <x:Arguments>
                 <MapSpan>
                     <x:Arguments>
@@ -43,111 +48,174 @@
         <!--  Container status  -->
         <!--  TODO: Make icons bigger  -->
         <Frame
-                BackgroundColor="{StaticResource BackgroundAccent200}"
-                BorderColor="Transparent"
-                CornerRadius="40">
-            <StackLayout Margin="15,5,15,5">
-
-                <!--  Header  -->
-                <HorizontalStackLayout Margin="0,0,0,15">
+            BackgroundColor="{StaticResource White}"
+            BorderColor="Transparent"
+            CornerRadius="40">
+            <StackLayout Margin="15,5,15,15">
+                <HorizontalStackLayout>
                     <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="warning.png"
-                            VerticalOptions="Center" />
+                        Margin="5,0,0,0"
+                        HeightRequest="25"
+                        Source="warning.png"
+                        VerticalOptions="Center" />
                     <Label
-                            FontAttributes="Bold"
-                            FontFamily="OpenSansBold"
-                            FontSize="Large"
-                            Text="Nursery" />
+                        Margin="15,0,0,0"
+                        FontFamily="OpenSansBold"
+                        FontSize="20"
+                        Text="Details" />
                 </HorizontalStackLayout>
-
-                <HorizontalStackLayout Spacing="5" Margin="0,0,0,15" >
-                    <!--  Roll  -->
-                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label 
-                                   Text="ROLL" 
-                                   FontSize="Small"
-                                    FontFamily="OpenSansBold"
-                                   HorizontalOptions="Center"/>
-                            <Label 
-                                    Text="34"
-                                    FontSize="Title"
-                                    HorizontalOptions="Center"
-                                    FontAttributes="Bold"
-                                    FontFamily="OpenSansBold"/>
-                            <Label 
-                                   Text="Degrees" 
-                                   FontSize="Small"
-                                   HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"/>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <!--  Pitch  -->
-                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label 
-                                   Text="PITCH" 
-                                   FontSize="Small"
-                                   HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"/>
-                            <Label 
-                                    Text="34"
-                                    FontSize="Title"
-                                    HorizontalOptions="Center"
-                                    FontAttributes="Bold"
-                                    FontFamily="OpenSansBold"/>
-                            <Label 
-                                   Text="Degrees" 
-                                   FontSize="Small"
-                                   HorizontalOptions="Center"
-                                    FontFamily="OpenSansBold"/>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <!--  Vibration  -->
-                    <Frame BackgroundColor="{StaticResource LightWarningYellow}" BorderColor="Transparent" CornerRadius="15">
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            
-
-                            <!--Uncomment and add into vibrating label when backend setup 
-                            Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"-->
-                            <Label 
-                                Text="NO VIBRATION DETECTED"
-                                FontSize="12"
+                <HorizontalStackLayout Margin="0,0,0,15" Spacing="5">
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <!--  Roll  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout
+                                Padding="0"
                                 HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="11.5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Roll Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="34.0°" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Vibration Levels  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Vibration" />
+
+                                <!--
+                                    Uncomment and add into vibrating label when backend setup
+                                    Text="{Binding whatever, Converter={StaticResource BoolToVibrationConverter}}"
+                                -->
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="None" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Pitch  -->
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{StaticResource LightAllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Pitch Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="34.0°" />
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout>
+                    <!--  Coordinates  -->
+                    <Frame
+                        Margin="0,0,0,0"
+                        Padding="20,0,0,0"
+                        BackgroundColor="{StaticResource MediumWarningYellow}"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="60"
+                        WidthRequest="325">
+                        <HorizontalStackLayout>
+                            <!--  Latitude  -->
+                            <Image
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                Source="latitude.png"
+                                VerticalOptions="Center" />
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="16"
+                                Text="Latitude is at "
+                                VerticalOptions="Center" />
+                            <Label
                                 FontFamily="OpenSansBold"
-                                FontAttributes="Bold"
-                                LineBreakMode="WordWrap"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center"
-                                WidthRequest="70"/>
-                        </VerticalStackLayout>
-                    </Frame>
-                </HorizontalStackLayout>
-
-                <!-- Coordinates -->
-                <HorizontalStackLayout Spacing="7" VerticalOptions="Center" HorizontalOptions="Center">
-                    <!-- Latitude -->
-                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label Text="LAT" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                            <Label Text="45.399222" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
+                                FontSize="16"
+                                Text="45.399222"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
                     </Frame>
 
-                    <!-- Longitude -->
-                    <Frame BackgroundColor="{StaticResource LightAllGoodGreen}" BorderColor="Transparent" CornerRadius="15">
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label Text="LONG" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                            <Label Text="-74.043186" FontSize="Small" HorizontalOptions="Center" FontFamily="OpenSansBold" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
+                    <Frame
+                        Margin="0,10,0,0"
+                        Padding="20,0,0,0"
+                        BackgroundColor="{StaticResource LightWarningYellow}"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="60"
+                        WidthRequest="325">
+                        <HorizontalStackLayout>
+                            <!--  Longetitude  -->
+                            <Image
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                Source="longetitude.png"
+                                VerticalOptions="Center" />
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="16"
+                                Text="Longetitude is at "
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="OpenSansBold"
+                                FontSize="16"
+                                Text="-74.043186"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
                     </Frame>
-                </HorizontalStackLayout>
-
+                </VerticalStackLayout>
             </StackLayout>
         </Frame>
+        <Rectangle
+            Margin="0,-100,0,0"
+            BackgroundColor="{StaticResource White}"
+            HeightRequest="5" />
     </VerticalStackLayout>
 </ContentPage>
