@@ -18,12 +18,6 @@ namespace Woody.Enums
         LOUDNESS,
         DOOR,
         DOOR_LOCK,
-        MOTION,
-        LATITUDE,
-        LONGITUDE,
-        ALTITUDE,
-        GPS,
-        VIBRATION
-
+        MOTION
     }
 }
