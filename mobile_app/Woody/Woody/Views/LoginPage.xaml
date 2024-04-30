@@ -1,66 +1,97 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Woody.Views.LoginPage"
-             Shell.NavBarIsVisible="False"
-             Title="LoginPage">
-    <VerticalStackLayout VerticalOptions="Center" Spacing="20" BackgroundColor="{StaticResource BackgroundAccent200}">
-        <Image Source="dotnet_bot.svg" 
-               VerticalOptions="CenterAndExpand" />
-        <Frame x:Name="LoginView" Margin="10" BackgroundColor="{StaticResource BackgroundAccent300}" BorderColor="Transparent" >
-            <VerticalStackLayout Spacing="10">
-                <Label Text="Welcome back!" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Title"/>
-                <Label Text="Email Address" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
-                <Frame>
-                    <Entry x:Name="user_name" Placeholder="Username" PlaceholderColor="Black" BackgroundColor="Transparent"/>
-                </Frame>
-                <Label Text="Password" FontAttributes="Bold" FontFamily="OpenSansBold" FontSize="Subtitle"/>
-                <Frame>
-                    <Entry x:Name="password"  Placeholder="Password"  IsPassword="True"  PlaceholderColor="Black" BackgroundColor="Transparent"/>
-                </Frame>
-                <Label x:Name="lblError" TextColor="red" Margin="0,5,0,0"/>
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                    <Button  
-                    Text="SIGN IN"
-                    FontSize="Medium"
-                    WidthRequest="150" 
-                    HorizontalOptions="Center" 
-                    BackgroundColor="Black"
-                    HeightRequest="50"
-                    Clicked="Btn_Login_Clicked" 
-                    SemanticProperties.Hint="Click to log in"/>
-                    <Button 
-                        Text="SIGN UP"
-                        FontSize="Medium"
-                        WidthRequest="150" 
-                        HeightRequest="50"
-                        HorizontalOptions="Center" 
-                        TextColor="Black"
-                        BackgroundColor="White"
-                        BorderColor="Black"
-                        Clicked="Btn_SignUp_Clicked"
-                        />
-                </HorizontalStackLayout>
+<ContentPage
+    x:Class="Woody.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="LoginPage"
+    Shell.NavBarIsVisible="False">
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent200}">
+        <StackLayout Margin="0,150,0,0" VerticalOptions="Center">
+            <Image
+                Margin="0,0,0,-8"
+                HeightRequest="100"
+                Source="seed.png" />
+            <Frame
+                x:Name="LoginView"
+                Margin="10,0,10,10"
+                BackgroundColor="{StaticResource BackgroundAccent300}"
+                BorderColor="Transparent">
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Title"
+                        Text="Welcome back!" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Email Address" />
+                    <Entry
+                        x:Name="user_name"
+                        BackgroundColor="Transparent"
+                        PlaceholderColor="Black" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Password" />
+                    <Entry
+                        x:Name="password"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        PlaceholderColor="Black" />
+                    <Label
+                        x:Name="lblError"
+                        Margin="0,5,0,0"
+                        TextColor="red" />
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="Btn_Login_Clicked"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Hint="Click to log in"
+                            Text="SIGN IN"
+                            WidthRequest="150" />
+                        <Button
+                            BackgroundColor="{StaticResource BackgroundAccent200}"
+                            BorderColor="Transparent"
+                            Clicked="Btn_SignUp_Clicked"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Text="SIGN UP"
+                            TextColor="Black"
+                            WidthRequest="150" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </StackLayout>
 
-            </VerticalStackLayout>
 
-        </Frame>
-
-        <Frame  x:Name="LogoutView" Margin="10" BackgroundColor="Transparent" IsVisible="false">
+        <Frame
+            x:Name="LogoutView"
+            Margin="10"
+            BackgroundColor="Transparent"
+            IsVisible="false">
 
             <StackLayout>
-                <Label Text="User Details:" FontAttributes="Bold"/>
-                <Label x:Name="lblUser" FontAttributes="Italic" Margin="0,5,0,30"/>
-                <Button Text="Log Out" 
-                        SemanticProperties.Hint="Click to log out"
-                        Clicked="Btn_Logout_Clicked" 
-                        VerticalOptions="CenterAndExpand" 
-                        BackgroundColor="Black"  />
-
+                <Label FontAttributes="Bold" Text="User Details:" />
+                <Label
+                    x:Name="lblUser"
+                    Margin="0,5,0,30"
+                    FontAttributes="Italic" />
+                <Button
+                    BackgroundColor="Black"
+                    Clicked="Btn_Logout_Clicked"
+                    SemanticProperties.Hint="Click to log out"
+                    Text="Log Out"
+                    VerticalOptions="CenterAndExpand" />
             </StackLayout>
-
         </Frame>
-
-
     </VerticalStackLayout>
 </ContentPage>
