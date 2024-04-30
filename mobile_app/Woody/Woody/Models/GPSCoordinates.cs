@@ -7,10 +7,24 @@ using Woody.Interfaces;
 
 namespace Woody.Models
 {
+    /// <summary>
+    /// Represents GPS coordinates including longitude, latitude, and altitude.
+    /// </summary>
     public class GPSCoordinates
     {
-       public IReading<double> Longitude { get; set; }
-       public IReading<double> Latitude { get; set; }
-       public IReading<double> Altitude { get; set; }
+        /// <summary>
+        /// Gets or sets the longitude reading.
+        /// </summary>
+        public IReading<double> Longitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the latitude reading.
+        /// </summary>
+        public IReading<double> Latitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the altitude reading.
+        /// </summary>
+        public IReading<double> Altitude { get; set; }
     }
 }

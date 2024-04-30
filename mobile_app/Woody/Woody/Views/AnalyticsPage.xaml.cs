@@ -4,6 +4,9 @@ using Woody.DataRepos;
 
 namespace Woody.Views;
 
+/// <summary>
+/// Represents an analytics page for historical data.
+/// </summary>
 public partial class AnalyticsPage : ContentPage
 {
     /// <summary>
@@ -15,6 +18,10 @@ public partial class AnalyticsPage : ContentPage
     /// Gets or sets the collection of plant Cartesian charts displayed on the page.
     /// </summary>
     public ObservableCollection<CartesianChart> ChartsPlant { get; set; }
+    
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnalyticsPage"/> class.
+    /// </summary>
     public AnalyticsPage()
 	{
 		InitializeComponent();
