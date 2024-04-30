@@ -20,7 +20,6 @@ public partial class SettingPage : ContentPage
     public SettingPage()
 	{
 		InitializeComponent();
-		BindingContext = App.UserRepo.User;
 		CheckUserBinding();
 
     }
