@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace Woody.Converters
 {
-    public class BoolToMotionDetectedConverter : IValueConverter
+    public class BoolToVibrationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "MOTION" : "NO MOTION";
+            if (value is bool booleanValue)
+            {
+                return booleanValue ? "True" : "False";
+            }
+            return "Unknown";
         }
 
         public object ConvertBack(
@@ -21,7 +25,7 @@ namespace Woody.Converters
             CultureInfo culture
         )
         {
-            return value.ToString().ToUpper() == "MOTION DETECTED";
+            throw new NotImplementedException();
         }
     }
 }
