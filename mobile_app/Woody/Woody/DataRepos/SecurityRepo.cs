@@ -6,28 +6,76 @@ using Woody.Services;
 
 namespace Woody.DataRepos
 {
+
+    /// <summary>
+    /// Represents a repository for security data, including noise levels, luminosity levels, and various sensor states.
+    /// </summary>
     public class SecurityRepo : INotifyPropertyChanged
     {
+
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets the security controller.
+        /// </summary>
         public SecurityController SecurityController { get; set; }
 
         private ContainerDatabaseService<SecurityController> securityDb;
 
+        /// <summary>
+        /// Gets the security database service.
+        /// </summary>
         public ContainerDatabaseService<SecurityController> SecurityDb
         {
             get { return securityDb; }
         }
-        public List<IReading<float>> NoiseLevels{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the list of noise level readings.
+        /// </summary>
+        public List<IReading<float>> NoiseLevels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of luminosity level readings.
+        /// </summary>
         public List<IReading<int>> LuminosityLevels { get; set; }
-        public IReading<int> LuminosityCurrent {  get; set; }
-        public IReading<float> NoiseCurrent {  get; set; }
-        public IReading<bool> DoorState { get; set; }
-        public IReading<bool> MotionState { get; set; }
-        public IReading<bool> BuzzerState { get; set; }
-        public IReading<bool> LockState { get; set; }
-        
 
+        /// <summary>
+        /// Gets or sets the current luminosity reading.
+        /// </summary>
+        public IReading<int> LuminosityCurrent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current noise reading.
+        /// </summary>
+        public IReading<float> NoiseCurrent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the door state reading.
+        /// </summary>
+        public IReading<bool> DoorState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the motion state reading.
+        /// </summary>
+        public IReading<bool> MotionState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the buzzer state reading.
+        /// </summary>
+        public IReading<bool> BuzzerState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lock state reading.
+        /// </summary>
+        public IReading<bool> LockState { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityRepo"/> class.
+        /// </summary>
         public SecurityRepo()
         {
             securityDb = new ContainerDatabaseService<SecurityController>();
@@ -36,6 +84,10 @@ namespace Woody.DataRepos
             AddTestData();
         }
 
+        /// <summary>
+        /// Adds test data for security properties.
+        /// </summary>
+        /// <param name="sample_points">The number of sample points to generate for noise and luminosity levels.</param>
         private void AddTestData(int sample_points = 40)
         {
             NoiseLevels = new List<IReading<float>>();

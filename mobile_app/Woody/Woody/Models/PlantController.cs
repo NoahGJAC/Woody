@@ -15,6 +15,13 @@ namespace Woody.Models
         public List<ISensor> Sensors { get; private set; }
         public List<IActuator> Actuators { get; private set; }
 
+        /// <summary>
+        /// Reads the sensors and returns a list of readings.
+        /// </summary>
+        /// <returns>A list of sensor readings.</returns>
+        /// <remarks>
+        /// This method is not implemented and should be overridden in derived classes.
+        /// </remarks>
         public List<IReading> ReadSensors()
         {
             throw new NotImplementedException();
