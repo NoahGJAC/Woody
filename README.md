@@ -37,6 +37,9 @@ Our goal is to make it easier than ever to grow your crops in a smarter way!
 
 *Color versions coming soon!*
 
+## UML Diagram
+![uml_diagram_png](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/assets/98351050/883014b8-6ccc-4fbf-8d28-5149908624c2)
+
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
