@@ -14,5 +14,7 @@ public partial class DashboardPage : ContentPage
 		FrameSecurity.BindingContext = App.SecurityRepo;
 		FrameSecurityDoor.BindingContext = App.SecurityRepo;
 		FrameLocation.BindingContext = App.GeoLocationRepo;
+		FramePlant.BindingContext = App.PlantRepo;
+
 	}
 }
