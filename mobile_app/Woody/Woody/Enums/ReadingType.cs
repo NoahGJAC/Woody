@@ -23,7 +23,10 @@ namespace Woody.Enums
         LONGITUDE,
         ALTITUDE,
         GPS,
-        VIBRATION
-
+        VIBRATION,
+        WATER_LEVEL,
+        FAN,
+        LIGHT,
+        SOIL_MOISTURE
     }
 }
