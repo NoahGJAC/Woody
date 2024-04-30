@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Woody.Views.AboutUsPage"
+             Title="">
+    <ScrollView BackgroundColor="{StaticResource BackgroundAccent500}">
+        <VerticalStackLayout>
+            <!--  About Us  -->
+            <Label
+            Margin="30,80,0,5"
+            FontAttributes="Bold"
+            FontFamily="OpenSansBold"
+            FontSize="Title"
+            HorizontalOptions="Start"
+            HorizontalTextAlignment="Start"
+            Text="About Us"
+            VerticalOptions="Center" />
+
+                <!-- Woody About Us -->
+            <Frame
+            BackgroundColor="{StaticResource BackgroundAccent300}"
+            BorderColor="Transparent"
+            CornerRadius="40"
+            HeightRequest="400">
+                <Label
+                Margin="30,-60,0,25"
+                CharacterSpacing="0.5"
+                FontAttributes="Bold"
+                FontFamily="OpenSansBold"
+                FontSize="Subtitle"
+                HorizontalOptions="Start"
+                HorizontalTextAlignment="Start"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                Text="Introducing Woody, your ultimate solution for upgrading basic container greenhouses into smart farms. &#10;&#10;With Woody, fleet owners can easily keep tabs on all their containers. Meanwhile, farm technicians can conveniently manage plants from outside the container."
+                TextColor="{StaticResource Gray500}"
+                />
+            </Frame>
+
+            <!--  Our Team  -->
+            <Frame
+            Margin="0,-100,0,0"
+            BackgroundColor="{StaticResource BackgroundAccent200}"
+            BorderColor="Transparent"
+            CornerRadius="40"
+            MinimumHeightRequest="375">
+                <StackLayout Margin="15,5,15,5">
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Large"
+                        Text="Our Team" />
+
+                    <Image
+                        Margin="5,0,0,0"
+                        HeightRequest="30"
+                        Source="sprout.png"
+                        VerticalOptions="Center"
+                        />
+                    </HorizontalStackLayout>
+                    <!-- Team Members -->
+                    <Frame
+                    Margin="0,34,0,0"
+                    BackgroundColor="White"
+                    CornerRadius="20"
+                    MinimumHeightRequest="100">
+                        <StackLayout VerticalOptions="Center">
+                            <HorizontalStackLayout Margin="0,0,0,7">
+                                <StackLayout Margin="15,0,0,0">
+                                    <Label
+                                    Margin="0,-1.5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="16"
+                                    Text="Noah Groleau"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Margin="0,7,0,7">
+                                <StackLayout Margin="15,0,0,0">
+                                    <Label
+                                    Margin="0,-1.5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="16"
+                                    Text="Katchenin Cindy Coulibaly"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Margin="0,7,0,7">
+
+                                <StackLayout Margin="15,0,0,0">
+                                    <Label
+                                    Margin="0,-1.5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="16"
+                                    Text="Diana Karpeev"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </HorizontalStackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+            <Rectangle
+            Margin="0,-100,0,0"
+            BackgroundColor="{StaticResource BackgroundAccent200}"
+            HeightRequest="5" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

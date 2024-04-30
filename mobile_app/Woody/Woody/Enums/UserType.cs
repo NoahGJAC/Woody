@@ -7,9 +7,19 @@ using System.Threading.Tasks;
 
 namespace Woody.Enums
 {
+    /// <summary>
+    /// Represents the types of users in the system.
+    /// </summary>
     public enum UserType
     {
-      OWNER,
-      FARMER
+        /// <summary>
+        /// Represents an owner user type.
+        /// </summary>
+        OWNER,
+
+        /// <summary>
+        /// Represents a farmer user type.
+        /// </summary>
+        FARMER
     }
 }

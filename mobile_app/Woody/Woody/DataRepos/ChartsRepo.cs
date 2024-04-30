@@ -11,9 +11,17 @@ using Woody.Interfaces;
 
 namespace Woody.DataRepos
 {
+    /// <summary>
+    /// Provides methods to generate charts.
+    /// </summary>
     public static class ChartsRepo
     {
         #region Plant Charts
+        /// <summary>
+        /// Generates a temperature chart from a list of temperature readings.
+        /// </summary>
+        /// <param name="temperatureReadings">The list of temperature readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display temperature readings.</returns>
         public static CartesianChart GetTemperatureChart(List<IReading<double>> temperatureReadings)
         {
             var dateTimePoints = temperatureReadings
@@ -70,6 +78,11 @@ namespace Woody.DataRepos
             return cartesianChart;
         }
 
+        /// <summary>
+        /// Generates a soil moisture chart from a list of soil moisture readings.
+        /// </summary>
+        /// <param name="soilMoistureReadings">The list of soil moisture readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display soil moisture readings.</returns>
         public static CartesianChart GetSoilMoistureChart(
             List<IReading<double>> soilMoistureReadings
         )
@@ -186,6 +199,11 @@ namespace Woody.DataRepos
         #endregion
 
         #region Security Charts
+        /// <summary>
+        /// Generates a noise chart from a list of noise readings.
+        /// </summary>
+        /// <param name="noiseReadings">The list of noise readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display noise readings.</returns>
         public static CartesianChart GetNoiseChart(List<IReading<float>> noiseReadings)
         {
             var dateTimePoints = noiseReadings
@@ -241,6 +259,11 @@ namespace Woody.DataRepos
             return cartesianChart;
         }
 
+        /// <summary>
+        /// Generates a luminosity chart from a list of luminosity readings.
+        /// </summary>
+        /// <param name="luminosityReadings">The list of luminosity readings to plot.</param>
+        /// <returns>A <see cref="CartesianChart"/> configured to display luminosity readings.</returns>
         public static CartesianChart GetLuminosityChart(List<IReading<int>> luminosityReadings)
         {
             var dateTimePoints = luminosityReadings
@@ -278,7 +301,6 @@ namespace Woody.DataRepos
             );
 
             var xAxis = new Axis[] { dateTimeAxis };
-
             var labelVisual = new LabelVisual()
             {
                 Text = "Luminosity",

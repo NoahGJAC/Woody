@@ -30,6 +30,29 @@ namespace Woody.DataRepos
         public IReading<bool> FanState { get; set; }
         public IReading<bool> LightState { get; set; }
 
+        public double AverageTemperature
+        {
+            get
+            {
+                return TemperatureLevels.Average(x => x.Value);
+            }
+        }
+        public IReading<double> CurrentHumidity
+        {
+            get
+            {
+                return HumidityLevels.Last();
+            }
+        }
+
+        public IReading<double> CurrentSoilMoisture
+        {
+            get
+            {
+                return SoilMoistureLevels.Last();
+            }
+        }
+
         public PlantRepo()
         {
             plantDb = new ContainerDatabaseService<PlantController>();

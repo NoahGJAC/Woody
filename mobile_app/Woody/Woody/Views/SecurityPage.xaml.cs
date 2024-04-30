@@ -5,10 +5,20 @@ using Woody.DataRepos;
 
 namespace Woody.Views;
 
+/// <summary>
+/// Represents a security page that displays charts and controls for security settings.
+/// </summary>
 public partial class SecurityPage : ContentPage
 {
+    /// <summary>
+    /// Gets or sets the collection of Cartesian charts displayed on the page.
+    /// </summary>
     public ObservableCollection<CartesianChart> Charts { get; set; }
-	public SecurityPage()
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SecurityPage"/> class.
+    /// </summary>
+    public SecurityPage()
 	{
 		InitializeComponent();
 		Charts = new ObservableCollection<CartesianChart>

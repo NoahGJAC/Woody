@@ -67,7 +67,6 @@
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\sprout.png" />
 	  <None Remove="Resources\Images\task.png" />
-	  <None Remove="Resources\Images\water_drop.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,6 +93,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AboutUsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AnalyticsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -107,6 +109,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PlantPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SecurityPage.xaml">
@@ -123,10 +128,5 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiXaml Update="Views\PlantPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
 
 </Project>
