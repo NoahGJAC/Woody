@@ -32,19 +32,14 @@ public partial class AnalyticsPage : ContentPage
             ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
         };
         
-        // TODO: REMOVE THIS
+
+
         ChartsPlant = new ObservableCollection<CartesianChart>
         {
-            ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
-            ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
+            ChartsRepo.GetTemperatureChart(App.PlantRepo.TemperatureLevels),
+            ChartsRepo.GetHumidityChart(App.PlantRepo.HumidityLevels),
+            ChartsRepo.GetSoilMoistureChart(App.PlantRepo.SoilMoistureLevels)
         };
-
-
-        //ChartsPlant = new ObservableCollection<CartesianChart>
-        //{
-        //    ChartsRepo.GetTemperatureChart(App.PlantRepo.TemperatureLevels),
-        //    ChartsRepo.GetHumidityChart(App.PlantRepo.HumidityLevels)
-        //};
         ChartCarouselSecurity.BindingContext = this;
         IndicatorViewSecurity.BindingContext = this;
 
