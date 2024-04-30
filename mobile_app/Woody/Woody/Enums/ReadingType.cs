@@ -84,6 +84,10 @@ namespace Woody.Enums
         /// <summary>
         /// Represents a reading type for vibration.
         /// </summary>
-        VIBRATION
+        VIBRATION,
+        WATER_LEVEL,
+        FAN,
+        LIGHT,
+        SOIL_MOISTURE
     }
 }
