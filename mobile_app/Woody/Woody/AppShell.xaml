@@ -75,5 +75,11 @@
             Route="TasksPage">
             <ShellContent ContentTemplate="{DataTemplate views:TasksPage}" />
         </Tab>
+        <Tab
+            Title="About Us"
+            Icon="heart.png"
+            Route="AboutUsPage">
+            <ShellContent ContentTemplate="{DataTemplate views:AboutUsPage}" />
+        </Tab>
     </TabBar>
 </Shell>
