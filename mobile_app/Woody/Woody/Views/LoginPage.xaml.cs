@@ -46,7 +46,7 @@ public partial class LoginPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", "Wrong username or password ", "OK");
+            await DisplayAlert("Error",ex.Message, "OK");
         }
 
     }

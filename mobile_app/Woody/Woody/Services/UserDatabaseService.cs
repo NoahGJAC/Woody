@@ -62,9 +62,21 @@ namespace Woody.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
         {
-            throw new NotImplementedException();
+            if (_realtimeDb.Database?.Count == 0)
+            {
+                try
+                {
+                    await _realtimeDb.PullAsync();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            IEnumerable<T> result = _realtimeDb.Once().Select(x => x.Object);
+            return await Task.FromResult(result);
         }
 
         public Task<bool> UpdateItemsAsync(T item)
