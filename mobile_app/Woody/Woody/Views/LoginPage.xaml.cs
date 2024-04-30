@@ -41,7 +41,6 @@ public partial class LoginPage : ContentPage
             //Update UI
             lblUser.Text = $"ID    : {user_name.Text}\n";
             LoginView.IsVisible = false;
-            LogoutView.IsVisible = true;
 
             lblError.Text = "Wrong Username or Password";
             await DisplayAlert("Success", "Successfully logged in", "OK");
