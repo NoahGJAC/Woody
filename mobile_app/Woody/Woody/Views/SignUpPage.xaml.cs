@@ -10,7 +10,7 @@ namespace Woody.Views;
 /// </summary>
 public partial class SignUpPage : ContentPage
 {
-    Models.User user_ { get; set; }
+    public Models.User user_ { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SignUpPage"/> class.
@@ -51,6 +51,7 @@ public partial class SignUpPage : ContentPage
             await DisplayAlert("Success", "Successfully sign up", "OK");
             await Shell.Current.GoToAsync($"//Index");
             await AuthService.Client.SignInWithEmailAndPasswordAsync(email.Text, password.Text);
+            App.UserRepo.User = user_;
 
 
 

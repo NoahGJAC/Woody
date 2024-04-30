@@ -86,14 +86,27 @@ namespace Woody.Services
             throw new NotImplementedException();
         }
 
+        
         /// <summary>
         /// Asynchronously retrieves items from the database.
         /// </summary>
         /// <param name="forceRefresh">A boolean indicating whether to force a refresh of the database.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the asynchronous operation, returning an <see cref="IEnumerable{T}"/> of items.</returns>
-        public Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
         {
-            throw new NotImplementedException();
+            if (_realtimeDb.Database?.Count == 0)
+            {
+                try
+                {
+                    await _realtimeDb.PullAsync();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            IEnumerable<T> result = _realtimeDb.Once().Select(x => x.Object);
+            return await Task.FromResult(result);
         }
 
         /// <summary>

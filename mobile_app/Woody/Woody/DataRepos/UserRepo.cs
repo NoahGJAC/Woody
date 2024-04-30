@@ -14,6 +14,7 @@ namespace Woody.DataRepos
     /// </summary>
     public class UserRepo
     {
+        public User User {  get; set; }
         private UserDatabaseService<User> userDb;
 
         /// <summary>
