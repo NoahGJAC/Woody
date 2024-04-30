@@ -6,7 +6,7 @@
     Title="LoginPage"
     Shell.NavBarIsVisible="False">
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent200}">
-        <StackLayout VerticalOptions="Center">
+        <StackLayout Margin="0,150,0,0" VerticalOptions="Center">
             <Image
                 Margin="0,0,0,-8"
                 HeightRequest="100"
@@ -57,7 +57,7 @@
                             Text="SIGN IN"
                             WidthRequest="150" />
                         <Button
-                            BackgroundColor="White"
+                            BackgroundColor="{StaticResource BackgroundAccent200}"
                             BorderColor="Transparent"
                             Clicked="Btn_SignUp_Clicked"
                             FontFamily="OpenSansBold"
@@ -91,11 +91,7 @@
                     SemanticProperties.Hint="Click to log out"
                     Text="Log Out"
                     VerticalOptions="CenterAndExpand" />
-
             </StackLayout>
-
         </Frame>
-
-
     </VerticalStackLayout>
 </ContentPage>
