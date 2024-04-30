@@ -36,6 +36,7 @@ namespace Woody.DataRepos
             get { return geoDb; }
         }
 
+
         /// <summary>
         /// Gets or sets the pitch reading.
         /// </summary>

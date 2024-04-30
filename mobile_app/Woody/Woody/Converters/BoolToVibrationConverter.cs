@@ -29,7 +29,7 @@ namespace Woody.Converters
         {
             if (value is bool booleanValue)
             {
-                return booleanValue ? "VIBRATION DETECTED" : "NO VIBRATION DETECTED";
+                return booleanValue ? "True" : "False";
             }
             return "Unknown";
         }

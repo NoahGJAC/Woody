@@ -301,7 +301,6 @@ namespace Woody.DataRepos
             );
 
             var xAxis = new Axis[] { dateTimeAxis };
-
             var labelVisual = new LabelVisual()
             {
                 Text = "Luminosity",

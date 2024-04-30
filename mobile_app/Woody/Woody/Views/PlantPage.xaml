@@ -94,7 +94,7 @@
             BackgroundColor="{StaticResource White}"
             BorderColor="Transparent"
             CornerRadius="10"
-            HeightRequest="135">
+            HeightRequest="110">
             <StackLayout>
                 <!--  Header  -->
                 <HorizontalStackLayout>
