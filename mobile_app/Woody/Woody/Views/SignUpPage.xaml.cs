@@ -3,6 +3,13 @@ using Firebase.Auth;
 using Woody.Enums;
 using Woody.Services;
 
+/*
+ * Team: Woody
+ * Section 1
+ * Winter 2024, 04/30/2024
+ * 420-6A6 App Dev III
+ */
+
 namespace Woody.Views;
 
 /// <summary>
@@ -10,6 +17,9 @@ namespace Woody.Views;
 /// </summary>
 public partial class SignUpPage : ContentPage
 {
+    /// <summary>
+    /// Gets or sets The user model.
+    /// </summary>
     public Models.User user_ { get; set; }
 
     /// <summary>

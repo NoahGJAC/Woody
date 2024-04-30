@@ -2,12 +2,22 @@ using Woody.Services;
 
 namespace Woody.Views;
 
+/*
+ * Team: Woody
+ * Section 1
+ * Winter 2024, 04/30/2024
+ * 420-6A6 App Dev III
+ */
+
+/// <summary>
+/// This class is the back of the setting page that display the user information and allow them to change theire info
+/// </summary>
 public partial class SettingPage : ContentPage
 {
-	/// <summary>
-	/// This class is the back of the setting page that display the user information and allow them to change theire info
-	/// </summary>
-	public SettingPage()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SettingPage"/> class.
+    /// </summary>
+    public SettingPage()
 	{
 		InitializeComponent();
 		BindingContext = App.UserRepo.User;

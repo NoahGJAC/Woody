@@ -6,6 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Woody.Interfaces;
 
+/*
+ * Team: Woody
+ * Section 1
+ * Winter 2024, 04/30/2024
+ * 420-6A6 App Dev III
+ */
 namespace Woody.Models
 {
     /// <summary>
@@ -32,9 +38,7 @@ namespace Woody.Models
         /// Controls the actuators based on the provided commands.
         /// </summary>
         /// <param name="commands">The list of commands to control the actuators.</param>
-        /// <remarks>
-        /// This method is currently empty and may need to be implemented in the future.
-        /// </remarks>
+        /// <exception cref="NotImplementedException">Thrown when called.</exception>
         public void ControlActuators(List<ICommand> commands)
         {
 
@@ -44,7 +48,7 @@ namespace Woody.Models
         /// Reads the sensors and returns a list of readings.
         /// </summary>
         /// <returns>A list of sensor readings.</returns>
-        /// <exception cref="NotImplementedException">Thrown when the method is not implemented.</exception>
+        /// <exception cref="NotImplementedException">Thrown when called.</exception>
         public List<IReading> ReadSensors()
         {
             throw new NotImplementedException();

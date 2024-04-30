@@ -3,12 +3,28 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Woody.DataRepos;
 
+/*
+ * Team: Woody
+ * Section 1
+ * Winter 2024, 04/30/2024
+ * 420-6A6 App Dev III
+ */
+
 namespace Woody.Views;
 
+/// <summary>
+/// Represents an plant page for plant data.
+/// </summary>
 public partial class PlantPage : ContentPage
 {
+    /// <summary>
+    /// Gets or sets the collection of Cartesian charts displayed on the page.
+    /// </summary>
     public ObservableCollection<CartesianChart> Charts { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AboutUsPage"/> class.
+    /// </summary>
     public PlantPage()
     {
         InitializeComponent();
