@@ -12,6 +12,12 @@
         Title="Login"
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="LoginPage" />
+    <!--  Sign Up page  -->
+    <ShellContent
+        Title="SignUp"
+        ContentTemplate="{DataTemplate views:SignUpPage}"
+        IsEnabled="False"
+        Route="SignUpPage" />
 
     <TabBar Route="Index">
         <Tab
@@ -25,8 +31,12 @@
             Icon="dashboard.png"
             Route="DashboardPage">
             <ShellContent Title="Overview" ContentTemplate="{DataTemplate views:DashboardPage}" />
+            <ShellContent Title="Plant" ContentTemplate="{DataTemplate views:PlantPage}" />
             <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
-            <ShellContent Title ="Geolocation" ContentTemplate="{DataTemplate views:MapPage}" Icon="map.png"/>
+            <ShellContent
+                Title="Geolocation"
+                ContentTemplate="{DataTemplate views:MapPage}"
+                Icon="map.png" />
         </Tab>
         <Tab
             Title="Analytics"

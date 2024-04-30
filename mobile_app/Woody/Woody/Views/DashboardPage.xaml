@@ -147,9 +147,9 @@
                 x:Name="FrameSecurity"
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
+                BindingContext="App.SecurityRepo"
                 BorderColor="Transparent"
-
-                CornerRadius="30" BindingContext="App.SecurityRepo">
+                CornerRadius="30">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -183,7 +183,8 @@
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="Luminosity" />
-                                <Label x:Name="LabelLuminosity"
+                                <Label
+                                    x:Name="LabelLuminosity"
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
                                     FontSize="22"
@@ -216,7 +217,7 @@
                                     FontSize="22"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter }}" />
+                                    Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}" />
                             </StackLayout>
                         </Frame>
 
