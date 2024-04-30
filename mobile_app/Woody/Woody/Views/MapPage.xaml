@@ -13,8 +13,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
-        <Map HeightRequest="400" x:Name="map" MapType="Street" IsShowingUser="True">
-        </Map>
+        <Map
+            x:Name="map"
+            HeightRequest="400"
+            IsShowingUser="True"
+            MapType="Street" />
         <!--  Container status  -->
         <!--  TODO: Make icons bigger  -->
         <Frame
@@ -58,10 +61,10 @@
                                 <Label
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
-                                    Text="{Binding Roll.Value}"
                                     FontSize="25"
                                     HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"/>
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Roll.Value}" />
                             </StackLayout>
                         </Frame>
 
@@ -158,7 +161,7 @@
                         HeightRequest="60"
                         WidthRequest="325">
                         <HorizontalStackLayout>
-                            <!--  Longetitude  -->
+                            <!--  Longitude  -->
                             <Image
                                 HeightRequest="25"
                                 HorizontalOptions="Center"
@@ -167,7 +170,7 @@
                             <Label
                                 Margin="10,0,0,0"
                                 FontSize="16"
-                                Text="Longetitude is at "
+                                Text="Longitude is at "
                                 VerticalOptions="Center" />
                             <Label
                                 FontFamily="OpenSansBold"
