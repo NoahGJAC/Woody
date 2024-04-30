@@ -28,21 +28,21 @@ namespace Woody.Converters
         /// <returns>Returns a color resource based on the input value. If the value is "Low", returns A good light; otherwise, returns a warning light. If the value is null, returns a good light.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Application.Current.Resources.TryGetValue("LightAllGoodGreen", out object colorResource);
-            Color LightAllGoodGreen = (Color)colorResource;
+            List<string> GoodColorNames = new List<string>{"AllGoodGreen", "MediumAllGoodGreen", "LightAllGoodGreen", "LimeGreen",
+            "ZestyGreen" };
+            List<string> WarningColorNames = new List<string> { "WarningYellow", "MediumWarningYellow", "LightWarningYellow" };
+            Random random = new Random();
 
-            Application.Current.Resources.TryGetValue("LightWarningYellow", out object colorResource2);
-            Color LightWarningYellow = (Color)colorResource2;
-
-            if (value == null)
-                return LightAllGoodGreen;
-
-            string sValue = value as string;
-            if (sValue == "Low")
-                return LightAllGoodGreen;
-
-
-            return LightWarningYellow;
+            if (value == null || value as string == "Low")
+            {
+                //get random good color from array
+                Application.Current.Resources.TryGetValue(GoodColorNames[random.Next(0, GoodColorNames.Count)], out object colorResource);
+                Color GoodColor = (Color)colorResource;
+                return GoodColor;
+            }
+            Application.Current.Resources.TryGetValue(WarningColorNames[random.Next(0, WarningColorNames.Count)], out object colorResource2);
+            Color WarningColor = (Color)colorResource2;
+            return WarningColor;
         }
 
         /// <summary>

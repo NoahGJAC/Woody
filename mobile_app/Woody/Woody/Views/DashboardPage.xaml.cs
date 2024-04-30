@@ -12,6 +12,7 @@ public partial class DashboardPage : ContentPage
 	{
 		InitializeComponent();
 		FrameSecurity.BindingContext = App.SecurityRepo;
-		// get app resource colors
+		FrameSecurityDoor.BindingContext = App.SecurityRepo;
+		FrameLocation.BindingContext = App.GeoLocationRepo;
 	}
 }

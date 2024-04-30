@@ -7,9 +7,12 @@
     Title="">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter" />
-            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter" />
-            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter" />
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter"/>
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
+            <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter"/>
+            <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
+            <converter:BoolToUnlockedLockedConverter x:Key="BoolToUnlockedLockedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
@@ -221,7 +224,7 @@
                         <!--  Motion  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
+                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource TrueFalseLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -249,13 +252,15 @@
 
             <!--  Door States  -->
             <Frame
+                x:Name="FrameSecurityDoor"
                 Margin="0,15,0,0"
                 Padding="20,0,0,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
                 CornerRadius="10"
                 HeightRequest="60"
-                WidthRequest="360">
+                WidthRequest="360"
+                BindingContext="App.SecurityRepo">
                 <HorizontalStackLayout>
                     <Image
                         HeightRequest="30"
@@ -271,27 +276,34 @@
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
-                        Text="closed "
+                        Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
-                        Text="and "
+                        Text=" and "
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
-                        Text="locked."
+                        Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="."
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
 
             <!--  Location Card  -->
             <Frame
+                x:Name="FrameLocation"
                 Margin="15,15,15,15"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
-                CornerRadius="10">
+                CornerRadius="10"
+                BindingContext="App.GeoLocationRepo">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -331,7 +343,8 @@
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="34.0°" />
+                                    Text="{Binding Roll.Value, StringFormat='{0:F1}°'}" />
+
                             </StackLayout>
                         </Frame>
 
@@ -339,7 +352,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
+                            BackgroundColor="{Binding Source={x:Reference LabelVibration}, Path=Text, Converter={StaticResource TrueFalseLevelToColorConverter}}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -352,12 +365,13 @@
                                     HorizontalTextAlignment="Center"
                                     Text="Vibration" />
                                 <Label
+                                    x:Name="LabelVibration"
                                     Margin="0,-5,0,0"
                                     FontFamily="OpenSansBold"
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Low" />
+                                    Text="{Binding Vibration.Value}" />
                             </StackLayout>
                         </Frame>
 
@@ -382,7 +396,7 @@
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="34.0°" />
+                                    Text="{Binding Pitch.Value, StringFormat='{0:F1}°'}" />
                             </StackLayout>
                         </Frame>
                     </HorizontalStackLayout>
