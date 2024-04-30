@@ -1,151 +1,303 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converter="clr-namespace:Woody.Converters"
-             x:Class="Woody.Views.SettingPage">
+<ContentPage
+    x:Class="Woody.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:Woody.Converters">
     <VerticalStackLayout BackgroundColor="{DynamicResource BackgroundAccent400}">
-        <HorizontalStackLayout Spacing="40" Margin="40,150,0,30">
+        <HorizontalStackLayout Margin="40,150,0,30" Spacing="40">
             <Image
                 Aspect="AspectFill"
-                HeightRequest="50"
-                HorizontalOptions="CenterAndExpand"
+                HeightRequest="70"
+                HorizontalOptions="Center"
                 Source="dummy_user.png"
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="50">
+                VerticalOptions="Center"
+                WidthRequest="70">
                 <Image.Clip>
                     <EllipseGeometry
-                        Center="25,25"
-                        RadiusX="25"
-                        RadiusY="25" />
+                        Center="35,35"
+                        RadiusX="35"
+                        RadiusY="35" />
                 </Image.Clip>
             </Image>
-            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <Label Margin="10,0,0,0" Text="{Binding Username}" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
-                <Label Margin="10,0,0,0" Text="{Binding UserType, Converter={StaticResource UserTypeToStringController}}" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>
+            <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                <Label
+                    Margin="-15,0,0,0"
+                    FontAttributes="Bold"
+                    FontFamily="OpenSansBold"
+                    FontSize="Large"
+                    Text="{Binding Username}"
+                    VerticalOptions="Center" />
+                <Label
+                    Margin="-15,0,0,0"
+                    FontAttributes="Italic"
+                    FontFamily="OpenSansBold"
+                    FontSize="Subtitle"
+                    Text="{Binding UserType, Converter={StaticResource UserTypeToStringController}}"
+                    VerticalOptions="Center" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
 
         <VerticalStackLayout>
-            <Frame 
-                Margin="0,15,0,0"
+            <Frame
+                Margin="0,5,0,0"
                 BackgroundColor="{StaticResource BackgroundAccent200}"
                 BorderColor="Transparent"
                 CornerRadius="25">
                 <VerticalStackLayout>
                     <!--<Label Margin="10,0,0,0" Text="Email Address" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
                     <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>-->
-                    <HorizontalStackLayout Margin="10,10,0,10" Spacing="15">
-                        <Button  BackgroundColor="{StaticResource BackgroundAccent300}" TextColor="Black" Text="CHANGE PASSWORD" 
-                                VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" CornerRadius="25"/>
-                        <Button  BackgroundColor="{StaticResource BackgroundAccent300}" TextColor="Black" Text="LOG OUT" 
-                                VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" CornerRadius="25"/>
-                     
+                    <HorizontalStackLayout Margin="5,15,5,10" Spacing="50">
+                        <Button
+                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            Text="CHANGE PASSWORD"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Button
+                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            Text="LOG OUT"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
                     </HorizontalStackLayout>
-                    <Button  BackgroundColor="{StaticResource BackgroundAccent300}" TextColor="Black" Text="CHNAGE PROFILE PICTURE" 
-                        VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" CornerRadius="25"/>
-
-                    <Frame Margin="0,15,0,0"
-                            BackgroundColor="{StaticResource BackgroundAccent100}"
-                            BorderColor="Transparent"
-                            CornerRadius="25">
-                        <VerticalStackLayout Spacing="10">
-                            
-                            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="50"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Source="bell.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="50">
-                                    <Image.Clip>
-                                        <EllipseGeometry
-                                            Center="25,25"
-                                            RadiusX="25"
-                                            RadiusY="25" />
-                                    </Image.Clip>
-                                </Image>
-                                <Label Margin="10,0,0,0" Text="Notification Center" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
-                            </HorizontalStackLayout>
-                            <!-- Treshold Alert -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Treshold Alert" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                                <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="OFF" Grid.Column="0" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
-                                    <Switch x:Name="ThesholdAlertSwitch"  Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <Label Text="ON" Grid.Column="2" FontFamily="OpenSansBold" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </Grid>
-                            <!-- Security Breach -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Security Breach" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                                <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="OFF" Grid.Column="0" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
-                                    <Switch x:Name="SecurityBreachSwitch"  Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <Label Text="ON" Grid.Column="2" FontFamily="OpenSansBold" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </Grid>
-                            <!-- Task reminder -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Task Reminder" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                                <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="OFF" Grid.Column="0" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
-                                    <Switch x:Name="TaskReminderSwitch"  Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <Label Text="ON" Grid.Column="2" FontFamily="OpenSansBold" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </Grid>
-
-                            <!-- Container Rotation -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Container Rotation" FontSize="Medium" FontAttributes="Bold" FontFamily="OpenSansBold" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                                <Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="OFF" Grid.Column="0" FontFamily="OpenSansBold" HorizontalOptions="End" VerticalOptions="Center" />
-                                    <Switch x:Name="ContainerRotationSwitch"  Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <Label Text="ON" Grid.Column="2" FontFamily="OpenSansBold" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </Grid>
-                        </VerticalStackLayout>
-
-                    </Frame>
-                    
+                    <Button
+                        Margin="5,0,5,0"
+                        BackgroundColor="{StaticResource BackgroundAccent300}"
+                        CornerRadius="15"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="CHANGE PROFILE PICTURE"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Rectangle
+                        Margin="0,0,0,0"
+                        BackgroundColor="{StaticResource BackgroundAccent200}"
+                        HeightRequest="30" />
                 </VerticalStackLayout>
-                
+            </Frame>
+            <Rectangle
+                Margin="0,-30,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                HeightRequest="40" />
+
+            <!--  Notification Center  -->
+            <Frame
+                Margin="0,-25,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent100}"
+                BorderColor="Transparent"
+                CornerRadius="40"
+                HeightRequest="500"
+                WidthRequest="400">
+                <VerticalStackLayout Margin="10,15,0,0">
+                    <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="50"
+                            HorizontalOptions="CenterAndExpand"
+                            Source="bell.png"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="50">
+                            <Image.Clip>
+                                <EllipseGeometry
+                                    Center="25,25"
+                                    RadiusX="20"
+                                    RadiusY="20" />
+                            </Image.Clip>
+                        </Image>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Large"
+                            Text="Notification Center"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!--  Treshold Alert  -->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Treshold Alert"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="ThesholdAlertSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Security Breach  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Security Breach"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="SecurityBreachSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Task reminder  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Task Reminder"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="TaskReminderSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Container Rotation  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Container Rotation"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="ContainerRotationSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+
             </Frame>
         </VerticalStackLayout>
     </VerticalStackLayout>
