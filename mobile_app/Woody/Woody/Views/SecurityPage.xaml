@@ -14,11 +14,84 @@
             <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
             <converter:BoolToMotionDetectedConverter x:Key="BoolToMotionDetectedConverter" />
             <converter:BoolToDoubleConverter x:Key="BoolToDoubleConverter" />
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter" />
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter" />
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
 
         <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+            <!--  Latest Graph Readings  -->
+            <Frame
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <!--  Header  -->
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="23"
+                            Source="lighting_bulb.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Latest Readings" />
+                    </HorizontalStackLayout>
+                    <!--  LUMINOSITY  -->
+                    <Grid Margin="15,-5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="LUMINOSITY"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Padding="0"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </Grid>
+
+                    <!--  NOISE  -->
+                    <Grid Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="NOISE"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Padding="0"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </Grid>
+                </StackLayout>
+
+            </Frame>
             <Frame
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
