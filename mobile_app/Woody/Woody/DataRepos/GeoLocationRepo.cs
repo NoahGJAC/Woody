@@ -68,6 +68,7 @@ namespace Woody.DataRepos
         /// </summary>
         public IReading<GPSCoordinates> GPS { get; set; }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GeoLocationRepo"/> class.
         /// </summary>
