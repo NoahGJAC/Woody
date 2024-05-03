@@ -50,14 +50,26 @@ namespace Woody.DataRepos
         public List<IReading<int>> LuminosityLevels { get; set; }
 
         /// <summary>
-        /// Gets or sets the current luminosity reading.
+        /// Gets the current luminosity reading.
         /// </summary>
-        public IReading<int> LuminosityCurrent { get; set; }
+        public IReading<int> LuminosityCurrent
+        {
+            get
+            {
+                return LuminosityLevels.Last();
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the current noise reading.
+        /// Gets the current noise reading.
         /// </summary>
-        public IReading<float> NoiseCurrent { get; set; }
+        public IReading<float> NoiseCurrent
+        {
+            get
+            {
+                return NoiseLevels.Last();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the door state reading.
@@ -98,15 +110,14 @@ namespace Woody.DataRepos
         {
             NoiseLevels = new List<IReading<float>>();
             LuminosityLevels = new List<IReading<int>>();
-            
+
             Random random = new Random();
 
             DoorState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR);
             MotionState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.MOTION);
             BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.BUZZER);
             LockState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR_LOCK);
-            LuminosityCurrent = new SensorReading<int>(random.Next(0, 1000),DateTime.Now, ReadingUnit.LUX, ReadingType.LUMINOSITY);
-            NoiseCurrent = new SensorReading<float>((float)random.NextDouble() * 100, DateTime.Now, ReadingUnit.LOUDNESS, ReadingType.LOUDNESS);
+
             DateTime day;
 
             for (int i = 0; i < sample_points; i++)

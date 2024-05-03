@@ -14,11 +14,92 @@
             <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
             <converter:BoolToMotionDetectedConverter x:Key="BoolToMotionDetectedConverter" />
             <converter:BoolToDoubleConverter x:Key="BoolToDoubleConverter" />
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter"/>
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
 
         <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+            <!-- Latest Graph Readings-->
+            <Frame Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <!--  Header  -->
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="23"
+                            Source="lighting_bulb.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Latest Readings" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0" HorizontalOptions="FillAndExpand"
+                                           VerticalOptions="FillAndExpand">
+
+                        <Grid Margin="15,0,0,0" HorizontalOptions="FillAndExpand"
+                                           VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                                 <!--  Luminosity  -->
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,10,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Text="LUMINOSITY"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                Grid.Row="0"  
+                                Grid.Column="1"
+                                x:Name="LabelLuminosity"
+                                Margin="0,-5,0,0"
+                                FontFamily="OpenSansBold"
+                                FontSize="22"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}" />
+                                
+                                <!--  Noise  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,10,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Text="NOISE"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.Row="1"
+                                    x:Name="LabelNoise"
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="22"
+                                    HorizontalOptions="End"
+                                    HorizontalTextAlignment="End"
+                                    Grid.Column="1"
+                                    Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}" />
+                        </Grid>
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
             <Frame
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
