@@ -40,4 +40,8 @@ public partial class MapPage : ContentPage
         map.MoveToRegion(new MapSpan(location,0.01, 0.01));
         map.Pins.Add(pin);
     }
+    private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+        App.SecurityRepo.BuzzerState.Value = e.Value;
+    }
 }
