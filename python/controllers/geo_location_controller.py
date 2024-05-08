@@ -16,41 +16,17 @@ import colorama
 class GeoLocationController(IDeviceController):
     """A class that represents a geolocation subsystem device controller."""
 
-    def __init__(self) -> None:
+    def __init__(
+            self,
+            sensors: list[ISensor],
+            actuators: list[IActuator]) -> None:
         """Initializes a GeoLocationController
+
+        Args:
+            sensors (list[ISensor]): The list of sensors to initialize.
+            actuators (list[IActuator]): The list of actuators to initialize.
         """
-        super().__init__()
-
-    def _initialize_actuators(self) -> list[IActuator]:
-        return [
-            BuzzerController(
-                gpio=None,
-                command_type=ACommand.Type.BUZZER_ON_OFF,
-                model='ReTerminal Buzzer',
-                reading_type=AReading.Type.BUZZER,
-                initial_state='off')
-        ]
-
-    def _initialize_sensors(self) -> list[ISensor]:
-        return [
-            RollSensor(
-                gpio=None,
-                model='Built-in Accelerometer',
-                type=AReading.Type.ROLL),
-            PitchSensor(
-                gpio=None,
-                model='Built-in Accelerometer',
-                type=AReading.Type.PITCH),
-            GPSSensor(
-                gpio=None,
-                model='GPS (Air 530)',
-                type=AReading.Type.GPS),
-            BuzzerController(
-                gpio=None,
-                command_type=ACommand.Type.BUZZER_ON_OFF,
-                model='ReTerminal Buzzer',
-                reading_type=AReading.Type.BUZZER,
-                initial_state='off')]
+        super().__init__(sensors=sensors, actuators=actuators)
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
@@ -121,7 +97,34 @@ class GeoLocationController(IDeviceController):
 
 
 def main():
-    controller = GeoLocationController()
+    controller = GeoLocationController(sensors=[
+        RollSensor(
+            gpio=None,
+            model='Built-in Accelerometer',
+            type=AReading.Type.ROLL),
+        PitchSensor(
+            gpio=None,
+            model='Built-in Accelerometer',
+            type=AReading.Type.PITCH),
+        GPSSensor(
+            gpio=None,
+            model='GPS (Air 530)',
+            type=AReading.Type.GPS),
+        BuzzerController(
+            gpio=None,
+            command_type=ACommand.Type.BUZZER_ON_OFF,
+            model='ReTerminal Buzzer',
+            reading_type=AReading.Type.BUZZER,
+            initial_state='off')
+    ],
+        actuators=[
+        BuzzerController(
+            gpio=None,
+            command_type=ACommand.Type.BUZZER_ON_OFF,
+            model='ReTerminal Buzzer',
+            reading_type=AReading.Type.BUZZER,
+            initial_state='off')
+    ])
     controller.loop()
 
 
