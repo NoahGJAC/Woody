@@ -12,6 +12,7 @@ class AReading(ABC):
         """
         # Add new reading types here.
         TEMPERATURE_HUMIDITY = 'temperature humidity'
+        WATER_LEVEL = 'water level'
         SOIL_MOISTURE = 'soil moisture'
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
@@ -39,7 +40,7 @@ class AReading(ABC):
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
         HUMIDITY = '% HR'
-        UNITLESS = 'unitless'
+        UNITLESS = ''
         LUX = 'lx'
         LOUDNESS = '% loudness strength'
         DEGREE = '°'
