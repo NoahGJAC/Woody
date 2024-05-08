@@ -51,7 +51,8 @@ class BuzzerController(IActuator, ISensor):
         Returns:
             bool: True if the command is valid, False otherwise.
         """
-        return command.target_type == self.command_type and type(command.value) is str and (
+        print(command)
+        return command.target_type == self.type and type(command.value) is str and (
             command.value.lower() == 'on' or command.value.lower() == 'off')
 
     def control_actuator(self, value: str) -> bool:
@@ -78,7 +79,7 @@ class BuzzerController(IActuator, ISensor):
 
         return False
 
-    def clean_up(self) -> None:
+    def __del__(self) -> None:
         """Sets the buzzer state to False, meant for cleaning up.
         """
         rt.buzzer = False
