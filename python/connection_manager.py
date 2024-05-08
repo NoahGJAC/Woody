@@ -41,7 +41,8 @@ class ConnectionManager:
         :return ConnectionConfig: object with configuration information loaded from .env file.
         """
         dotenv.load_dotenv(override=True)
-        if not dotenv.find_dotenv() or (device_str := os.getenv('IOTHUB_DEVICE_CONNECTION_STRING')) is None:
+        if not dotenv.find_dotenv() or (device_str := os.getenv(
+                'IOTHUB_DEVICE_CONNECTION_STRING')) is None:
             raise EnvironmentError(
                 "Unable to retrieve device connection string")
         return ConnectionConfig(device_str)
