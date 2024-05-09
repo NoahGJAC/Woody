@@ -3,7 +3,12 @@ The purpose of this file is to document the setup process for each subsystem's h
 ## Plant
 
 ## Geolocation
-
+- GPS Sensor: **UART** pin connection to base hat.
+    - Note: configure Raspberry Pi for Serial Communication.
+- Pitch Sensor: Internal component in reTerminal.
+- Roll Sensor: Internal component in reTerminal.
+- Vibration Sensor: Internal component in reTerminal.
+- Buzzer: Internal component in reTerminal.
 ## Security  
 - Loudness Sensor: Analog 4 pin connection to base hat.
 - PIR Motion Sensor: Digital 4 pin connection to base hat.
