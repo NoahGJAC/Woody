@@ -10,6 +10,7 @@ from python.sensors.geo_location.gps import GPSSensor
 from python.sensors.geo_location.pitch import PitchSensor
 from python.sensors.geo_location.roll import RollSensor
 from python.actuators.geo_location.buzzer import BuzzerController
+from python.sensors.geo_location.vibration import VibrationSensor
 import colorama
 
 
@@ -115,7 +116,12 @@ def main():
             command_type=ACommand.Type.BUZZER_ON_OFF,
             model='ReTerminal Buzzer',
             reading_type=AReading.Type.BUZZER,
-            initial_state='off')
+            initial_state='off'),
+        VibrationSensor(
+            gpio=None,
+            model= 'Built-in Accelerometer',
+            type= AReading.Type.VIBRATION
+        )
     ],
         actuators=[
         BuzzerController(
