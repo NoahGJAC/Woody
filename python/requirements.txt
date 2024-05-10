@@ -2,6 +2,7 @@ arandr==0.1.11
 asgiref==3.6.0
 astroid==2.14.2
 asttokens==2.2.1
+asyncio==3.4.3
 autopep8==2.1.0
 av==10.0.0
 azure-iot-device==2.13.0
