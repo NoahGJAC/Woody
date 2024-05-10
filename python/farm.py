@@ -14,17 +14,25 @@ import asyncio
 
 
 class Farm:
+    """A class that acts as the main point of contact for all subsystems in the farm.
+    """
     DEBUG = True
     LOOP_INTERVAL = 4  # in seconds
     _subsystems: list[IDeviceController]
     _subsystem_dict: dict[SubSystemType, IDeviceController]
 
     def __init__(self, subsystems: list[IDeviceController]) -> None:
+        """Initializes a Farm
+
+        Args:
+            subsystems (list[IDeviceController]): The list of subsystems.
+        """
         self._subsystems = subsystems
         self._connection_manager = ConnectionManager()
         self._subsystem_dict = self._get_subsystem_dict()
 
     async def loop(self) -> None:
+        """Main loop of the Farm system. Collects new readings, send them to connection manager, collect new commands and dispatch them to subsystems."""
         await self._connection_manager.connect()
         """ Actuator commands, WIP. Switch to direct methods
         self._connection_manager.register_command_callback(
@@ -34,6 +42,7 @@ class Farm:
 
         while True:
             readings = []
+
             # try except for now, since i don't have all hardware to read from
             # and pi may throw exceptions
             try:
@@ -42,6 +51,7 @@ class Farm:
                         readings.append(reading)
             except BaseException:
                 pass
+
             if self.DEBUG:
                 print(readings)
 
@@ -49,6 +59,11 @@ class Farm:
             await asyncio.sleep(self.LOOP_INTERVAL)
 
     def command_callback(self, command: ACommand) -> None:
+        """Callback for when a command is received from the connection manager.
+
+        Args:
+            command (ACommand): The command to be executed.
+        """
         subsystem = self._subsystem_dict.get(command.subsystem_type)
         if subsystem is None:
             print(f"No subsystem found for command: {command}")
