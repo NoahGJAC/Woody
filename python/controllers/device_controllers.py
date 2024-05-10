@@ -13,28 +13,14 @@ class IDeviceController(ABC):
     _actuators: list[IActuator]
 
     @abstractmethod
-    def __init__(self) -> None:
+    def __init__(self,
+                 sensors: list[ISensor],
+                 actuators: list[IActuator]) -> None:
         """
             Initialize the actuators and sensors
         """
-        self._sensors: list[ISensor] = self._initialize_sensors()
-        self._actuators: list[IActuator] = self._initialize_actuators()
-
-    @abstractmethod
-    def _initialize_sensors(self) -> list[ISensor]:
-        """Initializes all sensors and returns them as a list. Intended to be used in class constructor.
-
-        Returns:
-            list[ISensor]: List of initialized sensors.
-        """
-
-    @abstractmethod
-    def _initialize_actuators(self) -> list[IActuator]:
-        """Initializes all actuators and returns them as a list. Intended to be used in class constructor.
-
-        Returns:
-            list[IActuator]: List of initialized actuators.
-        """
+        self._sensors: list[ISensor] = sensors
+        self._actuators: list[IActuator] = actuators
 
     @abstractmethod
     def control_actuators(self, commands: list[ACommand]) -> None:

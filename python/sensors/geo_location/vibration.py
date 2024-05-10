@@ -5,7 +5,7 @@ from python.sensors.sensors import ISensor, AReading
 import math
 
 
-class vibration(ISensor):
+class VibrationSensor(ISensor):
     def __init__(self, gpio: int | None, model: str, type: AReading.Type):
         """Initializes the vibration sensor.
 
@@ -88,7 +88,7 @@ class vibration(ISensor):
 
 
 def main():
-    vib = vibration(None, 'Built-in Accelerometer', AReading.Type.VIBRATION)
+    vib = VibrationSensor(None, 'Built-in Accelerometer', AReading.Type.VIBRATION)
     try:
         while True:
             readings = vib.read_sensor()

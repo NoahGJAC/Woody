@@ -2,11 +2,11 @@
 
 from time import sleep
 from ..actuators.plant.fan import FanController
-#from ..actuators.plant.light import LightController
+# from ..actuators.plant.light import LightController
 from ..actuators.actuators import ACommand, IActuator
 from .device_controllers import IDeviceController
 from ..sensors.sensors import AReading, ISensor
-from ..sensors.plant.soil_moisture import SoilMoistureSensor
+# from ..sensors.plant.soil_moisture import SoilMoistureSensor
 from ..sensors.plant.water_level import WaterLevelSensor
 from ..sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
@@ -15,22 +15,17 @@ import colorama
 class PlantController(IDeviceController):
     """A class that represents a plant subsystem device controller."""
 
-    def __init__(self) -> None:
-        """Initialize a PlantController
-        """
-        super().__init__()
+    def __init__(
+            self,
+            sensors: list[ISensor],
+            actuators: list[IActuator]) -> None:
+        """Initializes a PlantController
 
-    def _initialize_actuators(self) -> list[IActuator]:
+        Args:
+            sensors (list[ISensor]): The list of sensors to initialize.
+            actuators (list[IActuator]): The list of actuators to initialize.
         """
-        return [LightController(gpio=12, type=ACommand.Type.LIGHT_ON_OFF),
-                FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)]
-        """
-        return [FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)]
-
-    def _initialize_sensors(self) -> list[ISensor]:
-        return [SoilMoistureSensor(),
-                WaterLevelSensor(),
-                TemperatureHumiditySensor()]
+        super().__init__(sensors=sensors, actuators=actuators)
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
@@ -106,7 +101,7 @@ class PlantController(IDeviceController):
                     temperature, humidity = reading.value
                     print("temperature: {:.2f} C".format(temperature))
                     print("humidity: {:.2f} %".format(humidity))
-                else:     
+                else:
                     print(reading)
             print("\n")
             sleep(2)
@@ -118,14 +113,22 @@ class PlantController(IDeviceController):
                     temperature, humidity = reading.value
                     print("temperature: {:.2f} C".format(temperature))
                     print("humidity: {:.2f} %".format(humidity))
-                else:     
+                else:
                     print(reading)
             print("\n")
             sleep(2)
 
 
 def main():
-    controller = PlantController()
+    controller = PlantController(sensors=[
+        # SoilMoistureSensor(),
+        WaterLevelSensor(),
+        TemperatureHumiditySensor()
+    ],
+        actuators=[
+        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+    ])
+
     controller.loop()
 
 

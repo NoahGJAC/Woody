@@ -17,58 +17,18 @@ import colorama
 class SecurityController(IDeviceController):
     """A class that represents a security subsystem device controller."""
 
-    def __init__(self) -> None:
+    def __init__(
+            self,
+            sensors: list[ISensor],
+            actuators: list[IActuator]) -> None:
         """Initializes a SecurityController
+
+        Args:
+            sensors (list[ISensor]): The list of sensors to initialize.
+            actuators (list[IActuator]): The list of actuators to initialize.
         """
-        super().__init__()
 
-    def _initialize_actuators(self) -> list[IActuator]:
-        return [
-            BuzzerController(
-                gpio=None,
-                command_type=ACommand.Type.BUZZER_ON_OFF,
-                model='ReTerminal Buzzer',
-                reading_type=AReading.Type.BUZZER,
-                initial_state='off'),
-            DoorLockController(
-                model='180 degree servo',
-                gpio=12,
-                command_type=ACommand.Type.DOOR_LOCK,
-                reading_type=AReading.Type.DOOR_LOCK,
-                initial_state='-1')
-        ]
-
-    def _initialize_sensors(self) -> list[ISensor]:
-        return [
-            DoorSensor(
-                gpio=5,
-                model='Magnetic door sensor reed switch',
-                type=AReading.Type.DOOR),
-            LoudnessSensor(
-                gpio=0,
-                model='Grove - Loudness Sensor',
-                type=AReading.Type.LOUDNESS),
-            LuminositySensor(
-                gpio=None,
-                model='Built-in Luminosity Sensor',
-                type=AReading.Type.LUMINOSITY),
-            MotionSensor(
-                gpio=22,
-                model='Adjustable PIR Motion Sensor',
-                type=AReading.Type.MOTION),
-            BuzzerController(
-                gpio=None,
-                command_type=ACommand.Type.BUZZER_ON_OFF,
-                model='ReTerminal Buzzer',
-                reading_type=AReading.Type.BUZZER,
-                initial_state='off'),
-            DoorLockController(
-                model='180 degree servo',
-                gpio=12,
-                command_type=ACommand.Type.DOOR_LOCK,
-                reading_type=AReading.Type.DOOR_LOCK,
-                initial_state='-1')
-        ]
+        super().__init__(sensors=sensors, actuators=actuators)
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
@@ -91,8 +51,7 @@ class SecurityController(IDeviceController):
                 print(
                     colorama.Fore.RED +
                     f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
-                    colorama.Fore.RESET
-                )
+                    colorama.Fore.RESET)
                 continue
 
             actuator.control_actuator(value=command.value)
@@ -145,7 +104,50 @@ class SecurityController(IDeviceController):
 
 
 def main():
-    controller = SecurityController()
+    controller = SecurityController(actuators=[
+        BuzzerController(
+            gpio=None,
+            command_type=ACommand.Type.BUZZER_ON_OFF,
+            model='ReTerminal Buzzer',
+            reading_type=AReading.Type.BUZZER,
+            initial_state='off'),
+        DoorLockController(
+            model='180 degree servo',
+            gpio=12,
+            command_type=ACommand.Type.DOOR_LOCK,
+            reading_type=AReading.Type.DOOR_LOCK,
+            initial_state='-1')
+    ],
+        sensors=[
+            DoorSensor(
+                gpio=5,
+                model='Magnetic door sensor reed switch',
+                type=AReading.Type.DOOR),
+            LoudnessSensor(
+                gpio=0,
+                model='Grove - Loudness Sensor',
+                type=AReading.Type.LOUDNESS),
+            LuminositySensor(
+                gpio=None,
+                model='Built-in Luminosity Sensor',
+                type=AReading.Type.LUMINOSITY),
+            MotionSensor(
+                gpio=22,
+                model='Adjustable PIR Motion Sensor',
+                type=AReading.Type.MOTION),
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model='ReTerminal Buzzer',
+                reading_type=AReading.Type.BUZZER,
+                initial_state='off'),
+            DoorLockController(
+                model='180 degree servo',
+                gpio=12,
+                command_type=ACommand.Type.DOOR_LOCK,
+                reading_type=AReading.Type.DOOR_LOCK,
+                initial_state='-1')
+    ])
     controller.loop()
 
 
