@@ -17,7 +17,7 @@ class Farm:
     """A class that acts as the main point of contact for all subsystems in the farm.
     """
     DEBUG = True
-    LOOP_INTERVAL = 4  # in seconds
+    LOOP_INTERVAL = 5  # in seconds
     _subsystems: list[IDeviceController]
     _subsystem_dict: dict[SubSystemType, IDeviceController]
 
