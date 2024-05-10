@@ -1,25 +1,27 @@
 #!/usr/bin/env python
 
+
 from time import sleep
-from python.actuators.plant.fan import FanController
-# from ..actuators.plant.light import LightController
+import pynmea2
 from python.actuators.actuators import ACommand, IActuator
-from python.controllers.device_controllers import IDeviceController
 from python.sensors.sensors import AReading, ISensor
-from ..sensors.plant.soil_moisture import SoilMoistureSensor
-from python.sensors.plant.water_level import WaterLevelSensor
-from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
+from python.controllers.device_controllers import IDeviceController
+from python.sensors.geo_location.gps import GPSSensor
+from python.sensors.geo_location.pitch import PitchSensor
+from python.sensors.geo_location.roll import RollSensor
+from python.actuators.geo_location.buzzer import BuzzerController
+from python.sensors.geo_location.vibration import VibrationSensor
 import colorama
 
 
-class PlantController(IDeviceController):
-    """A class that represents a plant subsystem device controller."""
+class GeoLocationController(IDeviceController):
+    """A class that represents a geolocation subsystem device controller."""
 
     def __init__(
             self,
             sensors: list[ISensor],
             actuators: list[IActuator]) -> None:
-        """Initializes a PlantController
+        """Initializes a GeoLocationController
 
         Args:
             sensors (list[ISensor]): The list of sensors to initialize.
@@ -29,6 +31,7 @@ class PlantController(IDeviceController):
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
+
         Args:
             commands (list[ACommand]): The list of commands to run.
         """
@@ -75,60 +78,59 @@ class PlantController(IDeviceController):
     def loop(self):
         """Loops through controlling actuators and reading sensors. Intended for testing.
         """
-        """
         pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='on'),
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='on')
         ]
         post_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='off'),
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='off')
         ]
-        """
-
-        pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
-        ]
-        post_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
-        ]
-
         while True:
             self.control_actuators(commands=pre_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
-            print("\n")
+                print(reading)
             sleep(2)
-
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
-            print("\n")
+                print(reading)
             sleep(2)
 
 
 def main():
-    controller = PlantController(sensors=[
-        SoilMoistureSensor(),
-        WaterLevelSensor(),
-        TemperatureHumiditySensor()
+    controller = GeoLocationController(sensors=[
+        RollSensor(
+            gpio=None,
+            model='Built-in Accelerometer',
+            type=AReading.Type.ROLL),
+        PitchSensor(
+            gpio=None,
+            model='Built-in Accelerometer',
+            type=AReading.Type.PITCH),
+        GPSSensor(
+            gpio=None,
+            model='GPS (Air 530)',
+            type=AReading.Type.GPS),
+        BuzzerController(
+            gpio=None,
+            command_type=ACommand.Type.BUZZER_ON_OFF,
+            model='ReTerminal Buzzer',
+            reading_type=AReading.Type.BUZZER,
+            initial_state='off'),
+        VibrationSensor(
+            gpio=None,
+            model= 'Built-in Accelerometer',
+            type= AReading.Type.VIBRATION
+        )
     ],
         actuators=[
-        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+        BuzzerController(
+            gpio=None,
+            command_type=ACommand.Type.BUZZER_ON_OFF,
+            model='ReTerminal Buzzer',
+            reading_type=AReading.Type.BUZZER,
+            initial_state='off')
     ])
-
     controller.loop()
 
 
@@ -137,3 +139,6 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("Exiting...")
+    except pynmea2.ParseError as e:
+        f"{e} \nCould not parse the information? you need to plug the GPS on UART port and wait 5 seconds"
+        pass

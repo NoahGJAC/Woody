@@ -20,6 +20,9 @@ class AReading(ABC):
         BUZZER = 'buzzer state'
         DOOR = 'door state'
         DOOR_LOCK = 'door lock state'
+        MOTION = 'motion'
+        VIBRATION = 'vibration'
+        LOUDNESS = 'loudness'
         LATITUDE = 'latitude'
         LONGITUDE ='longitude'
         ALTITUDE = 'altitude'
@@ -32,13 +35,14 @@ class AReading(ABC):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
-        CELSIUS_HUMIDITY = '°C - % HR'
+        CELSIUS_HUMIDITY = '°C-% HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
         HUMIDITY = '% HR'
         UNITLESS = ''
         LUX = 'lx'
+        LOUDNESS = '% loudness strength'
         DEGREE = '°'
         METERS = 'm'
         PERCENTAGE = "%"
@@ -46,9 +50,9 @@ class AReading(ABC):
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
-    value: float | str
+    value: float | str | bool
 
-    def __init__(self, type: Type, unit: Unit, value: float | str) -> None:
+    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
@@ -56,6 +60,9 @@ class AReading(ABC):
     def __repr__(self) -> str:
         """String representation of a reading object
         """
+        return f"AReading(reading_type={self.reading_type}, value={self.value}, unit={self.reading_unit})"
+    
+    def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
 
 
@@ -79,7 +86,7 @@ class ISensor(ABC):
     def read_sensor(self) -> list[AReading]:
         """Takes a reading form the sensor
 
-        :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
+        :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
         """
         pass
 
