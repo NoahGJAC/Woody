@@ -7,22 +7,23 @@ from python.enums.SubSystemType import SubSystemType
 
 
 from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, WaterLevelSensor, TemperatureHumiditySensor
-from python.actuators import BuzzerController, DoorLockController,FanController
+from python.actuators import BuzzerController, DoorLockController, FanController
 
 
 import asyncio
 
+
 class Farm:
     DEBUG = True
-    LOOP_INTERVAL = 4 # in seconds
+    LOOP_INTERVAL = 4  # in seconds
     _subsystems: list[IDeviceController]
-    _subsystem_dict : dict[SubSystemType, IDeviceController]
-    
+    _subsystem_dict: dict[SubSystemType, IDeviceController]
+
     def __init__(self, subsystems: list[IDeviceController]) -> None:
         self._subsystems = subsystems
         self._connection_manager = ConnectionManager()
         self._subsystem_dict = self._get_subsystem_dict()
-        
+
     async def loop(self) -> None:
         await self._connection_manager.connect()
         """ Actuator commands, WIP. Switch to direct methods
@@ -30,33 +31,35 @@ class Farm:
             self.command_callback
         )
         """
-        
+
         while True:
             readings = []
-            # try except for now, since i don't have all hardware to read from and pi may throw exceptions
+            # try except for now, since i don't have all hardware to read from
+            # and pi may throw exceptions
             try:
                 for subsystem in self._subsystems:
                     for reading in subsystem.read_sensors():
                         readings.append(reading)
-            except:
+            except BaseException:
                 pass
             if self.DEBUG:
                 print(readings)
-            
+
             await self._connection_manager.send_readings(readings)
             await asyncio.sleep(self.LOOP_INTERVAL)
-        
+
     def command_callback(self, command: ACommand) -> None:
         subsystem = self._subsystem_dict.get(command.subsystem_type)
         if subsystem is None:
             print(f"No subsystem found for command: {command}")
             return
-        
+
         subsystem.control_actuators([command])
-        
+
     def _get_subsystem_dict(self) -> dict[SubSystemType, IDeviceController]:
         return {subsystem.system_type: subsystem for subsystem in self._subsystems}
-    
+
+
 async def farm_main():
     subsystems = [GeoLocationController(sensors=[
         RollSensor(
@@ -79,8 +82,8 @@ async def farm_main():
             initial_state='off'),
         VibrationSensor(
             gpio=None,
-            model= 'Built-in Accelerometer',
-            type= AReading.Type.VIBRATION
+            model='Built-in Accelerometer',
+            type=AReading.Type.VIBRATION
         )
     ],
         actuators=[
@@ -91,20 +94,20 @@ async def farm_main():
             reading_type=AReading.Type.BUZZER,
             initial_state='off')
     ]),
-                  SecurityController(actuators=[
-        BuzzerController(
-            gpio=None,
-            command_type=ACommand.Type.BUZZER_ON_OFF,
-            model='ReTerminal Buzzer',
-            reading_type=AReading.Type.BUZZER,
-            initial_state='off'),
-        DoorLockController(
-            model='180 degree servo',
-            gpio=12,
-            command_type=ACommand.Type.DOOR_LOCK,
-            reading_type=AReading.Type.DOOR_LOCK,
-            initial_state='-1')
-    ],
+        SecurityController(actuators=[
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model='ReTerminal Buzzer',
+                reading_type=AReading.Type.BUZZER,
+                initial_state='off'),
+            DoorLockController(
+                model='180 degree servo',
+                gpio=12,
+                command_type=ACommand.Type.DOOR_LOCK,
+                reading_type=AReading.Type.DOOR_LOCK,
+                initial_state='-1')
+        ],
         sensors=[
             DoorSensor(
                 gpio=5,
@@ -134,18 +137,18 @@ async def farm_main():
                 command_type=ACommand.Type.DOOR_LOCK,
                 reading_type=AReading.Type.DOOR_LOCK,
                 initial_state='-1')
-    ]),
-                  PlantController(sensors=[
-        # SoilMoistureSensor(),
-        WaterLevelSensor(),
-        TemperatureHumiditySensor()
-    ],
+        ]),
+        PlantController(sensors=[
+            # SoilMoistureSensor(),
+            WaterLevelSensor(),
+            TemperatureHumiditySensor()
+        ],
         actuators=[
-        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
-    ])]
-    
+            FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+        ])]
+
     farm = Farm(subsystems)
     await farm.loop()
-    
+
 if __name__ == '__main__':
     asyncio.run(farm_main())

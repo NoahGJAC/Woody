@@ -59,9 +59,11 @@ class ConnectionManager:
         subsystem_type = message.custom_properties.get('subsystem-type')
         print(subsystem_type + " " + command_type)
         if command_type and subsystem_type:
-            command = ACommand(target=ACommand.Type(command_type), value=message.data.decode(
-                message.content_encoding if message.content_encoding is not None else 'utf-8'),
-                               subsystem_type=SubSystemType(subsystem_type))
+            command = ACommand(
+                target=ACommand.Type(command_type),
+                value=message.data.decode(
+                    message.content_encoding if message.content_encoding is not None else 'utf-8'),
+                subsystem_type=SubSystemType(subsystem_type))
             self._command_callback(command)
 
     async def connect(self) -> None:
