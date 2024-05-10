@@ -123,7 +123,7 @@ def main():
     controller = PlantController(sensors=[
         SoilMoistureSensor(),
         WaterLevelSensor(),
-        # TemperatureHumiditySensor()
+        TemperatureHumiditySensor()
     ],
         actuators=[
         FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
