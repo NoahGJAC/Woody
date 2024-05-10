@@ -1,28 +1,14 @@
-from python.controllers.device_controllers import IDeviceController
+from python.controllers import IDeviceController, GeoLocationController, SecurityController, PlantController
+
 from python.connection_manager import ConnectionManager
 from python.actuators.actuators import ACommand
 from python.sensors.sensors import AReading
-from python.controllers.geo_location_controller import GeoLocationController
-from python.controllers.security_controller import SecurityController
-from python.controllers.plant_controller import PlantController
 from python.enums.SubSystemType import SubSystemType
 
-# TODO: FIX LATER
-from python.sensors.geo_location.gps import GPSSensor
-from python.sensors.geo_location.pitch import PitchSensor
-from python.sensors.geo_location.roll import RollSensor
-from python.actuators.geo_location.buzzer import BuzzerController
-from python.sensors.geo_location.vibration import VibrationSensor
-from python.actuators.security.buzzer import BuzzerController
-from python.actuators.security.door_lock import DoorLockController
-from python.sensors.security.door import DoorSensor
-from python.sensors.security.loudness import LoudnessSensor
-from python.sensors.security.luminosity import LuminositySensor
-from python.sensors.security.motion import MotionSensor
-# from python.sensors.plant.soil_moisture import SoilMoistureSensor
-from python.sensors.plant.water_level import WaterLevelSensor
-from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
-from python.actuators.plant.fan import FanController
+
+from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, WaterLevelSensor, TemperatureHumiditySensor
+from python.actuators import BuzzerController, DoorLockController,FanController
+
 
 import asyncio
 
