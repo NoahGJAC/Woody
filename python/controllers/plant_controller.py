@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 from time import sleep
-from ..actuators.plant.fan import FanController
+from python.actuators.plant.fan import FanController
 # from ..actuators.plant.light import LightController
-from ..actuators.actuators import ACommand, IActuator
-from .device_controllers import IDeviceController
-from ..sensors.sensors import AReading, ISensor
+from python.actuators.actuators import ACommand, IActuator
+from python.controllers.device_controllers import IDeviceController
+from python.sensors.sensors import AReading, ISensor
 # from ..sensors.plant.soil_moisture import SoilMoistureSensor
-from ..sensors.plant.water_level import WaterLevelSensor
-from ..sensors.plant.temperature_humidity import TemperatureHumiditySensor
+from python.sensors.plant.water_level import WaterLevelSensor
+from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
 
 
@@ -121,7 +121,7 @@ class PlantController(IDeviceController):
 
 def main():
     controller = PlantController(sensors=[
-        # SoilMoistureSensor(),
+        SoilMoistureSensor(),
         WaterLevelSensor(),
         TemperatureHumiditySensor()
     ],
