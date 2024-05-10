@@ -23,6 +23,7 @@ from python.sensors.security.motion import MotionSensor
 from python.sensors.plant.water_level import WaterLevelSensor
 from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
 from python.actuators.plant.fan import FanController
+
 import asyncio
 
 class Farm:
@@ -38,11 +39,25 @@ class Farm:
         
     async def loop(self) -> None:
         await self._connection_manager.connect()
+        """ Actuator commands, WIP
         self._connection_manager.register_command_callback(
             self.command_callback
         )
+        """
         
         while True:
+            readings = []
+            # try except for now, since i don't have all hardware to read from and pi may throw exceptions
+            try:
+                for subsystem in self._subsystems:
+                    for reading in subsystem.read_sensors():
+                        readings.append(reading)
+            except:
+                pass
+            if self.DEBUG:
+                print(readings)
+            
+            await self._connection_manager.send_readings(readings)
             await asyncio.sleep(self.LOOP_INTERVAL)
         
     def command_callback(self, command: ACommand) -> None:
