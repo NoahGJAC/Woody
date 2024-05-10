@@ -68,8 +68,11 @@ class PlantController(IDeviceController):
 
         :return list[AReading]: a list containing all readings collected from the sensors.
         """
-        readings: list[AReading] = [
-            reading for sensor in self._sensors for reading in sensor.read_sensor()]
+        readings: List[AReading] = []
+
+        for sensor in self._sensors:
+            readings.extend(sensor.read_sensor())
+
         return readings
 
     def loop(self):
@@ -97,24 +100,14 @@ class PlantController(IDeviceController):
             self.control_actuators(commands=pre_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
+                print(reading)
             print("\n")
             sleep(2)
 
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
+                print(reading)
             print("\n")
             sleep(2)
 
