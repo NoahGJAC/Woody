@@ -39,7 +39,7 @@ class Farm:
         
     async def loop(self) -> None:
         await self._connection_manager.connect()
-        """ Actuator commands, WIP
+        """ Actuator commands, WIP. Switch to direct methods
         self._connection_manager.register_command_callback(
             self.command_callback
         )
