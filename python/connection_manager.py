@@ -1,8 +1,9 @@
 import asyncio
 from typing import Callable
 
-from actuators.actuators import ACommand
-from sensors.sensors import AReading
+from python.actuators.actuators import ACommand
+from python.sensors.sensors import AReading
+from python.enums.SubSystemType import SubSystemType
 
 from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import Message
@@ -55,9 +56,12 @@ class ConnectionManager:
         must contain a custom property of "command-type" and a json encoded string as the body.
         """
         command_type = message.custom_properties.get('command-type')
-        if command_type:
-            command = ACommand(ACommand.Type(command_type), message.data.decode(
-                message.content_encoding if message.content_encoding is not None else 'utf-8'))
+        subsytem_type = message.custom_properties.get('subsystem-type')
+        print(subsystem_type + " " + command_type)
+        if command_type and subsystem_type:
+            command = ACommand(target=ACommand.Type(command_type), value=message.data.decode(
+                message.content_encoding if message.content_encoding is not None else 'utf-8'),
+                               subsystem_type=SubSystemType(subsytem_type))
             self._command_callback(command)
 
     async def connect(self) -> None:

@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+from python.enums.SubSystemType import SubSystemType
 
 
 class ACommand(ABC):
     """Abstract class for actuator command. Can be instantiated directly or inherited.
     Also defines all possible command types via enums.
     """
-
     class Type(str, Enum):
         """Enum defining types of actuators that can be targets for a command
         """
@@ -18,17 +18,20 @@ class ACommand(ABC):
         DOOR_LOCK = 'door-lock'
 
     # Class properties that must be defined in implementation classes
+    target_subsystem: SubSystemType
     target_type: Type
     value: str # May be updated to a dict when azure is connected
 
-    def __init__(self, target: Type, value: str) -> None:
+    def __init__(self, target: Type, value: str, subsystem_type: SubSystemType = SubSystemType.SECURITY) -> None:
         """Constructor for Command abstract class
 
         :param Type target: Type of command whih associated a command to a type of actuator.
         :param str value: Value of command to be passed to actuator.
+        :param SubSystemType: The target subsystem for the command.
         """
         self.target_type = target
         self.value: str = value
+        self.target_subsystem = subsystem_type
 
     def __repr__(self) -> str:
         return f'Command setting {self.target_type} to {self.value}'

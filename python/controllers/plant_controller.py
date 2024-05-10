@@ -10,6 +10,8 @@ from ..sensors.sensors import AReading, ISensor
 from ..sensors.plant.water_level import WaterLevelSensor
 from ..sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
+from python.enums.SubSystemType import SubSystemType
+
 
 
 class PlantController(IDeviceController):
@@ -26,6 +28,7 @@ class PlantController(IDeviceController):
             actuators (list[IActuator]): The list of actuators to initialize.
         """
         super().__init__(sensors=sensors, actuators=actuators)
+        self.system_type = SubSystemType.PLANT
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
