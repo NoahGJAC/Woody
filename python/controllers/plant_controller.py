@@ -2,11 +2,11 @@
 
 from time import sleep
 from python.actuators.plant.fan import FanController
-# from ..actuators.plant.light import LightController
+# from python.actuators.plant.light import LightController
 from python.actuators.actuators import ACommand, IActuator
 from python.controllers.device_controllers import IDeviceController
 from python.sensors.sensors import AReading, ISensor
-from ..sensors.plant.soil_moisture import SoilMoistureSensor
+from python.sensors.plant.soil_moisture import SoilMoistureSensor
 from python.sensors.plant.water_level import WaterLevelSensor
 from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
