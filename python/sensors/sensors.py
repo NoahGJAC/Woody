@@ -11,7 +11,6 @@ class AReading(ABC):
         """Enum defining all possible types of readings that sensors might make.
         """
         # Add new reading types here.
-        TEMPERATURE_HUMIDITY = 'temperature humidity'
         WATER_LEVEL = 'water level'
         SOIL_MOISTURE = 'soil moisture'
         TEMPERATURE = 'temperature'
@@ -35,7 +34,6 @@ class AReading(ABC):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
-        CELSIUS_HUMIDITY = '°C-% HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
         FAHRENHEIT = '°F'
