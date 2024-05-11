@@ -1,24 +1,20 @@
 The purpose of this file is to document the setup process for each subsystem's hardware.
 
-## Plant
+## Hardware Setup
 
-## Geolocation
-- GPS Sensor: **UART** pin connection to base hat.
-    - Note: configure Raspberry Pi for Serial Communication.
-- Pitch Sensor: Internal component in reTerminal.
-- Roll Sensor: Internal component in reTerminal.
-- Vibration Sensor: Internal component in reTerminal.
-- Buzzer: Internal component in reTerminal.
-## Security  
-- Loudness Sensor: Analog 4 pin connection to base hat.
-- PIR Motion Sensor: Digital 4 pin connection to base hat.
-- Door Magnet: Digital **2 pin connection** to base hat. One pin to the numbered digital pin and another to GND, see references.
-- Door Servo: PWM **3 pin connection** to **exposed** base hat pins.
-  - Brown Cable: Must be connected to GND.
-  - Red Cable: Must be connected to 5V.
-  - Orange Cable: Must be connected to GPIO 12 PWM0.
-    - Note: See reference image below for connection points.
-- Buzzer: Internal component in reTerminal.
+| Subsystem | Component          | Connection Type | Port/Location | Notes |
+|-----------|--------------------|-----------------|---------------|-------|
+|Plant      |-                   |-                |-              |-      |
+| Geolocation | GPS Sensor        | UART            | UART pin      | Configure Raspberry Pi for Serial Communication. |
+| Geolocation | Pitch Sensor      | Built-in        | Internal      | -     |
+| Geolocation | Roll Sensor       | Built-in        | Internal      | -     |
+| Geolocation | Vibration Sensor  | Built-in        | Internal      | -     |
+| Geolocation | Buzzer            | Built-in        | Internal      | -     |
+| Security   | Loudness Sensor   | Analog          | Analog 4 pin  | -     |
+| Security   | PIR Motion Sensor | Digital         | Digital 4 pin | -     |
+| Security   | Door Magnet        | Digital         | Digital 2 pin | One pin to the numbered digital pin and another to GND. |
+| Security   | Door Servo         | PWM             | Exposed pins  | Brown Cable to GND, Red Cable to 5V, Orange Cable to GPIO 12 PWM0. |
+| Security   | Buzzer            | Built-in        | Internal      | -     |
 
 ## References
 ![baseHat](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/assets/98351050/fb257415-d486-4e30-8372-3f1d227ce53b)
