@@ -116,11 +116,12 @@ class ConnectionManager:
         Returns:
             int: The telemetry interval.
         """
-        default_interval = 5
         twin = await self._client.get_twin()
-        if interval := twin['desired'].get('telemetryInterval'):
-            return interval
-        return default_interval
+        telemetryInterval = twin['desired'].get('telemetryInterval')
+
+        interval = telemetryInterval if telemetryInterval else 5
+        await self._client.patch_twin_reported_properties({'telemetryInterval': interval})
+        return interval
 
     async def connect(self) -> None:
         """Connects to cloud gateway using connection credentials and setups up a message handler
