@@ -50,16 +50,27 @@ class ConnectionManager:
             raise EnvironmentError(
                 "Unable to retrieve device connection string")
         return ConnectionConfig(device_str)
-    
-    async def handle_command(self, method_request: Any) -> Coroutine[Any, Any, None]:
-        """Callback for handling direct method calls."""
+
+    async def handle_command(
+            self, method_request: Any) -> Coroutine[Any, Any, None]:
+        """
+        Handles incoming method requests for a device.
+
+        This method checks if the incoming request is for the 'is_online' method and sends a 200 or 400 response.
+
+        Parameters:
+        - method_request (Any): The incoming method request object containing the request details.
+
+        Returns:
+        - Coroutine[Any, Any, None]: An asynchronous coroutine that does not return a value.
+        """
 
         """ This is working actuator code, but for now we are just checking for is_online direct method
         try:
             command_type = method_request.payload.get('command-type')
             subsystem_type = method_request.payload.get('subsystem-type')
             value = method_request.payload.get('value')
-            if subsystem_type and command_type:
+            if subsystem_type and command_type and value:
                 command = ACommand(
                     target=ACommand.Type(command_type),
                     value = value,
@@ -70,18 +81,14 @@ class ConnectionManager:
             # response
             method_response = MethodResponse(method_request.request_id, 200, {"Response": "This is the response from the device"})
             await self._client.send_method_response(method_response=method_response)
-            # Process the command here
-            # For example, you might parse the payload and call self._command_callback
             #response_callback(200, "Command processed successfully")
         except Exception as e:
             print(f"{e}")
             """
         if method_request.name == 'is_online':
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id,status=200, payload=None))
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=200, payload=None))
         else:
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id,status=400, payload={'details': 'method name unknown'}))
-
-        
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=400, payload={'details': 'method name unknown'}))
 
     """
     def _on_message_received(self, message: Message) -> None:
@@ -90,7 +97,7 @@ class ConnectionManager:
 
         :param Message message: Incoming cloud gateway message. Messages with actuator commands
         must contain a custom property of "command-type" and a json encoded string as the body.
-        
+
         command_type = message.custom_properties.get('command-type')
         subsystem_type = message.custom_properties.get('subsystem-type')
         print(subsystem_type + " " + command_type)
