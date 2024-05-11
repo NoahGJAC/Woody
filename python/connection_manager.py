@@ -110,12 +110,25 @@ class ConnectionManager:
             self._command_callback(command)
     """
 
+    async def get_desired_interval(self) -> int:
+        """Gets the desired twin property for 'telemetryInterval', if unable to retrieve returns a default of 5 seconds.
+
+        Returns:
+            int: The telemetry interval.
+        """
+        default_interval = 5
+        twin = await self._client.get_twin()
+        if interval := twin['desired'].get('telemetryInterval'):
+            return interval
+        return default_interval
+
     async def connect(self) -> None:
         """Connects to cloud gateway using connection credentials and setups up a message handler
         """
         await self._client.connect()
         self._connected = True
         print("Connected")
+
         # Setup the callback handler for on_message_received of the
         # IoTHubDeviceClient instance.
         # self._client.on_message_received = self._on_message_received
@@ -129,6 +142,15 @@ class ConnectionManager:
         :param Callable[[ACommand], None] command_callback: function to be called whenever a new command is received.
         """
         self._command_callback = command_callback
+
+    def register_twin_callback(
+            self, twin_callback: Callable[[None], None]) -> None:
+        """Registers an external callback function to handle twin desired property patches.
+
+        Args:
+            twin_callback (Callable[[None], None]): Function to be called on twin desired property patches.
+        """
+        self._client.on_twin_desired_properties_patch_received = twin_callback
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.

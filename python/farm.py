@@ -38,6 +38,11 @@ class Farm:
             self.command_callback
         )
 
+        # get interval
+        self.LOOP_INTERVAL = await self._connection_manager.get_desired_interval()
+
+        # set callback for twin property updates
+        self._connection_manager.register_twin_callback(self.twin_callback)
 
         while True:
             readings = []
@@ -68,6 +73,16 @@ class Farm:
             print(f"No subsystem found for command: {command}")
             return
         subsystem.control_actuators([command])
+
+    async def twin_callback(self, patch: dict) -> None:
+        """Callback for when desired twin properties are changed.
+
+        Args:
+            patch (dict): The desired twin properties patch.
+        """
+        self.LOOP_INTERVAL = await self._connection_manager.get_desired_interval()
+        if self.DEBUG:
+            print(f'Twin property changed: {patch}')
 
     def _get_subsystem_dict(self) -> dict[SubSystemType, IDeviceController]:
         return {subsystem.system_type: subsystem for subsystem in self._subsystems}
