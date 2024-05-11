@@ -56,7 +56,6 @@ class SecurityController(IDeviceController):
                     f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
                     colorama.Fore.RESET)
                 continue
-
             actuator.control_actuator(value=command.value)
             print(
                 f"Executed command: {command}"

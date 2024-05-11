@@ -1,12 +1,12 @@
 import asyncio
-from typing import Callable
+from typing import Callable, Any, Coroutine
 
 from python.actuators.actuators import ACommand
 from python.sensors.sensors import AReading
 from python.enums.SubSystemType import SubSystemType
 
 from azure.iot.device.aio import IoTHubDeviceClient
-from azure.iot.device import Message
+from azure.iot.device import Message, MethodResponse
 
 import dotenv
 import os
@@ -50,14 +50,47 @@ class ConnectionManager:
             raise EnvironmentError(
                 "Unable to retrieve device connection string")
         return ConnectionConfig(device_str)
+    
+    async def handle_command(self, method_request: Any) -> Coroutine[Any, Any, None]:
+        """Callback for handling direct method calls."""
 
+        """ This is working actuator code, but for now we are just checking for is_online direct method
+        try:
+            command_type = method_request.payload.get('command-type')
+            subsystem_type = method_request.payload.get('subsystem-type')
+            value = method_request.payload.get('value')
+            if subsystem_type and command_type:
+                command = ACommand(
+                    target=ACommand.Type(command_type),
+                    value = value,
+                    subsystem_type=SubSystemType(subsystem_type)
+                )
+                self._command_callback(command)
+
+            # response
+            method_response = MethodResponse(method_request.request_id, 200, {"Response": "This is the response from the device"})
+            await self._client.send_method_response(method_response=method_response)
+            # Process the command here
+            # For example, you might parse the payload and call self._command_callback
+            #response_callback(200, "Command processed successfully")
+        except Exception as e:
+            print(f"{e}")
+            """
+        if method_request.name == 'is_online':
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id,status=200, payload=None))
+        else:
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id,status=400, payload={'details': 'method name unknown'}))
+
+        
+
+    """
     def _on_message_received(self, message: Message) -> None:
-        """Callback for handling new messages received from cloud gateway. Once the message is
+        Callback for handling new messages received from cloud gateway. Once the message is
         received and processed, it dispatches an ACommand to DeviceManager using _command_callback()
 
         :param Message message: Incoming cloud gateway message. Messages with actuator commands
         must contain a custom property of "command-type" and a json encoded string as the body.
-        """
+        
         command_type = message.custom_properties.get('command-type')
         subsystem_type = message.custom_properties.get('subsystem-type')
         print(subsystem_type + " " + command_type)
@@ -68,6 +101,7 @@ class ConnectionManager:
                     message.content_encoding if message.content_encoding is not None else 'utf-8'),
                 subsystem_type=SubSystemType(subsystem_type))
             self._command_callback(command)
+    """
 
     async def connect(self) -> None:
         """Connects to cloud gateway using connection credentials and setups up a message handler
@@ -77,7 +111,9 @@ class ConnectionManager:
         print("Connected")
         # Setup the callback handler for on_message_received of the
         # IoTHubDeviceClient instance.
-        self._client.on_message_received = self._on_message_received
+        # self._client.on_message_received = self._on_message_received
+        # Register the direct method
+        self._client.on_method_request_received = self.handle_command
 
     def register_command_callback(
             self, command_callback: Callable[[ACommand], None]) -> None:
