@@ -40,6 +40,9 @@ class ConnectionManager:
         """Loads connection credentials from .env file in the project's top-level directory.
 
         :return ConnectionConfig: object with configuration information loaded from .env file.
+
+        Raises:
+            EnvironmentError: When environment or environment variable is not found
         """
         dotenv.load_dotenv(override=True)
         if not dotenv.find_dotenv() or (device_str := os.getenv(
