@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import json
 
 
 class AReading(ABC):
@@ -35,6 +36,7 @@ class AReading(ABC):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
+        # TODO: ° does not work for json exporting
         CELSIUS_HUMIDITY = '°C-% HR'
         MILLIMITERS = 'mm'
         CELCIUS = '°C'
@@ -64,6 +66,13 @@ class AReading(ABC):
     
     def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
+    
+    def export_json(self) -> str:
+        """Exports a reading as a json encoded string
+
+        :return str: json string representation of the reading
+        """
+        return json.dumps({"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):
