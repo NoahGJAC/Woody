@@ -4,7 +4,11 @@ The purpose of this file is to document the setup process for each subsystem's h
 
 | Subsystem | Component          | Connection Type | Port/Location | Notes |
 |-----------|--------------------|-----------------|---------------|-------|
-|Plant      |-                   |-                |-              |-      |
+|Plant      | Fan                   | Digital                | GPIO 16 and exposed pins              | Use a relay to connect. View specific instructions below |
+| Plant | RGB Led Stick      | PWM        | GPIO 12      | Add user to groups kmem and gpio     |
+| Plant | Temperature and Humidity Sensor      | I2C        | GPIO 26      | Create I2C bus on GPIOs 26 and 27     |
+| Plant | Soil Moisture Sensor      | Analog        | Analog 4 pin      | Temporary pin     |
+| Plant | Water Level Sensor      | Analog        | Analog 4 pin      | Temporary pin    |
 | Geolocation | GPS Sensor        | UART            | UART pin      | Configure Raspberry Pi for Serial Communication. |
 | Geolocation | Pitch Sensor      | Built-in        | Internal      | -     |
 | Geolocation | Roll Sensor       | Built-in        | Internal      | -     |
@@ -15,6 +19,13 @@ The purpose of this file is to document the setup process for each subsystem's h
 | Security   | Door Magnet        | Digital         | Digital 2 pin | One pin to the numbered digital pin and another to GND. |
 | Security   | Door Servo         | PWM             | Exposed pins  | Brown Cable to GND, Red Cable to 5V, Orange Cable to GPIO 12 PWM0. |
 | Security   | Buzzer            | Built-in        | Internal      | -     |
+
+## Fan Connection
+1. Attach two jump wires (dupont wires) to the screw terminals of the relay.
+2. Connect one of the wires to the black cable (negative) of the fan.
+3. Connect the red cable of the fan (positive) to the 5V pin of the Base Hat
+4. Attach the remaining relay cable to the underside GND pin of the Base Hat (pin #6)
+5. Connect the relay's GPIO socket to GPIO 16
 
 ## References
 ![baseHat](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/assets/98351050/fb257415-d486-4e30-8372-3f1d227ce53b)
