@@ -42,4 +42,20 @@ public partial class SettingPage : ContentPage
 
         }
 	}
+
+    private void Btn_ChangePassword_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private async void Btn_LogOut_Clicked(object sender, EventArgs e)
+    {
+        AuthService.Client.SignOut();
+        await Shell.Current.GoToAsync($"//LoginPage");
+    }
+
+    private void Btn_ChangePFP_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

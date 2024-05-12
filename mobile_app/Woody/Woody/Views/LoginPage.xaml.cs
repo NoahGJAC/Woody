@@ -23,6 +23,16 @@ public partial class LoginPage : ContentPage
 		InitializeComponent();
 	}
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LoginView.IsVisible = true;
+        LogoutView.IsVisible = false;
+        lblError.Text = string.Empty;
+        user_name.Text = string.Empty;
+        password.Text = string.Empty;
+    }
+
     private async void Btn_Login_Clicked(object sender, EventArgs e)
     {
         NetworkAccess accessType = Connectivity.Current.NetworkAccess;
