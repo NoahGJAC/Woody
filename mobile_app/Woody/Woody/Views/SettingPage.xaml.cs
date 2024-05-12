@@ -46,7 +46,7 @@ public partial class SettingPage : ContentPage
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {
         await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
-        await DisplayAlert("Password Reset", $"An email has been sent to {AuthService.Client.User.Info.Email} reset your password", "OK");
+        await DisplayAlert("Password Reset", $"An email has been sent to {AuthService.Client.User.Info.Email} to reset your password.", "OK");
     }
 
     private async void Btn_LogOut_Clicked(object sender, EventArgs e)
