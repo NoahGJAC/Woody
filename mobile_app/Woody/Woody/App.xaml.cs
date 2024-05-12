@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Woody.Config;
 using Woody.DataRepos;
+using Woody.Services;
 using Woody.Views;
 
 /*
@@ -24,6 +25,7 @@ namespace Woody
         public static Settings Settings { get; private set; }
         private static SecurityRepo securityRepo;
         private static UserRepo userRepo;
+        private static AzureIoTHubService ioTDevice;
         
         /// <summary>
         /// Gets the user repository.
@@ -61,6 +63,11 @@ namespace Woody
             get { return geoLocationRepo ??= new GeoLocationRepo(); }
         }
 
+        public static AzureIoTHubService IoTDevice
+        {
+
+            get { return ioTDevice ??= new AzureIoTHubService(); }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
@@ -73,6 +80,7 @@ namespace Woody
             var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
             Settings = config.GetRequiredSection(nameof(Settings)).Get<Settings>();
             MainPage = new AppShell();
+            Task.Run(()=>IoTDevice.ConnectToDeviceAsync()).Wait();
         }
     }
 }
