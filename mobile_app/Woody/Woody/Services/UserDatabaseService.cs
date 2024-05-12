@@ -100,17 +100,15 @@ namespace Woody.Services
         /// <returns>A <see cref="Task{TResult}"/> representing the asynchronous operation, returning an <see cref="IEnumerable{T}"/> of items.</returns>
         public async Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
         {
-            if (_realtimeDb.Database?.Count == 0)
+            try
             {
-                try
-                {
-                    await _realtimeDb.PullAsync();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+                await _realtimeDb.PullAsync();
             }
+            catch (Exception)
+            {
+                return null;
+            }
+            
             IEnumerable<T> result = _realtimeDb.Once().Select(x => x.Object);
             return await Task.FromResult(result);
         }

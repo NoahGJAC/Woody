@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,20 +34,24 @@ namespace Woody.Services
                 return false;
             }
         }
-        public async Task<string> ReceiveMessageAsync()
+        /// <summary>
+        /// Get's all of the readings from the IoT.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> ReceiveReadingsAsync()
         {
             try
             {
-                while (true)
-                {
-                    var receivedMessage = await deviceClient.ReceiveAsync();
-                    if (receivedMessage == null)
-                        continue;
+                var receivedMessage = await deviceClient.ReceiveAsync();
+                if (receivedMessage == null)
+                    return "No new Message";
 
-                    var messageData = Encoding.UTF8.GetString(receivedMessage.GetBytes());
-                    Console.WriteLine($"Received message from Azure IoT Hub: {messageData}");
-                    await deviceClient.CompleteAsync(receivedMessage);
-                }
+                var messageData = Encoding.UTF8.GetString(receivedMessage.GetBytes());
+                var deserializedObject = JsonConvert.DeserializeObject<dynamic>(messageData);
+                Console.WriteLine($"Received message from Azure IoT Hub: {messageData}");
+                await deviceClient.CompleteAsync(receivedMessage); //this delete the message that was sent but idk if we want that
+                return deserializedObject;
+                
             }
             catch (Exception ex)
             {
