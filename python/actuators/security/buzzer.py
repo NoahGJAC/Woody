@@ -51,7 +51,6 @@ class BuzzerController(IActuator, ISensor):
         Returns:
             bool: True if the command is valid, False otherwise.
         """
-        print(command)
         return command.target_type == self.type and type(command.value) is str and (
             command.value.lower() == 'on' or command.value.lower() == 'off')
 

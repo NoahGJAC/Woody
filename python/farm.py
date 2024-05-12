@@ -7,7 +7,7 @@ from python.enums.SubSystemType import SubSystemType
 
 
 from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, WaterLevelSensor, TemperatureHumiditySensor
-from python.actuators import BuzzerController, DoorLockController, FanController
+from python.actuators import GeoBuzzerController, SecurityBuzzerController, DoorLockController, FanController
 
 
 import asyncio
@@ -34,11 +34,15 @@ class Farm:
     async def loop(self) -> None:
         """Main loop of the Farm system. Collects new readings, send them to connection manager, collect new commands and dispatch them to subsystems."""
         await self._connection_manager.connect()
-        """ Actuator commands, WIP. Switch to direct methods
         self._connection_manager.register_command_callback(
             self.command_callback
         )
-        """
+
+        # get interval
+        self.LOOP_INTERVAL = await self._connection_manager.get_desired_interval()
+
+        # set callback for twin property updates
+        self._connection_manager.register_twin_callback(self.twin_callback)
 
         while True:
             readings = []
@@ -53,7 +57,7 @@ class Farm:
                 pass
 
             if self.DEBUG:
-                print(readings)
+                print("Farm Readings:\n", readings, "\n")
 
             await self._connection_manager.send_readings(readings)
             await asyncio.sleep(self.LOOP_INTERVAL)
@@ -64,12 +68,21 @@ class Farm:
         Args:
             command (ACommand): The command to be executed.
         """
-        subsystem = self._subsystem_dict.get(command.subsystem_type)
+        subsystem = self._subsystem_dict.get(command.target_subsystem)
         if subsystem is None:
             print(f"No subsystem found for command: {command}")
             return
-
         subsystem.control_actuators([command])
+
+    async def twin_callback(self, patch: dict) -> None:
+        """Callback for when desired twin properties are changed.
+
+        Args:
+            patch (dict): The desired twin properties patch.
+        """
+        self.LOOP_INTERVAL = await self._connection_manager.get_desired_interval()
+        if self.DEBUG:
+            print(f'Twin property changed: {patch}')
 
     def _get_subsystem_dict(self) -> dict[SubSystemType, IDeviceController]:
         return {subsystem.system_type: subsystem for subsystem in self._subsystems}
@@ -89,7 +102,7 @@ async def farm_main():
             gpio=None,
             model='GPS (Air 530)',
             type=AReading.Type.GPS),
-        BuzzerController(
+        GeoBuzzerController(
             gpio=None,
             command_type=ACommand.Type.BUZZER_ON_OFF,
             model='ReTerminal Buzzer',
@@ -102,7 +115,7 @@ async def farm_main():
         )
     ],
         actuators=[
-        BuzzerController(
+        GeoBuzzerController(
             gpio=None,
             command_type=ACommand.Type.BUZZER_ON_OFF,
             model='ReTerminal Buzzer',
@@ -110,7 +123,7 @@ async def farm_main():
             initial_state='off')
     ]),
         SecurityController(actuators=[
-            BuzzerController(
+            SecurityBuzzerController(
                 gpio=None,
                 command_type=ACommand.Type.BUZZER_ON_OFF,
                 model='ReTerminal Buzzer',
@@ -140,7 +153,7 @@ async def farm_main():
                 gpio=22,
                 model='Adjustable PIR Motion Sensor',
                 type=AReading.Type.MOTION),
-            BuzzerController(
+            SecurityBuzzerController(
                 gpio=None,
                 command_type=ACommand.Type.BUZZER_ON_OFF,
                 model='ReTerminal Buzzer',
