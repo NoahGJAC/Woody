@@ -56,6 +56,12 @@ public partial class LoginPage : ContentPage
             LoginView.IsVisible = false;
 
             lblError.Text = "Wrong Username or Password";
+            //var user_ = new Models.User
+            //{
+            //    Uid = user.User.Uid,
+            //    Username = user_name.Text
+            //};
+            //App.UserRepo.User = user_;
             await DisplayAlert("Success", "Successfully logged in", "OK");
             await Shell.Current.GoToAsync($"//Index");
 

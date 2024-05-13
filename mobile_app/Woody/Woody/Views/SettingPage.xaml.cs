@@ -21,27 +21,34 @@ public partial class SettingPage : ContentPage
 	{
 		InitializeComponent();
 		CheckUserBinding();
+        App.UserRepo.UserDb.LoadItemsAsync();
 
     }
-	/// <summary>
-	/// add the binding depending if the user is signIn or signUp
-	/// </summary>
-	private void CheckUserBinding()
-	{
-		if(App.UserRepo.User != null) {
+    /// <summary>
+    /// add the binding depending if the user is signIn or signUp
+    /// </summary>
+    private void CheckUserBinding()
+    {
+        if (App.UserRepo.User != null)
+        {
             BindingContext = App.UserRepo.User;
         }
-		else
-		{
-			var usr = AuthService.UserCreds;
+        else
+        {
+            var usr = AuthService.UserCreds;
 
-			var temp = App.UserRepo.UserDb.Items.Where(u=>u.Uid==usr.User.Uid).First();
-			App.UserRepo.User = temp;
-            BindingContext = App.UserRepo.User;
-
-
+            if (usr != null && usr.User != null && App.UserRepo.UserDb.Items != null && App.UserRepo.UserDb.Items.Any())
+            {
+                var temp = App.UserRepo.UserDb.Items.Where(u => u.Uid == usr.User.Uid).FirstOrDefault();
+                if (temp != null)
+                {
+                    App.UserRepo.User = temp;
+                    BindingContext = App.UserRepo.User;
+                }
+            }
         }
-	}
+    }
+
 
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {
