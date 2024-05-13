@@ -5,8 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Woody"
     xmlns:views="clr-namespace:Woody.Views"
+    xmlns:converter="clr-namespace:Woody.Converters"
     FlyoutBehavior="Disabled">
-    
+    <Shell.Resources>
+        <ResourceDictionary>
+            <converter:UserTypeToBoolConverter x:Key="UserTypeToBoolConverter" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
     <!--  Landing page  -->
     <ShellContent
         Title="Login"
@@ -34,15 +40,20 @@
             <ShellContent Title="Plant" ContentTemplate="{DataTemplate views:PlantPage}" />
             <ShellContent Title="Security" ContentTemplate="{DataTemplate views:SecurityPage}" />
             <ShellContent
+                x:Name="tab_geolocation"
                 Title="Geolocation"
                 ContentTemplate="{DataTemplate views:MapPage}"
-                Icon="map.png" />
+                Icon="map.png" 
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}"
+                />
         </Tab>
         <Tab
+            x:Name="tab_analytics"
             Title="Analytics"
             Icon="pie_chart.png"
             Route="AnalyticsPage">
-            <ShellContent ContentTemplate="{DataTemplate views:AnalyticsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:AnalyticsPage}" 
+                          IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}"/>
         </Tab>
         <!--<Tab
             Title="Tasks"

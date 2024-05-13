@@ -44,6 +44,10 @@ public partial class LoginPage : ContentPage
 
             App.UserRepo.User = App.UserRepo.UserDb.Items.Where(u => u.Uid == user.User.Uid).First();
 
+            // Now that the user is authenticated, set the BindingContext for specific views
+            var appShell = Shell.Current as AppShell;
+            appShell.SetNavigationBindingContext();
+
             lblError.Text = "Wrong Username or Password";
             await DisplayAlert("Success", "Successfully logged in", "OK");
             await Shell.Current.GoToAsync($"//Index");
