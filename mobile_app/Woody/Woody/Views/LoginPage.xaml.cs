@@ -42,6 +42,8 @@ public partial class LoginPage : ContentPage
             lblUser.Text = $"ID    : {user_name.Text}\n";
             LoginView.IsVisible = false;
 
+            App.UserRepo.User = App.UserRepo.UserDb.Items.Where(u => u.Uid == user.User.Uid).First();
+
             lblError.Text = "Wrong Username or Password";
             await DisplayAlert("Success", "Successfully logged in", "OK");
             await Shell.Current.GoToAsync($"//Index");
