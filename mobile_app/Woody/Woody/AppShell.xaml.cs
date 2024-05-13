@@ -20,5 +20,14 @@
         {
             InitializeComponent();
         }
+
+        public void SetNavigationBindingContext()
+        {
+            if(App.UserRepo.User != null)
+            {
+                tab_analytics.BindingContext = App.UserRepo.User.UserType;
+                tab_geolocation.BindingContext = App.UserRepo.User.UserType;
+            }
+        }
     }
 }

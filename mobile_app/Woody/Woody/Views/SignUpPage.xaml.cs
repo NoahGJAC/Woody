@@ -58,6 +58,12 @@ public partial class SignUpPage : ContentPage
             AuthService.UserCreds = user;
             user_.Uid = user.User.Uid;
             await App.UserRepo.UserDb.AddItemsAsync(user_);
+
+            // Now that the user is authenticated, set the BindingContext for specific views
+            var appShell = Shell.Current as AppShell;
+            appShell.SetNavigationBindingContext();
+
+
             await DisplayAlert("Success", "Successfully sign up", "OK");
             await Shell.Current.GoToAsync($"//Index");
             await AuthService.Client.SignInWithEmailAndPasswordAsync(email.Text, password.Text);
