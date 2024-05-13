@@ -47,14 +47,9 @@ class Farm:
         while True:
             readings = []
 
-            # try except for now, since i don't have all hardware to read from
-            # and pi may throw exceptions
-            try:
-                for subsystem in self._subsystems:
-                    for reading in subsystem.read_sensors():
-                        readings.append(reading)
-            except BaseException:
-                pass
+            for subsystem in self._subsystems:
+                for reading in subsystem.read_sensors():
+                    readings.append(reading)
 
             if self.DEBUG:
                 print("Farm Readings:\n", readings, "\n")

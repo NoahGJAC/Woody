@@ -25,12 +25,11 @@ class AReading(ABC):
         VIBRATION = 'vibration'
         LOUDNESS = 'loudness'
         LATITUDE = 'latitude'
-        LONGITUDE ='longitude'
+        LONGITUDE = 'longitude'
         ALTITUDE = 'altitude'
         GPS = 'GPS'
         PITCH = 'pitch'
         ROLL = 'roll'
-
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -48,13 +47,18 @@ class AReading(ABC):
         DEGREE = '°'
         METERS = 'm'
         PERCENTAGE = "%"
+        FAILURE = 'failure'
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
     value: float | str | bool
 
-    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
+    def __init__(
+            self,
+            type: Type,
+            unit: Unit,
+            value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
@@ -63,16 +67,17 @@ class AReading(ABC):
         """String representation of a reading object
         """
         return f"AReading(reading_type={self.reading_type}, value={self.value}, unit={self.reading_unit})"
-    
+
     def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
-    
+
     def export_json(self) -> str:
         """Exports a reading as a json encoded string
 
         :return str: json string representation of the reading
         """
-        return json.dumps({"value": self.value, "unit": self.reading_unit.value})
+        return json.dumps(
+            {"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):

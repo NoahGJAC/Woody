@@ -35,13 +35,21 @@ class TemperatureHumiditySensor(ISensor):
         Returns:
             list[AReading]: A list of readings taken by the sensor.
         """
-        return [
-            AReading(
-                type=self.reading_type,
-                unit=AReading.Unit.CELSIUS_HUMIDITY,
-                value=list(self.sensor.read()),
-            )
-        ]
+        try:
+            return [
+                AReading(
+                    type=self.reading_type,
+                    unit=AReading.Unit.CELSIUS_HUMIDITY,
+                    value=list(self.sensor.read()),
+                )
+            ]
+        except BaseException:
+            return [
+                AReading(
+                    type=self.reading_type,
+                    unit=AReading.Unit.FAILURE,
+                    value="")
+            ]
 
 
 def main():
