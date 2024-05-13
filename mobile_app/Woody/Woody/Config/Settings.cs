@@ -40,5 +40,9 @@ namespace Woody.Config
         /// Gets or sets the IoTHub Connection String
         /// </summary>
         public string IOTHubConnectionString { get; set; }
+
+        public string BlobContainerName { get; set; }
+
+        public string BlobConnectionString { get; set; }
     }
 }

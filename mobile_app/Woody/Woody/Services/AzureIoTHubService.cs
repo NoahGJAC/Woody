@@ -1,4 +1,6 @@
-﻿using LiteDB;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using LiteDB;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
@@ -10,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace Woody.Services
 {
-    public  class AzureIoTHubService
+    public class AzureIoTHubService
     {
-        public  DeviceClient deviceClient { get; set; }
+        public DeviceClient deviceClient { get; set; }
+        public BlobContainerClient blobContainerClient { get; set; }
 
         /// <summary>
         /// Connect to the IoTHub using the Device Connection String
@@ -24,8 +27,9 @@ namespace Woody.Services
             {
                 var transportType = Microsoft.Azure.Devices.Client.TransportType.Mqtt;
                 deviceClient = DeviceClient.CreateFromConnectionString(App.Settings.IOTHubDeviceConnectionString, transportType);
+                blobContainerClient = new BlobContainerClient(App.Settings.BlobConnectionString, App.Settings.BlobContainerName);
                 await deviceClient.OpenAsync();
-                Console.WriteLine("Connected to Azure IoT Hub.");
+                Console.WriteLine("Connected to Azure IoT Hub and to the Blob");
                 return true;
             }
             catch (Exception ex)
@@ -34,30 +38,24 @@ namespace Woody.Services
                 return false;
             }
         }
-        /// <summary>
-        /// Get's all of the readings from the IoT.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<string> ReceiveReadingsAsync()
-        {
-            try
-            {
-                var receivedMessage = await deviceClient.ReceiveAsync();
-                if (receivedMessage == null)
-                    return "No new Message";
 
-                var messageData = Encoding.UTF8.GetString(receivedMessage.GetBytes());
-                var deserializedObject = JsonConvert.DeserializeObject<dynamic>(messageData);
-                Console.WriteLine($"Received message from Azure IoT Hub: {messageData}");
-                await deviceClient.CompleteAsync(receivedMessage); //this delete the message that was sent but idk if we want that
-                return deserializedObject;
-                
-            }
-            catch (Exception ex)
+        public async Task<List<string>> DownloadBlobAsync()
+        {
+            var blobList = new List<string>();
+
+            await foreach (var blobItem in blobContainerClient.GetBlobsAsync())
             {
-                Console.WriteLine($"Failed to receive message from Azure IoT Hub: {ex.Message}");
-                return null;
+                var blobClient = blobContainerClient.GetBlobClient(blobItem.Name);
+                var memoryStream = new MemoryStream();
+                await blobClient.DownloadToAsync(memoryStream);
+                memoryStream.Position = 0; // Reset the position to the start of the stream
+
+                // Assuming the blob contains text, read the content and add it to the list
+                var blobContent = new StreamReader(memoryStream).ReadToEnd();
+                blobList.Add(blobContent);
             }
+
+            return blobList;
         }
     }
 }

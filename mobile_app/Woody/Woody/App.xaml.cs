@@ -81,6 +81,8 @@ namespace Woody
             Settings = config.GetRequiredSection(nameof(Settings)).Get<Settings>();
             MainPage = new AppShell();
             Task.Run(()=>IoTDevice.ConnectToDeviceAsync()).Wait();
+            Task.Run(()=>IoTDevice.DownloadBlobAsync()).Wait();
+
         }
     }
 }
