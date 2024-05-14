@@ -5,19 +5,16 @@ from python.sensors.sensors import ISensor, AReading
 
 
 class IDeviceController(ABC):
-    """Interface for all device controllers.
-    """
+    """Interface for all device controllers."""
 
     # Class properties that must be defined in implementation classes.
     _sensors: list[ISensor]
     _actuators: list[IActuator]
 
     @abstractmethod
-    def __init__(self,
-                 sensors: list[ISensor],
-                 actuators: list[IActuator]) -> None:
+    def __init__(self, sensors: list[ISensor], actuators: list[IActuator]) -> None:
         """
-            Initialize the actuators and sensors
+        Initialize the actuators and sensors
         """
         self._sensors: list[ISensor] = sensors
         self._actuators: list[IActuator] = actuators

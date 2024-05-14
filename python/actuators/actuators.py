@@ -8,18 +8,18 @@ class ACommand(ABC):
     """
 
     class Type(str, Enum):
-        """Enum defining types of actuators that can be targets for a command
-        """
+        """Enum defining types of actuators that can be targets for a command"""
+
         # Add types as needed
-        FAN_ON_OFF = 'fan-on-off'
-        LIGHT_ON_OFF = 'light-on-off'
-        LIGHT_PULSE = 'light-pulse'
-        BUZZER_ON_OFF = 'buzzer-on-off'
-        DOOR_LOCK = 'door-lock'
+        FAN_ON_OFF = "fan-on-off"
+        LIGHT_ON_OFF = "light-on-off"
+        LIGHT_PULSE = "light-pulse"
+        BUZZER_ON_OFF = "buzzer-on-off"
+        DOOR_LOCK = "door-lock"
 
     # Class properties that must be defined in implementation classes
     target_type: Type
-    value: str # May be updated to a dict when azure is connected
+    value: str  # May be updated to a dict when azure is connected
 
     def __init__(self, target: Type, value: str) -> None:
         """Constructor for Command abstract class
@@ -31,18 +31,17 @@ class ACommand(ABC):
         self.value: str = value
 
     def __repr__(self) -> str:
-        return f'Command setting {self.target_type} to {self.value}'
+        return f"Command setting {self.target_type} to {self.value}"
 
 
 class IActuator(ABC):
 
     # Class properties that must be set in constructor of implementation class
-    _current_state: str | bool # May be updated to a dict as azure is implemented
+    _current_state: str | bool  # May be updated to a dict as azure is implemented
     type: ACommand.Type
 
     @abstractmethod
-    def __init__(self, gpio: int, type: ACommand.Type,
-                 initial_state: str) -> None:
+    def __init__(self, gpio: int, type: ACommand.Type, initial_state: str) -> None:
         """Constructor for Actuator class. Must define interface's class properties
 
         :param ACommand.Type type: Type of command the actuator can respond to.
@@ -71,11 +70,9 @@ class IActuator(ABC):
 
 
 class MockActuator(IActuator):
-    """A class that represents a mock actuator that implements the IActuator interface.
-    """
+    """A class that represents a mock actuator that implements the IActuator interface."""
 
-    def __init__(self, gpio: int, type: ACommand.Type,
-                 initial_state: str) -> None:
+    def __init__(self, gpio: int, type: ACommand.Type, initial_state: str) -> None:
         """Initialize the mock actuator. Set the parameters required by the interface.
 
         Args:
@@ -111,6 +108,5 @@ class MockActuator(IActuator):
         return True
 
     def clean_up(self):
-        """Simulates any clean up needed on the hardware.
-        """
+        """Simulates any clean up needed on the hardware."""
         pass

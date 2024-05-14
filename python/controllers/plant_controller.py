@@ -2,7 +2,7 @@
 
 from time import sleep
 from python.actuators.plant.fan import FanController
-# from python.actuators.plant.light import LightController
+from python.actuators.plant.light import LightController
 from python.actuators.actuators import ACommand, IActuator
 from python.controllers.device_controllers import IDeviceController
 from python.sensors.sensors import AReading, ISensor
@@ -15,10 +15,7 @@ import colorama
 class PlantController(IDeviceController):
     """A class that represents a plant subsystem device controller."""
 
-    def __init__(
-            self,
-            sensors: list[ISensor],
-            actuators: list[IActuator]) -> None:
+    def __init__(self, sensors: list[ISensor], actuators: list[IActuator]) -> None:
         """Initializes a PlantController
 
         Args:
@@ -37,23 +34,22 @@ class PlantController(IDeviceController):
             actuator = actuator_dict.get(command.target_type)
             if actuator is None:
                 print(
-                    colorama.Fore.RED +
-                    f"No actuator found for command: {command}" +
-                    colorama.Fore.RESET
+                    colorama.Fore.RED
+                    + f"No actuator found for command: {command}"
+                    + colorama.Fore.RESET
                 )
                 continue
 
             if not actuator.validate_command(command=command):
                 print(
-                    colorama.Fore.RED +
-                    f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
-                    colorama.Fore.RESET)
+                    colorama.Fore.RED
+                    + f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}"
+                    + colorama.Fore.RESET
+                )
                 continue
 
             actuator.control_actuator(value=command.value)
-            print(
-                f"Executed command: {command}"
-            )
+            print(f"Executed command: {command}")
 
     def _get_actuator_dict(self) -> dict[ACommand.Type, IActuator]:
         """Returns a dictionary with the actuators as values to their command type key.
@@ -69,12 +65,12 @@ class PlantController(IDeviceController):
         :return list[AReading]: a list containing all readings collected from the sensors.
         """
         readings: list[AReading] = [
-            reading for sensor in self._sensors for reading in sensor.read_sensor()]
+            reading for sensor in self._sensors for reading in sensor.read_sensor()
+        ]
         return readings
 
     def loop(self):
-        """Loops through controlling actuators and reading sensors. Intended for testing.
-        """
+        """Loops through controlling actuators and reading sensors. Intended for testing."""
         """
         pre_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='on'),
@@ -87,17 +83,19 @@ class PlantController(IDeviceController):
         """
 
         pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value="on"),
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="on")
         ]
         post_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value="off"),
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="off")
         ]
 
         while True:
             self.control_actuators(commands=pre_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
+                if reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY:
                     temperature, humidity = reading.value
                     print("temperature: {:.2f} C".format(temperature))
                     print("humidity: {:.2f} %".format(humidity))
@@ -109,7 +107,7 @@ class PlantController(IDeviceController):
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if (reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY):
+                if reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY:
                     temperature, humidity = reading.value
                     print("temperature: {:.2f} C".format(temperature))
                     print("humidity: {:.2f} %".format(humidity))
@@ -120,14 +118,13 @@ class PlantController(IDeviceController):
 
 
 def main():
-    controller = PlantController(sensors=[
-        SoilMoistureSensor(),
-        WaterLevelSensor(),
-        TemperatureHumiditySensor()
-    ],
+    controller = PlantController(
+        sensors=[SoilMoistureSensor(), WaterLevelSensor()],
         actuators=[
-        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
-    ])
+            LightController(gpio=12, type=ACommand.Type.LIGHT_ON_OFF),
+            FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF),
+        ],
+    )
 
     controller.loop()
 
