@@ -41,7 +41,8 @@ public partial class LoginPage : ContentPage
         NetworkAccess accessType = Connectivity.Current.NetworkAccess;
         if (accessType != NetworkAccess.Internet)
         {
-            await DisplayAlert("Error", "No internet", "OK");
+            await DisplayAlert("Error", "No internet connection available.", "OK");
+            return;
         }
 
         try
@@ -54,6 +55,12 @@ public partial class LoginPage : ContentPage
             //Update UI
             lblUser.Text = $"ID    : {user_name.Text}\n";
             LoginView.IsVisible = false;
+
+            App.UserRepo.User = App.UserRepo.UserDb.Items.Where(u => u.Uid == user.User.Uid).First();
+
+            // Now that the user is authenticated, set the BindingContext for specific views
+            var appShell = Shell.Current as AppShell;
+            appShell.SetNavigationBindingContext();
 
             lblError.Text = "Wrong Username or Password";
             //var user_ = new Models.User
@@ -70,7 +77,47 @@ public partial class LoginPage : ContentPage
         }
         catch (FirebaseAuthException ex)
         {
-            await DisplayAlert("Error", ex.Message, "OK");
+            switch (ex.Reason)
+            {
+                case AuthErrorReason.EmailExists:
+                    await DisplayAlert("Error", "A user with this email exists.", "OK");
+                    break;
+                case AuthErrorReason.AccountExistsWithDifferentCredential:
+                    await DisplayAlert("Error", "Account already exists.", "OK");
+                    break;
+                case AuthErrorReason.AlreadyLinked:
+                    await DisplayAlert("Error", "Account has already been linked.", "OK");
+                    break;
+                case AuthErrorReason.InvalidEmailAddress:
+                    await DisplayAlert("Error", "Email address is invalid.", "OK");
+                    break;
+                case AuthErrorReason.MissingPassword:
+                    await DisplayAlert("Error", "Provide a password.", "OK");
+                    break;
+                case AuthErrorReason.MissingEmail:
+                    await DisplayAlert("Error", "Provide an email address.", "OK");
+                    break;
+                case AuthErrorReason.TooManyAttemptsTryLater:
+                    await DisplayAlert("Error", "Too many attempts try later.", "OK");
+                    break;
+                case AuthErrorReason.UserNotFound:
+                    await DisplayAlert("Error", "Account not found.", "OK");
+                    break;
+                case AuthErrorReason.UnknownEmailAddress:
+                    await DisplayAlert("Error", "Unknown email address.", "OK");
+                    break;
+                case AuthErrorReason.WrongPassword:
+                    await DisplayAlert("Error", "Wrong password.", "OK");
+                    break;
+                default:
+                    if (ex.Message.Contains("INVALID_LOGIN_CREDENTIALS"))
+                    {
+                        await DisplayAlert("Error", "Invalid login credentials.", "OK");
+                        break;
+                    }
+                    await DisplayAlert("Error", $"An unknown error occurred. {ex.Message}", "OK");
+                    break;
+            }
         }
         catch (ApplicationException ex)
         {
