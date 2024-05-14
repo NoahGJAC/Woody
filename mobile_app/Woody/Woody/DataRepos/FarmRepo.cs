@@ -90,7 +90,7 @@ namespace Woody.DataRepos
                 }
             }
 
-            AssignDataToRepos(parseJsonObjects);
+            Task.Run(() => AssignDataToRepos(parseJsonObjects)).Wait();
         }
 
         private void AssignDataToRepos(List<IReading> parsedJsonObjects)
@@ -226,7 +226,11 @@ namespace Woody.DataRepos
             }
             else if(jsonObject.ReadingType == ReadingType.LOUDNESS)
             {
-                securityRepo.NoiseLevels.Add((IReading<float>)jsonObject);
+                var temp = (IReading<long>)jsonObject;
+
+                var value = (float)temp.Value;
+                var reading = new SensorReading<float>(value,temp.TimeStamp,temp.Unit,temp.ReadingType);
+                securityRepo.NoiseLevels.Add(reading);
             }
             else if(jsonObject.ReadingType== ReadingType.LUMINOSITY)
             {
