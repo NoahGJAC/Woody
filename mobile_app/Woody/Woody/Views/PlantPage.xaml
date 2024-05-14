@@ -12,6 +12,110 @@
             BorderColor="Transparent"
             CornerRadius="10">
             <StackLayout>
+                <!--  Header  -->
+                <HorizontalStackLayout>
+                    <Image
+                        Margin="5,0,0,0"
+                        HeightRequest="30"
+                        Source="sprout.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="15,0,0,0"
+                        FontFamily="OpenSansBold"
+                        FontSize="20"
+                        Text="Latest Readings" />
+                </HorizontalStackLayout>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="0.5*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!--  Temperature  -->
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="Body"
+                        Text="TEMPERATURE" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding CurrentTemperature.Value}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="°C" />
+
+                    <!--  Humidity  -->
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="Body"
+                        Text="HUMIDITY" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding CurrentHumidity.Value}" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="%" />
+
+                    <!--  Soil Moisture  -->
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="Body"
+                        Text="SOIL MOISTURE" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding CurrentSoilMoisture.Value}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        FontFamily="OpenSansBold"
+                        FontSize="Body"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="%" />
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+
+        <Frame
+            Margin="15,15,15,0"
+            BackgroundColor="{StaticResource White}"
+            BorderColor="Transparent"
+            CornerRadius="10">
+            <StackLayout>
 
                 <!--  Header  -->
                 <HorizontalStackLayout>
