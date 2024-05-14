@@ -60,12 +60,7 @@ public partial class LoginPage : ContentPage
         {
             switch (ex.Reason)
             {
-                case AuthErrorReason.EmailExists:
-                    await DisplayAlert("Error", "A user with this email exists.", "OK");
-                    break;
-                case AuthErrorReason.AccountExistsWithDifferentCredential:
-                    await DisplayAlert("Error", "Account already exists.", "OK");
-                    break;
+
                 case AuthErrorReason.AlreadyLinked:
                     await DisplayAlert("Error", "Account has already been linked.", "OK");
                     break;
@@ -85,11 +80,18 @@ public partial class LoginPage : ContentPage
                     await DisplayAlert("Error", "Account not found.", "OK");
                     break;
                 case AuthErrorReason.UnknownEmailAddress:
-                    await DisplayAlert("Error", "Unknown email address.", "OK");
+                    await DisplayAlert("Error", "No records match with this email address.", "OK");
+                    break;
+                case AuthErrorReason.UserDisabled:
+                    await DisplayAlert("Error", "Account has been disabled.", "OK");
                     break;
                 case AuthErrorReason.WrongPassword:
                     await DisplayAlert("Error", "Wrong password.", "OK");
                     break;
+                case AuthErrorReason.LoginCredentialsTooOld:
+                    await DisplayAlert("Error", "Login credentials too old. Try again.", "OK");
+                    break;
+                case AuthErrorReason.Unknown:
                 default:
                     if (ex.Message.Contains("INVALID_LOGIN_CREDENTIALS"))
                     {

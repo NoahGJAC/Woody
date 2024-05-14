@@ -111,9 +111,7 @@ public partial class SignUpPage : ContentPage
                 case AuthErrorReason.WeakPassword:
                     await DisplayAlert("Error", "Password is too weak. Must be at least 6 characters", "OK");
                     break;
-                case AuthErrorReason.UserNotFound:
-                    await DisplayAlert("Error", "Account not found.", "OK");
-                    break;
+                case AuthErrorReason.Unknown:
                 default:
                     await DisplayAlert("Error", $"An unknown error occurred. {ex.Message}", "OK");
                     break;
