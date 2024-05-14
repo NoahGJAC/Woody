@@ -44,5 +44,8 @@ namespace Woody.Config
         public string BlobContainerName { get; set; }
 
         public string BlobConnectionString { get; set; }
+
+        public string EventHubConnectionString { get; set; }
+        public string EventHubName { get; set; }
     }
 }

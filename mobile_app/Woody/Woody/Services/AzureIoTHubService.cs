@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Processor;
+using System.Net;
 
 namespace Woody.Services
 {
@@ -16,7 +20,8 @@ namespace Woody.Services
     {
         public DeviceClient deviceClient { get; set; }
         public BlobContainerClient blobContainerClient { get; set; }
-
+        public EventProcessorClient eventProcessorClient { get; set; }
+        public EventHubConsumerClient eventHubConsumerClient { get; set; }
         /// <summary>
         /// Connect to the IoTHub using the Device Connection String
         /// </summary>
@@ -28,7 +33,18 @@ namespace Woody.Services
                 var transportType = Microsoft.Azure.Devices.Client.TransportType.Mqtt;
                 deviceClient = DeviceClient.CreateFromConnectionString(App.Settings.IOTHubDeviceConnectionString, transportType);
                 blobContainerClient = new BlobContainerClient(App.Settings.BlobConnectionString, App.Settings.BlobContainerName);
-                await deviceClient.OpenAsync();
+                eventProcessorClient = new EventProcessorClient(blobContainerClient,App.Settings.EventHubName, App.Settings.EventHubConnectionString);
+                var options = new EventHubConsumerClientOptions();
+                options.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
+
+                string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+                await using var consumer = new EventHubConsumerClient(consumerGroup, App.Settings.EventHubConnectionString, App.Settings.EventHubName, options);
+                eventHubConsumerClient = consumer;
+
+                // Register handlers for processing events and handling errors
+                eventProcessorClient.ProcessEventAsync += ProcessEventHandler;
+                eventProcessorClient.ProcessErrorAsync += ProcessErrorHandler;
+                //await deviceClient.OpenAsync();
                 Console.WriteLine("Connected to Azure IoT Hub and to the Blob");
                 return true;
             }
@@ -57,6 +73,21 @@ namespace Woody.Services
             }
 
             return blobList;
+        }
+
+        Task ProcessEventHandler(ProcessEventArgs eventArgs)
+        {
+            // Write the body of the event to the console window
+            Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
+            return Task.CompletedTask;
+        }
+
+        Task ProcessErrorHandler(ProcessErrorEventArgs eventArgs)
+        {
+            // Write details about the error to the console window
+            Console.WriteLine($"\tPartition '{eventArgs.PartitionId}': an unhandled exception was encountered. This was not expected to happen.");
+            Console.WriteLine(eventArgs.Exception.Message);
+            return Task.CompletedTask;
         }
     }
 }

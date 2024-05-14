@@ -40,7 +40,7 @@ namespace Woody.DataRepos
             geoLocationRepo = new GeoLocationRepo();
         }
 
-        public async void DeserializeDataAsync()
+        public async Task<bool> DeserializeDataAsync()
         {
             var blobList = await App.IoTDevice.DownloadBlobAsync(); //this get the data from the blob
             var parseJsonObjects = new List<IReading>();
@@ -72,12 +72,21 @@ namespace Woody.DataRepos
                         var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
                         var value = values["value"];
                         var unitValue = values["unit"];
-                        var uniType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
+                        ReadingUnit unitType;
+                        if(readingType == ReadingType.LOUDNESS)
+                        {
+                            unitType = ReadingUnit.LOUDNESS;
+                        }
+                        else
+                        {
+                           unitType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
+                        }
+                        
                         Type type = value.GetType();
                         var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
                         var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
                         // Invoke the constructor
-                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, tempObject.TimeStamp, uniType, readingType });
+                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, tempObject.TimeStamp, unitType, readingType });
 
                         parseJsonObjects.Add((IReading)sensorReadingInstance);
                     }
@@ -90,7 +99,8 @@ namespace Woody.DataRepos
                 }
             }
 
-           AssignDataToRepos(parseJsonObjects);
+            AssignDataToRepos(parseJsonObjects);
+            return true;
         }
 
         private void AssignDataToRepos(List<IReading> parsedJsonObjects)
@@ -123,6 +133,8 @@ namespace Woody.DataRepos
                 ReadingType.PITCH,
                 ReadingType.ROLL
             };
+
+            var temp = parsedJsonObjects.Where(u => u.ReadingType == ReadingType.LOUDNESS);
             foreach (var jsonObject in parsedJsonObjects)
             {
                 if(geoLoactionReadingType.Contains(jsonObject.ReadingType))
@@ -139,6 +151,7 @@ namespace Woody.DataRepos
                 }
 
             }
+
         }
 
         /// <summary>
