@@ -39,7 +39,7 @@ public partial class SecurityPage : ContentPage
 
     private void SetBindingContext()
     {
-        BindingContext = App.SecurityRepo;
+        BindingContext = App.FarmRepo.SecurityRepo;
 
         frame_latest_readings.BindingContext = App.UserRepo.User.UserType;
         frame_graphs.BindingContext = App.UserRepo.User.UserType;
