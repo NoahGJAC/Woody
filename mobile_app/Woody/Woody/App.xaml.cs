@@ -35,39 +35,21 @@ namespace Woody
             get { return userRepo ??= new UserRepo(); }
         }
 
-        /// <summary>
-        /// Gets the Security repository.
-        /// </summary>
-        public static SecurityRepo SecurityRepo
-        {
-            get { return securityRepo ??= new SecurityRepo(); }
-        }
-
-        private static PlantRepo plantRepo;
-
-        /// <summary>
-        /// Gets the plant repository.
-        /// </summary>
-        public static PlantRepo PlantRepo
-        {
-            get { return plantRepo ??= new PlantRepo(); }
-        }
-
-        private static GeoLocationRepo geoLocationRepo;
-
-        /// <summary>
-        /// Gets the geolocation repository
-        /// </summary>
-        public static GeoLocationRepo GeoLocationRepo
-        {
-            get { return geoLocationRepo ??= new GeoLocationRepo(); }
-        }
-
         public static AzureIoTHubService IoTDevice
         {
 
             get { return ioTDevice ??= new AzureIoTHubService(); }
         }
+
+        private static FarmRepo farmRepo;
+        /// <summary>
+        /// This is the Repo for the farm
+        /// </summary>
+        public static FarmRepo FarmRepo
+        {
+            get { return farmRepo ??= new FarmRepo(); }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
@@ -81,7 +63,8 @@ namespace Woody
             Settings = config.GetRequiredSection(nameof(Settings)).Get<Settings>();
             MainPage = new AppShell();
             Task.Run(()=>IoTDevice.ConnectToDeviceAsync()).Wait();
-            Task.Run(()=>IoTDevice.DownloadBlobAsync()).Wait();
+            Task.Run(() => { FarmRepo.DeserializeDataAsync(); }).Wait();
+
 
         }
     }

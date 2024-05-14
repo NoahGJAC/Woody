@@ -51,6 +51,24 @@ namespace Woody.Enums
             return attribute == null ? unit.ToString() : attribute.Value;
         }
     }
+    /// <summary>
+    /// Get the enum from the value
+    /// </summary>
+    public static class EnumExtensions
+    {
+        public static TEnum GetEnumFromString<TEnum>(string value) where TEnum : struct, Enum
+        {
+            foreach (var field in typeof(TEnum).GetFields())
+            {
+                var attribute = field.GetCustomAttribute<ReadingUnitAttribute>();
+                if (attribute != null && attribute.Value == value)
+                {
+                    return (TEnum)field.GetValue(null);
+                }
+            }
+            throw new Exception("the unitReading isn't found");
+        }
+    }
 
 
     // Unit value can be used like so:
@@ -126,5 +144,6 @@ namespace Woody.Enums
         /// </summary>
         [ReadingUnit("")]
         UNITLESS
+
     }
 }

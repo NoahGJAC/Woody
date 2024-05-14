@@ -53,6 +53,7 @@ namespace Woody.Services
                 // Assuming the blob contains text, read the content and add it to the list
                 var blobContent = new StreamReader(memoryStream).ReadToEnd();
                 blobList.Add(blobContent);
+                memoryStream.Close();
             }
 
             return blobList;

@@ -97,6 +97,8 @@ namespace Woody.DataRepos
         public SecurityRepo()
         {
             securityDb = new ContainerDatabaseService<SecurityController>();
+            NoiseLevels = new List<IReading<float>>();
+            LuminosityLevels = new List<IReading<int>>();
 
             //for testing purposes
             AddTestData();
@@ -108,15 +110,15 @@ namespace Woody.DataRepos
         /// <param name="sample_points">The number of sample points to generate for noise and luminosity levels.</param>
         private void AddTestData(int sample_points = 40)
         {
-            NoiseLevels = new List<IReading<float>>();
-            LuminosityLevels = new List<IReading<int>>();
+            //NoiseLevels = new List<IReading<float>>();
+            //LuminosityLevels = new List<IReading<int>>();
 
             Random random = new Random();
 
-            DoorState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR);
-            MotionState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.MOTION);
-            BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.BUZZER);
-            LockState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR_LOCK);
+            //DoorState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR);
+            //MotionState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.MOTION);
+            //BuzzerState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.BUZZER);
+            //LockState = new SensorReading<bool>(random.Next(0, 2) == 0, DateTime.Now, ReadingUnit.UNITLESS, ReadingType.DOOR_LOCK);
 
             DateTime day;
 
@@ -130,9 +132,9 @@ namespace Woody.DataRepos
                 NoiseLevels.Add(noiseReading);
 
                 // Generate random luminosity level
-                var luminosityValue = random.Next(0, 100000);
-                var luminosityReading = new SensorReading<int>(luminosityValue, day, ReadingUnit.LUX, ReadingType.LUMINOSITY);
-                LuminosityLevels.Add(luminosityReading);
+                //var luminosityValue = random.Next(0, 100000);
+                //var luminosityReading = new SensorReading<int>(luminosityValue, day, ReadingUnit.LUX, ReadingType.LUMINOSITY);
+                //LuminosityLevels.Add(luminosityReading);
             }
         }
 

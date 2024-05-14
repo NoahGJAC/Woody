@@ -106,6 +106,9 @@ namespace Woody.DataRepos
         public PlantRepo()
         {
             plantDb = new ContainerDatabaseService<PlantController>();
+            TemperatureLevels = new List<IReading<double>>();
+            SoilMoistureLevels = new List<IReading<double>>();
+            HumidityLevels = new List<IReading<double>>();
             AddTestData();
         }
 

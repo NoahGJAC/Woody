@@ -30,22 +30,22 @@ public partial class SecurityPage : ContentPage
 		InitializeComponent();
 		Charts = new ObservableCollection<CartesianChart>
 		{
-			ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
-			ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
+			ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
+			ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
 		};
 
-		BindingContext = App.SecurityRepo;
+		BindingContext = App.FarmRepo.SecurityRepo;
 		ChartCarousel.BindingContext = this;
 		IndicatorView.BindingContext = this;
     }
 
     private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-		App.SecurityRepo.BuzzerState.Value = e.Value;
+		App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
     }
 
     private void ButtonLock_Clicked(object sender, EventArgs e)
     {
-		App.SecurityRepo.LockState.Value = !App.SecurityRepo.LockState.Value;
+		App.FarmRepo.SecurityRepo.LockState.Value = !App.FarmRepo.SecurityRepo.LockState.Value;
     }
 }

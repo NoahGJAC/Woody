@@ -23,14 +23,14 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
 
-        BindingContext = App.GeoLocationRepo;
+        BindingContext = App.FarmRepo.GeoLocationRepo;
         ConfigureMap();
         
     }
     private void ConfigureMap()
     {
         
-        var location = new Location(App.GeoLocationRepo.GPS.Value.Latitude.Value, App.GeoLocationRepo.GPS.Value.Longitude.Value);
+        var location = new Location(App.FarmRepo.GeoLocationRepo.GPS.Value.Latitude.Value, App.FarmRepo.GeoLocationRepo.GPS.Value.Longitude.Value);
         var pin = new Pin
         {
             Label = "container",
@@ -42,6 +42,6 @@ public partial class MapPage : ContentPage
     }
     private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        App.SecurityRepo.BuzzerState.Value = e.Value;
+        App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
     }
 }
