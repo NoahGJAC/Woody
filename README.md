@@ -37,6 +37,13 @@ Our goal is to make it easier than ever to grow your crops in a smarter way!
 
 *Color versions coming soon!*
 
+## Test Login Credentials
+- **Fleet Owner**
+    - Email: ownerowner@owner.ca
+    - Password: ownerowner
+- **Farm Technician**
+    - Email: farmer@test.ca
+    - Password: farmer
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
