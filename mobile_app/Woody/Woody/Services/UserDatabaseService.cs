@@ -104,14 +104,14 @@ namespace Woody.Services
             {
                 await _realtimeDb.PullAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
             
             IEnumerable<T> result = _realtimeDb.Once().Select(x => x.Object);
             return await Task.FromResult(result);
-        }
+            }
 
         /// <summary>
         /// Asynchronously updates an item in the database.
@@ -129,6 +129,10 @@ namespace Woody.Services
         private async Task LoadItems()
         {
             _items = new ObservableCollection<T>(await GetItemsAsync());
+        }
+        public async Task LoadItemsAsync()
+        {
+            await LoadItems();
         }
     }
 }
