@@ -170,7 +170,24 @@ public partial class LoginPage : ContentPage
             await DisplayAlert("Error", "Please enter a valid email address.", "OK");
             return;
         }
-        await AuthService.Client.ResetEmailPasswordAsync(email);
+
+        try 
+        { 
+            await AuthService.Client.ResetEmailPasswordAsync(email);
+        }
+        catch (FirebaseAuthException ex)
+        {
+            if (ex.Reason == AuthErrorReason.ResetPasswordExceedLimit)
+            {
+                await DisplayAlert("Error", "You have exceeded the limit for password resets. Please try again later.", "OK");
+                return;
+            }
+            else
+            {
+                await DisplayAlert("Error", "An error occurred while trying to reset your password. Please try again later.", "OK");
+                return;
+            }
+        }
         await DisplayAlert("Password Reset", $"If this email address matches our records, you will receive a password reset email.", "OK");
         
         LoginView.IsVisible = true;

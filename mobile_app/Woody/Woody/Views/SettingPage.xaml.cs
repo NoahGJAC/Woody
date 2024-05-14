@@ -1,3 +1,5 @@
+using Firebase.Auth;
+using Microsoft.Maui.ApplicationModel.Communication;
 using Woody.Services;
 
 namespace Woody.Views;
@@ -52,7 +54,22 @@ public partial class SettingPage : ContentPage
 
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {
-        await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
+        try
+        {
+            await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
+        }
+        catch (FirebaseAuthException ex)
+        {
+            if (ex.Reason == AuthErrorReason.ResetPasswordExceedLimit)
+            {
+                await DisplayAlert("Error", "You have exceeded the limit for password resets. Please try again later.", "OK");
+                return;
+            }else
+            {
+                await DisplayAlert("Error", "An error occurred while trying to reset your password. Please try again later.", "OK");
+                return;
+            }
+        }
         await DisplayAlert("Password Reset", $"An email has been sent to {AuthService.Client.User.Info.Email} to reset your password.", "OK");
     }
 
