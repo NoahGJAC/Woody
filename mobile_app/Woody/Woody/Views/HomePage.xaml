@@ -3,7 +3,7 @@
     x:Class="Woody.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ScrollView BackgroundColor="{StaticResource BackgroundAccent500}">
+    <ScrollView BackgroundColor="{StaticResource Alabaster}">
         <VerticalStackLayout>
             <!--  Greeting  -->
             <Label
@@ -14,6 +14,7 @@
                 HorizontalOptions="Start"
                 HorizontalTextAlignment="Start"
                 Text="It's good to see you!"
+                TextColor="{StaticResource DarkestCoffee}"
                 VerticalOptions="Center" />
             <Label
                 Margin="30,0,0,25"
@@ -24,16 +25,17 @@
                 HorizontalOptions="Start"
                 HorizontalTextAlignment="Start"
                 Text="Here is how things are going"
-                TextColor="{StaticResource Gray500}"
+                TextColor="{StaticResource Primary}"
                 VerticalOptions="Center" />
 
             <!--  Container status  -->
             <!--  TODO: Make icons bigger  -->
             <Frame
-                BackgroundColor="{StaticResource BackgroundAccent300}"
+                BackgroundColor="{StaticResource RawUmber}"
                 BorderColor="Transparent"
                 CornerRadius="40"
-                HeightRequest="400">
+                HeightRequest="400"
+                Opacity="20">
                 <StackLayout Margin="15,5,15,5">
 
                     <!--  Header  -->
@@ -41,7 +43,8 @@
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Large"
-                        Text="Container" />
+                        Text="Container"
+                        TextColor="White" />
 
                     <!--  Plant Wellbeing  -->
                     <Frame
@@ -56,6 +59,7 @@
                                 FontFamily="OpenSansBold"
                                 FontSize="16"
                                 Text="Plant wellbeing"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center"
                                 VerticalTextAlignment="Center" />
                         </HorizontalStackLayout>
@@ -75,6 +79,7 @@
                                 FontFamily="OpenSansBold"
                                 FontSize="16"
                                 Text="Security"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center"
                                 VerticalTextAlignment="Center" />
                         </HorizontalStackLayout>
@@ -94,6 +99,7 @@
                                 FontFamily="OpenSansBold"
                                 FontSize="16"
                                 Text="Location"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center"
                                 VerticalTextAlignment="Center" />
                         </HorizontalStackLayout>
@@ -104,7 +110,7 @@
             <!--  Tasks Coming Up  -->
             <Frame
                 Margin="0,-100,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BackgroundColor="{StaticResource Coyote}"
                 BorderColor="Transparent"
                 CornerRadius="40"
                 MinimumHeightRequest="375">
@@ -114,7 +120,8 @@
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Large"
-                        Text="Coming Up" />
+                        Text="Coming Up"
+                        TextColor="{StaticResource White}" />
 
                     <!--  Task List  -->
                     <!--  TODO: Binding task list  -->
@@ -122,7 +129,7 @@
                         Margin="0,10,0,0"
                         BackgroundColor="White"
                         CornerRadius="20"
-                        MinimumHeightRequest="100">
+                        MinimumHeightRequest="25">
                         <StackLayout VerticalOptions="Center">
                             <!--  Task #1  -->
                             <HorizontalStackLayout Margin="0,0,0,7">
@@ -137,12 +144,13 @@
                                         FontFamily="OpenSansBold"
                                         FontSize="16"
                                         Text="Refill water tank"
+                                        TextColor="{StaticResource DarkestCoffee}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <Label
                                         FontSize="12"
                                         Text="Due today at 9:30 AM"
-                                        TextColor="{StaticResource Gray600}" />
+                                        TextColor="{StaticResource LightCoffee}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
 
@@ -159,12 +167,13 @@
                                         FontFamily="OpenSansBold"
                                         FontSize="16"
                                         Text="Trim roots"
+                                        TextColor="{StaticResource DarkestCoffee}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <Label
                                         FontSize="12"
                                         Text="Due Saturday at 1:00 PM"
-                                        TextColor="{StaticResource Gray600}" />
+                                        TextColor="{StaticResource LightCoffee}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
 
@@ -181,12 +190,13 @@
                                         FontFamily="OpenSansBold"
                                         FontSize="16"
                                         Text="Harvest tomatoes"
+                                        TextColor="{StaticResource DarkestCoffee}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <Label
                                         FontSize="12"
                                         Text="Due next Monday at 11:00 AM"
-                                        TextColor="{StaticResource Gray600}" />
+                                        TextColor="{StaticResource LightCoffee}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
                         </StackLayout>
@@ -195,7 +205,7 @@
             </Frame>
             <Rectangle
                 Margin="0,-100,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BackgroundColor="{StaticResource DarkerCoffee}"
                 HeightRequest="5" />
         </VerticalStackLayout>
     </ScrollView>
