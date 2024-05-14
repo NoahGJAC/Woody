@@ -40,10 +40,8 @@ class PitchSensor(ISensor):
                 if last_x is not None and last_y is not None and last_z is not None:
                     pitch = self._calculate_pitch(last_x, last_y, last_z)
                     readings.append(
-                        AReading(
-                            AReading.Type.PITCH,
-                            AReading.Unit.DEGREE,
-                            pitch))
+                        AReading(AReading.Type.PITCH, AReading.Unit.DEGREE, pitch)
+                    )
                     break
         return readings
 
@@ -55,13 +53,13 @@ class PitchSensor(ISensor):
 
 
 def main():
-    pitch = PitchSensor(None, 'Built-in Accelerometer', AReading.Type.PITCH)
+    pitch = PitchSensor(None, "Built-in Accelerometer", AReading.Type.PITCH)
 
     while True:
         readings = pitch.read_sensor()
 
         for reading in readings:
-            print(f'Pitch: {reading.value:.2f}{reading.reading_unit.value}')
+            print(f"Pitch: {reading.value:.2f}{reading.reading_unit.value}")
 
 
 if __name__ == "__main__":

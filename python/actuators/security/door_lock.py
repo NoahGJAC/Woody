@@ -15,12 +15,13 @@ DOOR_LOCK_PIN: int = 12
 class DoorLockController(IActuator, ISensor):
 
     def __init__(
-            self,
-            gpio: int,
-            model: str,
-            command_type: ACommand.Type,
-            reading_type: AReading.Type,            
-            initial_state: str) -> None:
+        self,
+        gpio: int,
+        model: str,
+        command_type: ACommand.Type,
+        reading_type: AReading.Type,
+        initial_state: str,
+    ) -> None:
         """Initializes the door lock controller.
 
         Args:
@@ -38,19 +39,25 @@ class DoorLockController(IActuator, ISensor):
                 gpio,
                 min_pulse_width=0.5 / 1000,
                 max_pulse_width=2.5 / 1000,
-                pin_factory=PiGPIOFactory())
+                pin_factory=PiGPIOFactory(),
+            )
         except IOError as e:
-            print(f'{e}\nDid you forget $ sudo pigpiod')
+            print(f"{e}\nDid you forget $ sudo pigpiod")
             exit(1)
-        
+
         self._sensor_model: str = model
         self.reading_type: AReading.Type = reading_type
-        self.type: ACommand.Type = command_type # should rename IActuator property from type to something more readable
+        self.type: ACommand.Type = (
+            command_type  # should rename IActuator property from type to something more readable
+        )
         self._current_state: str = initial_state
 
         # Set initial state
-        self._servo.value = float(initial_state) if self.validate_command(
-            ACommand(target=self.type, value=initial_state)) else -1
+        self._servo.value = (
+            float(initial_state)
+            if self.validate_command(ACommand(target=self.type, value=initial_state))
+            else -1
+        )
 
     def validate_command(self, command: ACommand) -> bool:
         """Validates that a command can be used with the door lock actuator.
@@ -69,8 +76,11 @@ class DoorLockController(IActuator, ISensor):
         except ValueError:
             return False
 
-        return command.target_type == self.type and type(
-            command.value) is str and -1 <= command_value_float <= 1
+        return (
+            command.target_type == self.type
+            and type(command.value) is str
+            and -1 <= command_value_float <= 1
+        )
 
     def control_actuator(self, value: str) -> bool:
         """Controls the door lock's state.
@@ -85,7 +95,7 @@ class DoorLockController(IActuator, ISensor):
             ValueError: When unable to convert value to float. Returns False
         """
         try:
-            if (float(value) == float(self._current_state)):
+            if float(value) == float(self._current_state):
                 self._servo.value = float(value)
                 return False
             else:
@@ -101,16 +111,22 @@ class DoorLockController(IActuator, ISensor):
         Returns:
             list[AReading]: _description_
         """
-        return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self._servo.value)]
+        return [
+            AReading(
+                type=self.reading_type,
+                unit=AReading.Unit.UNITLESS,
+                value=self._servo.value,
+            )
+        ]
 
     def __del__(self):
         """Destructor:
-                Cleans up servo.
+        Cleans up servo.
         """
         self._servo.close()
 
 
-def read(door_lock: DoorLockController)-> None:
+def read(door_lock: DoorLockController) -> None:
     readings: list[AReading] = door_lock.read_sensor()
     for reading in readings:
         print(reading)
@@ -118,31 +134,32 @@ def read(door_lock: DoorLockController)-> None:
 
 def main():
     door_lock_controller = DoorLockController(
-        model='180 degree servo',
+        model="180 degree servo",
         gpio=DOOR_LOCK_PIN,
         command_type=ACommand.Type.DOOR_LOCK,
         reading_type=AReading.Type.DOOR_LOCK,
-        initial_state='-1')
+        initial_state="-1",
+    )
     try:
         while True:
-            door_lock_controller.control_actuator('1')
+            door_lock_controller.control_actuator("1")
             read(door_lock_controller)
             sleep(1)
-            door_lock_controller.control_actuator('-1')
+            door_lock_controller.control_actuator("-1")
             read(door_lock_controller)
             sleep(1)
-            door_lock_controller.control_actuator('-0')
+            door_lock_controller.control_actuator("-0")
             read(door_lock_controller)
             sleep(1)
-            door_lock_controller.control_actuator('0.5')
+            door_lock_controller.control_actuator("0.5")
             read(door_lock_controller)
             sleep(1)
-            door_lock_controller.control_actuator('-0.5')
+            door_lock_controller.control_actuator("-0.5")
             read(door_lock_controller)
             sleep(1)
     except KeyboardInterrupt:
-        print('exiting..')
+        print("exiting..")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

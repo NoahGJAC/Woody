@@ -6,14 +6,14 @@ from python.sensors.sensors import ISensor, AReading
 
 
 class LuminositySensor(ISensor):
-    """A sensor class for reading luminosity levels.
-    """
+    """A sensor class for reading luminosity levels."""
 
     def __init__(
-            self,
-            gpio: int | None = None,
-            model: str = 'Built-in Luminosity Sensor',
-            type: AReading.Type = AReading.Type.LUMINOSITY):
+        self,
+        gpio: int | None = None,
+        model: str = "Built-in Luminosity Sensor",
+        type: AReading.Type = AReading.Type.LUMINOSITY,
+    ):
         """Initialize a Luminosity sensor object.
 
         Args:
@@ -32,24 +32,23 @@ class LuminositySensor(ISensor):
         """
         return [
             AReading(
-                type=self.reading_type,
-                unit=AReading.Unit.LUX,
-                value=rt.illuminance)]
+                type=self.reading_type, unit=AReading.Unit.LUX, value=rt.illuminance
+            )
+        ]
 
 
 def main():
     luminosity_sensor = LuminositySensor(
-        gpio=None,
-        model='Built-in Luminosity Sensor',
-        type=AReading.Type.LUMINOSITY)
+        gpio=None, model="Built-in Luminosity Sensor", type=AReading.Type.LUMINOSITY
+    )
     try:
         while True:
             readings = luminosity_sensor.read_sensor()
             for reading in readings:
                 print(reading)
     except KeyboardInterrupt:
-        print('Exiting...')
+        print("Exiting...")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

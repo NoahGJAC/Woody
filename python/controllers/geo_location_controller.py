@@ -19,10 +19,7 @@ from python.enums.SubSystemType import SubSystemType
 class GeoLocationController(IDeviceController):
     """A class that represents a geolocation subsystem device controller."""
 
-    def __init__(
-            self,
-            sensors: list[ISensor],
-            actuators: list[IActuator]) -> None:
+    def __init__(self, sensors: list[ISensor], actuators: list[IActuator]) -> None:
         """Initializes a GeoLocationController
 
         Args:
@@ -43,23 +40,22 @@ class GeoLocationController(IDeviceController):
             actuator = actuator_dict.get(command.target_type)
             if actuator is None:
                 print(
-                    colorama.Fore.RED +
-                    f"No actuator found for command: {command}" +
-                    colorama.Fore.RESET
+                    colorama.Fore.RED
+                    + f"No actuator found for command: {command}"
+                    + colorama.Fore.RESET
                 )
                 continue
 
             if not actuator.validate_command(command=command):
                 print(
-                    colorama.Fore.RED +
-                    f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
-                    colorama.Fore.RESET)
+                    colorama.Fore.RED
+                    + f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}"
+                    + colorama.Fore.RESET
+                )
                 continue
 
             actuator.control_actuator(value=command.value)
-            print(
-                f"Executed command: {command}"
-            )
+            print(f"Executed command: {command}")
 
     def _get_actuator_dict(self) -> dict[ACommand.Type, IActuator]:
         """Returns a dictionary with the actuators as values to their command type key.
@@ -75,17 +71,17 @@ class GeoLocationController(IDeviceController):
         :return list[AReading]: a list containing all readings collected from the sensors.
         """
         readings: list[AReading] = [
-            reading for sensor in self._sensors for reading in sensor.read_sensor()]
+            reading for sensor in self._sensors for reading in sensor.read_sensor()
+        ]
         return readings
 
     def loop(self):
-        """Loops through controlling actuators and reading sensors. Intended for testing.
-        """
+        """Loops through controlling actuators and reading sensors. Intended for testing."""
         pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='on')
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value="on")
         ]
         post_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value='off')
+            ACommand(target=ACommand.Type.BUZZER_ON_OFF, value="off")
         ]
         while True:
             self.control_actuators(commands=pre_commands)
@@ -101,39 +97,36 @@ class GeoLocationController(IDeviceController):
 
 
 def main():
-    controller = GeoLocationController(sensors=[
-        RollSensor(
-            gpio=None,
-            model='Built-in Accelerometer',
-            type=AReading.Type.ROLL),
-        PitchSensor(
-            gpio=None,
-            model='Built-in Accelerometer',
-            type=AReading.Type.PITCH),
-        GPSSensor(
-            gpio=None,
-            model='GPS (Air 530)',
-            type=AReading.Type.GPS),
-        BuzzerController(
-            gpio=None,
-            command_type=ACommand.Type.BUZZER_ON_OFF,
-            model='ReTerminal Buzzer',
-            reading_type=AReading.Type.BUZZER,
-            initial_state='off'),
-        VibrationSensor(
-            gpio=None,
-            model= 'Built-in Accelerometer',
-            type= AReading.Type.VIBRATION
-        )
-    ],
+    controller = GeoLocationController(
+        sensors=[
+            RollSensor(
+                gpio=None, model="Built-in Accelerometer", type=AReading.Type.ROLL
+            ),
+            PitchSensor(
+                gpio=None, model="Built-in Accelerometer", type=AReading.Type.PITCH
+            ),
+            GPSSensor(gpio=None, model="GPS (Air 530)", type=AReading.Type.GPS),
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model="ReTerminal Buzzer",
+                reading_type=AReading.Type.BUZZER,
+                initial_state="off",
+            ),
+            VibrationSensor(
+                gpio=None, model="Built-in Accelerometer", type=AReading.Type.VIBRATION
+            ),
+        ],
         actuators=[
-        BuzzerController(
-            gpio=None,
-            command_type=ACommand.Type.BUZZER_ON_OFF,
-            model='ReTerminal Buzzer',
-            reading_type=AReading.Type.BUZZER,
-            initial_state='off')
-    ])
+            BuzzerController(
+                gpio=None,
+                command_type=ACommand.Type.BUZZER_ON_OFF,
+                model="ReTerminal Buzzer",
+                reading_type=AReading.Type.BUZZER,
+                initial_state="off",
+            )
+        ],
+    )
     controller.loop()
 
 

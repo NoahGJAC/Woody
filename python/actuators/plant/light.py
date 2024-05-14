@@ -3,7 +3,7 @@
 # Imports
 from python.actuators.actuators import IActuator, ACommand
 from enum import Enum
-from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
+from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip, theaterChase
 from rpi_ws281x import Color
 from time import sleep
 
@@ -23,7 +23,7 @@ class LightController(IActuator):
         count: int = 1,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
-        color: Color = Color(255, 255, 255)
+        color: Color = Color(255, 255, 255),
     ) -> None:
         """
         Initializes the RGB led stick.
@@ -41,7 +41,9 @@ class LightController(IActuator):
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
-        self._validate_integer(value=brightness, min_value=0, name="Light brightness", max_value=255)
+        self._validate_integer(
+            value=brightness, min_value=0, name="Light brightness", max_value=255
+        )
 
         self.gpio = gpio
         self.count = count
@@ -93,19 +95,26 @@ class LightController(IActuator):
         if value.lower() not in (LightState.ON.value, LightState.OFF.value):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
-        if (value is LightState.ON.value):
+        if value is LightState.ON.value:
             theaterChase(self.rgb_stick, self.color)
             self._current_state = value is LightState.ON
-        elif (value is LightState.OFF.value):
-            colorWipe(self.rgb_stick, Color(0,0,0), 10)
+        elif value is LightState.OFF.value:
+            self.colorWipe(Color(0, 0, 0), 10)
             self._current_state = value is LightState.OFF
-        
+
         return previous_state != self._current_state
 
     def clean_up(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-        colorWipe(self.rgb_stick, Color(0,0,0), 10)
-        
+        colorWipe(self.rgb_stick, Color(0, 0, 0), 10)
+
+    def colorWipe(self, color, wait_ms=50):
+            """Wipe color across display a pixel at a time."""
+            for i in range(self.rgb_stick.numPixels()):
+                self.rgb_stick.setPixelColor(i, color)
+                self.rgb_stick.show()
+                sleep(wait_ms/1000.0)
+
     def read_state(self) -> bool:
         """
         Returns true if the RGB led stick's state is truthy, false otherwise.
@@ -117,7 +126,9 @@ class LightController(IActuator):
 
 
 if __name__ == "__main__":
-    light_controller = LightController(gpio=12, type=ACommand(ACommand.Type.LIGHT_ON_OFF, LightState.OFF))
+    light_controller = LightController(
+        gpio=12, type=ACommand(ACommand.Type.LIGHT_ON_OFF, LightState.OFF)
+    )
 
     while True:
         print(f"Light is {'on' if light_controller.read_state() else 'off'}")

@@ -9,31 +9,31 @@ class AReading(ABC):
     """
 
     class Type(str, Enum):
-        """Enum defining all possible types of readings that sensors might make.
-        """
-        # Add new reading types here.
-        TEMPERATURE_HUMIDITY = 'temperature humidity'
-        WATER_LEVEL = 'water level'
-        SOIL_MOISTURE = 'soil moisture'
-        TEMPERATURE = 'temperature'
-        HUMIDITY = 'humidity'
-        LUMINOSITY = 'luminosity'
-        BUZZER = 'buzzer state'
-        DOOR = 'door state'
-        DOOR_LOCK = 'door lock state'
-        MOTION = 'motion'
-        VIBRATION = 'vibration'
-        LOUDNESS = 'loudness'
-        LATITUDE = 'latitude'
-        LONGITUDE = 'longitude'
-        ALTITUDE = 'altitude'
-        GPS = 'GPS'
-        PITCH = 'pitch'
-        ROLL = 'roll'
+        """Enum defining all possible types of readings that sensors might make."""
 
+        # Add new reading types here.
+        TEMPERATURE_HUMIDITY = "temperature humidity"
+        WATER_LEVEL = "water level"
+        SOIL_MOISTURE = "soil moisture"
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        LUMINOSITY = "luminosity"
+        BUZZER = "buzzer state"
+        DOOR = "door state"
+        DOOR_LOCK = "door lock state"
+        MOTION = "motion"
+        VIBRATION = "vibration"
+        LOUDNESS = "loudness"
+        LATITUDE = "latitude"
+        LONGITUDE = "longitude"
+        ALTITUDE = "altitude"
+        GPS = "GPS"
+        PITCH = "pitch"
+        ROLL = "roll"
+        
     class Unit(str, Enum):
-        """Enum defining all possible units for sensor measuremens.
-        """
+        """Enum defining all possible units for sensor measuremens."""
+
         # Add new reading units here.
         # TODO: ° does not work for json exporting
         CELSIUS_HUMIDITY = '°C-% HR'
@@ -64,8 +64,7 @@ class AReading(ABC):
         self.value = value
 
     def __repr__(self) -> str:
-        """String representation of a reading object
-        """
+        """String representation of a reading object"""
         return f"AReading(reading_type={self.reading_type}, value={self.value}, unit={self.reading_unit})"
 
     def __str__(self) -> str:
@@ -81,8 +80,7 @@ class AReading(ABC):
 
 
 class ISensor(ABC):
-    """Interface for all sensors.
-    """
+    """Interface for all sensors."""
 
     # Class properties that must be defined in implementation classes
     _sensor_model: str
@@ -106,8 +104,7 @@ class ISensor(ABC):
 
 
 class MockSensor(ISensor):
-    """A class to represent a mock sensor that implements ISensor.
-    """
+    """A class to represent a mock sensor that implements ISensor."""
 
     def __init__(self, gpio: int, model: str, type: AReading.Type) -> None:
         """Initialize the mock sensor and sets the properties required by the interface
@@ -126,14 +123,10 @@ class MockSensor(ISensor):
         Returns:
             list[AReading]: A list of the fake readings.
         """
-        print('Mock sensor reading...')
+        print("Mock sensor reading...")
         return [
-            AReading(
-                AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0),
-            AReading(
-                AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 101.0),
-            AReading(
-                AReading.Type.LUMINOSITY, AReading.Unit.LUX, 3.846e26),
-            AReading(
-                AReading.Type.BUZZER, AReading.Unit.UNITLESS, 'OFF')
+            AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0),
+            AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 101.0),
+            AReading(AReading.Type.LUMINOSITY, AReading.Unit.LUX, 3.846e26),
+            AReading(AReading.Type.BUZZER, AReading.Unit.UNITLESS, "OFF"),
         ]
