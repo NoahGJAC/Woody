@@ -90,7 +90,7 @@ namespace Woody.DataRepos
                 }
             }
 
-            Task.Run(() => AssignDataToRepos(parseJsonObjects)).Wait();
+           AssignDataToRepos(parseJsonObjects);
         }
 
         private void AssignDataToRepos(List<IReading> parsedJsonObjects)
