@@ -12,6 +12,8 @@ from python.sensors.geo_location.roll import RollSensor
 from python.actuators.geo_location.buzzer import BuzzerController
 from python.sensors.geo_location.vibration import VibrationSensor
 import colorama
+from python.enums.SubSystemType import SubSystemType
+
 
 
 class GeoLocationController(IDeviceController):
@@ -25,6 +27,7 @@ class GeoLocationController(IDeviceController):
             actuators (list[IActuator]): The list of actuators to initialize.
         """
         super().__init__(sensors=sensors, actuators=actuators)
+        self.system_type = SubSystemType.GEOLOCATION
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.

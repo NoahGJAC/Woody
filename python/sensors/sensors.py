@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import json
 
 
 class AReading(ABC):
@@ -29,29 +30,35 @@ class AReading(ABC):
         GPS = "GPS"
         PITCH = "pitch"
         ROLL = "roll"
-
+        
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens."""
 
         # Add new reading units here.
-        CELSIUS_HUMIDITY = "°C-% HR"
-        MILLIMITERS = "mm"
-        CELCIUS = "°C"
-        FAHRENHEIT = "°F"
-        HUMIDITY = "% HR"
-        UNITLESS = ""
-        LUX = "lx"
-        LOUDNESS = "% loudness strength"
-        DEGREE = "°"
-        METERS = "m"
+        # TODO: ° does not work for json exporting
+        CELSIUS_HUMIDITY = '°C-% HR'
+        MILLIMITERS = 'mm'
+        CELCIUS = '°C'
+        FAHRENHEIT = '°F'
+        HUMIDITY = '% HR'
+        UNITLESS = ''
+        LUX = 'lx'
+        LOUDNESS = '% loudness strength'
+        DEGREE = '°'
+        METERS = 'm'
         PERCENTAGE = "%"
+        FAILURE = 'failure'
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
     value: float | str | bool
 
-    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
+    def __init__(
+            self,
+            type: Type,
+            unit: Unit,
+            value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
@@ -62,6 +69,14 @@ class AReading(ABC):
 
     def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
+
+    def export_json(self) -> str:
+        """Exports a reading as a json encoded string
+
+        :return str: json string representation of the reading
+        """
+        return json.dumps(
+            {"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):

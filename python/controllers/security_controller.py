@@ -12,6 +12,8 @@ from python.sensors.security.loudness import LoudnessSensor
 from python.sensors.security.luminosity import LuminositySensor
 from python.sensors.security.motion import MotionSensor
 import colorama
+from python.enums.SubSystemType import SubSystemType
+
 
 
 class SecurityController(IDeviceController):
@@ -26,6 +28,7 @@ class SecurityController(IDeviceController):
         """
 
         super().__init__(sensors=sensors, actuators=actuators)
+        self.system_type = SubSystemType.SECURITY
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
@@ -51,7 +54,6 @@ class SecurityController(IDeviceController):
                     + colorama.Fore.RESET
                 )
                 continue
-
             actuator.control_actuator(value=command.value)
             print(f"Executed command: {command}")
 
