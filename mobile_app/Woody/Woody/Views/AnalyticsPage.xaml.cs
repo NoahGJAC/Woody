@@ -34,17 +34,17 @@ public partial class AnalyticsPage : ContentPage
 
         ChartsSecurity = new ObservableCollection<CartesianChart>
         {
-            ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
-            ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
+            ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
+            ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
         };
         
 
 
         ChartsPlant = new ObservableCollection<CartesianChart>
         {
-            ChartsRepo.GetTemperatureChart(App.PlantRepo.TemperatureLevels),
-            ChartsRepo.GetHumidityChart(App.PlantRepo.HumidityLevels),
-            ChartsRepo.GetSoilMoistureChart(App.PlantRepo.SoilMoistureLevels)
+            ChartsRepo.GetTemperatureChart(App.FarmRepo.PlantRepo.TemperatureLevels),
+            ChartsRepo.GetHumidityChart(App.FarmRepo.PlantRepo.HumidityLevels),
+            ChartsRepo.GetSoilMoistureChart(App.FarmRepo.PlantRepo.SoilMoistureLevels)
         };
         ChartCarouselSecurity.BindingContext = this;
         IndicatorViewSecurity.BindingContext = this;

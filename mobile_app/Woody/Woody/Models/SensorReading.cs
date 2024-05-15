@@ -61,6 +61,10 @@ namespace Woody.Models
             Unit = unit;
             ReadingType = readingType;
         }
+        public SensorReading()
+        {
+            
+        }
     }
     
 }

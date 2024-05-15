@@ -32,5 +32,10 @@ namespace Woody.Models
         /// Gets or sets the altitude reading.
         /// </summary>
         public IReading<double> Altitude { get; set; }
+
+        public GPSCoordinates()
+        {
+            
+        }
     }
 }

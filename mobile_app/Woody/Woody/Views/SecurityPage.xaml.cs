@@ -30,8 +30,8 @@ public partial class SecurityPage : ContentPage
 		InitializeComponent();
 		Charts = new ObservableCollection<CartesianChart>
 		{
-			ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
-			ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
+			ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
+			ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
 		};
 
 		SetBindingContext();
@@ -39,7 +39,7 @@ public partial class SecurityPage : ContentPage
 
     private void SetBindingContext()
     {
-        BindingContext = App.SecurityRepo;
+        BindingContext = App.FarmRepo.SecurityRepo;
 
         frame_latest_readings.BindingContext = App.UserRepo.User.UserType;
         frame_graphs.BindingContext = App.UserRepo.User.UserType;
@@ -49,19 +49,19 @@ public partial class SecurityPage : ContentPage
         ChartCarousel.BindingContext = this;
         IndicatorView.BindingContext = this;
 
-        label_lum_current.BindingContext = App.SecurityRepo;
-        label_noise_current.BindingContext = App.SecurityRepo;
-        label_motion.BindingContext = App.SecurityRepo;
-        BuzzerSwitch.BindingContext = App.SecurityRepo;
+        label_lum_current.BindingContext = App.FarmRepo.SecurityRepo;
+        label_noise_current.BindingContext = App.FarmRepo.SecurityRepo;
+        label_motion.BindingContext = App.FarmRepo.SecurityRepo;
+        BuzzerSwitch.BindingContext = App.FarmRepo.SecurityRepo;
     }
 
     private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-		App.SecurityRepo.BuzzerState.Value = e.Value;
+		App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
     }
 
     private void ButtonLock_Clicked(object sender, EventArgs e)
     {
-		App.SecurityRepo.LockState.Value = !App.SecurityRepo.LockState.Value;
+		App.FarmRepo.SecurityRepo.LockState.Value = !App.FarmRepo.SecurityRepo.LockState.Value;
     }
 }

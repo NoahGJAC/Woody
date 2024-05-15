@@ -213,7 +213,8 @@ namespace Woody.DataRepos
         public static CartesianChart GetNoiseChart(List<IReading<float>> noiseReadings)
         {
             var dateTimePoints = noiseReadings
-                .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
+                .Select(x => new DateTimePoint(x.TimeStamp, x.Value/10))
+                .OrderBy(x => x.DateTime)
                 .ToList();
             LineSeries<DateTimePoint>[] series =
             {
@@ -240,7 +241,7 @@ namespace Woody.DataRepos
             };
 
             var dateTimeAxis = new DateTimeAxis(
-                unit: TimeSpan.FromDays(1),
+                unit: TimeSpan.FromSeconds(10),
                 formatter: date => date.ToString("MM-dd")
             );
 
@@ -274,6 +275,7 @@ namespace Woody.DataRepos
         {
             var dateTimePoints = luminosityReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
+                .OrderBy(x => x.DateTime)
                 .ToList();
             LineSeries<DateTimePoint>[] series =
             {
@@ -288,13 +290,14 @@ namespace Woody.DataRepos
                 }
             };
 
+            int maxValue = luminosityReadings.Max(r => r.Value);
             var yAxis = new Axis[]
             {
                 new Axis
                 {
                     MinLimit = 0,
                     // may need to tweak the max value
-                    MaxLimit = 100000,
+                    MaxLimit = maxValue,
                     Name = luminosityReadings[0].Unit.GetReadingUnitValue(),
                     TextSize = 12,
                     NameTextSize = 14
@@ -302,7 +305,7 @@ namespace Woody.DataRepos
             };
 
             var dateTimeAxis = new DateTimeAxis(
-                unit: TimeSpan.FromDays(1),
+                unit: TimeSpan.FromSeconds(1),
                 formatter: date => date.ToString("MM-dd")
             );
 

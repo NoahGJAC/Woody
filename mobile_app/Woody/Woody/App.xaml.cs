@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Woody.Config;
 using Woody.DataRepos;
+using Woody.Services;
 using Woody.Views;
 
 /*
@@ -24,6 +25,7 @@ namespace Woody
         public static Settings Settings { get; private set; }
         private static SecurityRepo securityRepo;
         private static UserRepo userRepo;
+        private static AzureIoTHubService ioTDevice;
         
         /// <summary>
         /// Gets the user repository.
@@ -33,32 +35,19 @@ namespace Woody
             get { return userRepo ??= new UserRepo(); }
         }
 
-        /// <summary>
-        /// Gets the Security repository.
-        /// </summary>
-        public static SecurityRepo SecurityRepo
+        public static AzureIoTHubService IoTDevice
         {
-            get { return securityRepo ??= new SecurityRepo(); }
+
+            get { return ioTDevice ??= new AzureIoTHubService(); }
         }
 
-        private static PlantRepo plantRepo;
-
+        private static FarmRepo farmRepo;
         /// <summary>
-        /// Gets the plant repository.
+        /// This is the Repo for the farm
         /// </summary>
-        public static PlantRepo PlantRepo
+        public static FarmRepo FarmRepo
         {
-            get { return plantRepo ??= new PlantRepo(); }
-        }
-
-        private static GeoLocationRepo geoLocationRepo;
-
-        /// <summary>
-        /// Gets the geolocation repository
-        /// </summary>
-        public static GeoLocationRepo GeoLocationRepo
-        {
-            get { return geoLocationRepo ??= new GeoLocationRepo(); }
+            get { return farmRepo ??= new FarmRepo(); }
         }
 
         /// <summary>
@@ -73,6 +62,10 @@ namespace Woody
             var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
             Settings = config.GetRequiredSection(nameof(Settings)).Get<Settings>();
             MainPage = new AppShell();
+            Task.Run(()=>IoTDevice.ConnectToDeviceAsync()).Wait();
+            Task.Run(()=>FarmRepo.DeserializeDataAsync()).Wait();
+
+
         }
     }
 }
