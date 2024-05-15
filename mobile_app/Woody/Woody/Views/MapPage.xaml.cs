@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using The49.Maui.BottomSheet;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
 /*
@@ -20,24 +21,35 @@ public partial class MapPage : ContentPage
     /// Initializes a new instance of the <see cref="MapPage"/> class.
     /// </summary>
     public MapPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
         BindingContext = App.GeoLocationRepo;
         ConfigureMap();
-        
+        InitializeBottomSheet();
     }
+
+    private void InitializeBottomSheet()
+    {
+        MapBottomSheet bottomSheet = new MapBottomSheet();
+        bottomSheet.ShowAsync();
+        bottomSheet.HasHandle = true;
+        bottomSheet.ZIndex = -1;
+    }
+
     private void ConfigureMap()
     {
-        
-        var location = new Location(App.GeoLocationRepo.GPS.Value.Latitude.Value, App.GeoLocationRepo.GPS.Value.Longitude.Value);
+        var location = new Location(
+            App.GeoLocationRepo.GPS.Value.Latitude.Value,
+            App.GeoLocationRepo.GPS.Value.Longitude.Value
+        );
         var pin = new Pin
         {
             Label = "container",
             Type = PinType.SavedPin,
             Location = location
         };
-        map.MoveToRegion(new MapSpan(location,0.01, 0.01));
+        map.MoveToRegion(new MapSpan(location, 0.01, 0.01));
         map.Pins.Add(pin);
     }
 }

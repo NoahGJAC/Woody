@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using SkiaSharp.Views.Maui.Controls;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using The49.Maui.BottomSheet;
 #if ANDROID
 using Android.OS;
 #endif
@@ -20,6 +20,7 @@ namespace Woody
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
                 .UseMauiMaps()
+                .UseBottomSheet()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
