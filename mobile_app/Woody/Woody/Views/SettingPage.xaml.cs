@@ -24,6 +24,12 @@ public partial class SettingPage : ContentPage
         App.UserRepo.UserDb.LoadItemsAsync();
 
     }
+
+    protected override void OnAppearing()
+    {
+        // need to check binding onappearing to fix issue where you logout and sign in with a different account and first account info is still displayed
+        CheckUserBinding();
+    }
     /// <summary>
     /// add the binding depending if the user is signIn or signUp
     /// </summary>
