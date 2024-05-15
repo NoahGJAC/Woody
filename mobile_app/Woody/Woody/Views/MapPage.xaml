@@ -65,7 +65,7 @@
                                         FontSize="25"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
-                                        Text="{Binding Roll.Value}" />
+                                        Text="{Binding Roll.Value, StringFormat='{0:F4}'}" />
                                 </StackLayout>
                             </Frame>
 
@@ -117,7 +117,7 @@
                                         FontSize="25"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
-                                        Text="{Binding Pitch.Value}" />
+                                        Text="{Binding Pitch.Value, StringFormat='{0:F4}'}" />
                                 </StackLayout>
                             </Frame>
                         </HorizontalStackLayout>

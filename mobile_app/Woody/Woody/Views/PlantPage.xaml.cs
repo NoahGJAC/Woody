@@ -32,23 +32,23 @@ public partial class PlantPage : ContentPage
         InitializeComponent();
         Charts = new ObservableCollection<CartesianChart>
         {
-            ChartsRepo.GetTemperatureChart(App.PlantRepo.TemperatureLevels),
-            ChartsRepo.GetHumidityChart(App.PlantRepo.HumidityLevels),
-            ChartsRepo.GetSoilMoistureChart(App.PlantRepo.SoilMoistureLevels)
+            ChartsRepo.GetTemperatureChart(App.FarmRepo.PlantRepo.TemperatureLevels),
+            ChartsRepo.GetHumidityChart(App.FarmRepo.PlantRepo.HumidityLevels),
+            ChartsRepo.GetSoilMoistureChart(App.FarmRepo.PlantRepo.SoilMoistureLevels)
         };
 
-        BindingContext = App.PlantRepo;
+        BindingContext = App.FarmRepo.PlantRepo;
         ChartCarousel.BindingContext = this;
         IndicatorView.BindingContext = this;
     }
 
     private void FanSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        App.PlantRepo.FanState.Value = e.Value;
+        App.FarmRepo.PlantRepo.FanState.Value = e.Value;
     }
 
     private void LightSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        App.PlantRepo.LightState.Value = e.Value;
+        App.FarmRepo.PlantRepo.LightState.Value = e.Value;
     }
 }
