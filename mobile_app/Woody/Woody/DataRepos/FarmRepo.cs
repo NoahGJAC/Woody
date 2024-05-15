@@ -58,6 +58,9 @@ namespace Woody.DataRepos
                         var lol = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonObject);
                         var properties = lol["Properties"];
 
+                        // timestamp
+                        var enqueuedTime = lol["EnqueuedTimeUtc"];
+
                         var propertiesDictionary = new Dictionary<string, object>();
                         foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(properties))
                         {
@@ -94,7 +97,7 @@ namespace Woody.DataRepos
                         var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
                         var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
                         // Invoke the constructor
-                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, tempObject.TimeStamp, unitType, readingType });
+                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType });
 
                         AssignDataToRepos((IReading)sensorReadingInstance);
                     }
