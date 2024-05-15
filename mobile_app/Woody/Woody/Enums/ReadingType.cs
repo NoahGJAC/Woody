@@ -94,6 +94,7 @@ namespace Woody.Enums
         WATER_LEVEL,
         FAN,
         LIGHT,
-        SOIL_MOISTURE
+        SOIL_MOISTURE,
+        TEMPERATURE_HUMIDITY
     }
 }

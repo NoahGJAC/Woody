@@ -47,5 +47,6 @@ namespace Woody.Config
 
         public string EventHubConnectionString { get; set; }
         public string EventHubName { get; set; }
+        public string EventHubConsumer { get; set; }
     }
 }

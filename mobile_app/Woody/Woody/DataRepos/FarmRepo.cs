@@ -43,7 +43,6 @@ namespace Woody.DataRepos
         public async Task<bool> DeserializeDataAsync()
         {
             var blobList = await App.IoTDevice.DownloadBlobAsync(); //this get the data from the blob
-            var parseJsonObjects = new List<IReading>();
 
             //DeserializeData
             foreach (var blob in blobList)
@@ -67,6 +66,11 @@ namespace Woody.DataRepos
 
                         var readingTypeName = propertiesDictionary["reading-type-name"];
                         var readingType = (ReadingType)Enum.Parse(typeof(ReadingType), readingTypeName.ToString(), true);
+                        //check if the readingType is already assign if it's not a list
+                        if (ValidReadingType(readingType))
+                        {
+                            continue;
+                        }
                         var body = Convert.FromBase64String(tempObject.Body);
                         string decodedStr = Encoding.UTF8.GetString(body);
                         var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
@@ -76,6 +80,10 @@ namespace Woody.DataRepos
                         if(readingType == ReadingType.LOUDNESS)
                         {
                             unitType = ReadingUnit.LOUDNESS;
+                        }
+                        else if(readingType == ReadingType.TEMPERATURE_HUMIDITY)
+                        {
+                            unitType = ReadingUnit.CELCIUS_HUMIDITY;
                         }
                         else
                         {
@@ -88,10 +96,11 @@ namespace Woody.DataRepos
                         // Invoke the constructor
                         var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, tempObject.TimeStamp, unitType, readingType });
 
-                        parseJsonObjects.Add((IReading)sensorReadingInstance);
+                        AssignDataToRepos((IReading)sensorReadingInstance);
                     }
                     catch(Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                         continue;
                     }
 
@@ -99,11 +108,48 @@ namespace Woody.DataRepos
                 }
             }
 
-            AssignDataToRepos(parseJsonObjects);
+            
             return true;
         }
 
-        private void AssignDataToRepos(List<IReading> parsedJsonObjects)
+        private bool ValidReadingType(ReadingType type)
+        {
+            switch (type)
+            {
+                case ReadingType.DOOR:
+                    return securityRepo.DoorState != null;
+                case ReadingType.MOTION:
+                    return securityRepo.MotionState != null;
+                case ReadingType.BUZZER:
+                    return securityRepo.BuzzerState != null || geoLocationRepo.BuzzerState != null;
+                case ReadingType.DOOR_LOCK:
+                    return securityRepo.LockState != null;
+                case ReadingType.WATER_LEVEL:
+                    return plantRepo.WaterLevel != null;
+                case ReadingType.FAN:
+                    return plantRepo.FanState != null;
+                case ReadingType.LIGHT:
+                    return plantRepo.LightState != null;
+                case ReadingType.GPS:
+                    return GeoLocationRepo.GPS != null;
+                case ReadingType.LATITUDE:
+                    return geoLocationRepo.GPS?.Value?.Latitude != null;
+                case ReadingType.LONGITUDE:
+                    return geoLocationRepo.GPS?.Value?.Longitude != null;
+                case ReadingType.ALTITUDE:
+                    return geoLocationRepo.GPS?.Value?.Altitude != null;
+                case ReadingType.PITCH:
+                    return geoLocationRepo.Pitch != null;
+                case ReadingType.ROLL:
+                    return geoLocationRepo.Roll != null;
+                case ReadingType.VIBRATION:
+                    return geoLocationRepo.Vibration != null;
+                default:
+                    return false;
+            }
+        }
+
+        private void AssignDataToRepos(IReading jsonObject)
         {
             var securityReadingType = new List<ReadingType>()
             {
@@ -131,25 +177,21 @@ namespace Woody.DataRepos
                 ReadingType.LONGITUDE,
                 ReadingType.ALTITUDE,
                 ReadingType.PITCH,
-                ReadingType.ROLL
+                ReadingType.ROLL,
+                ReadingType.VIBRATION
             };
 
-            var temp = parsedJsonObjects.Where(u => u.ReadingType == ReadingType.LOUDNESS);
-            foreach (var jsonObject in parsedJsonObjects)
+            if(geoLoactionReadingType.Contains(jsonObject.ReadingType))
             {
-                if(geoLoactionReadingType.Contains(jsonObject.ReadingType))
-                {
-                    AssignDataToGeoLocationRepo(jsonObject);
-                }
-                else if (plantReadingType.Contains(jsonObject.ReadingType))
-                {
-                    AssignDataToPlantRepo(jsonObject);
-                }
-                else if (securityReadingType.Contains(jsonObject.ReadingType))
-                {
-                    AssignDataToSecurityRepo(jsonObject);
-                }
-
+                AssignDataToGeoLocationRepo(jsonObject);
+            }
+            else if (plantReadingType.Contains(jsonObject.ReadingType))
+            {
+                AssignDataToPlantRepo(jsonObject);
+            }
+            else if (securityReadingType.Contains(jsonObject.ReadingType))
+            {
+                AssignDataToSecurityRepo(jsonObject);
             }
 
         }
@@ -171,6 +213,7 @@ namespace Woody.DataRepos
                     var tempObj = (IReading<string>)jsonObject;
                     var value = bool.Parse(tempObj.Value);
                     geoLocationRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
+                    securityRepo.BuzzerState = geoLocationRepo.BuzzerState;
                     
                 }
             }
@@ -198,6 +241,10 @@ namespace Woody.DataRepos
             {
                 geoLocationRepo.Roll = (IReading<double>)jsonObject;
             }
+            else if(jsonObject.ReadingType == ReadingType.VIBRATION)
+            {
+                geoLocationRepo.Vibration = (IReading<bool>)jsonObject;
+            }
         }
         /// <summary>
         /// Add the value into the repo that are related to the security repo
@@ -224,6 +271,7 @@ namespace Woody.DataRepos
                     var tempObj = (IReading<string>)jsonObject;
                     var value = bool.Parse(tempObj.Value);
                     securityRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
+                    geoLocationRepo.BuzzerState = securityRepo.BuzzerState;
 
                 }
             }
@@ -239,7 +287,7 @@ namespace Woody.DataRepos
             }
             else if(jsonObject.ReadingType == ReadingType.LOUDNESS)
             {
-                var temp = (IReading<long>)jsonObject;
+                var temp = (IReading<double>)jsonObject;
 
                 var value = (float)temp.Value;
                 var reading = new SensorReading<float>(value,temp.TimeStamp,temp.Unit,temp.ReadingType);
