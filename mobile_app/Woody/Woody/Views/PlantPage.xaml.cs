@@ -22,6 +22,8 @@ public partial class PlantPage : ContentPage
     /// </summary>
     public ObservableCollection<CartesianChart> Charts { get; set; }
 
+
+
     /// <summary>
     /// Initializes a new instance of the <see cref="AboutUsPage"/> class.
     /// </summary>

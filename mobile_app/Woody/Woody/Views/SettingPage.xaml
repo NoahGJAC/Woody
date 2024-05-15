@@ -49,6 +49,7 @@
                     <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>-->
                     <HorizontalStackLayout Margin="5,15,5,10" Spacing="50">
                         <Button
+                            x:Name="Btn_ChangePassword"
                             BackgroundColor="{StaticResource BackgroundAccent300}"
                             CornerRadius="15"
                             FontAttributes="Bold"
@@ -56,8 +57,10 @@
                             FontSize="16"
                             Text="CHANGE PASSWORD"
                             TextColor="Black"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center"
+                            Clicked="Btn_ChangePassword_Clicked"/>
                         <Button
+                            x:Name="Btn_LogOut"
                             BackgroundColor="{StaticResource BackgroundAccent300}"
                             CornerRadius="15"
                             FontAttributes="Bold"
@@ -65,9 +68,11 @@
                             FontSize="16"
                             Text="LOG OUT"
                             TextColor="Black"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center" 
+                            Clicked="Btn_LogOut_Clicked"/>
                     </HorizontalStackLayout>
                     <Button
+                        x:Name="Btn_ChangePFP"
                         Margin="5,0,5,0"
                         BackgroundColor="{StaticResource BackgroundAccent300}"
                         CornerRadius="15"
@@ -76,7 +81,8 @@
                         FontSize="16"
                         Text="CHANGE PROFILE PICTURE"
                         TextColor="Black"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        Clicked="Btn_ChangePFP_Clicked"/>
                     <Rectangle
                         Margin="0,0,0,0"
                         BackgroundColor="{StaticResource BackgroundAccent200}"

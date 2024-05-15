@@ -58,6 +58,12 @@ public partial class SignUpPage : ContentPage
             AuthService.UserCreds = user;
             user_.Uid = user.User.Uid;
             await App.UserRepo.UserDb.AddItemsAsync(user_);
+
+            // Now that the user is authenticated, set the BindingContext for specific views
+            var appShell = Shell.Current as AppShell;
+            appShell.SetNavigationBindingContext();
+
+
             await DisplayAlert("Success", "Successfully sign up", "OK");
             await Shell.Current.GoToAsync($"//Index");
             await AuthService.Client.SignInWithEmailAndPasswordAsync(email.Text, password.Text);
@@ -70,7 +76,47 @@ public partial class SignUpPage : ContentPage
         }
         catch (FirebaseAuthException ex)
         {
-            await DisplayAlert("Error", ex.Message, "OK");
+            switch (ex.Reason)
+            {
+                case AuthErrorReason.EmailExists:
+                    await DisplayAlert("Error", "A user with this email exists.", "OK");
+                    break;
+                case AuthErrorReason.AccountExistsWithDifferentCredential:
+                    await DisplayAlert("Error", "Account already exists.", "OK");
+                    break;
+                case AuthErrorReason.AlreadyLinked:
+                    await DisplayAlert("Error", "Account has already been linked.", "OK");
+                    break;
+                case AuthErrorReason.InvalidEmailAddress:
+                    await DisplayAlert("Error", "Email address is invalid.", "OK");
+                    break;
+                case AuthErrorReason.MissingPassword:
+                    await DisplayAlert("Error", "Provide a password.", "OK");
+                    break;
+                case AuthErrorReason.MissingEmail:
+                    await DisplayAlert("Error", "Provide an email address.", "OK");
+                    break;
+                case AuthErrorReason.TooManyAttemptsTryLater:
+                    await DisplayAlert("Error", "Too many attempts try later.", "OK");
+                    break;
+                case AuthErrorReason.UserDisabled:
+                    await DisplayAlert("Error", "Account has been disabled.", "OK");
+                    break;
+                case AuthErrorReason.WeakPassword:
+                    await DisplayAlert("Error", "Password is too weak. Must be at least 6 characters", "OK");
+                    break;
+                case AuthErrorReason.UserNotFound:
+                    await DisplayAlert("Error", "Account not found.", "OK");
+                    break;
+                default:
+                    if (ex.Message.Contains("INVALID_LOGIN_CREDENTIALS"))
+                    {
+                        await DisplayAlert("Error", "Invalid login credentials.", "OK");
+                        break;
+                    }
+                    await DisplayAlert("Error", $"An unknown error occurred. {ex.Message}", "OK");
+                    break;
+            }
         }
         catch (ApplicationException ex)
         {

@@ -34,9 +34,25 @@ public partial class SecurityPage : ContentPage
 			ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
 		};
 
-		BindingContext = App.SecurityRepo;
-		ChartCarousel.BindingContext = this;
-		IndicatorView.BindingContext = this;
+		SetBindingContext();
+    }
+
+    private void SetBindingContext()
+    {
+        BindingContext = App.SecurityRepo;
+
+        frame_latest_readings.BindingContext = App.UserRepo.User.UserType;
+        frame_graphs.BindingContext = App.UserRepo.User.UserType;
+        frame_motion.BindingContext = App.UserRepo.User.UserType;
+        grid_buzzer.BindingContext = App.UserRepo.User.UserType;
+
+        ChartCarousel.BindingContext = this;
+        IndicatorView.BindingContext = this;
+
+        label_lum_current.BindingContext = App.SecurityRepo;
+        label_noise_current.BindingContext = App.SecurityRepo;
+        label_motion.BindingContext = App.SecurityRepo;
+        BuzzerSwitch.BindingContext = App.SecurityRepo;
     }
 
     private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)

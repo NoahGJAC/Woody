@@ -6,13 +6,13 @@
     Title="LoginPage"
     Shell.NavBarIsVisible="False">
     <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
-        <StackLayout Margin="0,150,0,0" VerticalOptions="Center">
+        <StackLayout Margin="0,150,0,0" VerticalOptions="Center" x:Name="LoginView">
             <Image
                 Margin="0,0,0,-8"
                 HeightRequest="100"
                 Source="seed.png" />
+            
             <Frame
-                x:Name="LoginView"
                 Margin="10,0,10,10"
                 BackgroundColor="{StaticResource Alabaster}"
                 BorderColor="Transparent">
@@ -50,8 +50,25 @@
                         x:Name="lblError"
                         Margin="0,5,0,0"
                         TextColor="red" />
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                        <Button
+                    <VerticalStackLayout HorizontalOptions="Center" Margin="0,-40 ,0 ,0 " Spacing="15">
+                        <Label
+                            Margin="-10,0,0,0"
+                            x:Name="forgotPasswordLabel"
+                            Text="Forgot password?"
+                            TextColor="Black"
+                            FontSize="16"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Padding="10"
+                            TextDecorations="Underline"
+                            >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnForgotPasswordTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+
+                            <Button
                             BackgroundColor="{StaticResource Primary}"
                             Clicked="Btn_Login_Clicked"
                             FontFamily="OpenSansBold"
@@ -61,7 +78,8 @@
                             SemanticProperties.Hint="Click to log in"
                             Text="SIGN IN"
                             WidthRequest="150" />
-                        <Button
+                          
+                            <Button
                             BackgroundColor="{StaticResource Bone}"
                             BorderColor="Transparent"
                             Clicked="Btn_SignUp_Clicked"
@@ -72,7 +90,8 @@
                             Text="SIGN UP"
                             TextColor="{StaticResource DarkestCoffee}"
                             WidthRequest="150" />
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </Frame>
         </StackLayout>
@@ -98,5 +117,50 @@
                     VerticalOptions="CenterAndExpand" />
             </StackLayout>
         </Frame>
+
+        
+        <StackLayout Margin="0,150,0,0" VerticalOptions="Center" x:Name="ForgotPasswordView" IsVisible="false">
+            <Image
+        Margin="0,0,0,-8"
+        HeightRequest="100"
+        Source="seed.png" />
+
+            <Frame
+        Margin="10,0,10,10"
+        BackgroundColor="{StaticResource BackgroundAccent300}"
+        BorderColor="Transparent">
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                FontAttributes="Bold"
+                FontFamily="OpenSansBold"
+                FontSize="Title"
+                Text="Password Reset" />
+                    <Label
+                FontAttributes="Bold"
+                FontFamily="OpenSansBold"
+                FontSize="Subtitle"
+                Text="Email Address" />
+                    <Entry
+                x:Name="Entry_email_reset"
+                BackgroundColor="Transparent"
+                PlaceholderColor="Black" />
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+
+                <Button
+                x:Name="Btn_ResetPassword"
+                BackgroundColor="{StaticResource Primary}"
+                Clicked="Btn_ResetPassword_Clicked"
+                FontFamily="OpenSansBold"
+                FontSize="16"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="Click to log in"
+                Text="Send Email"
+                WidthRequest="150" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </StackLayout>
     </VerticalStackLayout>
 </ContentPage>
