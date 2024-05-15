@@ -18,6 +18,7 @@
         Title="Login"
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="LoginPage" />
+
     <!--  Sign Up page  -->
     <ShellContent
         Title="SignUp"
@@ -65,7 +66,7 @@
             Title="Settings"
             Icon="settings.png"
             Route="SettingPage">
-                    <ShellContent ContentTemplate="{DataTemplate views:SettingPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:SettingPage}" />
         </Tab>
         <Tab
             Title="About Us"

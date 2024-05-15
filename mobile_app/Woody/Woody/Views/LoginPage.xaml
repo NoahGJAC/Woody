@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="LoginPage"
     Shell.NavBarIsVisible="False">
-    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent200}">
+    <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
         <StackLayout Margin="0,150,0,0" VerticalOptions="Center" x:Name="LoginView">
             <Image
                 Margin="0,0,0,-8"
@@ -14,33 +14,38 @@
             
             <Frame
                 Margin="10,0,10,10"
-                BackgroundColor="{StaticResource BackgroundAccent300}"
+                BackgroundColor="{StaticResource Alabaster}"
                 BorderColor="Transparent">
                 <VerticalStackLayout Spacing="10">
                     <Label
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Title"
-                        Text="Welcome back!" />
+                        Text="Welcome back!"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Label
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Subtitle"
-                        Text="Email Address" />
+                        Text="Email Address"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Entry
                         x:Name="user_name"
                         BackgroundColor="Transparent"
-                        PlaceholderColor="Black" />
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Label
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Subtitle"
-                        Text="Password" />
+                        Text="Password"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Entry
                         x:Name="password"
                         BackgroundColor="Transparent"
                         IsPassword="True"
-                        PlaceholderColor="Black" />
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Label
                         x:Name="lblError"
                         Margin="0,5,0,0"
@@ -73,8 +78,9 @@
                             SemanticProperties.Hint="Click to log in"
                             Text="SIGN IN"
                             WidthRequest="150" />
+                          
                             <Button
-                            BackgroundColor="{StaticResource BackgroundAccent200}"
+                            BackgroundColor="{StaticResource Bone}"
                             BorderColor="Transparent"
                             Clicked="Btn_SignUp_Clicked"
                             FontFamily="OpenSansBold"
@@ -82,7 +88,7 @@
                             HeightRequest="50"
                             HorizontalOptions="Center"
                             Text="SIGN UP"
-                            TextColor="Black"
+                            TextColor="{StaticResource DarkestCoffee}"
                             WidthRequest="150" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
