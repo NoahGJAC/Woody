@@ -7,25 +7,25 @@
     Title="">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter" />
-            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter" />
-            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter" />
-            <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter" />
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter"/>
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter"/>
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter"/>
+            <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter"/>
             <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
             <converter:BoolToUnlockedLockedConverter x:Key="BoolToUnlockedLockedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
 
             <!--  Plant Wellbeing Card  -->
             <Frame
                 x:Name="FramePlant"
                 Margin="15,15,15,0"
                 BackgroundColor="{StaticResource White}"
-                BindingContext="App.PlantRepo"
                 BorderColor="Transparent"
-                CornerRadius="10">
+                CornerRadius="10"
+                BindingContext="App.PlantRepo">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -37,15 +37,14 @@
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Plant wellbeing"
-                            TextColor="{StaticResource DarkestCoffee}" />
+                            Text="Plant wellbeing" />
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Margin="0,15,0,0">
                         <!--  Average Temperature  -->
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -81,7 +80,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource ZestyGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -113,7 +112,7 @@
                         <!--  Soil Moist.  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource WarningYellow}"
+                            BackgroundColor="{StaticResource MediumWarningYellow}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -252,11 +251,11 @@
                 Margin="0,15,0,0"
                 Padding="20,0,0,0"
                 BackgroundColor="{StaticResource White}"
-                BindingContext="App.SecurityRepo"
                 BorderColor="Transparent"
                 CornerRadius="10"
                 HeightRequest="60"
-                WidthRequest="360">
+                WidthRequest="360"
+                BindingContext="App.SecurityRepo">
                 <HorizontalStackLayout>
                     <Image
                         HeightRequest="30"
@@ -268,31 +267,26 @@
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
                         Text="Door is "
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
                         Text=" and "
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="."
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
@@ -302,9 +296,9 @@
                 x:Name="FrameLocation"
                 Margin="15,15,15,15"
                 BackgroundColor="{StaticResource White}"
-                BindingContext="App.GeoLocationRepo"
                 BorderColor="Transparent"
-                CornerRadius="10">
+                CornerRadius="10"
+                BindingContext="App.GeoLocationRepo">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -379,7 +373,7 @@
                         <!--  Pitch  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource LightAllGoodGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
