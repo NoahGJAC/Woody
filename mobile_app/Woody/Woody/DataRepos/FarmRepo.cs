@@ -343,5 +343,11 @@ namespace Woody.DataRepos
                 plantRepo.HumidityLevels.Add((IReading<double>)jsonObject);
             }
         }
+
+        public async Task DeserializeNewDataAsync(ReadOnlyMemory<byte> body)
+        {
+            Console.WriteLine(body);
+        }
     }
+
 }

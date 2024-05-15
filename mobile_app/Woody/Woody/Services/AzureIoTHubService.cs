@@ -37,7 +37,7 @@ namespace Woody.Services
                 // Register handlers for processing events and handling errors
                 eventProcessorClient.ProcessEventAsync += ProcessEventHandler;
                 eventProcessorClient.ProcessErrorAsync += ProcessErrorHandler;
-                await deviceClient.OpenAsync();
+                
                 Console.WriteLine("Connected to Azure IoT Hub and to the Blob");
                 return true;
             }
@@ -74,7 +74,7 @@ namespace Woody.Services
             try
             {
                 Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
-                
+                await App.FarmRepo.DeserializeNewDataAsync(eventArgs.Data.Body);
             }
             catch(Exception ex)
             {
