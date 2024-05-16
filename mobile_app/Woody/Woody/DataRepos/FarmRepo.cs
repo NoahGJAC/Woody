@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Woody.Enums;
-using Woody.Models;
+﻿using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
 using Newtonsoft.Json;
-using System.Diagnostics.Metrics;
-using Woody.Interfaces;
 using System.ComponentModel;
+using System.Text;
+using Woody.Enums;
+using Woody.Interfaces;
+using Woody.Models;
 
 namespace Woody.DataRepos
 {
@@ -347,10 +343,98 @@ namespace Woody.DataRepos
             }
         }
 
-        public async Task DeserializeNewDataAsync(ReadOnlyMemory<byte> body)
+        internal async Task GetNewDataAsync(PartitionContext partition, EventData data)
         {
-            Console.WriteLine(body);
+            Console.WriteLine(data);
+            // Assuming data is JSON serialized
+            var jsonString = Encoding.UTF8.GetString(data.Body.ToArray());
+            // Deserialize JSON string to Dictionary<string, object>
+            var dictionary = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonString);
+
+            // Now you can work with the deserialized list of dictionaries
+            var subjectString = dictionary[0]["subject"].ToString();
+            // get substring
+            int subjectIndex = subjectString.IndexOf("Woody");
+            string filePath = subjectString.Substring(subjectIndex);
+
+            var blobClient = App.IoTDevice.blobContainerClient.GetBlobClient(filePath);
+            var memoryStream = new MemoryStream();
+            await blobClient.DownloadToAsync(memoryStream);
+            memoryStream.Position = 0; // Reset the position to the start of the stream
+
+            // Assuming the blob contains text, read the content and add it to the list
+            var blobFile = new StreamReader(memoryStream).ReadToEnd();
+            memoryStream.Close();
+            if (!App.IoTDevice.blobFile.Contains(filePath))
+            {
+                DeserializeData(blobFile);
+                App.IoTDevice.blobFile.Add(filePath);
+            }
+                
         }
+
+        private void DeserializeData(string blobfile)
+        {
+            var jsonObjects = blobfile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            foreach (string jsonObject in jsonObjects)
+            {
+                try
+                {
+                    // Parse each JSON string and add it to the list
+                    var tempObject = JsonConvert.DeserializeObject<BlobReadings>(jsonObject);
+                    var lol = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonObject);
+                    var properties = lol["Properties"];
+
+                    // timestamp
+                    var enqueuedTime = lol["EnqueuedTimeUtc"];
+
+                    var propertiesDictionary = new Dictionary<string, object>();
+                    foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(properties))
+                    {
+                        propertiesDictionary[property.Name] = property.GetValue(properties);
+                    }
+
+                    var readingTypeName = propertiesDictionary["reading-type-name"];
+                    var readingType = (ReadingType)Enum.Parse(typeof(ReadingType), readingTypeName.ToString(), true);
+                    var body = Convert.FromBase64String(tempObject.Body);
+                    string decodedStr = Encoding.UTF8.GetString(body);
+                    var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
+                    var value = values["value"];
+                    var unitValue = values["unit"];
+                    ReadingUnit unitType;
+                    if (readingType == ReadingType.LOUDNESS)
+                    {
+                        unitType = ReadingUnit.LOUDNESS;
+                    }
+                    else if (readingType == ReadingType.TEMPERATURE_HUMIDITY)
+                    {
+                        unitType = ReadingUnit.CELCIUS_HUMIDITY;
+                    }
+                    else
+                    {
+                        unitType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
+                    }
+
+                    Type type = value.GetType();
+                    var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
+                    var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
+                    // Invoke the constructor
+                    var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType });
+
+                    AssignDataToRepos((IReading)sensorReadingInstance);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue;
+                }
+
+            }
+        }
+
     }
 
+
 }
+

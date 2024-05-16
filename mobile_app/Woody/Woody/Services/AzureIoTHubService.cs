@@ -21,6 +21,7 @@ namespace Woody.Services
         public DeviceClient deviceClient { get; set; }
         public BlobContainerClient blobContainerClient { get; set; }
         public EventProcessorClient eventProcessorClient { get; set; }
+        public List<string> blobFile = new List<string>();
         /// <summary>
         /// Connect to the IoTHub using the Device Connection String
         /// </summary>
@@ -30,6 +31,7 @@ namespace Woody.Services
             try
             {
                 var transportType = Microsoft.Azure.Devices.Client.TransportType.Mqtt;
+
                 deviceClient = DeviceClient.CreateFromConnectionString(App.Settings.IOTHubDeviceConnectionString, transportType);
                 blobContainerClient = new BlobContainerClient(App.Settings.BlobConnectionString, App.Settings.BlobContainerName);
                 eventProcessorClient = new EventProcessorClient(blobContainerClient,App.Settings.EventHubConsumer,App.Settings.EventHubConnectionString, App.Settings.EventHubName);
@@ -57,6 +59,7 @@ namespace Woody.Services
             await foreach (var blobItem in blobContainerClient.GetBlobsAsync())
             {
                 var blobClient = blobContainerClient.GetBlobClient(blobItem.Name);
+                blobFile.Add(blobItem.Name);
                 var memoryStream = new MemoryStream();
                 await blobClient.DownloadToAsync(memoryStream);
                 memoryStream.Position = 0; // Reset the position to the start of the stream
@@ -76,7 +79,7 @@ namespace Woody.Services
             try
             {
                 Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
-                //await App.FarmRepo.DeserializeNewDataAsync(eventArgs.Data.Body);
+                await App.FarmRepo.GetNewDataAsync(eventArgs.Partition, eventArgs.Data);
             }
             catch(Exception ex)
             {
