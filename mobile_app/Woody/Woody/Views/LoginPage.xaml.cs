@@ -1,5 +1,5 @@
-using Firebase.Auth;
 using System.Text.RegularExpressions;
+using Firebase.Auth;
 using Woody.Services;
 
 /*
@@ -19,12 +19,13 @@ public partial class LoginPage : ContentPage
     /// <summary>
     /// Initializes a new instance of the <see cref="LoginPage"/> class.
     /// </summary>
-    
+
     private Regex _emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
     public LoginPage()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 
     protected override void OnAppearing()
     {
@@ -47,8 +48,10 @@ public partial class LoginPage : ContentPage
 
         try
         {
-
-            var user = await AuthService.Client.SignInWithEmailAndPasswordAsync(user_name.Text, password.Text);
+            var user = await AuthService.Client.SignInWithEmailAndPasswordAsync(
+                user_name.Text,
+                password.Text
+            );
 
             AuthService.UserCreds = user;
 
@@ -56,7 +59,9 @@ public partial class LoginPage : ContentPage
             lblUser.Text = $"ID    : {user_name.Text}\n";
             LoginView.IsVisible = false;
 
-            App.UserRepo.User = App.UserRepo.UserDb.Items.Where(u => u.Uid == user.User.Uid).First();
+            App.UserRepo.User = App
+                .UserRepo.UserDb.Items.Where(u => u.Uid == user.User.Uid)
+                .First();
 
             // Now that the user is authenticated, set the BindingContext for specific views
             var appShell = Shell.Current as AppShell;
@@ -71,9 +76,6 @@ public partial class LoginPage : ContentPage
             //App.UserRepo.User = user_;
             await DisplayAlert("Success", "Successfully logged in", "OK");
             await Shell.Current.GoToAsync($"//Index");
-
-
-
         }
         catch (FirebaseAuthException ex)
         {
@@ -125,9 +127,8 @@ public partial class LoginPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error",ex.Message, "OK");
+            await DisplayAlert("Error", ex.Message, "OK");
         }
-
     }
 
     private async void Btn_Logout_Clicked(object sender, EventArgs e)
@@ -140,7 +141,6 @@ public partial class LoginPage : ContentPage
             LogoutView.IsVisible = false;
             LoginView.IsVisible = true;
             await Shell.Current.GoToAsync($"//Login");
-
         }
         catch (Exception ex)
         {
@@ -169,9 +169,20 @@ public partial class LoginPage : ContentPage
             return;
         }
         await AuthService.Client.ResetEmailPasswordAsync(email);
-        await DisplayAlert("Password Reset", $"If this email address matches our records, you will receive a password reset email.", "OK");
-        
+        await DisplayAlert(
+            "Password Reset",
+            $"If this email address matches our records, you will receive a password reset email.",
+            "OK"
+        );
+
         LoginView.IsVisible = true;
+        ForgotPasswordView.IsVisible = false;
+    }
+
+    private async void Btn_GoBack_Clicked(object sender, EventArgs e)
+    {
+        LoginView.IsVisible = true;
+        LogoutView.IsVisible = true;
         ForgotPasswordView.IsVisible = false;
     }
 }

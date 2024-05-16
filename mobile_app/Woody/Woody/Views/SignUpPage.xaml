@@ -3,6 +3,7 @@
     x:Class="Woody.Views.SignUpPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:converter="clr-namespace:Woody.Converters"
     xmlns:enum="clr-namespace:Woody.Enums"
     xmlns:model="clr-namespace:Woody.Models"
@@ -12,29 +13,47 @@
             <converter:UserTypeToRadioButtonConverter x:Key="UserTypeToRadioButtonConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent200}">
-        <StackLayout Margin="0,100,0,0">
+    <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
+        <StackLayout Margin="0,50,0,0">
             <Image
                 Margin="0,0,0,-8"
                 HeightRequest="100"
                 Source="seed.png" />
             <Frame
                 Margin="10,0,10,10"
-                BackgroundColor="{StaticResource BackgroundAccent300}"
+                BackgroundColor="{StaticResource Alabaster}"
                 BorderColor="Transparent"
-                VerticalOptions="Center">
+                CornerRadius="15"
+                VerticalOptions="Center"
+                WidthRequest="335">
                 <StackLayout x:DataType="model:User">
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Title"
+                        Text="Welcome!"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <Label
+                        Margin="0,5,0,25"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansLight"
+                        FontSize="Body"
+                        Text="Let's create your account to get you started."
+                        TextColor="{StaticResource DarkCoffee}" />
+
                     <!--  Username  -->
                     <Label
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Subtitle"
-                        Text="Name" />
+                        Text="Name"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Entry
                         x:Name="user_name"
                         BackgroundColor="Transparent"
-                        PlaceholderColor="Black"
-                        Text="{Binding Username}" />
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        Text="{Binding Username}"
+                        TextColor="{StaticResource DarkestCoffee}" />
 
                     <!--  Email  -->
                     <Label
@@ -42,11 +61,13 @@
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Subtitle"
-                        Text="Email Address" />
+                        Text="Email Address"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Entry
                         x:Name="email"
                         BackgroundColor="Transparent"
-                        PlaceholderColor="Black" />
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        TextColor="{StaticResource DarkestCoffee}" />
 
                     <!--  Password  -->
                     <Label
@@ -54,12 +75,23 @@
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Subtitle"
-                        Text="Password" />
+                        Text="Password"
+                        TextColor="{StaticResource DarkestCoffee}" />
                     <Entry
                         x:Name="password"
                         BackgroundColor="Transparent"
                         IsPassword="True"
-                        PlaceholderColor="Black" />
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        TextColor="{StaticResource DarkestCoffee}" />
+
+                    <buttons:SfSegmentedControl x:Name="userRole">
+                        <buttons:SfSegmentedControl.ItemsSource>
+                            <x:Array Type="{x:Type Image}">
+                                <Image Source="farmer.png" />
+                                <Image Source="fleet-owner.png" />
+                            </x:Array>
+                        </buttons:SfSegmentedControl.ItemsSource>
+                    </buttons:SfSegmentedControl>
 
                     <VerticalStackLayout Margin="0,3,0,0">
                         <RadioButton Content="Farmer" IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
@@ -76,7 +108,7 @@
                         HorizontalOptions="Center"
                         SemanticProperties.Hint="Click to log in"
                         Text="SIGN UP"
-                        WidthRequest="325" />
+                        WidthRequest="290" />
                 </StackLayout>
             </Frame>
         </StackLayout>
