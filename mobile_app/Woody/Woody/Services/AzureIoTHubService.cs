@@ -39,6 +39,8 @@ namespace Woody.Services
                 eventProcessorClient.ProcessErrorAsync += ProcessErrorHandler;
                 
                 Console.WriteLine("Connected to Azure IoT Hub and to the Blob");
+                GetCurrentMessageAsync();
+
                 return true;
             }
             catch (Exception ex)
@@ -74,7 +76,7 @@ namespace Woody.Services
             try
             {
                 Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
-                await App.FarmRepo.DeserializeNewDataAsync(eventArgs.Data.Body);
+                //await App.FarmRepo.DeserializeNewDataAsync(eventArgs.Data.Body);
             }
             catch(Exception ex)
             {
@@ -97,6 +99,35 @@ namespace Woody.Services
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
+        }
+
+        private async Task GetCurrentMessageAsync()
+        {
+            await eventProcessorClient.StartProcessingAsync();
+            try
+            {
+                // The processor performs its work in the background; block until cancellation
+                // to allow processing to take place.
+
+                await Task.Delay(Timeout.Infinite);
+            }
+            catch (TaskCanceledException)
+            {
+                // This is expected when the delay is canceled.
+            }
+
+            try
+            {
+                await eventProcessorClient.StopProcessingAsync();
+            }
+            finally
+            {
+                // To prevent leaks, the handlers should be removed when processing is complete.
+
+                eventProcessorClient.ProcessEventAsync -= ProcessEventHandler;
+                eventProcessorClient.ProcessErrorAsync -= ProcessErrorHandler;
+            }
+
         }
     }
 }
