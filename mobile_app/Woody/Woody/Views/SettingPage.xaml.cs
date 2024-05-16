@@ -18,12 +18,12 @@ public partial class SettingPage : ContentPage
     /// Initializes a new instance of the <see cref="SettingPage"/> class.
     /// </summary>
     public SettingPage()
-	{
-		InitializeComponent();
-		CheckUserBinding();
+    {
+        InitializeComponent();
+        CheckUserBinding();
         App.UserRepo.UserDb.LoadItemsAsync();
-
     }
+
     /// <summary>
     /// add the binding depending if the user is signIn or signUp
     /// </summary>
@@ -37,9 +37,16 @@ public partial class SettingPage : ContentPage
         {
             var usr = AuthService.UserCreds;
 
-            if (usr != null && usr.User != null && App.UserRepo.UserDb.Items != null && App.UserRepo.UserDb.Items.Any())
+            if (
+                usr != null
+                && usr.User != null
+                && App.UserRepo.UserDb.Items != null
+                && App.UserRepo.UserDb.Items.Any()
+            )
             {
-                var temp = App.UserRepo.UserDb.Items.Where(u => u.Uid == usr.User.Uid).FirstOrDefault();
+                var temp = App
+                    .UserRepo.UserDb.Items.Where(u => u.Uid == usr.User.Uid)
+                    .FirstOrDefault();
                 if (temp != null)
                 {
                     App.UserRepo.User = temp;
@@ -49,11 +56,14 @@ public partial class SettingPage : ContentPage
         }
     }
 
-
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {
         await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
-        await DisplayAlert("Password Reset", $"An email has been sent to {AuthService.Client.User.Info.Email} to reset your password.", "OK");
+        await DisplayAlert(
+            "Password Reset",
+            $"An email has been sent to {AuthService.Client.User.Info.Email} to reset your password.",
+            "OK"
+        );
     }
 
     private async void Btn_LogOut_Clicked(object sender, EventArgs e)
@@ -62,8 +72,5 @@ public partial class SettingPage : ContentPage
         await Shell.Current.GoToAsync($"//LoginPage");
     }
 
-    private void Btn_ChangePFP_Clicked(object sender, EventArgs e)
-    {
-
-    }
+    private void Btn_ChangePFP_Clicked(object sender, EventArgs e) { }
 }

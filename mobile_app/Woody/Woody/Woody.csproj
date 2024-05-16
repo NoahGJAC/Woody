@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Renderer\**" />
+	  <Compile Remove="Platforms\Android\Renderer\**" />
+	  <EmbeddedResource Remove="Platforms\Android\Renderer\**" />
+	  <MauiCss Remove="Platforms\Android\Renderer\**" />
+	  <MauiXaml Remove="Platforms\Android\Renderer\**" />
+	  <None Remove="Platforms\Android\Renderer\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\OpenSans-Bold.ttf" />
 	  <None Remove="Resources\Fonts\OpenSans-ExtraBold.ttf" />
 	  <None Remove="Resources\Fonts\OpenSans-Light.ttf" />

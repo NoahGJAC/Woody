@@ -25,7 +25,7 @@
                 BackgroundColor="{StaticResource White}"
                 BindingContext="App.PlantRepo"
                 BorderColor="Transparent"
-                CornerRadius="10">
+                CornerRadius="20">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -145,7 +145,7 @@
                 BackgroundColor="{StaticResource White}"
                 BindingContext="App.SecurityRepo"
                 BorderColor="Transparent"
-                CornerRadius="30">
+                CornerRadius="20">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image
@@ -304,7 +304,7 @@
                 BackgroundColor="{StaticResource White}"
                 BindingContext="App.GeoLocationRepo"
                 BorderColor="Transparent"
-                CornerRadius="10">
+                CornerRadius="20">
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image

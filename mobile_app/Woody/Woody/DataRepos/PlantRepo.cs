@@ -72,10 +72,7 @@ namespace Woody.DataRepos
         /// </summary>
         public IReading<double> CurrentTemperature
         {
-            get
-            {
-                return TemperatureLevels.Last();
-            }
+            get { return TemperatureLevels.Last(); }
         }
 
         /// <summary>
@@ -83,10 +80,7 @@ namespace Woody.DataRepos
         /// </summary>
         public double AverageTemperature
         {
-            get
-            {
-                return TemperatureLevels.Average(x => x.Value);
-            }
+            get { return TemperatureLevels.Average(x => x.Value); }
         }
 
         /// <summary>
@@ -94,10 +88,7 @@ namespace Woody.DataRepos
         /// </summary>
         public IReading<double> CurrentHumidity
         {
-            get
-            {
-                return HumidityLevels.Last();
-            }
+            get { return HumidityLevels.Last(); }
         }
 
         /// <summary>
@@ -105,10 +96,7 @@ namespace Woody.DataRepos
         /// </summary>
         public IReading<double> CurrentSoilMoisture
         {
-            get
-            {
-                return SoilMoistureLevels.Last();
-            }
+            get { return SoilMoistureLevels.Last(); }
         }
 
         /// <summary>
@@ -156,7 +144,7 @@ namespace Woody.DataRepos
 
                 // Generate random temperature reading
                 TemperatureLevels.Add(
-                   new SensorReading<double>(
+                    new SensorReading<double>(
                         Math.Round(random.NextDouble() * 40, 2),
                         day,
                         ReadingUnit.CELCIUS,

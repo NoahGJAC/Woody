@@ -23,6 +23,7 @@
                 WidthRequest="335">
                 <VerticalStackLayout Spacing="10">
                     <Label
+                        Margin="0,5,0,5"
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="Title"

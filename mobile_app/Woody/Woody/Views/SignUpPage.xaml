@@ -84,19 +84,12 @@
                         PlaceholderColor="{StaticResource DarkestCoffee}"
                         TextColor="{StaticResource DarkestCoffee}" />
 
-                    <buttons:SfSegmentedControl x:Name="userRole">
-                        <buttons:SfSegmentedControl.ItemsSource>
-                            <x:Array Type="{x:Type Image}">
-                                <Image Source="farmer.png" />
-                                <Image Source="fleet-owner.png" />
-                            </x:Array>
-                        </buttons:SfSegmentedControl.ItemsSource>
-                    </buttons:SfSegmentedControl>
-
-                    <VerticalStackLayout Margin="0,3,0,0">
+                    <!--  User Type  -->
+                    <HorizontalStackLayout Margin="0,3,0,0" Spacing="10">
                         <RadioButton Content="Farmer" IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
                         <RadioButton Content="Owner" IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
-                    </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
                     <Button
                         Margin="0,10,0,0"
                         BackgroundColor="{StaticResource Primary}"
