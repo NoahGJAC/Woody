@@ -6,11 +6,19 @@ using System.Text;
 using Woody.Enums;
 using Woody.Interfaces;
 using Woody.Models;
-
+/*
+ * Team: Woody
+ * Section 1
+ * Winter 2024, 05/16/2024
+ * 420-6A6 App Dev III
+ */
 namespace Woody.DataRepos
 {
     public class FarmRepo 
     {
+        /// <summary>
+        /// Represents a repository for the farm data in general, give the data for the other repo
+        /// </summary>
         private SecurityRepo securityRepo;
         /// <summary>
         /// Gets the Security repository.
@@ -28,7 +36,9 @@ namespace Woody.DataRepos
         /// Gets the geolocation repository
         /// </summary>
         public GeoLocationRepo GeoLocationRepo { get { return geoLocationRepo; } }
-
+        /// <summary>
+        /// instantiate the other repos  <see cref="FarmRepo"/>
+        /// </summary>
         public FarmRepo()
         {
             securityRepo = new SecurityRepo();
@@ -36,45 +46,57 @@ namespace Woody.DataRepos
             geoLocationRepo = new GeoLocationRepo();
         }
 
-        public async Task<bool> DeserializeDataAsync()
+        /// <summary>
+        /// Deserialize the old data.
+        /// </summary>
+        public async Task DeserializeOldDataAsync()
         {
             var blobList = await App.IoTDevice.DownloadBlobAsync(); //this get the data from the blob
 
             //DeserializeData
             foreach (var blob in blobList)
             {
-                var jsonObjects = blob.Split(new string[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                var blobReadings = blob.Split(new string[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                foreach (string jsonObject in jsonObjects)
+                foreach (string reading in blobReadings)
                 {
                     try
                     {
-                        // Parse each JSON string and add it to the list
-                        var tempObject = JsonConvert.DeserializeObject<BlobReadings>(jsonObject);
-                        var lol = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonObject);
-                        var properties = lol["Properties"];
+                        // get the raw readings and get the readings in the BlobReadings object
+                        var blobReadingObject = JsonConvert.DeserializeObject<BlobReadings>(reading);
+                        var rawReading = JsonConvert.DeserializeObject<Dictionary<string, object>>(reading);
+
+                        //get all the properties of the reading
+                        var properties = rawReading["Properties"];
 
                         // timestamp
-                        var enqueuedTime = lol["EnqueuedTimeUtc"];
+                        var enqueuedTime = rawReading["EnqueuedTimeUtc"];
 
+                        //put the readings in a dictionary of ease of use
                         var propertiesDictionary = new Dictionary<string, object>();
                         foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(properties))
                         {
                             propertiesDictionary[property.Name] = property.GetValue(properties);
                         }
 
+                        //get the reading type and parse it
                         var readingTypeName = propertiesDictionary["reading-type-name"];
                         var readingType = (ReadingType)Enum.Parse(typeof(ReadingType), readingTypeName.ToString(), true);
+
                         //check if the readingType is already assign if it's not a list
                         if (ValidReadingType(readingType))
                         {
                             continue;
                         }
-                        var body = Convert.FromBase64String(tempObject.Body);
+
+                        // get the values inside of the body aka the reading unit and the value
+                        var body = Convert.FromBase64String(blobReadingObject.Body);
                         string decodedStr = Encoding.UTF8.GetString(body);
                         var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
                         var value = values["value"];
                         var unitValue = values["unit"];
+
+                        //parse the reading unit
                         ReadingUnit unitType;
                         if(readingType == ReadingType.LOUDNESS)
                         {
@@ -88,10 +110,14 @@ namespace Woody.DataRepos
                         {
                            unitType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
                         }
-                        
+
+                        //get the type of the value to create a sensor reading
                         Type type = value.GetType();
+
+                        //create the sensorReading
                         var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
                         var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
+
                         // Invoke the constructor
                         var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType });
 
@@ -106,11 +132,13 @@ namespace Woody.DataRepos
 
                 }
             }
-
-            
-            return true;
         }
 
+        /// <summary>
+        /// only used at the beginning to make sure that we aren't reasigning data that isn't necessary
+        /// </summary>
+        /// <param name="type">the reading type to make sure that we aren't reasigning data</param>
+        /// <returns></returns>
         private bool ValidReadingType(ReadingType type)
         {
             switch (type)
@@ -343,65 +371,81 @@ namespace Woody.DataRepos
             }
         }
 
+        /// <summary>
+        /// Get the new data from the blob
+        /// </summary>
+        /// <param name="partition"> the context</param>
+        /// <param name="data">the blob file data</param>
+        /// <returns></returns>
         internal async Task GetNewDataAsync(PartitionContext partition, EventData data)
         {
-            Console.WriteLine(data);
-            // Assuming data is JSON serialized
+            // get all the information from the data.body
             var jsonString = Encoding.UTF8.GetString(data.Body.ToArray());
-            // Deserialize JSON string to Dictionary<string, object>
             var dictionary = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonString);
 
-            // Now you can work with the deserialized list of dictionaries
+            // get the file name that is added
             var subjectString = dictionary[0]["subject"].ToString();
-            // get substring
             int subjectIndex = subjectString.IndexOf("Woody");
             string filePath = subjectString.Substring(subjectIndex);
 
+            //if that file was already downloaded don't do anything
+            if (App.IoTDevice.blobFile.Contains(filePath))
+                return;
+
+            //get the data
             var blobClient = App.IoTDevice.blobContainerClient.GetBlobClient(filePath);
             var memoryStream = new MemoryStream();
             await blobClient.DownloadToAsync(memoryStream);
-            memoryStream.Position = 0; // Reset the position to the start of the stream
+            memoryStream.Position = 0;
 
-            // Assuming the blob contains text, read the content and add it to the list
             var blobFile = new StreamReader(memoryStream).ReadToEnd();
             memoryStream.Close();
-            if (!App.IoTDevice.blobFile.Contains(filePath))
-            {
-                DeserializeData(blobFile);
-                App.IoTDevice.blobFile.Add(filePath);
-            }
+
+            DeserializeNewData(blobFile);
+            App.IoTDevice.blobFile.Add(filePath);
                 
         }
-
-        private void DeserializeData(string blobfile)
+        /// <summary>
+        /// Desirialise that data from the blob file. this is only for the new data because there's 1 step that is different
+        /// </summary>
+        /// <param name="blobfile">the string of content of the blob file</param>
+        private void DeserializeNewData(string blobfile)
         {
-            var jsonObjects = blobfile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var blobReadings = blobfile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-            foreach (string jsonObject in jsonObjects)
+            foreach (string reading in blobReadings)
             {
                 try
                 {
-                    // Parse each JSON string and add it to the list
-                    var tempObject = JsonConvert.DeserializeObject<BlobReadings>(jsonObject);
-                    var lol = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonObject);
-                    var properties = lol["Properties"];
+                    // get the raw readings and get the readings in the BlobReadings object
+                    var blobReadingObject = JsonConvert.DeserializeObject<BlobReadings>(reading);
+                    var rawReading = JsonConvert.DeserializeObject<Dictionary<string, object>>(reading);
+
+                    //get all the properties of the reading
+                    var properties = rawReading["Properties"];
 
                     // timestamp
-                    var enqueuedTime = lol["EnqueuedTimeUtc"];
+                    var enqueuedTime = rawReading["EnqueuedTimeUtc"];
 
+                    //put the readings in a dictionary of ease of use
                     var propertiesDictionary = new Dictionary<string, object>();
                     foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(properties))
                     {
                         propertiesDictionary[property.Name] = property.GetValue(properties);
                     }
 
+                    //get the reading type and parse it
                     var readingTypeName = propertiesDictionary["reading-type-name"];
                     var readingType = (ReadingType)Enum.Parse(typeof(ReadingType), readingTypeName.ToString(), true);
-                    var body = Convert.FromBase64String(tempObject.Body);
+
+                    // get the values inside of the body aka the reading unit and the value
+                    var body = Convert.FromBase64String(blobReadingObject.Body);
                     string decodedStr = Encoding.UTF8.GetString(body);
                     var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
                     var value = values["value"];
                     var unitValue = values["unit"];
+
+                    //parse the reading unit
                     ReadingUnit unitType;
                     if (readingType == ReadingType.LOUDNESS)
                     {
@@ -415,8 +459,10 @@ namespace Woody.DataRepos
                     {
                         unitType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
                     }
-
+                    //get the type of the value to create a sensor reading
                     Type type = value.GetType();
+
+                    //create the sensorReading
                     var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
                     var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
                     // Invoke the constructor

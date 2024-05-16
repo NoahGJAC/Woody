@@ -16,14 +16,23 @@ using System.Net;
 
 namespace Woody.Services
 {
+    /*
+     * Team: Woody
+     * Section 1
+     * Winter 2024, 05/16/2024
+     * 420-6A6 App Dev III
+    */
     public class AzureIoTHubService
     {
         public DeviceClient deviceClient { get; set; }
         public BlobContainerClient blobContainerClient { get; set; }
         public EventProcessorClient eventProcessorClient { get; set; }
         public List<string> blobFile = new List<string>();
+
         /// <summary>
-        /// Connect to the IoTHub using the Device Connection String
+        /// Connect to the IoTHub using the Device Connection String,
+        /// the blob to get all the data
+        /// the event hub to get all the current data being processed.
         /// </summary>
         /// <returns>True if everything went well and false otherwise</returns>
         public async Task<bool> ConnectToDeviceAsync()
@@ -51,7 +60,10 @@ namespace Woody.Services
                 return false;
             }
         }
-
+        /// <summary>
+        /// Download everything from the blob before the app start so that there is historical data
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<string>> DownloadBlobAsync()
         {
             var blobList = new List<string>();
@@ -72,7 +84,12 @@ namespace Woody.Services
 
             return blobList;
         }
-
+        /// <summary>
+        /// if there is a something happening in the blob while the app is running
+        /// it will get the new data into the application
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
         async Task ProcessEventHandler(ProcessEventArgs eventArgs)
         {
             // Write the body of the event to the console window
@@ -87,7 +104,12 @@ namespace Woody.Services
             }
             
         }
-
+        /// <summary>
+        /// it there is a error happening when getting the data from the blob
+        /// while running the the application this will be called
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
         async Task ProcessErrorHandler(ProcessErrorEventArgs eventArgs)
         {
             // Write details about the error to the console window
@@ -103,7 +125,10 @@ namespace Woody.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// background task to make sure that the application gets the new data
+        /// </summary>
+        /// <returns></returns>
         private async Task GetCurrentMessageAsync()
         {
             await eventProcessorClient.StartProcessingAsync();
