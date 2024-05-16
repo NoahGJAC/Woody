@@ -12,14 +12,14 @@ class TemperatureHumiditySensor(ISensor):
         self,
         gpio: int = None,
         model: str = "AHT20 Temperature & Humidity Sensor",
-        types: list[AReading.Type] = [AReading.Type.TEMPERATURE, A.Reading.Type.Humidity]
+        type: AReading.Type = AReading.TEMPERATURE_HUMIDITY
     ):
         """Initializes the temperature and humidity sensor.
 
         Args:
             gpio (int): The gpio of the temperature and humidity sensor.
             model (str, optional): The model of the temperature and humidity sensor. Defaults to 'Adjustable PIR Motion Sensor'.
-            types (list[AReading.Type], optional): The reading types of the temperature and humidity sensor. Defaults to [AReading.Type.TEMPERATURE, AReading.Type.HUMIDITY].
+            types (AReading.Type, optional): The reading type of the temperature and humidity sensor. Defaults to AReading.Type.TEMPERATURE_HUMIDITY.
         """
         self._address = 0x38
         self._bus = 4
@@ -36,8 +36,9 @@ class TemperatureHumiditySensor(ISensor):
             list[AReading]: A list of readings taken by the sensor.
         """
         readings: list[AReading] = []
+        types = list[AReading.Type.TEMPERATURE, AReading.Type.HUMIDITY]
 
-        for type in self.reading_types:
+        for type in types:
             readings.append(
                 AReading(
                     type=type,
