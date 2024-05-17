@@ -14,8 +14,8 @@
     <Color x:Key="Coyote">#7E583A</Color>
 
     <Color x:Key="Primary">#7C883F</Color>
-    <Color x:Key="Secondary">#727E31</Color>
-    <Color x:Key="Tertiary">#677423</Color>
+    <Color x:Key="Secondary">#677423</Color>
+    <Color x:Key="Tertiary">#454F17</Color>
     <Color x:Key="BackgroundAccent100">#BEB0F0</Color>
     <Color x:Key="BackgroundAccent200">#D4CAF5</Color>
     <Color x:Key="BackgroundAccent300">#EAE5FA</Color>
