@@ -12,10 +12,6 @@ class IDeviceController(ABC):
     # Class properties that must be defined in implementation classes.
     _sensors: list[ISensor]
     _actuators: list[IActuator]
-<<<<<<< HEAD
-=======
-    system_type: SubSystemType
->>>>>>> 3f0b66b (temperature humidity has a single type now)
 
     @abstractmethod
     def __init__(self,

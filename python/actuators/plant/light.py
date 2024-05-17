@@ -104,20 +104,8 @@ class LightController(IActuator):
 
     def clean_up(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-<<<<<<< HEAD
         colorWipe(self.rgb_stick, Color(0,0,0), 10)
         
-=======
-        colorWipe(self.rgb_stick, Color(0, 0, 0), 10)
-
-    def colorWipe(self, color, wait_ms=50):
-        """Wipe color across display a pixel at a time."""
-        for i in range(self.rgb_stick.numPixels()):
-            self.rgb_stick.setPixelColor(i, color)
-            self.rgb_stick.show()
-            sleep(wait_ms / 1000.0)
-
->>>>>>> 3f0b66b (temperature humidity has a single type now)
     def read_state(self) -> bool:
         """
         Returns true if the RGB led stick's state is truthy, false otherwise.
