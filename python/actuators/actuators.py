@@ -6,6 +6,12 @@ class ACommand(ABC):
     """Abstract class for actuator command. Can be instantiated directly or inherited.
     Also defines all possible command types via enums.
     """
+<<<<<<< HEAD
+=======
+
+    class Type(str, Enum):
+        """Enum defining types of actuators that can be targets for a command"""
+>>>>>>> 3f0b66b (temperature humidity has a single type now)
 
     class Type(str, Enum):
         """Enum defining types of actuators that can be targets for a command
@@ -21,7 +27,16 @@ class ACommand(ABC):
     target_type: Type
     value: str # May be updated to a dict when azure is connected
 
+<<<<<<< HEAD
     def __init__(self, target: Type, value: str) -> None:
+=======
+    def __init__(
+        self,
+        target: Type,
+        value: str,
+        subsystem_type: SubSystemType = SubSystemType.SECURITY,
+    ) -> None:
+>>>>>>> 3f0b66b (temperature humidity has a single type now)
         """Constructor for Command abstract class
 
         :param Type target: Type of command whih associated a command to a type of actuator.

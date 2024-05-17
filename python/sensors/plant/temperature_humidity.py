@@ -10,16 +10,16 @@ class TemperatureHumiditySensor(ISensor):
 
     def __init__(
         self,
+        type: AReading.Type,
         gpio: int = None,
         model: str = "AHT20 Temperature & Humidity Sensor",
-        type: AReading.Type = AReading.TEMPERATURE_HUMIDITY
     ):
         """Initializes the temperature and humidity sensor.
 
         Args:
-            gpio (int): The gpio of the temperature and humidity sensor.
+            type (AReading.Type): The first reading type of the temperature and humidity sensor.
+            gpio (int, optional): The gpio of the temperature and humidity sensor. Defaults to none.
             model (str, optional): The model of the temperature and humidity sensor. Defaults to 'Adjustable PIR Motion Sensor'.
-            types (AReading.Type, optional): The reading type of the temperature and humidity sensor. Defaults to AReading.Type.TEMPERATURE_HUMIDITY.
         """
         self._address = 0x38
         self._bus = 4
@@ -35,33 +35,41 @@ class TemperatureHumiditySensor(ISensor):
         Returns:
             list[AReading]: A list of readings taken by the sensor.
         """
-        readings: list[AReading] = []
-        types = list[AReading.Type.TEMPERATURE, AReading.Type.HUMIDITY]
+        try:
+            temperature, humidity = self.sensor.read()
 
-        for type in types:
-            readings.append(
-                AReading(
-                    type=type,
-                    unit=(
-                        AReading.Unit.CELCIUS
-                        if type == AReading.Type.TEMPERATURE
-                        else AReading.Unit.HUMIDITY
-                    ),
-                    value=self.sensor.read()
+            if self.reading_type == AReading.Type.TEMPERATURE:
+                return [
+                    AReading(
+                        type=AReading.Type.TEMPERATURE,
+                        unit=AReading.Unit.CELCIUS,
+                        value=temperature,
+                    )
+                ]
+            elif self.reading_type == AReading.Type.HUMIDITY:
+                return [
+                    AReading(
+                        type=AReading.Type.HUMIDITY,
+                        unit=AReading.Unit.HUMIDITY,
+                        value=humidity,
+                    )
+                ]
+            else:
+                raise BaseException(
+                    f"Invalid reading type. Cannot read {self.reading_type.value} from a temperature and humidity sensor."
                 )
-            )
-
-        return readings
+        except BaseException:
+            return [
+                AReading(type=self.reading_type, unit=AReading.Unit.FAILURE, value="")
+            ]
 
 
 def main():
     temperature_humidity_sensor = TemperatureHumiditySensor()
     try:
         while True:
-            readings = temperature_humidity_sensor.read_sensor()
-            for reading in readings:
-                print(repr(reading))
-
+            reading = temperature_humidity_sensor.read_sensor()
+            print(repr(reading))
             time.sleep(0.2)
     except KeyboardInterrupt:
         print("Exiting...")

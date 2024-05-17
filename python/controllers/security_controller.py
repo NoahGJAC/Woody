@@ -13,7 +13,6 @@ from python.sensors.security.luminosity import LuminositySensor
 from python.sensors.security.motion import MotionSensor
 import colorama
 
-
 class SecurityController(IDeviceController):
     """A class that represents a security subsystem device controller."""
 

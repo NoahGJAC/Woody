@@ -11,40 +11,44 @@ class AReading(ABC):
         """Enum defining all possible types of readings that sensors might make.
         """
         # Add new reading types here.
-        TEMPERATURE_HUMIDITY = 'temperature humidity'
-        WATER_LEVEL = 'water level'
-        SOIL_MOISTURE = 'soil moisture'
-        TEMPERATURE = 'temperature'
-        HUMIDITY = 'humidity'
-        LUMINOSITY = 'luminosity'
-        BUZZER = 'buzzer state'
-        DOOR = 'door state'
-        DOOR_LOCK = 'door lock state'
-        MOTION = 'motion'
-        VIBRATION = 'vibration'
-        LOUDNESS = 'loudness'
-        LATITUDE = 'latitude'
-        LONGITUDE ='longitude'
-        ALTITUDE = 'altitude'
-        GPS = 'GPS'
-        PITCH = 'pitch'
-        ROLL = 'roll'
+        WATER_LEVEL = "water level"
+        SOIL_MOISTURE = "soil moisture"
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        LUMINOSITY = "luminosity"
+        BUZZER = "buzzer state"
+        DOOR = "door state"
+        DOOR_LOCK = "door lock state"
+        MOTION = "motion"
+        VIBRATION = "vibration"
+        LOUDNESS = "loudness"
+        LATITUDE = "latitude"
+        LONGITUDE = "longitude"
+        ALTITUDE = "altitude"
+        GPS = "GPS"
+        PITCH = "pitch"
+        ROLL = "roll"
+
+    class Unit(str, Enum):
+        """Enum defining all possible units for sensor measuremens."""
 
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
-        MILLIMITERS = 'mm'
-        CELCIUS = '°C'
-        FAHRENHEIT = '°F'
-        HUMIDITY = '% HR'
-        UNITLESS = ''
-        LUX = 'lx'
-        LOUDNESS = '% loudness strength'
-        DEGREE = '°'
-        METERS = 'm'
+        # TODO: ° does not work for json exporting
+        MILLIMITERS = "mm"
+        CELCIUS = "°C"
+        FAHRENHEIT = "°F"
+        HUMIDITY = "% HR"
+        UNITLESS = ""
+        LUX = "lx"
+        LOUDNESS = "% loudness strength"
+        DEGREE = "°"
+        METERS = "m"
         PERCENTAGE = "%"
+        FAILURE = "failure"
 
     # Class properties that must be defined in implementation classes
     reading_type: Type
@@ -63,6 +67,13 @@ class AReading(ABC):
     
     def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
+
+    def export_json(self) -> str:
+        """Exports a reading as a json encoded string
+
+        :return str: json string representation of the reading
+        """
+        return json.dumps({"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):

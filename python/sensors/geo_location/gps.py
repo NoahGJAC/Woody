@@ -53,9 +53,23 @@ class GPSSensor(ISensor):
             return readings
         except pynmea2.ParseError as e:
             print(
+<<<<<<< HEAD
                 f"{e} \nCould not parse the information? you need to plug the GPS on UART port. Also make sure that your GPS is near an open window and replug your GPS after restarting your Raspberri Pi.")
             return readings
             
+=======
+                f"{e} \nCould not parse the information? you need to plug the GPS on UART port. Also make sure that your GPS is near an open window and replug your GPS after restarting your Raspberri Pi."
+            )
+            return (
+                readings
+                if readings
+                else [
+                    AReading(AReading.Type.LATITUDE, AReading.Unit.FAILURE, ""),
+                    AReading(AReading.Type.LONGITUDE, AReading.Unit.FAILURE, ""),
+                    AReading(AReading.Type.ALTITUDE, AReading.Unit.FAILURE, ""),
+                ]
+            )
+>>>>>>> 3f0b66b (temperature humidity has a single type now)
 
     def close(self) -> None:
         self.gps.close()

@@ -11,7 +11,6 @@ from python.sensors.plant.water_level import WaterLevelSensor
 from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
 
-
 class PlantController(IDeviceController):
     """A class that represents a plant subsystem device controller."""
 
@@ -90,10 +89,12 @@ class PlantController(IDeviceController):
         """
 
         pre_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='on')
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value="on"),
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="on"),
         ]
         post_commands: list[ACommand] = [
-            ACommand(target=ACommand.Type.FAN_ON_OFF, value='off')
+            ACommand(target=ACommand.Type.FAN_ON_OFF, value="off"),
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="off"),
         ]
 
         while True:
@@ -113,11 +114,13 @@ class PlantController(IDeviceController):
 
 
 def main():
-    controller = PlantController(sensors=[
-        SoilMoistureSensor(),
-        WaterLevelSensor(),
-        TemperatureHumiditySensor()
-    ],
+    controller = PlantController(
+        sensors=[
+            SoilMoistureSensor(),
+            WaterLevelSensor(),
+            # TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
+            # TemperatureHumiditySensor(AReading.Type.HUMIDITY),
+        ],
         actuators=[
         FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
     ])
