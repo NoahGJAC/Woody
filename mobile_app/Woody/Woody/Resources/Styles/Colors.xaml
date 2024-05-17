@@ -4,6 +4,7 @@
 
 
     <Color x:Key="Alabaster">#F1ECE2</Color>
+    <Color x:Key="Isabelline">#FAF9F5</Color>
     <Color x:Key="Bone">#E5DBCE</Color>
     <Color x:Key="LightCoffee">#7E5638</Color>
     <Color x:Key="MediumCoffee">#724E33</Color>

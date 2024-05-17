@@ -9,7 +9,7 @@
         <VerticalStackLayout>
             <Frame
                 Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10">
                 <StackLayout>
@@ -123,7 +123,7 @@
 
             <Frame
                 Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10">
                 <StackLayout>
@@ -172,32 +172,36 @@
             <Frame
                 Margin="0,15,0,0"
                 Padding="20,0,0,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10"
                 HeightRequest="60"
                 WidthRequest="360">
                 <HorizontalStackLayout>
                     <Image
-                        HeightRequest="25"
+                        Margin="5,0,0,0"
+                        HeightRequest="30"
                         HorizontalOptions="Center"
-                        Source="water_drop.png"
+                        Source="sprout.png"
                         VerticalOptions="Center" />
                     <Label
-                        Margin="10,0,0,0"
+                        Margin="15,0,0,0"
                         FontFamily="OpenSansSemiBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="Container water level is at "
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="{Binding WaterLevel.Value}"
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="%"
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
@@ -205,111 +209,110 @@
             <!--  Control Panel  -->
             <Frame
                 Margin="15,15,15,0"
-                Padding="15,15,30,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
-                CornerRadius="10"
-                HeightRequest="110">
+                CornerRadius="10">
                 <StackLayout>
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
                             Margin="5,0,0,0"
-                            HeightRequest="25"
-                            Source="lighting_bulb.png"
+                            HeightRequest="30"
+                            Source="sprout.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Control Panel" />
+                            Text="Control Panel"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
-
-                    <!--  Fan  -->
-                    <Grid Margin="15,5,0,0">
+                    <Grid Margin="5,10,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="0.5*" />
+                        </Grid.RowDefinitions>
+
+                        <!--  Fan  -->
                         <Label
+                            Grid.Row="0"
                             Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="14"
-                            HorizontalOptions="Start"
-                            Text="FAN"
-                            VerticalOptions="Center" />
-                        <Grid
-                            Grid.Column="1"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
+                            FontSize="Body"
+                            Text="Fan"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                        <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
-                                Text="OFF"
-                                VerticalOptions="Center" />
+                                HorizontalTextAlignment="End"
+                                Text="ON"
+                                TextColor="{StaticResource DarkestCoffee}" />
                             <Switch
                                 x:Name="FanSwitch"
                                 Grid.Column="1"
                                 HorizontalOptions="Center"
                                 IsToggled="{Binding FanState.Value}"
                                 Toggled="FanSwitch_Toggled"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Start" />
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
-                                HorizontalOptions="Start"
-                                Text="ON"
-                                VerticalOptions="Center" />
+                                FontSize="Body"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Text="OFF"
+                                TextColor="{StaticResource DarkestCoffee}" />
                         </Grid>
-                    </Grid>
 
-                    <!--  Light  -->
-                    <Grid Margin="15,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <!--  Light  -->
                         <Label
+                            Grid.Row="1"
                             Grid.Column="0"
-                            Margin="0,0,0,0"
-                            FontSize="14"
-                            HorizontalOptions="Start"
-                            Text="LIGHT"
-                            VerticalOptions="Center" />
-                        <Grid
-                            Grid.Column="1"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
+                            FontSize="Body"
+                            Text="Light"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                        <Grid Grid.Row="1" Grid.Column="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
-                                Text="OFF"
-                                VerticalOptions="Center" />
+                                HorizontalTextAlignment="End"
+                                Text="ON"
+                                TextColor="{StaticResource DarkestCoffee}" />
                             <Switch
                                 x:Name="LightSwitch"
                                 Grid.Column="1"
                                 HorizontalOptions="Center"
                                 IsToggled="{Binding LightState.Value}"
                                 Toggled="LightSwitch_Toggled"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Start" />
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
-                                HorizontalOptions="Start"
-                                Text="ON"
-                                VerticalOptions="Center" />
+                                FontSize="Body"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Text="OFF"
+                                TextColor="{StaticResource DarkestCoffee}" />
                         </Grid>
                     </Grid>
                 </StackLayout>
