@@ -4,7 +4,6 @@ from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 
 
-
 class IDeviceController(ABC):
     """Interface for all device controllers.
     """

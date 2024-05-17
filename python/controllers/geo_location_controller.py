@@ -13,6 +13,7 @@ from python.actuators.geo_location.buzzer import BuzzerController
 from python.sensors.geo_location.vibration import VibrationSensor
 import colorama
 
+
 class GeoLocationController(IDeviceController):
     """A class that represents a geolocation subsystem device controller."""
 
