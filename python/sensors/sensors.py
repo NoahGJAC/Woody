@@ -19,6 +19,8 @@ class AReading(ABC):
         BUZZER = "buzzer state"
         DOOR = "door state"
         DOOR_LOCK = "door lock state"
+        FAN = "fan state"
+        LED = "LED state"
         MOTION = "motion"
         VIBRATION = "vibration"
         LOUDNESS = "loudness"

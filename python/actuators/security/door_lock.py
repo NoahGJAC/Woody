@@ -96,10 +96,10 @@ class DoorLockController(IActuator, ISensor):
             return False
 
     def read_sensor(self) -> list[AReading]:
-        """_summary_
+        """Returns an AReading list from the sensor.
 
         Returns:
-            list[AReading]: _description_
+            list[AReading]: The list of readings measured by the door lock.
         """
         return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self._servo.value)]
 
