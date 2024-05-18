@@ -27,7 +27,7 @@ class TemperatureHumiditySensor(ISensor):
             address=self._address, bus=self._bus
         )
         self._sensor_model = model
-        self.reading_types = types
+        self.reading_type = type
 
     def read_sensor(self) -> list[AReading]:
         """Reads temperature and humidity sensor data and returns a list of readings.
@@ -35,9 +35,9 @@ class TemperatureHumiditySensor(ISensor):
         Returns:
             list[AReading]: A list of readings taken by the sensor.
         """
+        print(self.reading_type)
         try:
             temperature, humidity = self.sensor.read()
-
             if self.reading_type == AReading.Type.TEMPERATURE:
                 return [
                     AReading(
@@ -65,11 +65,13 @@ class TemperatureHumiditySensor(ISensor):
 
 
 def main():
-    temperature_humidity_sensor = TemperatureHumiditySensor()
+    temperature_sensor = TemperatureHumiditySensor(type=AReading.Type.TEMPERATURE)
+    humidity_sensor = TemperatureHumiditySensor(type=AReading.Type.HUMIDITY)
     try:
         while True:
-            reading = temperature_humidity_sensor.read_sensor()
-            print(repr(reading))
+            temp_readings = temperature_sensor.read_sensor()
+            humi_readings = humidity_sensor.read_sensor()
+            print(repr(temp_readings), repr(humi_readings))
             time.sleep(0.2)
     except KeyboardInterrupt:
         print("Exiting...")
