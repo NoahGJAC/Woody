@@ -67,7 +67,7 @@ class PlantController(IDeviceController):
 
         :return list[AReading]: a list containing all readings collected from the sensors.
         """
-        readings: List[AReading] = []
+        readings: list[AReading] = []
 
         for sensor in self._sensors:
             readings.extend(sensor.read_sensor())
@@ -120,9 +120,12 @@ def main():
             WaterLevelSensor(),
             # TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
             # TemperatureHumiditySensor(AReading.Type.HUMIDITY),
+            FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
+            # LightController?
         ],
         actuators=[
-        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+        FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF),
+        # LightController?
     ])
 
     controller.loop()
