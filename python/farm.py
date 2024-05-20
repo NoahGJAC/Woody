@@ -84,9 +84,9 @@ class Farm:
 
 
 async def farm_main():
-    fan = FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+    fan = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
     led = LightController(
-        gpio=12, type=ACommand.Type.LIGHT_ON_OFF)
+        gpio=12, command_type=ACommand.Type.LIGHT_ON_OFF, reading_type=AReading.Type.LED)
     subsystems = [GeoLocationController(sensors=[
         RollSensor(
             gpio=None,
