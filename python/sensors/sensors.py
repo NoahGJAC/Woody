@@ -9,10 +9,9 @@ class AReading(ABC):
     """
 
     class Type(str, Enum):
-        """Enum defining all possible types of readings that sensors might make."""
-
+        """Enum defining all possible types of readings that sensors might make.
+        """
         # Add new reading types here.
-        TEMPERATURE_HUMIDITY = "temperature humidity"
         WATER_LEVEL = "water level"
         SOIL_MOISTURE = "soil moisture"
         TEMPERATURE = "temperature"
@@ -21,6 +20,8 @@ class AReading(ABC):
         BUZZER = "buzzer state"
         DOOR = "door state"
         DOOR_LOCK = "door lock state"
+        FAN = "fan state"
+        LED = "LED state"
         MOTION = "motion"
         VIBRATION = "vibration"
         LOUDNESS = "loudness"
@@ -31,24 +32,25 @@ class AReading(ABC):
         PITCH = "pitch"
         ROLL = "roll"
         
+        
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens."""
 
         # Add new reading units here.
         # TODO: ° does not work for json exporting
-        CELSIUS_HUMIDITY = '°C-% HR'
-        MILLIMITERS = 'mm'
-        CELCIUS = '°C'
-        FAHRENHEIT = '°F'
-        HUMIDITY = '% HR'
-        UNITLESS = ''
-        LUX = 'lx'
-        LOUDNESS = '% loudness strength'
-        DEGREE = '°'
-        METERS = 'm'
+        MILLIMITERS = "mm"
+        CELCIUS = "°C"
+        FAHRENHEIT = "°F"
+        HUMIDITY = "% HR"
+        UNITLESS = ""
+        LUX = "lx"
+        LOUDNESS = "% loudness strength"
+        DEGREE = "°"
+        METERS = "m"
         PERCENTAGE = "%"
-        FAILURE = 'failure'
+        FAILURE = "failure"
 
+        
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
@@ -75,6 +77,7 @@ class AReading(ABC):
 
         :return str: json string representation of the reading
         """
+
         return json.dumps(
             {"value": self.value, "unit": self.reading_unit.value})
 
