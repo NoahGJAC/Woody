@@ -13,7 +13,6 @@ import colorama
 from python.enums.SubSystemType import SubSystemType
 
 
-
 class PlantController(IDeviceController):
     """A class that represents a plant subsystem device controller."""
 
@@ -67,9 +66,11 @@ class PlantController(IDeviceController):
 
         :return list[AReading]: a list containing all readings collected from the sensors.
         """
-        readings: list[AReading] = [
-            reading for sensor in self._sensors for reading in sensor.read_sensor()
-        ]
+        readings: list[AReading] = []
+
+        for sensor in self._sensors:
+            readings.extend(sensor.read_sensor())
+
         return readings
 
     def loop(self):
@@ -87,47 +88,44 @@ class PlantController(IDeviceController):
 
         pre_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.FAN_ON_OFF, value="on"),
-            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="on")
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="on"),
         ]
         post_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.FAN_ON_OFF, value="off"),
-            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="off")
+            ACommand(target=ACommand.Type.LIGHT_ON_OFF, value="off"),
         ]
 
         while True:
             self.control_actuators(commands=pre_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY:
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
+                print(reading)
             print("\n")
             sleep(2)
 
             self.control_actuators(commands=post_commands)
             readings = self.read_sensors()
             for reading in readings:
-                if reading.reading_type is AReading.Type.TEMPERATURE_HUMIDITY:
-                    temperature, humidity = reading.value
-                    print("temperature: {:.2f} C".format(temperature))
-                    print("humidity: {:.2f} %".format(humidity))
-                else:
-                    print(reading)
+                print(reading)
             print("\n")
             sleep(2)
 
 
 def main():
+    fan = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
     controller = PlantController(
-        sensors=[SoilMoistureSensor(), WaterLevelSensor()],
-        actuators=[
-            LightController(gpio=12, type=ACommand.Type.LIGHT_ON_OFF),
-            FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF),
+        sensors=[
+            SoilMoistureSensor(),
+            WaterLevelSensor(),
+            TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
+            TemperatureHumiditySensor(AReading.Type.HUMIDITY),
+            fan
+            # LightController?
         ],
-    )
+        actuators=[
+        fan
+        # LightController?
+    ])
 
     controller.loop()
 
