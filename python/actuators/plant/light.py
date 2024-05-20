@@ -4,7 +4,7 @@
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 from enum import Enum
-from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
+from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip, theaterChase
 from rpi_ws281x import Color
 from time import sleep
 
@@ -25,7 +25,7 @@ class LightController(IActuator, ISensor):
         count: int = 1,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
-        color: Color = Color(255, 255, 255)
+        color: Color = Color(255, 255, 255),
     ) -> None:
         """
         Initializes the RGB led stick.
@@ -44,7 +44,9 @@ class LightController(IActuator, ISensor):
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
-        self._validate_integer(value=brightness, min_value=0, name="Light brightness", max_value=255)
+        self._validate_integer(
+            value=brightness, min_value=0, name="Light brightness", max_value=255
+        )
 
         self.gpio = gpio
         self.count = count
@@ -102,8 +104,9 @@ class LightController(IActuator, ISensor):
             self._current_state = value is LightState.ON
         elif (value is LightState.OFF.value):
             self.rgb_stick.colorWipe(self.rgb_stick, Color(0,0,0), 10)
+
             self._current_state = value is LightState.OFF
-        
+
         return previous_state != self._current_state
 
     def __del__(self) -> None:

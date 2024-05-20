@@ -40,10 +40,8 @@ class RollSensor(ISensor):
                 if last_x is not None and last_y is not None and last_z is not None:
                     Roll = self._calculate_roll(last_x, last_y, last_z)
                     readings.append(
-                        AReading(
-                            AReading.Type.ROLL,
-                            AReading.Unit.DEGREE,
-                            Roll))
+                        AReading(AReading.Type.ROLL, AReading.Unit.DEGREE, Roll)
+                    )
                     break
         return readings
 
@@ -55,13 +53,13 @@ class RollSensor(ISensor):
 
 
 def main():
-    roll = RollSensor(None, 'Built-in Accelerometer', AReading.Type.ROLL)
+    roll = RollSensor(None, "Built-in Accelerometer", AReading.Type.ROLL)
 
     while True:
         readings = roll.read_sensor()
 
         for reading in readings:
-            print(f'Roll: {reading.value:.2f}{reading.reading_unit.value}')
+            print(f"Roll: {reading.value:.2f}{reading.reading_unit.value}")
 
 
 if __name__ == "__main__":

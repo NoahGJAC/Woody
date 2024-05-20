@@ -11,8 +11,7 @@ LOUDNESS_GPIO_PIN: int = 0
 
 
 class LoudnessSensor(ISensor):
-    """A class that represents a loudness sensor. (ANALOG)
-    """
+    """A class that represents a loudness sensor. (ANALOG)"""
 
     def __init__(self, gpio: int, model: str, type: AReading.Type):
         """Initialize the loudness sensor.
@@ -41,16 +40,18 @@ class LoudnessSensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.LOUDNESS,
-                value=float(
-                    self._sensor.value))]
+                value=float(self._sensor.value),
+            )
+        ]
 
 
 def main():
     loudness_sensor = LoudnessSensor(
         gpio=LOUDNESS_GPIO_PIN,
-        model='Grove - Loudness Sensor',
-        type=AReading.Type.LOUDNESS)
-    print('Listening...')
+        model="Grove - Loudness Sensor",
+        type=AReading.Type.LOUDNESS,
+    )
+    print("Listening...")
     try:
         while True:
             readings = loudness_sensor.read_sensor()
@@ -58,8 +59,8 @@ def main():
                 print(reading)
             time.sleep(0.1)
     except KeyboardInterrupt:
-        print('Exiting')
+        print("Exiting")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

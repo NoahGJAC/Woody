@@ -7,9 +7,11 @@ from enum import Enum
 from gpiozero import OutputDevice
 from time import sleep
 
+
 class FanState(Enum):
     ON = "on"
     OFF = "off"
+
 
 class FanController(IActuator):
     # A class to control a fan through the reterminal.
@@ -39,9 +41,7 @@ class FanController(IActuator):
 
         self.control_actuator(self._current_state)
 
-    def _validate_integer(
-        self, value: int, name: str, min_value: int = 0
-    ) -> None:
+    def _validate_integer(self, value: int, name: str, min_value: int = 0) -> None:
         if value < min_value:
             raise ValueError(f"{name} value must be positive")
 
@@ -96,6 +96,7 @@ class FanController(IActuator):
 def print_readings(readings: list[AReading]) -> None:
     for reading in readings:
         print(reading)
+
 
 if __name__ == "__main__":
     fan_controller = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)

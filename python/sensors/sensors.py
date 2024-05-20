@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import json
 
 
 class AReading(ABC):
@@ -30,14 +31,11 @@ class AReading(ABC):
         GPS = "GPS"
         PITCH = "pitch"
         ROLL = "roll"
-
+        
+        
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens."""
 
-
-    class Unit(str, Enum):
-        """Enum defining all possible units for sensor measuremens.
-        """
         # Add new reading units here.
         # TODO: ° does not work for json exporting
         MILLIMITERS = "mm"
@@ -52,21 +50,25 @@ class AReading(ABC):
         PERCENTAGE = "%"
         FAILURE = "failure"
 
+        
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
     value: float | str | bool
 
-    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
+    def __init__(
+            self,
+            type: Type,
+            unit: Unit,
+            value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
 
     def __repr__(self) -> str:
-        """String representation of a reading object
-        """
+        """String representation of a reading object"""
         return f"AReading(reading_type={self.reading_type}, value={self.value}, unit={self.reading_unit})"
-    
+
     def __str__(self) -> str:
         return f"{self.reading_type.value}: {self.value} {self.reading_unit.value}"
 
@@ -75,12 +77,13 @@ class AReading(ABC):
 
         :return str: json string representation of the reading
         """
-        return json.dumps({"value": self.value, "unit": self.reading_unit.value})
+
+        return json.dumps(
+            {"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):
-    """Interface for all sensors.
-    """
+    """Interface for all sensors."""
 
     # Class properties that must be defined in implementation classes
     _sensor_model: str
@@ -104,8 +107,7 @@ class ISensor(ABC):
 
 
 class MockSensor(ISensor):
-    """A class to represent a mock sensor that implements ISensor.
-    """
+    """A class to represent a mock sensor that implements ISensor."""
 
     def __init__(self, gpio: int, model: str, type: AReading.Type) -> None:
         """Initialize the mock sensor and sets the properties required by the interface
@@ -124,14 +126,10 @@ class MockSensor(ISensor):
         Returns:
             list[AReading]: A list of the fake readings.
         """
-        print('Mock sensor reading...')
+        print("Mock sensor reading...")
         return [
-            AReading(
-                AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0),
-            AReading(
-                AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 101.0),
-            AReading(
-                AReading.Type.LUMINOSITY, AReading.Unit.LUX, 3.846e26),
-            AReading(
-                AReading.Type.BUZZER, AReading.Unit.UNITLESS, 'OFF')
+            AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, -200.0),
+            AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 101.0),
+            AReading(AReading.Type.LUMINOSITY, AReading.Unit.LUX, 3.846e26),
+            AReading(AReading.Type.BUZZER, AReading.Unit.UNITLESS, "OFF"),
         ]

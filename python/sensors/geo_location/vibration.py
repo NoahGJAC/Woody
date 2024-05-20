@@ -40,39 +40,50 @@ class VibrationSensor(ISensor):
 
                 # Calculate pitch and roll angles only if all readings are
                 # available
-                if self.last_x is not None and self.last_y is not None and self.last_z is not None and self.first_x is None and self.first_y is None and self.first_z is None:
+                if (
+                    self.last_x is not None
+                    and self.last_y is not None
+                    and self.last_z is not None
+                    and self.first_x is None
+                    and self.first_y is None
+                    and self.first_z is None
+                ):
                     self.first_x = self.last_x
                     self.first_y = self.last_y
                     self.first_z = self.last_z
 
-                if self.first_x is not None and self.first_y is not None and self.first_z is not None:
+                if (
+                    self.first_x is not None
+                    and self.first_y is not None
+                    and self.first_z is not None
+                ):
                     if self._range(self.last_x, self.first_x):
                         self.first_x = self.last_x
                         readings.append(
                             AReading(
-                                AReading.Type.VIBRATION,
-                                AReading.Unit.UNITLESS,
-                                True))
+                                AReading.Type.VIBRATION, AReading.Unit.UNITLESS, True
+                            )
+                        )
                     elif self._range(self.last_y, self.first_y):
                         self.first_y = self.last_y
                         readings.append(
                             AReading(
-                                AReading.Type.VIBRATION,
-                                AReading.Unit.UNITLESS,
-                                True))
+                                AReading.Type.VIBRATION, AReading.Unit.UNITLESS, True
+                            )
+                        )
                     elif self._range(self.last_z, self.first_z):
                         self.first_z = self.last_z
                         readings.append(
                             AReading(
-                                AReading.Type.VIBRATION,
-                                AReading.Unit.UNITLESS,
-                                True))
+                                AReading.Type.VIBRATION, AReading.Unit.UNITLESS, True
+                            )
+                        )
                     else:
                         readings.append(
                             AReading(
-                                AReading.Type.VIBRATION,
-                                AReading.Unit.UNITLESS,
-                                False))
+                                AReading.Type.VIBRATION, AReading.Unit.UNITLESS, False
+                            )
+                        )
                     break
 
         return readings
@@ -83,18 +94,21 @@ class VibrationSensor(ISensor):
             return a boolean if the current is not between the buffers then there is vibration
 
         """
-        return last_value - \
-            self.variant >= current_value or current_value >= last_value + self.variant
+        return (
+            last_value - self.variant >= current_value
+            or current_value >= last_value + self.variant
+        )
 
 
 def main():
-    vib = VibrationSensor(None, 'Built-in Accelerometer', AReading.Type.VIBRATION)
+    vib = VibrationSensor(None, "Built-in Accelerometer", AReading.Type.VIBRATION)
     try:
         while True:
             readings = vib.read_sensor()
             for reading in readings:
                 print(
-                    f'{reading.reading_type.value}: {reading.value} {reading.reading_unit.value}')
+                    f"{reading.reading_type.value}: {reading.value} {reading.reading_unit.value}"
+                )
 
     except KeyboardInterrupt:
         print("Exiting...")

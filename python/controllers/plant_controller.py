@@ -2,7 +2,7 @@
 
 from time import sleep
 from python.actuators.plant.fan import FanController
-# from python.actuators.plant.light import LightController
+from python.actuators.plant.light import LightController
 from python.actuators.actuators import ACommand, IActuator
 from python.controllers.device_controllers import IDeviceController
 from python.sensors.sensors import AReading, ISensor
@@ -10,14 +10,13 @@ from python.sensors.plant.soil_moisture import SoilMoistureSensor
 from python.sensors.plant.water_level import WaterLevelSensor
 from python.sensors.plant.temperature_humidity import TemperatureHumiditySensor
 import colorama
+from python.enums.SubSystemType import SubSystemType
+
 
 class PlantController(IDeviceController):
     """A class that represents a plant subsystem device controller."""
 
-    def __init__(
-            self,
-            sensors: list[ISensor],
-            actuators: list[IActuator]) -> None:
+    def __init__(self, sensors: list[ISensor], actuators: list[IActuator]) -> None:
         """Initializes a PlantController
 
         Args:
@@ -25,6 +24,7 @@ class PlantController(IDeviceController):
             actuators (list[IActuator]): The list of actuators to initialize.
         """
         super().__init__(sensors=sensors, actuators=actuators)
+        self.system_type = SubSystemType.PLANT
 
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Runs the commands on their corresponding actuators.
@@ -36,23 +36,22 @@ class PlantController(IDeviceController):
             actuator = actuator_dict.get(command.target_type)
             if actuator is None:
                 print(
-                    colorama.Fore.RED +
-                    f"No actuator found for command: {command}" +
-                    colorama.Fore.RESET
+                    colorama.Fore.RED
+                    + f"No actuator found for command: {command}"
+                    + colorama.Fore.RESET
                 )
                 continue
 
             if not actuator.validate_command(command=command):
                 print(
-                    colorama.Fore.RED +
-                    f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}" +
-                    colorama.Fore.RESET)
+                    colorama.Fore.RED
+                    + f"Invalid command for actuator: {actuator.type}\n\tCommand: {command}"
+                    + colorama.Fore.RESET
+                )
                 continue
 
             actuator.control_actuator(value=command.value)
-            print(
-                f"Executed command: {command}"
-            )
+            print(f"Executed command: {command}")
 
     def _get_actuator_dict(self) -> dict[ACommand.Type, IActuator]:
         """Returns a dictionary with the actuators as values to their command type key.
@@ -75,8 +74,7 @@ class PlantController(IDeviceController):
         return readings
 
     def loop(self):
-        """Loops through controlling actuators and reading sensors. Intended for testing.
-        """
+        """Loops through controlling actuators and reading sensors. Intended for testing."""
         """
         pre_commands: list[ACommand] = [
             ACommand(target=ACommand.Type.LIGHT_ON_OFF, value='on'),
@@ -119,8 +117,8 @@ def main():
         sensors=[
             SoilMoistureSensor(),
             WaterLevelSensor(),
-            # TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
-            # TemperatureHumiditySensor(AReading.Type.HUMIDITY),
+            TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
+            TemperatureHumiditySensor(AReading.Type.HUMIDITY),
             fan
             # LightController?
         ],
