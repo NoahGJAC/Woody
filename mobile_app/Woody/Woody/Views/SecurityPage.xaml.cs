@@ -2,6 +2,7 @@ using LiveChartsCore.SkiaSharpView.Maui;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Woody.DataRepos;
+using Woody.Enums;
 
 /*
  * Team: Woody
@@ -21,6 +22,7 @@ public partial class SecurityPage : ContentPage
     /// Gets or sets the collection of Cartesian charts displayed on the page.
     /// </summary>
     public ObservableCollection<CartesianChart> Charts { get; set; }
+    private Models.Command<string> BuzzerCommand { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SecurityPage"/> class.
@@ -33,7 +35,7 @@ public partial class SecurityPage : ContentPage
 			ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
 			ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
 		};
-
+        BuzzerCommand = new Models.Command<string>("off",CommandType.BUZZER_ON_OFF,SubSystemType.Security);
 		SetBindingContext();
     }
 
@@ -55,9 +57,19 @@ public partial class SecurityPage : ContentPage
         BuzzerSwitch.BindingContext = App.FarmRepo.SecurityRepo;
     }
 
-    private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
+    private async void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-		App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
+
+        if (e.Value)
+        {
+            BuzzerCommand.Value = "on";
+            await App.IoTDevice.SendCommandAsync(BuzzerCommand);
+        }
+        else
+        {
+            BuzzerCommand.Value = "off";
+            await App.IoTDevice.SendCommandAsync(BuzzerCommand);
+        }
     }
 
     private void ButtonLock_Clicked(object sender, EventArgs e)

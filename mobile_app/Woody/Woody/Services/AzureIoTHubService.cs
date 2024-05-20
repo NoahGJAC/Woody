@@ -1,18 +1,13 @@
 ﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using LiteDB;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
-using System.Net;
+using Woody.Models;
+using Woody.Interfaces;
+using Woody.Enums;
 
 namespace Woody.Services
 {
@@ -28,6 +23,7 @@ namespace Woody.Services
         public BlobContainerClient blobContainerClient { get; set; }
         public EventProcessorClient eventProcessorClient { get; set; }
         public List<string> blobFile = new List<string>();
+        public ServiceClient serviceClient { get; set; }
 
         /// <summary>
         /// Connect to the IoTHub using the Device Connection String,
@@ -42,6 +38,7 @@ namespace Woody.Services
                 var transportType = Microsoft.Azure.Devices.Client.TransportType.Mqtt;
 
                 deviceClient = DeviceClient.CreateFromConnectionString(App.Settings.IOTHubDeviceConnectionString, transportType);
+                serviceClient = ServiceClient.CreateFromConnectionString(App.Settings.IOTHubConnectionString);
                 blobContainerClient = new BlobContainerClient(App.Settings.BlobConnectionString, App.Settings.BlobContainerName);
                 eventProcessorClient = new EventProcessorClient(blobContainerClient,App.Settings.EventHubConsumer,App.Settings.EventHubConnectionString, App.Settings.EventHubName);
 
@@ -156,6 +153,33 @@ namespace Woody.Services
                 eventProcessorClient.ProcessErrorAsync -= ProcessErrorHandler;
             }
 
+        }
+
+        public async Task SendCommandAsync<T>(Models.Command<T> command)
+        {
+            var methodInvocation = new CloudToDeviceMethod("command")
+            {
+                ResponseTimeout = TimeSpan.FromSeconds(30)
+            };
+            var commandObject = new Dictionary<string, string>
+            {
+                ["command-type"] = CommandTypeExtensions.ToDescription(command.CommandType),
+                ["subsystem-type"] = SubSystemTypeExtensions.ToDescription(command.SubSystem),
+                ["value"] = command.Value.ToString(),
+            };
+
+            var payload = JsonConvert.SerializeObject(commandObject);
+            methodInvocation.SetPayloadJson(payload);
+
+            try
+            {
+                var response = await serviceClient.InvokeDeviceMethodAsync(App.Settings.IOTHubDeviceId, methodInvocation);
+                Console.WriteLine($"Response status: {response.Status}, payload: {response.GetPayloadAsJson()}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to invoke device method: {ex.Message}");
+            }
         }
     }
 }

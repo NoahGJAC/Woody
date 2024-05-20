@@ -23,6 +23,8 @@ namespace Woody.Interfaces
         /// Gets or sets the type of the command.
         /// </summary>
         CommandType CommandType { get; set; }
+        SubSystemType SubSystem { get; set; }
+
     }
 
     /// <summary>
