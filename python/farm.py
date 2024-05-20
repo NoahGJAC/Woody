@@ -6,8 +6,8 @@ from python.sensors.sensors import AReading
 from python.enums.SubSystemType import SubSystemType
 
 
-from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, WaterLevelSensor, TemperatureHumiditySensor
-from python.actuators import GeoBuzzerController, SecurityBuzzerController, DoorLockController, FanController
+from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, SoilMoistureSensor, WaterLevelSensor, TemperatureHumiditySensor
+from python.actuators import GeoBuzzerController, SecurityBuzzerController, DoorLockController, FanController, LightController
 
 
 import asyncio
@@ -84,6 +84,9 @@ class Farm:
 
 
 async def farm_main():
+    fan = FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+    led = LightController(
+        gpio=12, type=ACommand.Type.LIGHT_ON_OFF)
     subsystems = [GeoLocationController(sensors=[
         RollSensor(
             gpio=None,
@@ -162,12 +165,15 @@ async def farm_main():
                 initial_state='-1')
         ]),
         PlantController(sensors=[
-            # SoilMoistureSensor(),
+            SoilMoistureSensor(),
             WaterLevelSensor(),
-            TemperatureHumiditySensor()
+            TemperatureHumiditySensor(),
+            fan,
+            led
         ],
         actuators=[
-            FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+            fan,
+            led
         ])]
 
     farm = Farm(subsystems)
