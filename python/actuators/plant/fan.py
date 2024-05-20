@@ -2,6 +2,7 @@
 
 # Imports
 from ..actuators import IActuator, ACommand
+from python.sensors.sensors import ISensor, AReading
 from enum import Enum
 from gpiozero import OutputDevice
 from time import sleep
@@ -18,7 +19,8 @@ class FanController(IActuator):
     def __init__(
         self,
         gpio: int,
-        type: ACommand.Type,
+        command_type: ACommand.Type,
+        reading_type: AReading.Type,
         initial_state: FanState = FanState.OFF,
     ) -> None:
         """
@@ -26,12 +28,14 @@ class FanController(IActuator):
 
         Args:
             gpio int: The gpio of the fan
-            type (ACommand.Type): The type of command the fan accepts.
+            command_type (ACommand.Type): The type of commands the fan responds to.
+            reading_type (AReading.Type): The type of reading the fan produces.
             initial_state (str, optional): The initial state of the fan ('on' or 'off'). Defaults to 'off'.
         """
         self._validate_integer(gpio, " GPIO")
         self.gpio = gpio
-        self.type = type
+        self.type = command_type
+        self.reading_type = reading_type
         self.fan = OutputDevice(pin=gpio)
         self._current_state = initial_state.value
 
@@ -76,35 +80,38 @@ class FanController(IActuator):
 
         return previous_state != self._current_state
 
-    def clean_up(self) -> None:
+    def __del__(self) -> None:
         # Sets the fan's state to False, meant for cleaning up.
         self.fan.value = False
 
-    def read_state(self) -> bool:
-        """
-        Returns true if the fan's state is truthy, false otherwise.
+    def read_sensor(self) -> list[AReading]:
+        """Returns an AReading list from the sensor.
 
         Returns:
-            bool: The state of the fan.
+            list[AReading]: The list of readings measured by the fan.
         """
-        return self.fan.value
+        return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self.fan.value)]
+
+
+def print_readings(readings: list[AReading]) -> None:
+    for reading in readings:
+        print(reading)
 
 
 if __name__ == "__main__":
-    fan_controller = FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
+    fan_controller = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
 
     while True:
-        print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        sleep(2)
+        print_readings(fan_controller.read_sensor())
+        sleep(1)
 
         fan_controller.control_actuator("on")
 
-        print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        sleep(2)
+        print_readings(fan_controller.read_sensor())
+        sleep(1)
 
         fan_controller.control_actuator("off")
 
-        print(f"Fan is {'on' if fan_controller.read_state() else 'off'}")
-        sleep(2)
+        print_readings(fan_controller.read_sensor())
+        sleep(1)
 
-    fan_controller.clean_up()
