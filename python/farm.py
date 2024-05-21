@@ -6,8 +6,8 @@ from python.sensors.sensors import AReading
 from python.enums.SubSystemType import SubSystemType
 
 
-from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, WaterLevelSensor, TemperatureHumiditySensor
-from python.actuators import GeoBuzzerController, SecurityBuzzerController, DoorLockController, FanController
+from python.sensors import GPSSensor, PitchSensor, RollSensor, VibrationSensor, DoorSensor, LoudnessSensor, LuminositySensor, MotionSensor, SoilMoistureSensor, WaterLevelSensor, TemperatureHumiditySensor
+from python.actuators import GeoBuzzerController, SecurityBuzzerController, DoorLockController, FanController, LightController
 
 
 import asyncio
@@ -84,6 +84,9 @@ class Farm:
 
 
 async def farm_main():
+    fan = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
+    led = LightController(
+        gpio=12, command_type=ACommand.Type.LIGHT_ON_OFF, reading_type=AReading.Type.LED)
     subsystems = [GeoLocationController(sensors=[
         RollSensor(
             gpio=None,
@@ -141,9 +144,9 @@ async def farm_main():
                 model='Grove - Loudness Sensor',
                 type=AReading.Type.LOUDNESS),
             LuminositySensor(
-                gpio=None,
-                model='Built-in Luminosity Sensor',
-                type=AReading.Type.LUMINOSITY),
+                 gpio=None,
+                 model='Built-in Luminosity Sensor',
+                 type=AReading.Type.LUMINOSITY),
             MotionSensor(
                 gpio=22,
                 model='Adjustable PIR Motion Sensor',
@@ -160,15 +163,21 @@ async def farm_main():
                 command_type=ACommand.Type.DOOR_LOCK,
                 reading_type=AReading.Type.DOOR_LOCK,
                 initial_state='-1')
-        ]),
+        ])
+        ,
         PlantController(sensors=[
-            # SoilMoistureSensor(),
-            WaterLevelSensor(),
-            TemperatureHumiditySensor()
+             SoilMoistureSensor(),
+             WaterLevelSensor(),
+             TemperatureHumiditySensor(type=AReading.Type.TEMPERATURE),
+             TemperatureHumiditySensor(type=AReading.Type.HUMIDITY),
+             fan,
+             led
         ],
         actuators=[
-            FanController(gpio=16, type=ACommand.Type.FAN_ON_OFF)
-        ])]
+             fan,
+             led
+        ])
+        ]
 
     farm = Farm(subsystems)
     await farm.loop()
