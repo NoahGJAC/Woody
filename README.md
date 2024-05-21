@@ -93,7 +93,7 @@ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id}
 
 **Example command to turn the RGB LED off:**
 ```bash 
-az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "on", "command-type": "light-on-off", "subsystem-type": "plant" }'
+az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "off", "command-type": "light-on-off", "subsystem-type": "plant" }'
 ```
 
 ### Door Lock Control
