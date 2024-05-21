@@ -144,9 +144,9 @@ async def farm_main():
                 model='Grove - Loudness Sensor',
                 type=AReading.Type.LOUDNESS),
             LuminositySensor(
-                gpio=None,
-                model='Built-in Luminosity Sensor',
-                type=AReading.Type.LUMINOSITY),
+                 gpio=None,
+                 model='Built-in Luminosity Sensor',
+                 type=AReading.Type.LUMINOSITY),
             MotionSensor(
                 gpio=22,
                 model='Adjustable PIR Motion Sensor',
@@ -163,18 +163,21 @@ async def farm_main():
                 command_type=ACommand.Type.DOOR_LOCK,
                 reading_type=AReading.Type.DOOR_LOCK,
                 initial_state='-1')
-        ]),
+        ])
+        ,
         PlantController(sensors=[
-            SoilMoistureSensor(),
-            WaterLevelSensor(),
-            TemperatureHumiditySensor(),
-            fan,
-            led
+             SoilMoistureSensor(),
+             WaterLevelSensor(),
+             TemperatureHumiditySensor(type=AReading.Type.TEMPERATURE),
+             TemperatureHumiditySensor(type=AReading.Type.HUMIDITY),
+             fan,
+             led
         ],
         actuators=[
-            fan,
-            led
-        ])]
+             fan,
+             led
+        ])
+        ]
 
     farm = Farm(subsystems)
     await farm.loop()
