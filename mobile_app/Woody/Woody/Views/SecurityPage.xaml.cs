@@ -61,17 +61,29 @@ public partial class SecurityPage : ContentPage
         if (e.Value)
         {
             App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "on";
-            await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
         }
         else
         {
-            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";
-            await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";  
         }
+        App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
     }
 
-    private void ButtonLock_Clicked(object sender, EventArgs e)
+    private async void ButtonLock_Clicked(object sender, EventArgs e)
     {
+        
 		App.FarmRepo.SecurityRepo.LockState.Value = !App.FarmRepo.SecurityRepo.LockState.Value;
+
+        if (App.FarmRepo.SecurityRepo.LockState.Value)
+        {
+            App.FarmRepo.SecurityRepo.LockState.Command.Value = "1";
+        }
+        else
+        {
+            App.FarmRepo.SecurityRepo.LockState.Command.Value = "0";
+        }
+
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.LockState.Command);
     }
 }
