@@ -25,7 +25,7 @@ class LightController(IActuator, ISensor):
         count: int = 1,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
-        color: Color = Color(255, 255, 255)
+        color: Color = Color(255, 255, 255),
     ) -> None:
         """
         Initializes the RGB led stick.
@@ -44,7 +44,9 @@ class LightController(IActuator, ISensor):
         """
         self._validate_integer(gpio, "Light GPIO")
         self._validate_integer(count, "Light strip LEDS count")
-        self._validate_integer(value=brightness, min_value=0, name="Light brightness", max_value=255)
+        self._validate_integer(
+            value=brightness, min_value=0, name="Light brightness", max_value=255
+        )
 
         self.gpio = gpio
         self.count = count
@@ -103,7 +105,7 @@ class LightController(IActuator, ISensor):
         elif (value is LightState.OFF.value):
             self.constantLight(self.rgb_stick, Color(0,0,0))
             self._current_state = value is LightState.OFF
-        
+
         return previous_state != self._current_state
 
     def constantLight(self, strip, color):

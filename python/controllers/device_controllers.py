@@ -2,26 +2,24 @@ from time import sleep
 from abc import ABC, abstractmethod
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
-
+from python.enums.SubSystemType import SubSystemType
 
 class IDeviceController(ABC):
-    """Interface for all device controllers.
-    """
+    """Interface for all device controllers."""
 
     # Class properties that must be defined in implementation classes.
     _sensors: list[ISensor]
     _actuators: list[IActuator]
-
+    system_type: SubSystemType
+  
     @abstractmethod
-    def __init__(self,
-                 sensors: list[ISensor],
-                 actuators: list[IActuator]) -> None:
+    def __init__(self, sensors: list[ISensor], actuators: list[IActuator]) -> None:
         """
-            Initialize the actuators and sensors
+        Initialize the actuators and sensors
         """
         self._sensors: list[ISensor] = sensors
         self._actuators: list[IActuator] = actuators
-
+        
     @abstractmethod
     def control_actuators(self, commands: list[ACommand]) -> None:
         """Controls actuators according to a list of commands. Each command is applied to it's respective actuator.

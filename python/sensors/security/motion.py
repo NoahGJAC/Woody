@@ -10,14 +10,14 @@ MOTION_SENSOR_GPIO: int = 22
 
 
 class MotionSensor(ISensor):
-    """A class for motion sensor readings.
-    """
+    """A class for motion sensor readings."""
 
     def __init__(
-            self,
-            gpio: int,
-            model: str = 'Adjustable PIR Motion Sensor',
-            type: AReading.Type = AReading.Type.MOTION):
+        self,
+        gpio: int,
+        model: str = "Adjustable PIR Motion Sensor",
+        type: AReading.Type = AReading.Type.MOTION,
+    ):
         """Initializes the Motion Sensor.
 
         Args:
@@ -30,7 +30,7 @@ class MotionSensor(ISensor):
         self.reading_type = type
 
     def read_sensor(self) -> list[AReading]:
-        """ Reads motion sensor data and returns a list of readings.
+        """Reads motion sensor data and returns a list of readings.
 
         Returns:
             list[AReading]: A list of readings taken by the sensor.
@@ -39,14 +39,17 @@ class MotionSensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.UNITLESS,
-                value=bool(self.pir.read()))]
+                value=bool(self.pir.read()),
+            )
+        ]
 
 
 def main():
     motion_sensor = MotionSensor(
         gpio=MOTION_SENSOR_GPIO,
-        model='Adjustable PIR Motion Sensor',
-        type=AReading.Type.MOTION)
+        model="Adjustable PIR Motion Sensor",
+        type=AReading.Type.MOTION,
+    )
     try:
         while True:
             readings: list[AReading] = motion_sensor.read_sensor()
@@ -57,5 +60,5 @@ def main():
         print("Exiting...")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
