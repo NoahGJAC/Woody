@@ -44,7 +44,7 @@ class SoilMoistureSensor(ISensor):
             AReading(
                 type=self.reading_type,
                 unit=AReading.Unit.UNITLESS,
-                value=self.sensor.read_voltage(0),
+                value=self.sensor.read(4),
             )
         ]
 

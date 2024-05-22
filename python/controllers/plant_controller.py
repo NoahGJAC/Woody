@@ -2,7 +2,7 @@
 
 from time import sleep
 from python.actuators.plant.fan import FanController
-# from python.actuators.plant.light import LightController
+from python.actuators.plant.light import LightController
 from python.actuators.actuators import ACommand, IActuator
 from python.controllers.device_controllers import IDeviceController
 from python.sensors.sensors import AReading, ISensor
@@ -115,19 +115,22 @@ class PlantController(IDeviceController):
 
 def main():
     fan = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
+    light = LightController(gpio=12, command_type=ACommand.Type.LIGHT_ON_OFF, reading_type=AReading.Type.LED)
+
     controller = PlantController(
         sensors=[
             SoilMoistureSensor(),
             WaterLevelSensor(),
             # TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
             # TemperatureHumiditySensor(AReading.Type.HUMIDITY),
-            fan
-            # LightController?
+            fan,
+            light
         ],
         actuators=[
-        fan
-        # LightController?
-    ])
+            fan,
+            light
+        ]
+    )
 
     controller.loop()
 

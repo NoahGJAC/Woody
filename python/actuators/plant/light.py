@@ -4,7 +4,7 @@
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 from enum import Enum
-from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
+from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip, colorWipe, theaterChase
 from rpi_ws281x import Color
 from time import sleep
 
@@ -98,17 +98,23 @@ class LightController(IActuator, ISensor):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
         if (value is LightState.ON.value):
-            self.rgb_stick.theaterChase(self.rgb_stick, self.color)
+            self.constantLight(self.rgb_stick, self.color)
             self._current_state = value is LightState.ON
         elif (value is LightState.OFF.value):
-            self.rgb_stick.colorWipe(self.rgb_stick, Color(0,0,0), 10)
+            self.constantLight(self.rgb_stick, Color(0,0,0))
             self._current_state = value is LightState.OFF
         
         return previous_state != self._current_state
 
+    def constantLight(self, strip, color):
+        """Keep the LED strip lit with a constant color."""
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, color)
+            strip.show()
+
     def __del__(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-        self.rgb_stick.colorWipe(self.rgb_stick, Color(0,0,0), 10)
+        colorWipe(self.rgb_stick, Color(0,0,0), 10)
         
     def read_sensor(self) -> list[AReading]:
         """Returns an AReading list from the sensor.
