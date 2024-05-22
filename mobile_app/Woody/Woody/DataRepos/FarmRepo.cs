@@ -94,6 +94,7 @@ namespace Woody.DataRepos
                         string decodedStr = Encoding.UTF8.GetString(body);
                         var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedStr);
                         var value = values["value"];
+                        var valueString = value.ToString();
                         var unitValue = values["unit"];
 
                         //parse the reading unit
@@ -104,7 +105,11 @@ namespace Woody.DataRepos
                         }
                         else if(readingType == ReadingType.TEMPERATURE_HUMIDITY)
                         {
-                            unitType = ReadingUnit.CELCIUS_HUMIDITY;
+                            continue;
+                        }
+                        else if ((readingType == ReadingType.TEMPERATURE && string.IsNullOrEmpty(valueString)) || (readingType == ReadingType.HUMIDITY && string.IsNullOrEmpty(valueString)))
+                        {
+                            continue;
                         }
                         else
                         {
@@ -116,10 +121,10 @@ namespace Woody.DataRepos
 
                         //create the sensorReading
                         var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
-                        var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
+                        var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType)});
 
                         // Invoke the constructor
-                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType });
+                        var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType});
 
                         AssignDataToRepos((IReading)sensorReadingInstance);
                     }
@@ -231,18 +236,12 @@ namespace Woody.DataRepos
         {
             if (jsonObject.ReadingType == ReadingType.BUZZER)
             {
-                try
-                {
-                    geoLocationRepo.BuzzerState = (IReading<bool>)jsonObject;
-                }
-                catch (Exception ex)
-                {
-                    var tempObj = (IReading<string>)jsonObject;
-                    var value = bool.Parse(tempObj.Value);
-                    geoLocationRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
-                    securityRepo.BuzzerState = geoLocationRepo.BuzzerState;
+                var tempObj = (IReading<string>)jsonObject;
+                var value = bool.Parse(tempObj.Value);
+                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.Geolocation);
+                geoLocationRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType,buzzerCommand);
                     
-                }
+                securityRepo.BuzzerState = geoLocationRepo.BuzzerState;
             }
             else if(jsonObject.ReadingType == ReadingType.GPS)
             {
@@ -289,28 +288,20 @@ namespace Woody.DataRepos
             }
             else if(jsonObject.ReadingType == ReadingType.BUZZER)
             {
-                try
-                {
-                    securityRepo.BuzzerState = (IReading<bool>)jsonObject;
-                }
-                catch (Exception ex)
-                {
-                    var tempObj = (IReading<string>)jsonObject;
-                    var value = bool.Parse(tempObj.Value);
-                    securityRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
-                    geoLocationRepo.BuzzerState = securityRepo.BuzzerState;
-
-                }
+                var tempObj = (IReading<string>)jsonObject;
+                var value = bool.Parse(tempObj.Value);
+                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.Security);
+                securityRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType, buzzerCommand);
+                geoLocationRepo.BuzzerState = securityRepo.BuzzerState;
             }
             else if(jsonObject.ReadingType == ReadingType.DOOR_LOCK)
             {
                 var temp = (IReading<double>)jsonObject;
+                var value = temp.Value > 0;
+                var commandValue = value ? "on" : "off";
 
-                var value = false;
-                if (temp.Value > 0)
-                    value = true;
-
-                securityRepo.LockState = new SensorReading<bool>(value,temp.TimeStamp,temp.Unit,temp.ReadingType);
+                var doorCommand = new Models.Command<string>(commandValue, CommandType.DOOR_LOCK, SubSystemType.Security);
+                securityRepo.LockState = new SensorReading<bool>(value,temp.TimeStamp,temp.Unit,temp.ReadingType, doorCommand);
             }
             else if(jsonObject.ReadingType == ReadingType.LOUDNESS)
             {
@@ -322,17 +313,10 @@ namespace Woody.DataRepos
             }
             else if(jsonObject.ReadingType== ReadingType.LUMINOSITY)
             {
-                try
-                {
-                    securityRepo.LuminosityLevels.Add((IReading<int>)jsonObject);
-                }
-                catch(Exception ex)
-                {
-                    var tempObj = (IReading<long>)jsonObject;
-                    var value = (int)tempObj.Value;
-                    var luminosityReading = new SensorReading<int>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
-                    securityRepo.LuminosityLevels.Add(luminosityReading);
-                }
+                var tempObj = (IReading<long>)jsonObject;
+                var value = (int)tempObj.Value;
+                var luminosityReading = new SensorReading<int>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
+                securityRepo.LuminosityLevels.Add(luminosityReading);
                 
             }
                 
@@ -351,19 +335,49 @@ namespace Woody.DataRepos
             }
             else if(jsonObject.ReadingType == ReadingType.FAN)
             {
-                plantRepo.FanState = (IReading<bool>)jsonObject;
+                var tempObj = (IReading<long>)jsonObject;
+                var value = tempObj.Value > 0;
+                var fanReading = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
+                plantRepo.FanState = fanReading;
+                var commandValue = plantRepo.FanState.Value ? "on" : "off";
+                var fanCommand = new Models.Command<string>(commandValue, CommandType.FAN_ON_OFF, SubSystemType.Plant);
+                plantRepo.FanState.Command = fanCommand;
             }
             else if(jsonObject.ReadingType == ReadingType.LIGHT)
             {
                 plantRepo.LightState = (IReading<bool>)jsonObject;
+                var commandValue = plantRepo.LightState.Value ? "on" : "off";
+                var lightCommand = new Models.Command<string>(commandValue, CommandType.LIGHT_ON_OFF, SubSystemType.Plant);
+                plantRepo.LightState.Command = lightCommand;
             }
             else if(jsonObject.ReadingType == ReadingType.TEMPERATURE)
             {
-                plantRepo.TemperatureLevels.Add((IReading<double>)jsonObject);
+                try
+                {
+                    plantRepo.TemperatureLevels.Add((IReading<double>)jsonObject);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             else if(jsonObject.ReadingType == ReadingType.SOIL_MOISTURE)
             {
-                plantRepo.SoilMoistureLevels.Add((IReading<double>)jsonObject);
+
+                try
+                {
+                    var tempObj = (IReading<long>)jsonObject;
+
+                    var value = (double)tempObj.Value;
+
+                    var soilMoistureReading = new SensorReading<double>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
+                    plantRepo.SoilMoistureLevels.Add(soilMoistureReading);
+
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             else if(jsonObject.ReadingType == ReadingType.HUMIDITY)
             {
