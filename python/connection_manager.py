@@ -6,7 +6,7 @@ from python.sensors.sensors import AReading
 from python.enums.SubSystemType import SubSystemType
 
 from azure.iot.device.aio import IoTHubDeviceClient
-from azure.iot.device import Message, MethodResponse
+from azure.iot.device import Message, MethodResponse, MethodRequest
 
 import dotenv
 import os
@@ -52,7 +52,7 @@ class ConnectionManager:
         return ConnectionConfig(device_str)
 
     async def handle_command(
-            self, method_request: Any) -> Coroutine[Any, Any, None]:
+            self, method_request: MethodRequest) -> Coroutine[Any, Any, None]:
         """
         Handles incoming method requests for a device.
 
@@ -64,8 +64,10 @@ class ConnectionManager:
         Returns:
         - Coroutine[Any, Any, None]: An asynchronous coroutine that does not return a value.
         """
-
-        """ This is working actuator code, but for now we are just checking for is_online direct method
+        if method_request.name == 'is_online':
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=200, payload=None))
+            return
+        
         try:
             command_type = method_request.payload.get('command-type')
             subsystem_type = method_request.payload.get('subsystem-type')
@@ -77,18 +79,14 @@ class ConnectionManager:
                     subsystem_type=SubSystemType(subsystem_type)
                 )
                 self._command_callback(command)
-
-            # response
-            method_response = MethodResponse(method_request.request_id, 200, {"Response": "This is the response from the device"})
+            else:
+                raise Exception('Expected "value", "command-type" and "subsystem-type" in the payload.')
+            method_response = MethodResponse(method_request.request_id, 200, {"Response": f"{command} sent to farm"})
             await self._client.send_method_response(method_response=method_response)
-            #response_callback(200, "Command processed successfully")
         except Exception as e:
-            print(f"{e}")
-            """
-        if method_request.name == 'is_online':
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=200, payload=None))
-        else:
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=400, payload={'details': 'method name unknown'}))
+            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=400, payload={"message": f"{e}"}))
+        
+        
 
     """
     def _on_message_received(self, message: Message) -> None:
@@ -145,7 +143,7 @@ class ConnectionManager:
         self._command_callback = command_callback
 
     def register_twin_callback(
-            self, twin_callback: Callable[[None], None]) -> None:
+            self, twin_callback: Callable[[dict], Coroutine[Any, Any, None]]) -> None:
         """Registers an external callback function to handle twin desired property patches.
 
         Args:
