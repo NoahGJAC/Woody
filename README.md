@@ -69,7 +69,7 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 
 ## 🛠️ App Setup
 ### Setup
-Create an Azure IoT Hub, Event Hub, and Blob Storage. Create a Firebase project and set up Firebase Authentication and RealTime DB. Add the required configurations to the appsettings.json file.
+Create an Azure IoT Hub, Event Hub, and Storage Account. Create a Firebase project and set up Firebase Authentication and RealTime DB. Add the required configurations to the appsettings.json file.
 
 ### Configuration
 Required configurations needed to run the app.
@@ -108,7 +108,7 @@ Required configurations needed to run the app.
 ### IoT Hub Storage
 - Storage Type: Blob Storage
 - Reason: IoT Hub is a fully managed service that enables reliable and secure bidirectional communication between millions of IoT devices and a solution back end. It also provides a secure way to store data from IoT devices. Blob storage is a good choice for storing large amounts of unstructured data, such as text or binary data.
-- Create an event in Storage Account ![Event](https://imgur.com/a/TsvXuvV)
+- Create an event in Storage Account ![Event](https://i.imgur.com/0hxwAnG.png)
 
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
