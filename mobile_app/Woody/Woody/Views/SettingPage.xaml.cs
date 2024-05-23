@@ -27,11 +27,30 @@ public partial class SettingPage : ContentPage
 
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         // need to check binding onappearing to fix issue where you logout and sign in with a different account and first account info is still displayed
         CheckUserBinding();
+        App.UserRepo.UserDb.LoadItemsAsync();
+
+        await UpdateTelemetryIntervalLabel();
     }
+
+    private async Task UpdateTelemetryIntervalLabel()
+    {
+        // Fetch reported properties
+        var twin = await App.IoTDevice.GetTwinAsync();
+        if (twin != null && twin.Properties.Reported.Contains("telemetryInterval"))
+        {
+            var telemetryInterval = twin.Properties.Reported["telemetryInterval"].Value;
+            TelemetryIntervalLabel.Text = $"Current Interval: {telemetryInterval}";
+        }
+        else
+        {
+            TelemetryIntervalLabel.Text = "Telemetry Interval";
+        }
+    }
+
     /// <summary>
     /// add the binding depending if the user is signIn or signUp
     /// </summary>
@@ -88,5 +107,27 @@ public partial class SettingPage : ContentPage
     private void Btn_ChangePFP_Clicked(object sender, EventArgs e)
     {
 
+    }
+
+    private async void TelemetryIntervalEntry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        int telemetryInterval;
+        bool isValid = Int32.TryParse(TelemetryIntervalEntry.Text, out telemetryInterval);
+
+        if (!isValid || telemetryInterval <= 0)
+        {
+            await DisplayAlert("Invalid telemetry interval entered.", "Please enter the desired interval in seconds.", "OK");
+        }
+        else
+        {
+            Dictionary<string, object> properties = new Dictionary<string, object>
+            {
+                { "telemetryInterval", telemetryInterval }
+            };
+            // Save the valid telemetry interval
+            await App.IoTDevice.UpdateDeviceTwinPropertiesAsync(properties);
+            await DisplayAlert("Success",$"Valid telemetry interval saved: {telemetryInterval}", "OK");
+            await UpdateTelemetryIntervalLabel();
+        }
     }
 }

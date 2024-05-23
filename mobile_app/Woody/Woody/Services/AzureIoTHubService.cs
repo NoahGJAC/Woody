@@ -8,6 +8,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Woody.Models;
 using Woody.Interfaces;
 using Woody.Enums;
+using Microsoft.Azure.Devices.Shared;
 
 namespace Woody.Services
 {
@@ -24,6 +25,7 @@ namespace Woody.Services
         public EventProcessorClient eventProcessorClient { get; set; }
         public List<string> blobFile = new List<string>();
         public ServiceClient serviceClient { get; set; }
+        private RegistryManager registryManager;
 
         /// <summary>
         /// Connect to the IoTHub using the Device Connection String,
@@ -41,6 +43,7 @@ namespace Woody.Services
                 serviceClient = ServiceClient.CreateFromConnectionString(App.Settings.IOTHubConnectionString);
                 blobContainerClient = new BlobContainerClient(App.Settings.BlobConnectionString, App.Settings.BlobContainerName);
                 eventProcessorClient = new EventProcessorClient(blobContainerClient,App.Settings.EventHubConsumer,App.Settings.EventHubConnectionString, App.Settings.EventHubName);
+                registryManager = RegistryManager.CreateFromConnectionString(App.Settings.IOTHubConnectionString);
 
                 // Register handlers for processing events and handling errors
                 eventProcessorClient.ProcessEventAsync += ProcessEventHandler;
@@ -179,6 +182,35 @@ namespace Woody.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to invoke device method: {ex.Message}");
+            }
+        }
+
+        public async Task<Twin> GetTwinAsync()
+        {
+            try
+            {
+                Twin twin = await deviceClient.GetTwinAsync();
+                return twin;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get reported properties: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task UpdateDeviceTwinPropertiesAsync(Dictionary<string, object> propertiesToUpdate)
+        {
+            try
+            {
+                Twin twin = await registryManager.GetTwinAsync(App.Settings.IOTHubDeviceId);
+                twin.Properties.Desired[propertiesToUpdate.Keys.First()] = propertiesToUpdate.Values.First();
+                await registryManager.UpdateTwinAsync(twin.DeviceId, twin, twin.ETag);
+                Console.WriteLine("Updated device twin properties successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to update device twin properties: {ex.Message}");
             }
         }
     }
