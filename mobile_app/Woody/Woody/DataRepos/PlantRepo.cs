@@ -120,7 +120,7 @@ namespace Woody.DataRepos
             TemperatureLevels = new List<IReading<double>>();
             SoilMoistureLevels = new List<IReading<double>>();
             HumidityLevels = new List<IReading<double>>();
-            AddTestData();
+            //AddTestData();
         }
 
         private void AddTestData(int sample_points = 40)

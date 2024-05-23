@@ -42,13 +42,31 @@ public partial class PlantPage : ContentPage
         IndicatorView.BindingContext = this;
     }
 
-    private void FanSwitch_Toggled(object sender, ToggledEventArgs e)
+    private async void FanSwitch_Toggled(object sender, ToggledEventArgs e)
     {
+        if (e.Value)
+        {
+            App.FarmRepo.PlantRepo.FanState.Command.Value = "on";
+        }
+        else
+        {
+            App.FarmRepo.PlantRepo.FanState.Command.Value = "off";
+        }
         App.FarmRepo.PlantRepo.FanState.Value = e.Value;
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.PlantRepo.FanState.Command);
     }
 
-    private void LightSwitch_Toggled(object sender, ToggledEventArgs e)
+    private async void LightSwitch_Toggled(object sender, ToggledEventArgs e)
     {
+        if (e.Value)
+        {
+            App.FarmRepo.PlantRepo.LightState.Command.Value = "on";
+        }
+        else
+        {
+            App.FarmRepo.PlantRepo.LightState.Command.Value = "off";
+        }
         App.FarmRepo.PlantRepo.LightState.Value = e.Value;
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.PlantRepo.LightState.Command);
     }
 }

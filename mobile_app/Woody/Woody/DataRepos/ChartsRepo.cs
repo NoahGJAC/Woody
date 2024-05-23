@@ -32,6 +32,7 @@ namespace Woody.DataRepos
         {
             var dateTimePoints = temperatureReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
+                .OrderBy(x => x.DateTime)
                 .ToList();
 
             LineSeries<DateTimePoint>[] series =
@@ -95,6 +96,7 @@ namespace Woody.DataRepos
         {
             var dateTimePoints = soilMoistureReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
+                .OrderBy(x => x.DateTime)
                 .ToList();
 
             LineSeries<DateTimePoint>[] series =
@@ -151,6 +153,7 @@ namespace Woody.DataRepos
         {
             var dateTimePoints = humidityReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
+                .OrderBy(x => x.DateTime)
                 .ToList();
 
             LineSeries<DateTimePoint>[] series =

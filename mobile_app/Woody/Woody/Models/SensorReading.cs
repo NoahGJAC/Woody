@@ -47,6 +47,9 @@ namespace Woody.Models
         /// </summary>
         public ReadingType ReadingType { get; set; }
 
+        public Models.Command<string> Command { get; set; }
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SensorReading{T}"/> class with the specified value, timestamp, unit, and reading type.
         /// </summary>
@@ -60,6 +63,15 @@ namespace Woody.Models
             TimeStamp = timeStamp;
             Unit = unit;
             ReadingType = readingType;
+            Command = null;
+        }
+        public SensorReading(T value, DateTime timeStamp, ReadingUnit unit, ReadingType readingType, Command<string> command = null)
+        {
+            Value = value;
+            TimeStamp = timeStamp;
+            Unit = unit;
+            ReadingType = readingType;
+            Command = command;
         }
         public SensorReading()
         {
