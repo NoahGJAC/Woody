@@ -76,6 +76,7 @@ namespace Woody.DataRepos
         {
             geoDb = new ContainerDatabaseService<GeoLocationController>();
 
+
             //for testing purposes
             //AddTestData();
             GPS = new SensorReading<GPSCoordinates>();
