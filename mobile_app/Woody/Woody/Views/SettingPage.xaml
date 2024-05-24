@@ -126,8 +126,34 @@
                             Text="Notification Center"
                             VerticalOptions="Center" />
                     </HorizontalStackLayout>
-
-                    <!--  Treshold Alert  -->
+                    <!-- Telemetry Interval -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="TelemetryIntervalLabel"
+                        Grid.Column="0"
+                        Margin="0,0,10,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Medium"
+                        HorizontalOptions="Start"
+                        Text="Telemetry Interval"
+                        VerticalOptions="Center" />
+                        <Entry
+                        Grid.Column="1"
+                        Placeholder="Interval in seconds"
+                        TextColor="Black"
+                        PlaceholderColor="Black"
+                        Keyboard="Numeric"
+                        x:Name="TelemetryIntervalEntry"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center" 
+                            TextChanged="TelemetryIntervalEntry_TextChanged"/>
+                    </Grid>
+                    <!--  Threshold Alert  -->
                     <Grid Margin="10,10,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -140,7 +166,7 @@
                             FontFamily="OpenSansBold"
                             FontSize="Medium"
                             HorizontalOptions="Start"
-                            Text="Treshold Alert"
+                            Text="Threshold Alert"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
