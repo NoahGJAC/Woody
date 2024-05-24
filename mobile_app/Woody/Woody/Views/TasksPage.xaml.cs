@@ -17,6 +17,15 @@ public partial class TasksPage : ContentPage
     /// </summary>
     public TasksPage()
 	{
+        if(App.UserRepo.User.Tasks == null)
+        {
+            App.UserRepo.User.Tasks = new List<Models.Tasks>();
+        }
 		InitializeComponent();
 	}
+
+    private async void AddTask_Btn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new AddTaskPage());
+    }
 }

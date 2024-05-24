@@ -118,9 +118,18 @@ namespace Woody.Services
         /// </summary>
         /// <param name="item">The item to update.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the asynchronous operation, returning true if the item was updated successfully, otherwise false.</returns>
-        public Task<bool> UpdateItemsAsync(T item)
+        public async Task<bool> UpdateItemsAsync(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var temp = item as IHasUKey;
+                _realtimeDb.Put(temp.Key, item); //Update the entry in the database to maintain the key
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(false);
+            }
+            return await Task.FromResult(true);
         }
 
         /// <summary>

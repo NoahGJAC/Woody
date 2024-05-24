@@ -40,6 +40,8 @@ namespace Woody.Models
         /// </summary>
         public UserType UserType { get; set; }
 
+        public List<Tasks> Tasks { get; set; }
+
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>

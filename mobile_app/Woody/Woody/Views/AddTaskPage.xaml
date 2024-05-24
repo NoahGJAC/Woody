@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Woody.Views.AddTaskPage"
+             xmlns:model="clr-namespace:Woody.Models"
+             xmlns:enum="clr-namespace:Woody.Enums"
+             Title="Add Task">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <VerticalStackLayout Margin="0,30,0,0" x:DataType="model:Tasks">
+                <Frame Margin="10,0,10,10"
+                        BackgroundColor="{StaticResource BackgroundAccent300}"
+                        BorderColor="Transparent"
+                        VerticalOptions="Center">
+                    <StackLayout>
+                        <!--  Title  -->
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Subtitle"
+                            Text="Title" />
+                        <Entry
+                            x:Name="title"
+                            BackgroundColor="Transparent"
+                            PlaceholderColor="Black"
+                            Text="{Binding Title}" />
+                    </StackLayout>
+                </Frame>
+                <Frame Margin="10,0,10,10"
+                        BackgroundColor="{StaticResource BackgroundAccent300}"
+                        BorderColor="Transparent"
+                        VerticalOptions="Center">
+                    <StackLayout>
+                        <Label Text="Date" 
+                               FontAttributes="Bold"
+                               FontFamily="OpenSansBold"
+                               FontSize="Subtitle"/>
+                        <TimePicker x:Name="timePicker" />
+                        <DatePicker x:Name="datePicker" Format="dddd MM,yyyy"/>
+                    </StackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
