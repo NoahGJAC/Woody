@@ -148,7 +148,7 @@ namespace Woody.DataRepos
                 random.Next(0, 2) == 0,
                 DateTime.Now,
                 ReadingUnit.UNITLESS,
-                ReadingType.LIGHT
+                ReadingType.LED
             );
 
             DateTime day;

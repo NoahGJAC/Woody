@@ -160,7 +160,7 @@ namespace Woody.DataRepos
                     return plantRepo.WaterLevel != null;
                 case ReadingType.FAN:
                     return plantRepo.FanState != null;
-                case ReadingType.LIGHT:
+                case ReadingType.LED:
                     return plantRepo.LightState != null;
                 case ReadingType.GPS:
                     return GeoLocationRepo.GPS != null;
@@ -196,7 +196,7 @@ namespace Woody.DataRepos
             {
                  ReadingType.WATER_LEVEL,
                  ReadingType.FAN,
-                 ReadingType.LIGHT,
+                 ReadingType.LED,
                  ReadingType.TEMPERATURE,
                  ReadingType.SOIL_MOISTURE,
                  ReadingType.HUMIDITY
@@ -343,7 +343,7 @@ namespace Woody.DataRepos
                 var fanCommand = new Models.Command<string>(commandValue, CommandType.FAN_ON_OFF, SubSystemType.Plant);
                 plantRepo.FanState.Command = fanCommand;
             }
-            else if(jsonObject.ReadingType == ReadingType.LIGHT)
+            else if(jsonObject.ReadingType == ReadingType.LED)
             {
                 plantRepo.LightState = (IReading<bool>)jsonObject;
                 var commandValue = plantRepo.LightState.Value ? "on" : "off";
