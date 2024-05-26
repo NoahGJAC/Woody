@@ -22,7 +22,7 @@
     </ContentPage.Resources>
     <ScrollView>
 
-        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+        <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
             <Frame
                 x:Name="frame_latest_readings"
                 Margin="15,15,15,0"
@@ -51,6 +51,7 @@
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
@@ -117,6 +118,7 @@
                             Text="Sensors"
                             TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
+
                     <!--  Carousel for Graphs  -->
                     <CarouselView
                         x:Name="ChartCarousel"
@@ -143,14 +145,47 @@
                 </StackLayout>
             </Frame>
 
-
-            <!--  Control Panel  -->
+            <!--  Motion  -->
             <Frame
-                Margin="15,15,15,0"
+                x:Name="frame_motion"
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
                 BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
-                CornerRadius="10">
-                <StackLayout>
+                CornerRadius="10"
+                HeightRequest="60"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="radar.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Motion sensors detect "
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        x:Name="label_motion"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame
+                Margin="15,15,15,15"
+                BackgroundColor="{StaticResource Isabelline}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="150">
+                <StackLayout Spacing="1">
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
@@ -165,93 +200,76 @@
                             Text="Control Panel"
                             TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
-                    <Grid Margin="5,10,0,0">
+
+                    <!--  Buzzer  -->
+                    <Grid x:Name="grid_buzzer" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="0.8*" />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                        </Grid.RowDefinitions>
-
-                        <!--  Buzzer  -->
                         <Label
-                            Grid.Row="0"
                             Grid.Column="0"
+                            Margin="0,0,0,0"
                             FontSize="Body"
+                            HorizontalOptions="Start"
                             Text="Buzzer"
-                            TextColor="{StaticResource DarkestCoffee}" />
-                        <Grid Grid.Row="0" Grid.Column="1">
+                            TextColor="{StaticResource DarkestCoffee}"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
-                                FontSize="Body"
                                 HorizontalOptions="End"
-                                HorizontalTextAlignment="End"
-                                Text="ON"
-                                TextColor="{StaticResource DarkestCoffee}" />
+                                Text="OFF"
+                                VerticalOptions="Center" />
                             <Switch
-                                x:Name="FanSwitch"
+                                x:Name="BuzzerSwitch"
                                 Grid.Column="1"
                                 HorizontalOptions="Center"
-                                IsToggled="{Binding FanState.Value}"
-                                Toggled="FanSwitch_Toggled"
-                                VerticalOptions="Start" />
+                                IsToggled="{Binding BuzzerState.Value}"
+                                Toggled="BuzzerSwitch_Toggled"
+                                VerticalOptions="Center" />
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
-                                FontSize="Body"
-                                HorizontalOptions="End"
-                                HorizontalTextAlignment="End"
-                                Text="OFF"
-                                TextColor="{StaticResource DarkestCoffee}" />
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
                         </Grid>
+                    </Grid>
 
-                        <!--  Light  -->
+                    <!--  Lock  -->
+                    <Grid Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
                         <Label
-                            Grid.Row="1"
                             Grid.Column="0"
+                            Margin="0,0,0,0"
                             FontSize="Body"
-                            Text="Light"
-                            TextColor="{StaticResource DarkestCoffee}" />
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label
-                                Grid.Column="0"
-                                FontFamily="OpenSansBold"
-                                FontSize="Body"
-                                HorizontalOptions="End"
-                                HorizontalTextAlignment="End"
-                                Text="ON"
-                                TextColor="{StaticResource DarkestCoffee}" />
-                            <Switch
-                                x:Name="LightSwitch"
-                                Grid.Column="1"
-                                HorizontalOptions="Center"
-                                IsToggled="{Binding LightState.Value}"
-                                Toggled="LightSwitch_Toggled"
-                                VerticalOptions="Start" />
-                            <Label
-                                Grid.Column="2"
-                                FontFamily="OpenSansBold"
-                                FontSize="Body"
-                                HorizontalOptions="End"
-                                HorizontalTextAlignment="End"
-                                Text="OFF"
-                                TextColor="{StaticResource DarkestCoffee}" />
-                        </Grid>
+                            HorizontalOptions="Start"
+                            Text="Door Lock"
+                            TextColor="{StaticResource DarkestCoffee}"
+                            VerticalOptions="Center" />
+                        <Button
+                            Grid.Column="1"
+                            Padding="0"
+                            Clicked="ButtonLock_Clicked"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding LockState.Value, Converter={StaticResource BoolToLockUnlockConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
                     </Grid>
                 </StackLayout>
             </Frame>

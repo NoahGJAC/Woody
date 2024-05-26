@@ -1,189 +1,194 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             x:Class="Woody.Views.AnalyticsPage"
-             Title="Analytics">
-    <ScrollView BackgroundColor="{StaticResource BackgroundAccent500}">
+<ContentPage
+    x:Class="Woody.Views.AnalyticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui">
+    <ScrollView BackgroundColor="{StaticResource Bone}">
         <VerticalStackLayout>
-            
-            <!-- Security Carousel-->
-            <Frame Margin="15,30,15,0"
-            BackgroundColor="{StaticResource White}"
-            BorderColor="Transparent"
-            CornerRadius="30">
+
+            <!--  Security Carousel  -->
+            <Frame
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="20">
                 <StackLayout>
-                    <!-- Header -->
+                    <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                    Margin="5,0,0,0"
-                    HeightRequest="30"
-                    Source="warning.png"
-                    VerticalOptions="Center" />
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="sprout.png"
+                            VerticalOptions="Center" />
                         <Label
-                    Margin="15,0,0,0"
-                    FontFamily="OpenSansBold"
-                    FontSize="20"
-                    Text="Security History" />
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Security History"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
                     <!--  Carousel for Graphs  -->
                     <CarouselView
-                    x:Name="ChartCarouselSecurity"
-                    ItemsSource="{Binding ChartsSecurity}"
-                    Loop="True">
+                        x:Name="ChartCarouselSecurity"
+                        ItemsSource="{Binding ChartsSecurity}"
+                        Loop="True">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <charts:CartesianChart
-                                Title="{Binding Title}"
-                                HeightRequest="280"
-                                Series="{Binding Series}"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding YAxes}"
-                                ZoomMode="ZoomX" />
+                                    Title="{Binding Title}"
+                                    HeightRequest="280"
+                                    Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    ZoomMode="ZoomX" />
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                     <!--  Carousel navigation  -->
                     <IndicatorView
-                x:Name="IndicatorViewSecurity"
-                Count="{Binding ChartsSecurity.Count}"
-                HorizontalOptions="Center"
-                Position="{Binding Source={x:Reference ChartCarouselSecurity}, Path=Position}" />
+                        x:Name="IndicatorViewSecurity"
+                        Count="{Binding ChartsSecurity.Count}"
+                        HorizontalOptions="Center"
+                        Position="{Binding Source={x:Reference ChartCarouselSecurity}, Path=Position}" />
                 </StackLayout>
             </Frame>
 
-            <!-- Plant Carousel -->
-            <Frame Margin="15,30,15,0"
+            <!--  Plant Carousel  -->
+            <Frame
+                Margin="15,30,15,0"
                 BackgroundColor="{StaticResource White}"
                 BorderColor="Transparent"
                 CornerRadius="30">
                 <StackLayout>
-                    <!-- Header -->
+                    <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                    Margin="5,0,0,0"
-                    HeightRequest="30"
-                    Source="warning.png"
-                    VerticalOptions="Center" />
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="sprout.png"
+                            VerticalOptions="Center" />
                         <Label
-                    Margin="15,0,0,0"
-                    FontFamily="OpenSansBold"
-                    FontSize="20"
-                    Text="Plant History" />
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Plant History"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
                     <!--  Carousel for Graphs  -->
                     <CarouselView
-                    x:Name="ChartCarouselPlant"
-                    ItemsSource="{Binding ChartsPlant}"
-                    Loop="True">
+                        x:Name="ChartCarouselPlant"
+                        ItemsSource="{Binding ChartsPlant}"
+                        Loop="True">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <charts:CartesianChart
-                                Title="{Binding Title}"
-                                HeightRequest="280"
-                                Series="{Binding Series}"
-                                XAxes="{Binding XAxes}"
-                                YAxes="{Binding YAxes}"
-                                ZoomMode="ZoomX" />
+                                    Title="{Binding Title}"
+                                    HeightRequest="280"
+                                    Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    ZoomMode="ZoomX" />
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                     <!--  Carousel navigation  -->
                     <IndicatorView
-                x:Name="IndicatorViewPlant"
-                Count="{Binding ChartsPlant.Count}"
-                HorizontalOptions="Center"
-                Position="{Binding Source={x:Reference ChartCarouselPlant}, Path=Position}" />
+                        x:Name="IndicatorViewPlant"
+                        Count="{Binding ChartsPlant.Count}"
+                        HorizontalOptions="Center"
+                        Position="{Binding Source={x:Reference ChartCarouselPlant}, Path=Position}" />
                 </StackLayout>
             </Frame>
 
             <!--  Past Security Breaches  -->
-            <!-- Always have security breaches at bottom of screen?-->
+            <!--  Always have security breaches at bottom of screen?  -->
             <Frame
-            Margin="0,30,0,0"
-            BackgroundColor="{StaticResource BackgroundAccent200}"
-            BorderColor="Transparent"
-            CornerRadius="40"
-            MinimumHeightRequest="375">
+                Margin="0,30,0,0"
+                BackgroundColor="{StaticResource Coyote}"
+                BorderColor="Transparent"
+                CornerRadius="40"
+                MinimumHeightRequest="375">
                 <StackLayout Margin="15,5,15,5">
                     <!--  Header  -->
                     <Label
-                    FontAttributes="Bold"
-                    FontFamily="OpenSansBold"
-                    FontSize="Large"
-                    Text="Past Security Breaches" />
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Large"
+                        Text="Past Security Breaches"
+                        TextColor="{StaticResource White}" />
 
                     <!--  Breach List  -->
                     <!--  TODO: Binding breach list  -->
                     <Frame
-                    Margin="0,10,0,0"
-                    BackgroundColor="White"
-                    CornerRadius="20"
-                    MinimumHeightRequest="100">
+                        Margin="0,10,0,0"
+                        BackgroundColor="{StaticResource White}"
+                        CornerRadius="20"
+                        MinimumHeightRequest="100">
                         <StackLayout VerticalOptions="Center">
                             <!--  Breach #1  -->
                             <HorizontalStackLayout Margin="0,0,0,7">
                                 <Ellipse
-                                Fill="{StaticResource WarningYellow}"
-                                HeightRequest="15"
-                                VerticalOptions="Center"
-                                WidthRequest="15" />
+                                    Fill="{StaticResource WarningYellow}"
+                                    HeightRequest="15"
+                                    VerticalOptions="Center"
+                                    WidthRequest="15" />
                                 <StackLayout Margin="15,0,0,0">
                                     <Label
-                                    Margin="0,-1.5,0,0"
-                                    FontFamily="OpenSansBold"
-                                    FontSize="16"
-                                    Text="High amount of motion"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center" />
+                                        Margin="0,-1.5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="16"
+                                        Text="High amount of motion"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
                                     <Label
-                                    FontSize="12"
-                                    Text="2024/05/16 08:34:35 AM"
-                                    TextColor="{StaticResource Gray600}" />
+                                        FontSize="12"
+                                        Text="2024/05/16 08:34:35 AM"
+                                        TextColor="{StaticResource Gray600}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
 
                             <!--  Breach #2  -->
                             <HorizontalStackLayout Margin="0,7,0,7">
                                 <Ellipse
-                                Fill="{StaticResource WarningYellow}"
-                                HeightRequest="15"
-                                VerticalOptions="Center"
-                                WidthRequest="15" />
+                                    Fill="{StaticResource WarningYellow}"
+                                    HeightRequest="15"
+                                    VerticalOptions="Center"
+                                    WidthRequest="15" />
                                 <StackLayout Margin="15,0,0,0">
                                     <Label
-                                    Margin="0,-1.5,0,0"
-                                    FontFamily="OpenSansBold"
-                                    FontSize="16"
-                                    Text="Loud noise"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center" />
+                                        Margin="0,-1.5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="16"
+                                        Text="Loud noise"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
                                     <Label
-                                    FontSize="12"
-                                    Text="2024/05/21 03:15:30 AM"
-                                    TextColor="{StaticResource Gray600}" />
+                                        FontSize="12"
+                                        Text="2024/05/21 03:15:30 AM"
+                                        TextColor="{StaticResource Gray600}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
 
                             <!--  Breach #3  -->
                             <HorizontalStackLayout Margin="0,7,0,7">
                                 <Ellipse
-                                Fill="{StaticResource WarningYellow}"
-                                HeightRequest="15"
-                                VerticalOptions="Center"
-                                WidthRequest="15" />
+                                    Fill="{StaticResource WarningYellow}"
+                                    HeightRequest="15"
+                                    VerticalOptions="Center"
+                                    WidthRequest="15" />
                                 <StackLayout Margin="15,0,0,0">
                                     <Label
-                                    Margin="0,-1.5,0,0"
-                                    FontFamily="OpenSansBold"
-                                    FontSize="16"
-                                    Text="Bright light"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center" />
+                                        Margin="0,-1.5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="16"
+                                        Text="Bright light"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
                                     <Label
-                                    FontSize="12"
-                                    Text="2024/04/19 11:44:02 AM"
-                                    TextColor="{StaticResource Gray600}" />
+                                        FontSize="12"
+                                        Text="2024/04/19 11:44:02 AM"
+                                        TextColor="{StaticResource Gray600}" />
                                 </StackLayout>
                             </HorizontalStackLayout>
                         </StackLayout>
@@ -191,9 +196,9 @@
                 </StackLayout>
             </Frame>
             <Rectangle
-            Margin="0,-100,0,0"
-            BackgroundColor="{StaticResource BackgroundAccent200}"
-            HeightRequest="5" />
+                Margin="0,-100,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                HeightRequest="5" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

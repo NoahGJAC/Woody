@@ -208,7 +208,7 @@
 
             <!--  Control Panel  -->
             <Frame
-                Margin="15,15,15,0"
+                Margin="15,15,15,15"
                 BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10">
@@ -227,14 +227,15 @@
                             Text="Control Panel"
                             TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
-                    <Grid Margin="5,10,0,0">
+
+                    <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="0.8*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <!--  Fan  -->
@@ -262,6 +263,7 @@
                             <Switch
                                 x:Name="FanSwitch"
                                 Grid.Column="1"
+                                Margin="0,0,0,0"
                                 HorizontalOptions="Center"
                                 IsToggled="{Binding FanState.Value}"
                                 Toggled="FanSwitch_Toggled"
@@ -301,6 +303,7 @@
                             <Switch
                                 x:Name="LightSwitch"
                                 Grid.Column="1"
+                                Margin="0,0,0,0"
                                 HorizontalOptions="Center"
                                 IsToggled="{Binding LightState.Value}"
                                 Toggled="LightSwitch_Toggled"

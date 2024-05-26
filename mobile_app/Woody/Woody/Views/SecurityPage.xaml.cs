@@ -1,6 +1,6 @@
-using LiveChartsCore.SkiaSharpView.Maui;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Woody.DataRepos;
 
 /*
@@ -26,15 +26,15 @@ public partial class SecurityPage : ContentPage
     /// Initializes a new instance of the <see cref="SecurityPage"/> class.
     /// </summary>
     public SecurityPage()
-	{
-		InitializeComponent();
-		Charts = new ObservableCollection<CartesianChart>
-		{
-			ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
-			ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
-		};
+    {
+        InitializeComponent();
+        Charts = new ObservableCollection<CartesianChart>
+        {
+            ChartsRepo.GetNoiseChart(App.SecurityRepo.NoiseLevels),
+            ChartsRepo.GetLuminosityChart(App.SecurityRepo.LuminosityLevels)
+        };
 
-		SetBindingContext();
+        SetBindingContext();
     }
 
     private void SetBindingContext()
@@ -44,7 +44,7 @@ public partial class SecurityPage : ContentPage
         frame_latest_readings.BindingContext = App.UserRepo.User.UserType;
         frame_graphs.BindingContext = App.UserRepo.User.UserType;
         frame_motion.BindingContext = App.UserRepo.User.UserType;
-        grid_buzzer.BindingContext = App.UserRepo.User.UserType;
+        //grid_buzzer.BindingContext = App.UserRepo.User.UserType;
 
         ChartCarousel.BindingContext = this;
         IndicatorView.BindingContext = this;
@@ -57,11 +57,11 @@ public partial class SecurityPage : ContentPage
 
     private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-		App.SecurityRepo.BuzzerState.Value = e.Value;
+        App.SecurityRepo.BuzzerState.Value = e.Value;
     }
 
     private void ButtonLock_Clicked(object sender, EventArgs e)
     {
-		App.SecurityRepo.LockState.Value = !App.SecurityRepo.LockState.Value;
+        App.SecurityRepo.LockState.Value = !App.SecurityRepo.LockState.Value;
     }
 }
