@@ -18,10 +18,10 @@ public partial class DashboardPage : ContentPage
     public DashboardPage()
 	{
 		InitializeComponent();
-		FrameSecurity.BindingContext = App.SecurityRepo;
-		FrameSecurityDoor.BindingContext = App.SecurityRepo;
-		FrameLocation.BindingContext = App.GeoLocationRepo;
-		FramePlant.BindingContext = App.PlantRepo;
+		FrameSecurity.BindingContext = App.FarmRepo.SecurityRepo;
+		FrameSecurityDoor.BindingContext = App.FarmRepo.SecurityRepo;
+		FrameLocation.BindingContext = App.FarmRepo.GeoLocationRepo;
+		FramePlant.BindingContext = App.FarmRepo.PlantRepo;
 
 	}
 }

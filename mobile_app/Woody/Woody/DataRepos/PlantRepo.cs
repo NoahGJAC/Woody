@@ -105,7 +105,10 @@ namespace Woody.DataRepos
         public PlantRepo()
         {
             plantDb = new ContainerDatabaseService<PlantController>();
-            AddTestData();
+            TemperatureLevels = new List<IReading<double>>();
+            SoilMoistureLevels = new List<IReading<double>>();
+            HumidityLevels = new List<IReading<double>>();
+            //AddTestData();
         }
 
         private void AddTestData(int sample_points = 40)
@@ -133,7 +136,7 @@ namespace Woody.DataRepos
                 random.Next(0, 2) == 0,
                 DateTime.Now,
                 ReadingUnit.UNITLESS,
-                ReadingType.LIGHT
+                ReadingType.LED
             );
 
             DateTime day;

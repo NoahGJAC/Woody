@@ -23,14 +23,14 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
 
-        BindingContext = App.GeoLocationRepo;
+        BindingContext = App.FarmRepo.GeoLocationRepo;
         ConfigureMap();
         
     }
     private void ConfigureMap()
     {
         
-        var location = new Location(App.GeoLocationRepo.GPS.Value.Latitude.Value, App.GeoLocationRepo.GPS.Value.Longitude.Value);
+        var location = new Location(App.FarmRepo.GeoLocationRepo.GPS.Value.Latitude.Value, App.FarmRepo.GeoLocationRepo.GPS.Value.Longitude.Value);
         var pin = new Pin
         {
             Label = "container",
@@ -40,8 +40,17 @@ public partial class MapPage : ContentPage
         map.MoveToRegion(new MapSpan(location,0.01, 0.01));
         map.Pins.Add(pin);
     }
-    private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
+    private async void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        App.SecurityRepo.BuzzerState.Value = e.Value;
+        if (e.Value)
+        {
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "on";
+        }
+        else
+        {
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";
+        }
+        App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
     }
 }

@@ -104,10 +104,11 @@ namespace Woody.Services
             {
                 await _realtimeDb.PullAsync();
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }
+            
             IEnumerable<T> result = _realtimeDb.Once().Select(x => x.Object);
             return await Task.FromResult(result);
             }

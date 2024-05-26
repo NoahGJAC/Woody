@@ -14,7 +14,6 @@
                 HorizontalOptions="Start"
                 HorizontalTextAlignment="Start"
                 Text="It's good to see you!"
-                TextColor="{StaticResource DarkestCoffee}"
                 VerticalOptions="Center" />
             <Label
                 Margin="30,0,0,25"
@@ -144,7 +143,6 @@
                                         FontFamily="OpenSansBold"
                                         FontSize="16"
                                         Text="Refill water tank"
-                                        TextColor="{StaticResource DarkestCoffee}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <Label
@@ -167,7 +165,6 @@
                                         FontFamily="OpenSansBold"
                                         FontSize="16"
                                         Text="Trim roots"
-                                        TextColor="{StaticResource DarkestCoffee}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <Label

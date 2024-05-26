@@ -201,18 +201,6 @@
                             SemanticProperties.Hint="Click to log in"
                             Text="SEND EMAIL"
                             WidthRequest="140" />
-                        <Button
-                            x:Name="Btn_GoBack"
-                            BackgroundColor="{StaticResource Bone}"
-                            Clicked="Btn_GoBack_Clicked"
-                            FontFamily="OpenSansBold"
-                            FontSize="16"
-                            HeightRequest="50"
-                            HorizontalOptions="Center"
-                            SemanticProperties.Hint="Click to log in"
-                            Text="GO BACK"
-                            TextColor="{StaticResource DarkestCoffee}"
-                            WidthRequest="140" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>

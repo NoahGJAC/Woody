@@ -45,7 +45,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource MediumAllGoodGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -74,7 +74,7 @@
                         <Frame
                             Margin="0,0,10,0"
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource ZestyGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -99,7 +99,7 @@
                         <!--  Soil Moist.  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource WarningYellow}"
+                            BackgroundColor="{StaticResource MediumWarningYellow}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
@@ -218,8 +218,7 @@
                                     FontSize="12"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Motion"
-                                    WidthRequest="75" />
+                                    Text="Motion" />
                                 <Label
                                     x:Name="LabelMotion"
                                     Margin="0,-5,0,0"
@@ -256,31 +255,26 @@
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
                         Text="Door is "
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansSemiBold"
                         FontSize="16"
                         Text=" and "
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="."
-                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
@@ -368,7 +362,7 @@
                         <!--  Pitch  -->
                         <Frame
                             Padding="0"
-                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BackgroundColor="{StaticResource LightAllGoodGreen}"
                             BorderColor="Transparent"
                             CornerRadius="20"
                             HeightRequest="100"
