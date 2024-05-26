@@ -22,7 +22,7 @@
             <Frame
                 x:Name="FramePlant"
                 Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BindingContext="App.PlantRepo"
                 BorderColor="Transparent"
                 CornerRadius="20">
@@ -56,7 +56,7 @@
                                 VerticalOptions="Center">
                                 <Label
                                     Margin="0,0,0,0"
-                                    FontSize="11.5"
+                                    FontSize="12"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="Avg. Temp." />
@@ -67,13 +67,6 @@
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="{Binding AverageTemperature, StringFormat='{0:F1}'}" />
-                                <Label
-                                    Margin="0,-5,0,0"
-                                    FontFamily="OpenSansBold"
-                                    FontSize="12"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"
-                                    Text="°C" />
                             </StackLayout>
                         </Frame>
 
@@ -100,13 +93,6 @@
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
                                     Text="{Binding CurrentHumidity.Value, StringFormat='{0:F0}'}" />
-                                <Label
-                                    Margin="0,-5,0,0"
-                                    FontFamily="OpenSansBold"
-                                    FontSize="12"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"
-                                    Text="%" />
                             </StackLayout>
                         </Frame>
 
@@ -142,7 +128,7 @@
             <Frame
                 x:Name="FrameSecurity"
                 Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BindingContext="App.SecurityRepo"
                 BorderColor="Transparent"
                 CornerRadius="20">
@@ -157,7 +143,8 @@
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Security" />
+                            Text="Security"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Margin="0,15,0,0">
                         <!--  Luminosity  -->
@@ -231,7 +218,8 @@
                                     FontSize="12"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="Motion Detected" />
+                                    Text="Motion"
+                                    WidthRequest="75" />
                                 <Label
                                     x:Name="LabelMotion"
                                     Margin="0,-5,0,0"
@@ -251,7 +239,7 @@
                 x:Name="FrameSecurityDoor"
                 Margin="0,15,0,0"
                 Padding="20,0,0,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BindingContext="App.SecurityRepo"
                 BorderColor="Transparent"
                 CornerRadius="10"
@@ -301,7 +289,7 @@
             <Frame
                 x:Name="FrameLocation"
                 Margin="15,15,15,15"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BindingContext="App.GeoLocationRepo"
                 BorderColor="Transparent"
                 CornerRadius="20">
@@ -316,7 +304,8 @@
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Location" />
+                            Text="Location"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Margin="0,15,0,0">
                         <!--  Roll  -->
