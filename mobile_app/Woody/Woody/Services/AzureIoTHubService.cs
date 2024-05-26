@@ -157,7 +157,12 @@ namespace Woody.Services
             }
 
         }
-
+        /// <summary>
+        /// Sends a command to the IoThub
+        /// </summary>
+        /// <typeparam name="T">the type of the command</typeparam>
+        /// <param name="command">the command itself i.e: on or off for what subsystem</param>
+        /// <returns></returns>
         public async Task SendCommandAsync<T>(Models.Command<T> command)
         {
             var methodInvocation = new CloudToDeviceMethod("command")
@@ -184,7 +189,10 @@ namespace Woody.Services
                 Console.WriteLine($"Failed to invoke device method: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Get the twin device
+        /// </summary>
+        /// <returns></returns>
         public async Task<Twin> GetTwinAsync()
         {
             try
@@ -198,7 +206,11 @@ namespace Woody.Services
                 return null;
             }
         }
-
+        /// <summary>
+        /// change the twin device value
+        /// </summary>
+        /// <param name="propertiesToUpdate"></param>
+        /// <returns></returns>
         public async Task UpdateDeviceTwinPropertiesAsync(Dictionary<string, object> propertiesToUpdate)
         {
             try

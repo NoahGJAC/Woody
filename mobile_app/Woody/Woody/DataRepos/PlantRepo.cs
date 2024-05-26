@@ -27,16 +27,6 @@ namespace Woody.DataRepos
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ContainerDatabaseService<PlantController> plantDb;
-
-        /// <summary>
-        /// Gets the plant database service.
-        /// </summary>
-        public ContainerDatabaseService<PlantController> PlantDb
-        {
-            get { return plantDb; }
-        }
-
         /// <summary>
         /// Gets or sets the temperature level readings.
         /// </summary>
@@ -116,77 +106,10 @@ namespace Woody.DataRepos
         /// </summary>
         public PlantRepo()
         {
-            plantDb = new ContainerDatabaseService<PlantController>();
             TemperatureLevels = new List<IReading<double>>();
             SoilMoistureLevels = new List<IReading<double>>();
             HumidityLevels = new List<IReading<double>>();
-            //AddTestData();
         }
 
-        private void AddTestData(int sample_points = 40)
-        {
-            TemperatureLevels = new List<IReading<double>>();
-            SoilMoistureLevels = new List<IReading<double>>();
-            HumidityLevels = new List<IReading<double>>();
-
-            Random random = new Random();
-
-            WaterLevel = new SensorReading<int>(
-                random.Next(0, 100),
-                DateTime.Now,
-                ReadingUnit.PERCENTAGE,
-                ReadingType.WATER_LEVEL
-            );
-
-            FanState = new SensorReading<bool>(
-                random.Next(0, 2) == 0,
-                DateTime.Now,
-                ReadingUnit.UNITLESS,
-                ReadingType.FAN
-            );
-            LightState = new SensorReading<bool>(
-                random.Next(0, 2) == 0,
-                DateTime.Now,
-                ReadingUnit.UNITLESS,
-                ReadingType.LED
-            );
-
-            DateTime day;
-
-            for (int i = 0; i < sample_points; i++)
-            {
-                day = DateTime.Now.AddDays(-i);
-
-                // Generate random temperature reading
-                TemperatureLevels.Add(
-                   new SensorReading<double>(
-                        Math.Round(random.NextDouble() * 40, 2),
-                        day,
-                        ReadingUnit.CELCIUS,
-                        ReadingType.TEMPERATURE
-                    )
-                );
-
-                // Generate random soil moisture reading
-                SoilMoistureLevels.Add(
-                    new SensorReading<double>(
-                        Math.Round(random.NextDouble() * 2000, 2),
-                        day,
-                        ReadingUnit.UNITLESS,
-                        ReadingType.SOIL_MOISTURE
-                    )
-                );
-
-                // Generate random humidity reading
-                HumidityLevels.Add(
-                    new SensorReading<double>(
-                        Math.Round(random.NextDouble() * 100, 2),
-                        day,
-                        ReadingUnit.PERCENTAGE,
-                        ReadingType.HUMIDITY
-                    )
-                );
-            }
-        }
     }
 }

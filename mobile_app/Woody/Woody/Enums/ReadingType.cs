@@ -91,10 +91,30 @@ namespace Woody.Enums
         /// Represents a reading type for vibration.
         /// </summary>
         VIBRATION,
+
+        /// <summary>
+        /// Represents a reading type for water level.
+        /// </summary>
         WATER_LEVEL,
+
+        /// <summary>
+        /// Represents a reading type for fan.
+        /// </summary>
         FAN,
+
+        /// <summary>
+        /// Represents a reading type for soil moisture
+        /// </summary>
         SOIL_MOISTURE,
+
+        /// <summary>
+        /// Represents a reading type for temperature_humidity, used to be use but now is just there to catch the readings and not use them.
+        /// </summary>
         TEMPERATURE_HUMIDITY,
+
+        /// <summary>
+        /// Represents a reading type for light/led
+        /// </summary>
         LED
     }
 }
