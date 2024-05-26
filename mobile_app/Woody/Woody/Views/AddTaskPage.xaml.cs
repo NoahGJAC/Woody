@@ -41,7 +41,7 @@ public partial class AddTaskPage : ContentPage
     {
         if (PickerTags.SelectedIndex == -1)
         {
-            await DisplayAlert("Missing Data", "Please pick a meal?", "OK");
+            await DisplayAlert("Missing Data", "Please pick a tag?", "OK");
             return;
         }
         App.UserRepo.User.Tasks.Add(task_);
