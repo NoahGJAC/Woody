@@ -90,7 +90,13 @@ class FanController(IActuator):
         Returns:
             list[AReading]: The list of readings measured by the fan.
         """
-        return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self.fan.value)]
+        return [
+            AReading(
+                type=self.reading_type,
+                unit=AReading.Unit.UNITLESS,
+                value=self.fan.value,
+            )
+        ]
 
 
 def print_readings(readings: list[AReading]) -> None:
@@ -99,7 +105,9 @@ def print_readings(readings: list[AReading]) -> None:
 
 
 if __name__ == "__main__":
-    fan_controller = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
+    fan_controller = FanController(
+        gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN
+    )
 
     while True:
         print_readings(fan_controller.read_sensor())
@@ -114,4 +122,3 @@ if __name__ == "__main__":
 
         print_readings(fan_controller.read_sensor())
         sleep(1)
-
