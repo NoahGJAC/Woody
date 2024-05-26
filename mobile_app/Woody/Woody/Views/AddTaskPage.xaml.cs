@@ -1,3 +1,4 @@
+using Woody.Converters;
 using Woody.Enums;
 
 namespace Woody.Views;
@@ -5,6 +6,7 @@ namespace Woody.Views;
 public partial class AddTaskPage : ContentPage
 {
     private Models.Tasks task_ { get;set; }
+    private IntEnumTagToTagNameConverter IntEnumTagToTagNameConverter = new IntEnumTagToTagNameConverter();
 
     public List<string> TagNames
     {
@@ -53,5 +55,30 @@ public partial class AddTaskPage : ContentPage
     private async void Cancel_btn_Clicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
+    }
+
+    private void PickerTags_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        switch(selectedIndex)
+        {
+            case 0:
+                task_.Tag = TaskType.PLANT;
+                break;
+            case 1:
+                task_.Tag = TaskType.GEOLOCATION;
+                break;
+            case 2:
+                task_.Tag = TaskType.SECURITY;
+                break;
+            case 3:
+                task_.Tag = TaskType.STORAGE;
+                break;
+            default:
+                task_.Tag = TaskType.PLANT;
+                break;
+        }
     }
 }

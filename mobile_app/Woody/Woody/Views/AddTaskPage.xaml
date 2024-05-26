@@ -50,7 +50,9 @@
                     <StackLayout>
                         <Label Text="Tags" FontSize="Medium" FontAttributes="Bold"/>
                         <Grid ColumnDefinitions="3*,*">
-                            <Picker x:Name="PickerTags" SelectedItem ="{Binding Tag, Converter={StaticResource IntEnumTagToTagNameConverter}}" />
+                            <Picker x:Name="PickerTags" 
+                            SelectedItem="{Binding Tag, Converter={StaticResource IntEnumTagToTagNameConverter}}"
+                            SelectedIndexChanged="PickerTags_SelectedIndexChanged"  />
                         </Grid>
                     </StackLayout>
                 </Frame>

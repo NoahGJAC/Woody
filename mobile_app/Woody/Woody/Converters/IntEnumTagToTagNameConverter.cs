@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Woody.Enums;
 
 namespace Woody.Converters
 {
@@ -11,20 +12,13 @@ namespace Woody.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Enum)
-            {
-                return (int)value;
-            }
-            return 0;
+            var taskType = (TaskType)value;
+            return taskType.ToString().ToLower();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int)
-            {
-                return Enum.ToObject(targetType, value);
-            }
-            return null;
+            return Enum.Parse(targetType, value.ToString(), true);
         }
     }
 }
