@@ -9,8 +9,8 @@ class AReading(ABC):
     """
 
     class Type(str, Enum):
-        """Enum defining all possible types of readings that sensors might make.
-        """
+        """Enum defining all possible types of readings that sensors might make."""
+
         # Add new reading types here.
         WATER_LEVEL = "water level"
         SOIL_MOISTURE = "soil moisture"
@@ -31,8 +31,7 @@ class AReading(ABC):
         GPS = "GPS"
         PITCH = "pitch"
         ROLL = "roll"
-        
-        
+
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens."""
 
@@ -50,17 +49,12 @@ class AReading(ABC):
         PERCENTAGE = "%"
         FAILURE = "failure"
 
-        
     # Class properties that must be defined in implementation classes
     reading_type: Type
     reading_unit: Unit
     value: float | str | bool
 
-    def __init__(
-            self,
-            type: Type,
-            unit: Unit,
-            value: float | str | bool) -> None:
+    def __init__(self, type: Type, unit: Unit, value: float | str | bool) -> None:
         self.reading_type = type
         self.reading_unit = unit
         self.value = value
@@ -78,8 +72,7 @@ class AReading(ABC):
         :return str: json string representation of the reading
         """
 
-        return json.dumps(
-            {"value": self.value, "unit": self.reading_unit.value})
+        return json.dumps({"value": self.value, "unit": self.reading_unit.value})
 
 
 class ISensor(ABC):

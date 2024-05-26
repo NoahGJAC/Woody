@@ -35,7 +35,7 @@ class TemperatureHumiditySensor(ISensor):
         Returns:
             list[AReading]: A list of readings taken by the sensor.
         """
-        #print(self.reading_type)
+        # print(self.reading_type)
         try:
             temperature, humidity = self.sensor.read()
             if self.reading_type == AReading.Type.TEMPERATURE:

@@ -112,8 +112,12 @@ class PlantController(IDeviceController):
 
 
 def main():
-    fan = FanController(gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN)
-    light = LightController(gpio=12, command_type=ACommand.Type.LIGHT_ON_OFF, reading_type=AReading.Type.LED)
+    fan = FanController(
+        gpio=16, command_type=ACommand.Type.FAN_ON_OFF, reading_type=AReading.Type.FAN
+    )
+    light = LightController(
+        gpio=12, command_type=ACommand.Type.LIGHT_ON_OFF, reading_type=AReading.Type.LED
+    )
 
     controller = PlantController(
         sensors=[
@@ -121,13 +125,10 @@ def main():
             WaterLevelSensor(),
             TemperatureHumiditySensor(AReading.Type.TEMPERATURE),
             TemperatureHumiditySensor(AReading.Type.HUMIDITY),
-            fan
-            # LightController?
-        ],
-        actuators=[
             fan,
             light
-        ]
+        ],
+        actuators=[fan, light],
     )
 
     controller.loop()

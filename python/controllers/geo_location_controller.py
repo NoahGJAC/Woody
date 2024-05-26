@@ -15,7 +15,6 @@ import colorama
 from python.enums.SubSystemType import SubSystemType
 
 
-
 class GeoLocationController(IDeviceController):
     """A class that represents a geolocation subsystem device controller."""
 

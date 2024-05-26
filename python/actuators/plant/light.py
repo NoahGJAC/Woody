@@ -4,7 +4,11 @@
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 from enum import Enum
-from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip, colorWipe, theaterChase
+from grove.grove_ws2813_rgb_led_strip import (
+    GroveWS2813RgbStrip,
+    colorWipe,
+    theaterChase,
+)
 from rpi_ws281x import Color
 from time import sleep
 
@@ -22,7 +26,7 @@ class LightController(IActuator, ISensor):
         gpio: int,
         command_type: ACommand.Type,
         reading_type: AReading.Type,
-        count: int = 1,
+        count: int = 10,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
         color: Color = Color(255, 255, 255),
@@ -99,12 +103,15 @@ class LightController(IActuator, ISensor):
         if value.lower() not in (LightState.ON.value, LightState.OFF.value):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
-        if (value is LightState.ON.value):
-            self.constantLight(self.rgb_stick, self.color)
-            self._current_state = value is LightState.ON
-        elif (value is LightState.OFF.value):
+        if value.lower() == "on":
+            self.constantLight(self.rgb_stick, Color(255, 255, 255))
+            self._current_state = True
+        elif value.lower() == "off":
             self.constantLight(self.rgb_stick, Color(0,0,0))
-            self._current_state = value is LightState.OFF
+            self._current_state = False
+        else:
+            raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
+
 
         return previous_state != self._current_state
 
@@ -116,23 +123,34 @@ class LightController(IActuator, ISensor):
 
     def __del__(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-        colorWipe(self.rgb_stick, Color(0,0,0), 10)
-        
+        colorWipe(self.rgb_stick, Color(0, 0, 0), 10)
+
     def read_sensor(self) -> list[AReading]:
         """Returns an AReading list from the sensor.
 
         Returns:
             list[AReading]: The list of readings measured by the LED.
         """
-        return [AReading(type=self.reading_type, unit=AReading.Unit.UNITLESS, value=self._current_state)]
+        return [
+            AReading(
+                type=self.reading_type,
+                unit=AReading.Unit.UNITLESS,
+                value=self._current_state,
+            )
+        ]
 
 
 def print_readings(readings: list[AReading]) -> None:
     for reading in readings:
         print(reading)
 
+
 if __name__ == "__main__":
-    light_controller = LightController(gpio=12, command_type=ACommand(ACommand.Type.LIGHT_ON_OFF, LightState.OFF), reading_type=AReading.Type.LED)
+    light_controller = LightController(
+        gpio=12,
+        command_type=ACommand(ACommand.Type.LIGHT_ON_OFF, LightState.OFF),
+        reading_type=AReading.Type.LED,
+    )
 
     while True:
         print_readings(light_controller.read_sensor())
@@ -147,4 +165,3 @@ if __name__ == "__main__":
 
         print_readings(light_controller.read_sensor())
         sleep(1)
-

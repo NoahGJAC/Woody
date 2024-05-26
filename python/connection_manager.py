@@ -13,8 +13,8 @@ import os
 
 
 class ConnectionConfig:
-    """Represents all information required to successfully connect client to cloud gateway.
-    """
+    """Represents all information required to successfully connect client to cloud gateway."""
+
     # Key names for configuration values inside .env file. See .env.example
     # Constants included as static class property
 
@@ -29,12 +29,12 @@ class ConnectionManager:
     """
 
     def __init__(self) -> None:
-        """Constructor for ConnectionManager and initializes an internal cloud gateway client.
-        """
+        """Constructor for ConnectionManager and initializes an internal cloud gateway client."""
         self._connected = False
         self._config: ConnectionConfig = self._load_connection_config()
         self._client = IoTHubDeviceClient.create_from_connection_string(
-            self._config._device_connection_str)
+            self._config._device_connection_str
+        )
 
     def _load_connection_config(self) -> ConnectionConfig:
         """Loads connection credentials from .env file in the project's top-level directory.
@@ -45,14 +45,16 @@ class ConnectionManager:
             EnvironmentError: When environment or environment variable is not found
         """
         dotenv.load_dotenv(override=True)
-        if not dotenv.find_dotenv() or (device_str := os.getenv(
-                'IOTHUB_DEVICE_CONNECTION_STRING')) is None:
-            raise EnvironmentError(
-                "Unable to retrieve device connection string")
+        if (
+            not dotenv.find_dotenv()
+            or (device_str := os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")) is None
+        ):
+            raise EnvironmentError("Unable to retrieve device connection string")
         return ConnectionConfig(device_str)
 
     async def handle_command(
-            self, method_request: MethodRequest) -> Coroutine[Any, Any, None]:
+        self, method_request: MethodRequest
+    ) -> Coroutine[Any, Any, None]:
         """
         Handles incoming method requests for a device.
 
@@ -64,29 +66,41 @@ class ConnectionManager:
         Returns:
         - Coroutine[Any, Any, None]: An asynchronous coroutine that does not return a value.
         """
-        if method_request.name == 'is_online':
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=200, payload=None))
+        if method_request.name == "is_online":
+            await self._client.send_method_response(
+                method_response=MethodResponse(
+                    request_id=method_request.request_id, status=200, payload=None
+                )
+            )
             return
-        
+
         try:
-            command_type = method_request.payload.get('command-type')
-            subsystem_type = method_request.payload.get('subsystem-type')
-            value = method_request.payload.get('value')
+            command_type = method_request.payload.get("command-type")
+            subsystem_type = method_request.payload.get("subsystem-type")
+            value = method_request.payload.get("value")
             if subsystem_type and command_type and value:
                 command = ACommand(
                     target=ACommand.Type(command_type),
-                    value = value,
-                    subsystem_type=SubSystemType(subsystem_type)
+                    value=value,
+                    subsystem_type=SubSystemType(subsystem_type),
                 )
                 self._command_callback(command)
             else:
-                raise Exception('Expected "value", "command-type" and "subsystem-type" in the payload.')
-            method_response = MethodResponse(method_request.request_id, 200, {"Response": f"{command} sent to farm"})
+                raise Exception(
+                    'Expected "value", "command-type" and "subsystem-type" in the payload.'
+                )
+            method_response = MethodResponse(
+                method_request.request_id, 200, {"Response": f"{command} sent to farm"}
+            )
             await self._client.send_method_response(method_response=method_response)
         except Exception as e:
-            await self._client.send_method_response(method_response=MethodResponse(request_id=method_request.request_id, status=400, payload={"message": f"{e}"}))
-        
-        
+            await self._client.send_method_response(
+                method_response=MethodResponse(
+                    request_id=method_request.request_id,
+                    status=400,
+                    payload={"message": f"{e}"},
+                )
+            )
 
     """
     def _on_message_received(self, message: Message) -> None:
@@ -115,15 +129,16 @@ class ConnectionManager:
             int: The telemetry interval.
         """
         twin = await self._client.get_twin()
-        telemetryInterval = twin['desired'].get('telemetryInterval')
+        telemetryInterval = twin["desired"].get("telemetryInterval")
 
         interval = telemetryInterval if telemetryInterval else 5
-        await self._client.patch_twin_reported_properties({'telemetryInterval': interval})
+        await self._client.patch_twin_reported_properties(
+            {"telemetryInterval": interval}
+        )
         return interval
 
     async def connect(self) -> None:
-        """Connects to cloud gateway using connection credentials and setups up a message handler
-        """
+        """Connects to cloud gateway using connection credentials and setups up a message handler"""
         await self._client.connect()
         self._connected = True
         print("Connected")
@@ -135,7 +150,8 @@ class ConnectionManager:
         self._client.on_method_request_received = self.handle_command
 
     def register_command_callback(
-            self, command_callback: Callable[[ACommand], None]) -> None:
+        self, command_callback: Callable[[ACommand], None]
+    ) -> None:
         """Registers an external callback function to handle newly received commands.
 
         :param Callable[[ACommand], None] command_callback: function to be called whenever a new command is received.
@@ -143,7 +159,8 @@ class ConnectionManager:
         self._command_callback = command_callback
 
     def register_twin_callback(
-            self, twin_callback: Callable[[dict], Coroutine[Any, Any, None]]) -> None:
+        self, twin_callback: Callable[[dict], Coroutine[Any, Any, None]]
+    ) -> None:
         """Registers an external callback function to handle twin desired property patches.
 
         Args:
@@ -159,8 +176,9 @@ class ConnectionManager:
         for reading in readings:
             message = Message(reading.export_json())
             message.custom_properties = {
-                'reading-type-name': reading.reading_type.name,
-                'reading-type': reading.reading_type.value}
+                "reading-type-name": reading.reading_type.name,
+                "reading-type": reading.reading_type.value,
+            }
             await self._client.send_message(message)
 
 
@@ -183,17 +201,19 @@ async def main_demo():
 
         # ===== Create a list of fake readings =====
         fake_temperature_reading = AReading(
-            AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, 12.34)
+            AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, 12.34
+        )
         fake_humidity_reading = AReading(
-            AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 56.78)
+            AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, 56.78
+        )
 
         # ===== Send fake readings =====
-        await connection_manager.send_readings([
-            fake_temperature_reading,
-            fake_humidity_reading
-        ])
+        await connection_manager.send_readings(
+            [fake_temperature_reading, fake_humidity_reading]
+        )
 
         await asyncio.sleep(TEST_SLEEP_TIME)
+
 
 if __name__ == "__main__":
     asyncio.run(main_demo())

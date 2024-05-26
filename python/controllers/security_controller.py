@@ -15,7 +15,6 @@ import colorama
 from python.enums.SubSystemType import SubSystemType
 
 
-
 class SecurityController(IDeviceController):
     """A class that represents a security subsystem device controller."""
 
