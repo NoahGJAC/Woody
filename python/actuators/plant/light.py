@@ -4,7 +4,11 @@
 from python.actuators.actuators import IActuator, ACommand
 from python.sensors.sensors import ISensor, AReading
 from enum import Enum
-from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip, theaterChase
+from grove.grove_ws2813_rgb_led_strip import (
+    GroveWS2813RgbStrip,
+    colorWipe,
+    theaterChase,
+)
 from rpi_ws281x import Color
 from time import sleep
 
@@ -22,7 +26,7 @@ class LightController(IActuator, ISensor):
         gpio: int,
         command_type: ACommand.Type,
         reading_type: AReading.Type,
-        count: int = 1,
+        count: int = 10,
         brightness: int = 255,
         initial_state: LightState = LightState.OFF,
         color: Color = Color(255, 255, 255),
@@ -34,7 +38,7 @@ class LightController(IActuator, ISensor):
             gpio int: The gpio of the RGB led stick
             command_type (ACommand.Type): The type of commands the LED responds to.
             reading_type (AReading.Type): The type of reading the LED produces.
-            count (int, optional): Number of strip LEDS. Defaults to one.
+            count (int, optional): Number of strip LEDS. Defaults to ten.
             brightness (int, optional): Brightness level (0 to 255) of the "ON" state. Defaults to 255.
             initial_state (str, optional): The initial state of the RGB led stick ('on' or 'off'). Defaults to 'off'.
             color (Color, optional): Color of the light. Defaults to white.
@@ -96,22 +100,26 @@ class LightController(IActuator, ISensor):
         """
         previous_state = self._current_state
 
-        if value.lower() not in (LightState.ON.value, LightState.OFF.value):
+        if (value.lower() == LightState.ON.value):
+            self.constantLight(self.rgb_stick, self.color)
+            self._current_state = True
+        elif (value.lower() == LightState.OFF.value):
+            self.constantLight(self.rgb_stick, Color(0,0,0))
+            self._current_state = False
+        else:
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
-
-        if (value is LightState.ON.value):
-            self.rgb_stick.theaterChase(self.rgb_stick, self.color)
-            self._current_state = value is LightState.ON
-        elif (value is LightState.OFF.value):
-            self.rgb_stick.colorWipe(self.rgb_stick, Color(0,0,0), 10)
-
-            self._current_state = value is LightState.OFF
 
         return previous_state != self._current_state
 
+    def constantLight(self, strip, color):
+        """Keep the LED strip lit with a constant color."""
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, color)
+            strip.show()
+
     def __del__(self) -> None:
         # Sets the RGB led stick's state to False, meant for cleaning up.
-        self.rgb_stick.colorWipe(self.rgb_stick, Color(0,0,0), 10)
+        colorWipe(self.rgb_stick, Color(0, 0, 0), 10)
         
     def read_sensor(self) -> list[AReading]:
         """Returns an AReading list from the sensor.
