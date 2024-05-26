@@ -74,7 +74,7 @@ class FanController(IActuator):
         if value.lower() not in (FanState.ON.value, FanState.OFF.value):
             raise ValueError(f"Invalid argument {value}, must be 'on' or 'off'")
 
-        self.fan.value = 1 if value is FanState.ON.value else 0
+        self.fan.value = 1 if value.lower() == FanState.ON.value else 0
 
         self._current_state = value
 
