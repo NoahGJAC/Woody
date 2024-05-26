@@ -101,7 +101,7 @@ namespace Woody.DataRepos
             LuminosityLevels = new List<IReading<int>>();
 
             //for testing purposes
-            AddTestData();
+            //AddTestData();
         }
 
         /// <summary>

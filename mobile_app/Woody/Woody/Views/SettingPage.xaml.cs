@@ -1,3 +1,5 @@
+using Firebase.Auth;
+using Microsoft.Maui.ApplicationModel.Communication;
 using Woody.Services;
 
 namespace Woody.Views;
@@ -24,6 +26,31 @@ public partial class SettingPage : ContentPage
         App.UserRepo.UserDb.LoadItemsAsync();
 
     }
+
+    protected override async void OnAppearing()
+    {
+        // need to check binding onappearing to fix issue where you logout and sign in with a different account and first account info is still displayed
+        CheckUserBinding();
+        App.UserRepo.UserDb.LoadItemsAsync();
+
+        await UpdateTelemetryIntervalLabel();
+    }
+
+    private async Task UpdateTelemetryIntervalLabel()
+    {
+        // Fetch reported properties
+        var twin = await App.IoTDevice.GetTwinAsync();
+        if (twin != null && twin.Properties.Reported.Contains("telemetryInterval"))
+        {
+            var telemetryInterval = twin.Properties.Reported["telemetryInterval"].Value;
+            TelemetryIntervalLabel.Text = $"Current Interval: {telemetryInterval}";
+        }
+        else
+        {
+            TelemetryIntervalLabel.Text = "Telemetry Interval";
+        }
+    }
+
     /// <summary>
     /// add the binding depending if the user is signIn or signUp
     /// </summary>
@@ -52,7 +79,22 @@ public partial class SettingPage : ContentPage
 
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {
-        await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
+        try
+        {
+            await AuthService.Client.ResetEmailPasswordAsync(AuthService.Client.User.Info.Email);
+        }
+        catch (FirebaseAuthException ex)
+        {
+            if (ex.Reason == AuthErrorReason.ResetPasswordExceedLimit)
+            {
+                await DisplayAlert("Error", "You have exceeded the limit for password resets. Please try again later.", "OK");
+                return;
+            }else
+            {
+                await DisplayAlert("Error", "An error occurred while trying to reset your password. Please try again later.", "OK");
+                return;
+            }
+        }
         await DisplayAlert("Password Reset", $"An email has been sent to {AuthService.Client.User.Info.Email} to reset your password.", "OK");
     }
 
@@ -65,5 +107,27 @@ public partial class SettingPage : ContentPage
     private void Btn_ChangePFP_Clicked(object sender, EventArgs e)
     {
 
+    }
+
+    private async void TelemetryIntervalEntry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        int telemetryInterval;
+        bool isValid = Int32.TryParse(TelemetryIntervalEntry.Text, out telemetryInterval);
+
+        if (!isValid || telemetryInterval <= 0)
+        {
+            await DisplayAlert("Invalid telemetry interval entered.", "Please enter the desired interval in seconds.", "OK");
+        }
+        else
+        {
+            Dictionary<string, object> properties = new Dictionary<string, object>
+            {
+                { "telemetryInterval", telemetryInterval }
+            };
+            // Save the valid telemetry interval
+            await App.IoTDevice.UpdateDeviceTwinPropertiesAsync(properties);
+            await DisplayAlert("Success",$"Valid telemetry interval saved: {telemetryInterval}", "OK");
+            await UpdateTelemetryIntervalLabel();
+        }
     }
 }

@@ -40,8 +40,17 @@ public partial class MapPage : ContentPage
         map.MoveToRegion(new MapSpan(location,0.01, 0.01));
         map.Pins.Add(pin);
     }
-    private void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
+    private async void BuzzerSwitch_Toggled(object sender, ToggledEventArgs e)
     {
+        if (e.Value)
+        {
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "on";
+        }
+        else
+        {
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";
+        }
         App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
+        await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
     }
 }

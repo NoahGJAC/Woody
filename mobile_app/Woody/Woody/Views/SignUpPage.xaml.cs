@@ -46,7 +46,13 @@ public partial class SignUpPage : ContentPage
         NetworkAccess accessType = Connectivity.Current.NetworkAccess;
         if (accessType != NetworkAccess.Internet)
         {
-            await DisplayAlert("Error", "No internet", "OK");
+            await DisplayAlert("Error", "No internet connection available.", "OK");
+            return;
+        }
+        if (string.IsNullOrEmpty(user_name.Text))
+        {
+            await DisplayAlert("Error", "Please enter a username", "OK");
+            return;
         }
 
         try
@@ -105,15 +111,8 @@ public partial class SignUpPage : ContentPage
                 case AuthErrorReason.WeakPassword:
                     await DisplayAlert("Error", "Password is too weak. Must be at least 6 characters", "OK");
                     break;
-                case AuthErrorReason.UserNotFound:
-                    await DisplayAlert("Error", "Account not found.", "OK");
-                    break;
+                case AuthErrorReason.Unknown:
                 default:
-                    if (ex.Message.Contains("INVALID_LOGIN_CREDENTIALS"))
-                    {
-                        await DisplayAlert("Error", "Invalid login credentials.", "OK");
-                        break;
-                    }
                     await DisplayAlert("Error", $"An unknown error occurred. {ex.Message}", "OK");
                     break;
             }

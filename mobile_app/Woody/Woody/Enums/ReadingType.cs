@@ -93,8 +93,8 @@ namespace Woody.Enums
         VIBRATION,
         WATER_LEVEL,
         FAN,
-        LIGHT,
         SOIL_MOISTURE,
-        TEMPERATURE_HUMIDITY
+        TEMPERATURE_HUMIDITY,
+        LED
     }
 }

@@ -27,6 +27,11 @@ namespace Woody.Interfaces
         /// Gets or sets the type of the reading.
         /// </summary>
         ReadingType ReadingType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command associated with the reading.
+        /// </summary>
+        Models.Command<string> Command { get; set; }
     }
 
     /// <summary>
