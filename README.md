@@ -52,18 +52,58 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 - **Geolocation Tracking:** Display container geolocation for fleet owners, enhancing fleet management and logistics planning.
 
 ### 👀 Sneakpeek
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/GwyFLxr.png" alt="Log in" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/W3h3F6C.png" alt="Create Account" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/uJTRVc6.png" alt="Forgotten Password" style="width:100%;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Sign in page for user authentication.</figcaption></td>
+    <td><figcaption>Sign up page for user account creation.</figcaption></td>
+    <td><figcaption>Account retrieval page for users that have forgotten their passwords.</figcaption></td>
+  </tr>
+</table>
 
-# TODO: ADD NEW SCREENSHOTS WITH CAPTIONS
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/WAtQ9tB.png" alt="Home" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/S1UOek1.png" alt="Settings" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/hUMWXax.png" alt="Dashboard" style="width:100%;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Home page with an overview of subsystem status and upcoming tasks.</figcaption></td>
+    <td><figcaption>Settings page to change user account information, telemetry interval and notification settings.</figcaption></td>
+    <td><figcaption>Dashboard page with the latest readings of their container's subsystem's sensors and actuators.</figcaption></td>
+  </tr>
+</table>
 
-![Sign Up](https://i.imgur.com/Wrc5sz5.png)![Sign In](https://i.imgur.com/h3DFLd1.png)![Home](https://i.imgur.com/MwZhD1I.png)
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/XF3ijqC.png" alt="Plant" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/cHK8l97.png" alt="Security" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/oqnJmUY.png" alt="Geolocation" style="width:100%;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Plant page to view and control the plant subsystem's sensors and actuators.</figcaption></td>
+    <td><figcaption>Security page to view and control the security subsystem's sensors and actuators.</figcaption></td>
+    <td><figcaption>Geolocation page to view the container's location on a map and view the geolocation subsystem's sensor readings.</figcaption></td>
+  </tr>
+</table>
 
-![Overview](https://i.imgur.com/qhQORXR.png)![Container-specific](https://i.imgur.com/Z1SObrf.png)![Container-specific Controls](https://i.imgur.com/CuVgVC6.png)
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/XF3ijqC.png" alt="Analytics" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/cHK8l97.png" alt="Security Breaches" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/oqnJmUY.png" alt="About Us" style="width:100%;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Analytics page to view history of plant and security subsystem's data as well as security breach history.</figcaption></td>
+    <td><figcaption>Security breach history section of the analytics page.</figcaption></td>
+    <td><figcaption>About us page containing app motivation and team member names.</figcaption></td>
+  </tr>
+</table>
 
-![Map](https://i.imgur.com/XsjH901.png)![Analytics](https://i.imgur.com/ARcJx6W.png)![Tasks](https://i.imgur.com/m1L4WGQ.png) 
-
-![User Settings](https://i.imgur.com/xenAG0R.png)![About Us](https://i.imgur.com/p2l9vZ5.png)![Placeholder](https://i.imgur.com/BTBeYI2.png)
-
-*Color versions coming soon!*
 ### 📊 UML Diagram
 ![UML Diagram](https://www.mermaidchart.com/raw/8fe4f596-027f-459b-b698-7631a75b1354?theme=dark&version=v0.1&format=svg)
 
