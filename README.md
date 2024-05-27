@@ -65,7 +65,210 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 
 *Color versions coming soon!*
 ### 📊 UML Diagram
-![UML Diagram](https://www.mermaidchart.com/raw/8fe4f596-027f-459b-b698-7631a75b1354?theme=dark&version=v0.1&format=svg)
+```mermaid
+classDiagram
+    GeoLocationRepo --|> FarmRepo : Is
+    SecurityRepo --|> FarmRepo : Is
+    PlantRepo --|> FarmRepo : Is
+    FleetOwner --|> User : Implements
+    FarmTechnician --|> User : Implements
+    User "1" -- "0..*" Container : manages
+    FleetOwner "1" -- "0..*" Container : owns
+    FarmTechnician "1" -- "0..*" Container : manages
+    Container o-- "1" FarmRepo : has
+    FarmRepo "1" -- "0..*" ISensor : contains
+    FarmRepo "1" -- "0..*" IActuator : controls
+    ISensor "1" -- "0..*" IReading: produces
+    IActuator "1" -- "1" ICommand: sends
+    ICommand "1" -- "1" CommandType: has
+    IReading "1" -- "1" ReadingType: has
+    IReading "1" -- "1" ReadingUnit: has
+    ICommand "1" -- "1" SubSystemType: has
+    UserType "1" -- "1" User: has
+
+    
+    class ChartsRepo{
+        + GetTemperatureChart(temperatureReadings: List[IReading]) CartesianChart
+        + GetSoilMoistureChart(soilMoistureReadings:  List[IReading]) CartesianChart
+        + GetHumidityChart(humidityReadings:  List[IReading]) CartesianChart
+        + GetNoiseChart(noiseReadings:  List[IReading]) CartesianChart
+        + GetLuminosityChart(luminosityReadings:  List[IReading]) CartesianChart
+
+    }
+    class FarmRepo{
+        -securityRepo: SecurityRepo
+        -plantRepo: PlantRepo
+        -geoLocationRepo: GeoLocationRepo
+        +SecurityRepo(): SecurityRepo
+        +PlantRepo(): PlantRepo
+        +GeoLocationRepo(): GeoLocationRepo
+        +DeserializeOldDataAsync()
+        +ValidReadingType(ReadingType)
+        +AssignDataToRepos(IReading)
+        +AssignDataToGeoLocationRepo(IReading)
+        +AssignDataToSecurityRepo(IReading)
+        +AssignDataToPlantRepo(IReading)
+        +GetNewDataAsync(PartitionContext, EventData)
+        +DeserializeNewData(string)
+    }
+    class ISensor{
+        <<interface>>
+        +string SensorID
+        +string SensorModel
+        +readSensor() List[IReading]
+    }
+    class IActuator{
+        <<interface>>
+        +string ActuatorID
+        +string State
+        +controlActuator(command: ICommand)
+    }
+    class IReading{
+        <<interface>>
+        +ReadingUnit Unit
+        +ReadingType ReadingType
+        +T Value
+        +Datetime TimeStamp
+        
+    }
+    class ICommand{
+        <<interface>>
+        +CommandType CommandType
+        +SubSystemType SubSystem
+        +T Value
+    }
+    class CommandType{
+        <<enumeration>>
+        FAN_ON_OFF,
+        LIGHT_ON_OFF,
+        LIGHT_PULSE,
+        BUZZER_ON_OFF,
+        DOOR_LOCK
+    }
+    class SubSystemType{
+    <<enumeartion>>
+    Security,
+    Geolocation,
+    Plant
+    }
+    class ReadingUnit{
+        <<enumeration>>
+        DEGREES,
+        METERS,
+        CELCIUS_HUMIDITY,
+        MILLIMETERS,
+        FARENHEIT,
+        HUMIDITY,
+        LUX,
+        LOUDNESS,
+        CELCIUS,
+        PERCENTAGE,
+        UNITLESS
+    }
+    class UserType{
+        <<enumeration>>
+        OWNER,
+        FARMER
+    }
+    class ReadingType{
+        <<enumeration>>
+        BUZZER,
+        PITCH,
+        ROLL,
+        HUMIDITY,
+        TEMPERATURE,
+        LUMINOSITY,
+        LOUDNESS,
+        DOOR,
+        DOOR_LOCK,
+        MOTION,
+        LATITUDE,
+        LONGITUDE,
+        ALTITUDE,
+        GPS,
+        VIBRATION
+    }
+    class GeoLocationRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -geoDb: ContainerDatabaseService~GeoLocationController~
+        +GeoLocationController: GeoLocationController
+        +GeoDb(): ContainerDatabaseService~GeoLocationController~
+        +Pitch: IReading~double~
+        +Roll: IReading~double~
+        +BuzzerState: IReading~bool~
+        +Vibration: IReading~bool~
+        +GPS: IReading~GPSCoordinates~
+        -AddTestData(sample_points: int)
+    }
+    class SecurityRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -securityDb: ContainerDatabaseService~SecurityController~
+        +SecurityController: SecurityController
+        +SecurityDb(): ContainerDatabaseService~SecurityController~
+        +NoiseLevels: List~IReading~float~~
+        +LuminosityLevels: List~IReading~int~~
+        +LuminosityCurrent(): IReading~int~
+        +NoiseCurrent(): IReading~float~
+        +DoorState: IReading~bool~
+        +MotionState: IReading~bool~
+        +BuzzerState: IReading~bool~
+        +LockState: IReading~bool~
+        -AddTestData(sample_points: int)
+    }
+    class PlantRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -plantDb: ContainerDatabaseService~PlantController~
+        +PlantDb(): ContainerDatabaseService~PlantController~
+        +TemperatureLevels: List~IReading~double~~
+        +HumidityLevels: List~IReading~double~~
+        +SoilMoistureLevels: List~IReading~double~~
+        +WaterLevel: IReading~int~
+        +FanState: IReading~bool~
+        +LightState: IReading~bool~
+        +CurrentTemperature(): IReading~double~
+        +AverageTemperature(): double
+        +CurrentHumidity(): IReading~double~
+        +CurrentSoilMoisture(): IReading~double~
+        -AddTestData(sample_points: int)
+    }
+    class GPSCoordinates{
+        +IReading longitude
+        +IReading latitude
+        +IReading altitude
+    }
+    class Container{
+        +string containerID
+        +string containerName
+        +List<IController> SubSystems
+    }
+    class User {
+        +string Key
+        +string Uid
+        +string Username
+        +UserType UserType
+
+        +List<Container> managedContainers
+    }
+    class FleetOwner{
+    }
+    class FarmTechnician{
+    }
+
+    %%WIP
+    class AzureIoTHub {
+         +DeviceClient deviceClient
+        +BlobContainerClient blobContainerClient
+        +EventProcessorClient eventProcessorClient
+        +List<string> blobFile
+        +ServiceClient serviceClient
+        +ConnectToDeviceAsync()
+        +DownloadBlobAsync()
+        +ProcessEventHandler(ProcessEventArgs)
+        +ProcessErrorHandler(ProcessErrorEventArgs)
+        +GetCurrentMessageAsync()
+        +SendCommandAsync<T>(ICommand<T>)
+    }  
+```
 
 ## 🛠️ App Setup
 ### Setup
@@ -181,7 +384,174 @@ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id}
 ```bash  
 az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "<string representation of integer between -1 and 1>", "command-type": "door-lock", "subsystem-type": "security" }'
 ```
- 
+
+## 📬 D2C Messages
+> [!NOTE]  
+> The Reading type and type name are set as custom propeties in the message.  
+
+### Door Lock Reading
+**Sensor:** Door Lock  
+**Subsystem(s):** Security  
+
+```bash
+# Sending door lock reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=door lock state;reading-type-name=DOOR_LOCK' --data '{"value":-1.0,"unit":""}'
+```
+
+### Roll Reading
+**Sensor:** Internal Acceleration Device  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending roll reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=roll;reading-type-name=ROLL' --data '{ "value":-1.3140687970083822,"unit":"\u00b0"}'
+```
+
+### Pitch Reading
+**Sensor:** Internal Acceleration Device  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending pitch reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=pitch;reading-type-name=PITCH' --data '{ "value":0.3140687970083822,"unit":"\u00b0"}'
+```
+
+### Buzzer Reading
+**Sensor:** Internal Buzzer  
+**Subsystem(s):** Security/Geolocation
+
+```bash
+# Sending buzzer reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=buzzer state;reading-type-name=BUZZER' --data '{ "value":"False","unit":""}'
+```
+
+### Vibration Reading
+**Sensor:** Internal Vibration Sensor  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending vibration reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=vibration;reading-type-name=VIBRATION' --data '{ "value":false,"unit":""}'
+```
+
+### Door Reading
+**Sensor:** Magnetic Door Sensor Reed Switch  
+**Subsystem(s):** Security
+
+```bash
+# Sending door reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=door state;reading-type-name=DOOR' --data '{ "value":false,"unit":""}'
+```
+
+### Loudness Reading
+**Sensor:** Loudness Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending loudness reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=loudness;reading-type-name=LOUDNESS' --data '{"value": 503.0,"unit":"%loudnessStrength"}'
+```
+
+### Luminosity Reading
+**Sensor:** Internal Luminosity Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending luminosity reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=luminosity;reading-type-name=LUMINOSITY' --data '{"value":6,"unit":"lx"}'
+```
+
+### Motion Reading
+**Sensor:** Motion Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending motion reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=motion;reading-type-name=MOTION' --data '{"value":true,"unit":""}'
+```
+
+### Soil Moisture Reading
+**Sensor:** Soil Moisture Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending soil moisture reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=soil moisture;reading-type-name=SOIL_MOISTURE' --data '{"value":1686,"unit":""}'
+```
+
+### Water Level Reading
+**Sensor:** Water Level Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending water level reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=water level;reading-type-name=WATER_LEVEL' --data '{"value":504,"unit":""}'
+```
+
+### Temperature Reading
+**Sensor:** Temperature and Humidity Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending temperature reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=temperature;reading-type-name=TEMPERATURE' --data '{"value":24.0,"unit":"\u00b0C"}'
+```
+
+### Humidity Reading
+**Sensor:** Temperature and Humidity Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending humidity reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=humidity;reading-type-name=HUMIDITY' --data '{"value":50.0,"unit":"%HR"}'
+```
+
+### Fan Reading
+**Sensor:** Fan with Relay  
+**Subsystem(s):** Plant
+
+```bash
+# Sending fan reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=fan state;reading-type-name=FAN' --data '{"value":0,"unit":""}'
+```
+
+### LED Reading
+**Sensor:** RGB LED Stick  
+**Subsystem(s):** Plant
+
+```bash
+# Sending LED reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=LED state;reading-type-name=LED' --data '{"value":false,"unit":""}'
+```
+
+### Longitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending longitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=longitude;reading-type-name=LONGITUDE' --data '{"value":45.0,"unit":"\u00b0"}'
+```
+
+### Latitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending latitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=latitude;reading-type-name=LATITUDE' --data '{"value":45.0,"unit":"\u00b0"}'
+```
+
+### Altitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending altitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=altitude;reading-type-name=ALTITUDE' --data '{"value":45.0,"unit":"m"}'
+```
+
+
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
