@@ -43,6 +43,7 @@ public partial class SettingPage : ContentPage
         {
             var telemetryInterval = twin.Properties.Reported["telemetryInterval"].Value;
             TelemetryIntervalLabel.Text = $"{telemetryInterval}";
+            TelemetryIntervalEntry.Placeholder = $"{telemetryInterval}";
         }
         else
         {

@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converter="clr-namespace:Woody.Converters">
     <VerticalStackLayout BackgroundColor="{DynamicResource Alabaster}">
-        <HorizontalStackLayout Margin="35,150,0,30" Spacing="40">
+        <HorizontalStackLayout Margin="35,100,0,30" Spacing="40">
             <!--  User Profile Picture  -->
             <Grid Margin="0,-30,0,0" VerticalOptions="Center">
                 <Grid.RowDefinitions>
@@ -68,7 +68,7 @@
         <VerticalStackLayout>
             <Frame
                 Margin="0,5,0,35"
-                BackgroundColor="{StaticResource RawUmber}"
+                BackgroundColor="{StaticResource Chamoisee}"
                 BorderColor="Transparent"
                 CornerRadius="25"
                 HeightRequest="175"
@@ -119,22 +119,22 @@
             </Frame>
             <Rectangle
                 Margin="0,-55,0,0"
-                BackgroundColor="{StaticResource RawUmber}"
+                BackgroundColor="{StaticResource Chamoisee}"
                 HeightRequest="55" />
             <Frame
                 Margin="0,-50,0,35"
-                BackgroundColor="{StaticResource Pup}"
+                BackgroundColor="{StaticResource RawUmber}"
                 BorderColor="Transparent"
                 CornerRadius="25"
-                HeightRequest="175"
+                HeightRequest="165"
                 HorizontalOptions="FillAndExpand"
                 Opacity="40">
-                <VerticalStackLayout Margin="15,5,15,5">
+                <VerticalStackLayout Margin="15,5,15,5" Spacing="10">
                     <HorizontalStackLayout
                         Margin="0,5,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center">
-                        <Image HeightRequest="25" Source="bell.png" />
+                        <Image HeightRequest="30" Source="telemetry.png" />
                         <Label
                             Margin="15,0,0,0"
                             FontAttributes="Bold"
@@ -146,55 +146,66 @@
                     </HorizontalStackLayout>
 
                     <!--  Telemetry Interval  -->
-                    <Grid>
+                    <Grid Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            FontFamily="OpenSansBold"
-                            FontSize="Body"
-                            Text="Current Interval" />
-                        <Label
-                            x:Name="TelemetryIntervalLabel"
-                            Grid.Column="1"
-                            FontAttributes="Bold"
-                            FontFamily="OpenSansBold"
-                            FontSize="Body"
-                            HorizontalOptions="End"
-                            HorizontalTextAlignment="End"
-                            Text="10"
-                            TextColor="{StaticResource White}"
-                            VerticalOptions="Center" />
-                    </Grid>
-                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label
                             Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,2"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            Text="Current Interval"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            x:Name="TelemetryIntervalLabel"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,0,2"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            Text="10"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontFamily="OpenSansBold"
                             FontSize="Body"
                             Text="Update Interval"
                             TextColor="{StaticResource White}" />
                         <Entry
                             x:Name="TelemetryIntervalEntry"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="1,0,0,0"
                             BackgroundColor="Transparent"
+                            FontFamily="OpenSansRegular"
+                            FontSize="Body"
                             HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
                             Keyboard="Numeric"
-                            Placeholder="Interval in seconds"
+                            Placeholder="10"
                             PlaceholderColor="{StaticResource White}"
                             TextChanged="TelemetryIntervalEntry_TextChanged"
                             TextColor="{StaticResource White}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Start" />
                     </Grid>
-
                 </VerticalStackLayout>
             </Frame>
             <Rectangle
                 Margin="0,-55,0,0"
-                BackgroundColor="{StaticResource Pup}"
+                BackgroundColor="{StaticResource RawUmber}"
                 HeightRequest="55" />
 
             <!--  Notification Center  -->

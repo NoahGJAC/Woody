@@ -12,6 +12,7 @@
     <Color x:Key="DarkestCoffee">#463020</Color>
     <Color x:Key="RawUmber">#9B6B46</Color>
     <Color x:Key="Pup">#865D3D</Color>
+    <Color x:Key="Chamoisee">#A57958</Color>
     <Color x:Key="Coyote">#7E583A</Color>
 
     <Color x:Key="Primary">#7C883F</Color>

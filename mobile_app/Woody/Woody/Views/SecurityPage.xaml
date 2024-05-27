@@ -34,9 +34,8 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="sprout.png"
+                            HeightRequest="20"
+                            Source="security.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -107,9 +106,8 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="sprout.png"
+                            HeightRequest="25"
+                            Source="graph.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -158,9 +156,9 @@
                 WidthRequest="360">
                 <HorizontalStackLayout>
                     <Image
-                        HeightRequest="30"
+                        HeightRequest="25"
                         HorizontalOptions="Center"
-                        Source="radar.png"
+                        Source="motion_sensor.png"
                         VerticalOptions="Center" />
                     <Label
                         Margin="10,0,0,0"
@@ -189,9 +187,8 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="sprout.png"
+                            HeightRequest="25"
+                            Source="gear.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -227,8 +224,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="BuzzerSwitch"
@@ -240,8 +239,10 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>

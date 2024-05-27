@@ -15,12 +15,12 @@
     <VerticalStackLayout BackgroundColor="{StaticResource MapBlue}">
         <Map
             x:Name="map"
-            HeightRequest="300"
+            HeightRequest="375"
             IsShowingUser="True"
             MapType="Street" />
 
         <!--  Container status  -->
-        <ScrollView Margin="0,0,0,0">
+        <ScrollView Margin="0,-15,0,0">
             <Frame
                 BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
@@ -30,7 +30,7 @@
                         <Image
                             Margin="5,0,0,0"
                             HeightRequest="30"
-                            Source="sprout.png"
+                            Source="nature.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -85,8 +85,7 @@
                                         FontSize="12"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
-                                        Text="Vibration"
-                                        TextColor="{StaticResource DarkestCoffee}" />
+                                        Text="Vibration" />
 
                                     <Label
                                         Margin="0,-5,0,0"

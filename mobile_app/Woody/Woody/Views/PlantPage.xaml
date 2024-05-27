@@ -16,7 +16,6 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
                             HeightRequest="30"
                             Source="sprout.png"
                             VerticalOptions="Center" />
@@ -131,9 +130,8 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="sprout.png"
+                            HeightRequest="25"
+                            Source="graph.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -179,10 +177,9 @@
                 WidthRequest="360">
                 <HorizontalStackLayout>
                     <Image
-                        Margin="5,0,0,0"
-                        HeightRequest="30"
+                        HeightRequest="25"
                         HorizontalOptions="Center"
-                        Source="sprout.png"
+                        Source="water_plant.png"
                         VerticalOptions="Center" />
                     <Label
                         Margin="15,0,0,0"
@@ -216,9 +213,8 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="30"
-                            Source="sprout.png"
+                            HeightRequest="25"
+                            Source="gear.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -228,21 +224,28 @@
                             TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
 
-                    <!--  Fan  -->
-
-                    <Grid>
+                    <!--  Controls  -->
+                    <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!--  Fan  -->
                         <Label
+                            Grid.Row="0"
                             Grid.Column="0"
                             FontSize="Body"
                             Text="Fan"
                             TextColor="{StaticResource DarkestCoffee}" />
                         <Label
+                            Grid.Row="0"
                             Grid.Column="1"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
@@ -252,13 +255,14 @@
                             TextColor="{StaticResource DarkestCoffee}" />
                         <Switch
                             x:Name="FanSwitch"
+                            Grid.Row="0"
                             Grid.Column="2"
                             Margin="0,0,0,0"
                             HorizontalOptions="Center"
                             IsToggled="{Binding FanState.Value}"
-                            Toggled="FanSwitch_Toggled"
-                            VerticalOptions="Start" />
+                            Toggled="FanSwitch_Toggled" />
                         <Label
+                            Grid.Row="0"
                             Grid.Column="3"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
@@ -266,23 +270,16 @@
                             HorizontalTextAlignment="End"
                             Text="OFF"
                             TextColor="{StaticResource DarkestCoffee}" />
-                    </Grid>
 
-                    <!--  Light  -->
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <!--  Light  -->
                         <Label
+                            Grid.Row="1"
                             Grid.Column="0"
                             FontSize="Body"
                             Text="Light"
                             TextColor="{StaticResource DarkestCoffee}" />
                         <Label
+                            Grid.Row="1"
                             Grid.Column="1"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
@@ -292,13 +289,14 @@
                             TextColor="{StaticResource DarkestCoffee}" />
                         <Switch
                             x:Name="LightSwitch"
+                            Grid.Row="1"
                             Grid.Column="2"
                             Margin="0,0,0,0"
                             HorizontalOptions="Center"
                             IsToggled="{Binding LightState.Value}"
-                            Toggled="LightSwitch_Toggled"
-                            VerticalOptions="Start" />
+                            Toggled="LightSwitch_Toggled" />
                         <Label
+                            Grid.Row="1"
                             Grid.Column="3"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
