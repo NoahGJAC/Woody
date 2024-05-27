@@ -32,10 +32,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\icon.svg" Color="#E5DBCE" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#E5DBCE" BaseSize="333,333" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -46,6 +46,15 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Renderer\**" />
+	  <Compile Remove="Platforms\Android\Renderer\**" />
+	  <EmbeddedResource Remove="Platforms\Android\Renderer\**" />
+	  <MauiCss Remove="Platforms\Android\Renderer\**" />
+	  <MauiXaml Remove="Platforms\Android\Renderer\**" />
+	  <None Remove="Platforms\Android\Renderer\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,9 +91,11 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Mopups" Version="1.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.58" />
+		<PackageReference Include="Syncfusion.Maui.Buttons" Version="25.2.4" />
 		<PackageReference Include="WindowsAzure.ServiceBus" Version="7.0.1" />
 	</ItemGroup>
 

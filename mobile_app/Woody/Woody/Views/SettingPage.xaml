@@ -4,22 +4,47 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converter="clr-namespace:Woody.Converters">
-    <VerticalStackLayout BackgroundColor="{DynamicResource BackgroundAccent400}">
-        <HorizontalStackLayout Margin="40,150,0,30" Spacing="40">
-            <Image
-                Aspect="AspectFill"
-                HeightRequest="70"
-                HorizontalOptions="Center"
-                Source="dummy_user.png"
-                VerticalOptions="Center"
-                WidthRequest="70">
-                <Image.Clip>
-                    <EllipseGeometry
-                        Center="35,35"
-                        RadiusX="35"
-                        RadiusY="35" />
-                </Image.Clip>
-            </Image>
+    <VerticalStackLayout BackgroundColor="{DynamicResource Alabaster}">
+        <HorizontalStackLayout Margin="35,100,0,15" Spacing="40">
+            <!--  User Profile Picture  -->
+            <Grid Margin="0,-30,0,0" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    Margin="0,0,0,-10"
+                    HeightRequest="40"
+                    Source="head_sprout.png" />
+                <!--  Green Circle  -->
+                <BoxView
+                    Grid.Row="1"
+                    CornerRadius="50"
+                    HeightRequest="85"
+                    WidthRequest="85"
+                    Color="{StaticResource Primary}" />
+
+                <!--  Image Container  -->
+                <Grid Grid.Row="1">
+                    <Image
+                        Aspect="AspectFill"
+                        HeightRequest="70"
+                        HorizontalOptions="Center"
+                        Source="dummy_user.png"
+                        VerticalOptions="Center"
+                        WidthRequest="70">
+                        <Image.Clip>
+                            <EllipseGeometry
+                                Center="35,35"
+                                RadiusX="35"
+                                RadiusY="35" />
+                        </Image.Clip>
+                    </Image>
+                </Grid>
+            </Grid>
+
             <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
                 <Label
                     Margin="-15,0,0,0"
@@ -27,6 +52,7 @@
                     FontFamily="OpenSansBold"
                     FontSize="Large"
                     Text="{Binding Username}"
+                    TextColor="{StaticResource DarkestCoffee}"
                     VerticalOptions="Center" />
                 <Label
                     Margin="-15,0,0,0"
@@ -34,127 +60,180 @@
                     FontFamily="OpenSansBold"
                     FontSize="Subtitle"
                     Text="{Binding UserType, Converter={StaticResource UserTypeToStringController}}"
+                    TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
 
         <VerticalStackLayout>
             <Frame
-                Margin="0,5,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent200}"
+                Margin="0,5,0,35"
+                BackgroundColor="{StaticResource RawUmber}"
                 BorderColor="Transparent"
-                CornerRadius="25">
+                CornerRadius="25"
+                HeightRequest="175"
+                HorizontalOptions="FillAndExpand"
+                Opacity="40">
                 <VerticalStackLayout>
-                    <!--<Label Margin="10,0,0,0" Text="Email Address" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
-                    <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>-->
+                    <!--
+        <Label Margin="10,0,0,0" Text="Email Address" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
+        <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>
+                    -->
                     <HorizontalStackLayout Margin="5,15,5,10" Spacing="50">
                         <Button
                             x:Name="Btn_ChangePassword"
-                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            BackgroundColor="{StaticResource Coyote}"
+                            Clicked="Btn_ChangePassword_Clicked"
                             CornerRadius="15"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
                             FontSize="16"
                             Text="CHANGE PASSWORD"
-                            TextColor="Black"
-                            VerticalOptions="Center"
-                            Clicked="Btn_ChangePassword_Clicked"/>
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center" />
                         <Button
                             x:Name="Btn_LogOut"
-                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            BackgroundColor="{StaticResource Coyote}"
+                            Clicked="Btn_LogOut_Clicked"
                             CornerRadius="15"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
                             FontSize="16"
                             Text="LOG OUT"
-                            TextColor="Black"
-                            VerticalOptions="Center" 
-                            Clicked="Btn_LogOut_Clicked"/>
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center" />
                     </HorizontalStackLayout>
                     <Button
                         x:Name="Btn_ChangePFP"
                         Margin="5,0,5,0"
-                        BackgroundColor="{StaticResource BackgroundAccent300}"
+                        BackgroundColor="{StaticResource Coyote}"
+                        Clicked="Btn_ChangePFP_Clicked"
                         CornerRadius="15"
                         FontAttributes="Bold"
                         FontFamily="OpenSansBold"
                         FontSize="16"
                         Text="CHANGE PROFILE PICTURE"
-                        TextColor="Black"
-                        VerticalOptions="Center"
-                        Clicked="Btn_ChangePFP_Clicked"/>
-                    <Rectangle
-                        Margin="0,0,0,0"
-                        BackgroundColor="{StaticResource BackgroundAccent200}"
-                        HeightRequest="30" />
+                        TextColor="{StaticResource White}"
+                        VerticalOptions="Center" />
                 </VerticalStackLayout>
             </Frame>
             <Rectangle
-                Margin="0,-30,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent200}"
-                HeightRequest="40" />
+                Margin="0,-55,0,0"
+                BackgroundColor="{StaticResource RawUmber}"
+                HeightRequest="55" />
+            <Frame
+                Margin="0,-50,0,35"
+                BackgroundColor="{StaticResource Coyote}"
+                BorderColor="Transparent"
+                CornerRadius="25"
+                HeightRequest="165"
+                HorizontalOptions="FillAndExpand"
+                Opacity="40">
+                <VerticalStackLayout Margin="15,5,15,5" Spacing="10">
+                    <HorizontalStackLayout
+                        Margin="0,5,0,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                        <Image HeightRequest="30" Source="telemetry.png" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Large"
+                            Text="Telemetry Interval"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!--  Telemetry Interval  -->
+                    <Grid Margin="0,5,0,0" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,2,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            Text="Current Interval"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            x:Name="TelemetryIntervalLabel"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,0,3"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            Text="10"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,2,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            Text="Update Interval"
+                            TextColor="{StaticResource White}" />
+                        <Entry
+                            x:Name="TelemetryIntervalEntry"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            FontFamily="OpenSansRegular"
+                            FontSize="Body"
+                            HeightRequest="40"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Keyboard="Numeric"
+                            Placeholder="10"
+                            PlaceholderColor="{StaticResource White}"
+                            TextChanged="TelemetryIntervalEntry_TextChanged"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Start" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+            <Rectangle
+                Margin="0,-55,0,0"
+                BackgroundColor="{StaticResource Coyote}"
+                HeightRequest="55" />
 
             <!--  Notification Center  -->
             <Frame
-                Margin="0,-25,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent100}"
+                Margin="0,-50,0,0"
+                BackgroundColor="{StaticResource MediumCoffee}"
                 BorderColor="Transparent"
                 CornerRadius="40"
-                HeightRequest="500"
+                HeightRequest="300"
                 WidthRequest="400">
-                <VerticalStackLayout Margin="10,15,0,0">
-                    <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Image
-                            Aspect="AspectFill"
-                            HeightRequest="50"
-                            HorizontalOptions="CenterAndExpand"
-                            Source="bell.png"
-                            VerticalOptions="CenterAndExpand"
-                            WidthRequest="50">
-                            <Image.Clip>
-                                <EllipseGeometry
-                                    Center="25,25"
-                                    RadiusX="20"
-                                    RadiusY="20" />
-                            </Image.Clip>
-                        </Image>
+                <VerticalStackLayout Margin="15,5,15,5" Spacing="10">
+                    <HorizontalStackLayout
+                        Margin="0,5,0,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                        <Image HeightRequest="25" Source="bell.png" />
                         <Label
-                            Margin="10,0,0,0"
+                            Margin="15,0,0,0"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
                             FontSize="Large"
                             Text="Notification Center"
+                            TextColor="{StaticResource White}"
                             VerticalOptions="Center" />
                     </HorizontalStackLayout>
-                    <!-- Telemetry Interval -->
-                    <Grid Margin="10,0,10,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            x:Name="TelemetryIntervalLabel"
-                        Grid.Column="0"
-                        Margin="0,0,10,0"
-                        FontAttributes="Bold"
-                        FontFamily="OpenSansBold"
-                        FontSize="Medium"
-                        HorizontalOptions="Start"
-                        Text="Telemetry Interval"
-                        VerticalOptions="Center" />
-                        <Entry
-                        Grid.Column="1"
-                        Placeholder="Interval in seconds"
-                        TextColor="Black"
-                        PlaceholderColor="Black"
-                        Keyboard="Numeric"
-                        x:Name="TelemetryIntervalEntry"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center" 
-                            TextChanged="TelemetryIntervalEntry_TextChanged"/>
-                    </Grid>
+
                     <!--  Threshold Alert  -->
-                    <Grid Margin="10,10,10,0">
+                    <Grid Margin="0,10,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -164,9 +243,10 @@
                             Margin="0,0,10,0"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
-                            FontSize="Medium"
+                            FontSize="Body"
                             HorizontalOptions="Start"
-                            Text="Threshold Alert"
+                            Text="Treshold Alert"
+                            TextColor="{StaticResource Isabelline}"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
@@ -180,8 +260,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="ThesholdAlertSwitch"
@@ -191,14 +273,16 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>
 
                     <!--  Security Breach  -->
-                    <Grid Margin="10,0,10,0">
+                    <Grid Margin="0,0,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -208,9 +292,10 @@
                             Margin="0,0,10,0"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
-                            FontSize="Medium"
+                            FontSize="Body"
                             HorizontalOptions="Start"
                             Text="Security Breach"
+                            TextColor="{StaticResource Isabelline}"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
@@ -224,8 +309,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="SecurityBreachSwitch"
@@ -235,14 +322,16 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>
 
                     <!--  Task reminder  -->
-                    <Grid Margin="10,0,10,0">
+                    <Grid Margin="0,0,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -252,9 +341,10 @@
                             Margin="0,0,10,0"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
-                            FontSize="Medium"
+                            FontSize="Body"
                             HorizontalOptions="Start"
                             Text="Task Reminder"
+                            TextColor="{StaticResource Isabelline}"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
@@ -268,8 +358,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="TaskReminderSwitch"
@@ -279,14 +371,16 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>
 
                     <!--  Container Rotation  -->
-                    <Grid Margin="10,0,10,0">
+                    <Grid Margin="0,0,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -296,9 +390,10 @@
                             Margin="0,0,10,0"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
-                            FontSize="Medium"
+                            FontSize="Body"
                             HorizontalOptions="Start"
                             Text="Container Rotation"
+                            TextColor="{StaticResource Isabelline}"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
@@ -312,8 +407,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="ContainerRotationSwitch"
@@ -323,13 +420,14 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource Isabelline}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>
                 </VerticalStackLayout>
-
             </Frame>
         </VerticalStackLayout>
     </VerticalStackLayout>
