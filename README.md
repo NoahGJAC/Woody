@@ -37,9 +37,78 @@ Our goal is to make it easier than ever to grow your crops in a smarter way!
 
 *Color versions coming soon!*
 
-## UML Diagram
-![uml_diagram_png](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/assets/98351050/883014b8-6ccc-4fbf-8d28-5149908624c2)
+## 💡 Controlling Actuators
 
+### Buzzer Control
+
+**Actuator:** Buzzer  
+**Subsystem(s):** Geo/Security  
+**Communication Strategy:** Direct Methods  
+**Reason:** Uses Direct Methods since they are preferred when real-time interaction with the device is necessary, and an immediate response is required. This ensures that the action taken by the backend is confirmed by the device, enhancing reliability and control.
+
+**Example command to turn buzzer on:**
+
+```bash 
+ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "on", "command-type": "buzzer-on-off", "subsystem-type": "security" }'
+ ```
+
+ **Example command to turn buzzer off:**
+
+```bash 
+ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "off", "command-type": "buzzer-on-off", "subsystem-type": "security" }'
+ ```
+
+
+
+### Fan Control
+
+**Actuator:** Fan  
+**Subsystem(s):** Plant  
+**Communication Strategy:** Direct Methods  
+**Reason:** Uses Direct Methods since they are preferred when real-time interaction with the device is necessary, and an immediate response is required. This ensures that the action taken by the backend is confirmed by the device, enhancing reliability and control.
+
+**Example command to turn the fan on:**
+
+```bash 
+ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "on", "command-type": "fan-on-off", "subsystem-type": "plant" }'
+ ```
+
+**Example command to turn the fan off:**
+
+```bash 
+ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "off", "command-type": "fan-on-off", "subsystem-type": "plant" }'
+ ```
+
+### RGB LED Control
+
+**Actuator:** RGB Led  
+**Subsystem(s):** Plant  
+**Communication Strategy:** Direct Methods  
+**Reason:** Uses Direct Methods since they are preferred when real-time interaction with the device is necessary, and an immediate response is required. This ensures that the action taken by the backend is confirmed by the device, enhancing reliability and control.
+
+**Example command to turn the RGB LED on:**
+```bash 
+az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "on", "command-type": "light-on-off", "subsystem-type": "plant" }'
+```
+
+**Example command to turn the RGB LED off:**
+```bash 
+az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "off", "command-type": "light-on-off", "subsystem-type": "plant" }'
+```
+
+### Door Lock Control
+
+**Actuator:** Door Lock  
+**Subsystem(s):** Security  
+**Communication Strategy:** Direct Methods  
+**Reason:** Uses Direct Methods since they are preferred when real-time interaction with the device is necessary, and an immediate response is required. This ensures that the action taken by the backend is confirmed by the device, enhancing reliability and control.
+
+**Example command to control the door lock:**
+
+```bash  
+az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "<string representation of integer between -1 and 1>", "command-type": "door-lock", "subsystem-type": "security" }'
+```
+ 
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
