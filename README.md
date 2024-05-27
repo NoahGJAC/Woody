@@ -387,7 +387,171 @@ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id}
 
 ## 📬 D2C Messages
 > [!NOTE]  
-> The Reading type and type name are set as custom propeties in the message.
+> The Reading type and type name are set as custom propeties in the message.  
+
+### Door Lock Reading
+**Sensor:** Door Lock  
+**Subsystem(s):** Security  
+
+```bash
+# Sending door lock reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=door lock state;reading-type-name=DOOR_LOCK' --data '{"value":-1.0,"unit":""}'
+```
+
+### Roll Reading
+**Sensor:** Internal Acceleration Device  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending roll reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=roll;reading-type-name=ROLL' --data '{ "value":-1.3140687970083822,"unit":"\u00b0"}'
+```
+
+### Pitch Reading
+**Sensor:** Internal Acceleration Device  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending pitch reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=pitch;reading-type-name=PITCH' --data '{ "value":0.3140687970083822,"unit":"\u00b0"}'
+```
+
+### Buzzer Reading
+**Sensor:** Internal Buzzer  
+**Subsystem(s):** Security/Geolocation
+
+```bash
+# Sending buzzer reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=buzzer state;reading-type-name=BUZZER' --data '{ "value":"False","unit":""}'
+```
+
+### Vibration Reading
+**Sensor:** Internal Vibration Sensor  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending vibration reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=vibration;reading-type-name=VIBRATION' --data '{ "value":false,"unit":""}'
+```
+
+### Door Reading
+**Sensor:** Magnetic Door Sensor Reed Switch  
+**Subsystem(s):** Security
+
+```bash
+# Sending door reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=door state;reading-type-name=DOOR' --data '{ "value":false,"unit":""}'
+```
+
+### Loudness Reading
+**Sensor:** Loudness Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending loudness reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=loudness;reading-type-name=LOUDNESS' --data '{"value": 503.0,"unit":"%loudnessStrength"}'
+```
+
+### Luminosity Reading
+**Sensor:** Internal Luminosity Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending luminosity reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=luminosity;reading-type-name=LUMINOSITY' --data '{"value":6,"unit":"lx"}'
+```
+
+### Motion Reading
+**Sensor:** Motion Sensor  
+**Subsystem(s):** Security
+
+```bash
+# Sending motion reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=motion;reading-type-name=MOTION' --data '{"value":true,"unit":""}'
+```
+
+### Soil Moisture Reading
+**Sensor:** Soil Moisture Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending soil moisture reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=soil moisture;reading-type-name=SOIL_MOISTURE' --data '{"value":1686,"unit":""}'
+```
+
+### Water Level Reading
+**Sensor:** Water Level Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending water level reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=water level;reading-type-name=WATER_LEVEL' --data '{"value":504,"unit":""}'
+```
+
+### Temperature Reading
+**Sensor:** Temperature and Humidity Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending temperature reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=temperature;reading-type-name=TEMPERATURE' --data '{"value":24.0,"unit":"\u00b0C"}'
+```
+
+### Humidity Reading
+**Sensor:** Temperature and Humidity Sensor  
+**Subsystem(s):** Plant
+
+```bash
+# Sending humidity reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=humidity;reading-type-name=HUMIDITY' --data '{"value":50.0,"unit":"%HR"}'
+```
+
+### Fan Reading
+**Sensor:** Fan with Relay  
+**Subsystem(s):** Plant
+
+```bash
+# Sending fan reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=fan state;reading-type-name=FAN' --data '{"value":0,"unit":""}'
+```
+
+### LED Reading
+**Sensor:** RGB LED Stick  
+**Subsystem(s):** Plant
+
+```bash
+# Sending LED reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=LED state;reading-type-name=LED' --data '{"value":false,"unit":""}'
+```
+
+### Longitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending longitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=longitude;reading-type-name=LONGITUDE' --data '{"value":45.0,"unit":"\u00b0"}'
+```
+
+### Latitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending latitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=latitude;reading-type-name=LATITUDE' --data '{"value":45.0,"unit":"\u00b0"}'
+```
+
+### Altitude Reading
+**Sensor:** GPS  
+**Subsystem(s):** Geolocation
+
+```bash
+# Sending altitude reading
+az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'reading-type=altitude;reading-type-name=ALTITUDE' --data '{"value":45.0,"unit":"m"}'
+```
+
+
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
