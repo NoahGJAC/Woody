@@ -386,7 +386,8 @@ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id}
 ```
 
 ## 📬 D2C Messages
- 
+> [!NOTE]  
+> The Reading type and type name are set as custom propeties in the message.
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
 Katchenin Cindy Coulibaly <br>
