@@ -384,6 +384,8 @@ az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id}
 ```bash  
 az iot hub invoke-device-method --hub-name {iothub_name} --device-id {device_id} --method-name control_actuators --method-payload '{ "value": "<string representation of integer between -1 and 1>", "command-type": "door-lock", "subsystem-type": "security" }'
 ```
+
+## 📬 D2C Messages
  
 ## 🐱‍💻 Authors
 Diana Karpeev <br>
