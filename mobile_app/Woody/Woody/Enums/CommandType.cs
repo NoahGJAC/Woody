@@ -17,12 +17,36 @@ namespace Woody.Enums
     /// </summary>
     public enum CommandType
     {
+        /// <summary>
+        /// Represents a command type for the fan states.
+        /// </summary>
         FAN_ON_OFF,
+
+        /// <summary>
+        /// Represents a command type for the light states.
+        /// </summary>
         LIGHT_ON_OFF,
+
+        /// <summary>
+        /// Represents a command type for the light pulse.
+        /// </summary>
         LIGHT_PULSE,
+
+        /// <summary>
+        /// Represents a command type for the buzzer states.
+        /// </summary>
         BUZZER_ON_OFF,
+
+
+        /// <summary>
+        /// Represents a command type for the door lock states.
+        /// </summary>
         DOOR_LOCK
     }
+
+    /// <summary>
+    /// convert the enum of the commandType to a string.
+    /// </summary>
     public static class CommandTypeExtensions
     {
         public static string ToDescription(this CommandType type)
@@ -44,6 +68,9 @@ namespace Woody.Enums
             }
         }
 
+        /// <summary>
+        /// converts from the description of the command to the enum
+        /// </summary>
         public static CommandType FromDescription(string description)
         {
             switch (description.ToLower())

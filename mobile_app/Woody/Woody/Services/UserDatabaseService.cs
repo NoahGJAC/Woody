@@ -130,6 +130,9 @@ namespace Woody.Services
         {
             _items = new ObservableCollection<T>(await GetItemsAsync());
         }
+        /// <summary>
+        /// Loads items from the database asynchronously.
+        /// </summary>
         public async Task LoadItemsAsync()
         {
             await LoadItems();
