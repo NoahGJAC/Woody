@@ -12,7 +12,7 @@
             <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout BackgroundColor="{StaticResource MapBlue}">
+    <VerticalStackLayout BackgroundColor="{StaticResource MapGray}">
         <Map
             x:Name="map"
             HeightRequest="375"
@@ -30,7 +30,7 @@
                         <Image
                             Margin="5,0,0,0"
                             HeightRequest="30"
-                            Source="nature.png"
+                            Source="earth.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
@@ -189,5 +189,9 @@
                 </StackLayout>
             </Frame>
         </ScrollView>
+        <Rectangle
+            Margin="0,-35,0,0"
+            BackgroundColor="{StaticResource Isabelline}"
+            HeightRequest="70" />
     </VerticalStackLayout>
 </ContentPage>

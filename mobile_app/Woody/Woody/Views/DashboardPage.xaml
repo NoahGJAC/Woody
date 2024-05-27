@@ -92,7 +92,7 @@
                                     FontSize="25"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"
-                                    Text="{Binding CurrentHumidity.Value, StringFormat='{0:F0}'}" />
+                                    Text="{Binding CurrentHumidity.Value, StringFormat='{0:F1}'}" />
                             </StackLayout>
                         </Frame>
 
@@ -253,28 +253,33 @@
                     <Label
                         Margin="10,0,0,0"
                         FontFamily="OpenSansSemiBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="Door is "
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansSemiBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text=" and "
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                     <Label
                         FontFamily="OpenSansBold"
-                        FontSize="16"
+                        FontSize="Body"
                         Text="."
+                        TextColor="{StaticResource DarkestCoffee}"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>

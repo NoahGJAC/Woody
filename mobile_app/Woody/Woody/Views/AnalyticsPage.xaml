@@ -7,99 +7,107 @@
     <ScrollView BackgroundColor="{StaticResource Bone}">
         <VerticalStackLayout>
 
-            <!--  Security Carousel  -->
-            <Frame
-                Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
-                BorderColor="Transparent"
-                CornerRadius="20">
-                <StackLayout>
-                    <!--  Header  -->
-                    <HorizontalStackLayout>
-                        <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="25"
-                            Source="sprout.png"
-                            VerticalOptions="Center" />
-                        <Label
-                            Margin="15,0,0,0"
-                            FontFamily="OpenSansBold"
-                            FontSize="20"
-                            Text="Security History"
-                            TextColor="{StaticResource DarkestCoffee}" />
-                    </HorizontalStackLayout>
-                    <!--  Carousel for Graphs  -->
-                    <CarouselView
-                        x:Name="ChartCarouselSecurity"
-                        ItemsSource="{Binding ChartsSecurity}"
-                        Loop="True">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <charts:CartesianChart
-                                    Title="{Binding Title}"
-                                    HeightRequest="280"
-                                    Series="{Binding Series}"
-                                    XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}"
-                                    ZoomMode="ZoomX" />
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                    <!--  Carousel navigation  -->
-                    <IndicatorView
-                        x:Name="IndicatorViewSecurity"
-                        Count="{Binding ChartsSecurity.Count}"
-                        HorizontalOptions="Center"
-                        Position="{Binding Source={x:Reference ChartCarouselSecurity}, Path=Position}" />
-                </StackLayout>
-            </Frame>
+            <!--  Main Carousel View  -->
+            <CarouselView x:Name="MainCarousel" Loop="True">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <!--  Security Carousel Frame  -->
+                        <Frame
+                            Margin="15,30,15,0"
+                            BackgroundColor="{StaticResource White}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="300">
+                            <StackLayout>
+                                <!--  Header  -->
+                                <HorizontalStackLayout>
+                                    <Image
+                                        Margin="5,0,0,0"
+                                        HeightRequest="25"
+                                        Source="sprout.png"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Margin="15,0,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="20"
+                                        Text="Security History"
+                                        TextColor="{StaticResource DarkestCoffee}" />
+                                </HorizontalStackLayout>
+                                <!--  Carousel for Graphs  -->
+                                <CarouselView
+                                    x:Name="ChartCarouselSecurity"
+                                    ItemsSource="{Binding ChartsSecurity}"
+                                    Loop="True">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <charts:CartesianChart
+                                                Title="{Binding Title}"
+                                                HeightRequest="280"
+                                                Series="{Binding Series}"
+                                                XAxes="{Binding XAxes}"
+                                                YAxes="{Binding YAxes}"
+                                                ZoomMode="ZoomX" />
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <!--  Carousel navigation  -->
+                                <IndicatorView
+                                    x:Name="IndicatorViewSecurity"
+                                    Count="{Binding ChartsSecurity.Count}"
+                                    HorizontalOptions="Center"
+                                    Position="{Binding Source={x:Reference ChartCarouselSecurity}, Path=Position}" />
+                            </StackLayout>
+                        </Frame>
 
-            <!--  Plant Carousel  -->
-            <Frame
-                Margin="15,30,15,0"
-                BackgroundColor="{StaticResource White}"
-                BorderColor="Transparent"
-                CornerRadius="30">
-                <StackLayout>
-                    <!--  Header  -->
-                    <HorizontalStackLayout>
-                        <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="25"
-                            Source="sprout.png"
-                            VerticalOptions="Center" />
-                        <Label
-                            Margin="15,0,0,0"
-                            FontFamily="OpenSansBold"
-                            FontSize="20"
-                            Text="Plant History"
-                            TextColor="{StaticResource DarkestCoffee}" />
-                    </HorizontalStackLayout>
-                    <!--  Carousel for Graphs  -->
-                    <CarouselView
-                        x:Name="ChartCarouselPlant"
-                        ItemsSource="{Binding ChartsPlant}"
-                        Loop="True">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <charts:CartesianChart
-                                    Title="{Binding Title}"
-                                    HeightRequest="280"
-                                    Series="{Binding Series}"
-                                    XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}"
-                                    ZoomMode="ZoomX" />
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                    <!--  Carousel navigation  -->
-                    <IndicatorView
-                        x:Name="IndicatorViewPlant"
-                        Count="{Binding ChartsPlant.Count}"
-                        HorizontalOptions="Center"
-                        Position="{Binding Source={x:Reference ChartCarouselPlant}, Path=Position}" />
-                </StackLayout>
-            </Frame>
+                        <!--  Plant Carousel Frame  -->
+                        <Frame
+                            Margin="15,30,15,0"
+                            BackgroundColor="{StaticResource White}"
+                            BorderColor="Transparent"
+                            CornerRadius="30">
+                            <StackLayout>
+                                <!--  Header  -->
+                                <HorizontalStackLayout>
+                                    <Image
+                                        Margin="5,0,0,0"
+                                        HeightRequest="25"
+                                        Source="sprout.png"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Margin="15,0,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="20"
+                                        Text="Plant History"
+                                        TextColor="{StaticResource DarkestCoffee}" />
+                                </HorizontalStackLayout>
+                                <!--  Carousel for Graphs  -->
+                                <CarouselView
+                                    x:Name="ChartCarouselPlant"
+                                    ItemsSource="{Binding ChartsPlant}"
+                                    Loop="True">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <charts:CartesianChart
+                                                Title="{Binding Title}"
+                                                HeightRequest="280"
+                                                Series="{Binding Series}"
+                                                XAxes="{Binding XAxes}"
+                                                YAxes="{Binding YAxes}"
+                                                ZoomMode="ZoomX" />
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <!--  Carousel navigation  -->
+                                <IndicatorView
+                                    x:Name="IndicatorViewPlant"
+                                    Count="{Binding ChartsPlant.Count}"
+                                    HorizontalOptions="Center"
+                                    Position="{Binding Source={x:Reference ChartCarouselPlant}, Path=Position}" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
 
             <!--  Past Security Breaches  -->
             <!--  Always have security breaches at bottom of screen?  -->
@@ -197,7 +205,7 @@
             </Frame>
             <Rectangle
                 Margin="0,-100,0,0"
-                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BackgroundColor="{StaticResource Coyote}"
                 HeightRequest="5" />
         </VerticalStackLayout>
     </ScrollView>

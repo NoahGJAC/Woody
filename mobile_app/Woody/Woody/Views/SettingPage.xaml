@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converter="clr-namespace:Woody.Converters">
     <VerticalStackLayout BackgroundColor="{DynamicResource Alabaster}">
-        <HorizontalStackLayout Margin="35,100,0,30" Spacing="40">
+        <HorizontalStackLayout Margin="35,100,0,15" Spacing="40">
             <!--  User Profile Picture  -->
             <Grid Margin="0,-30,0,0" VerticalOptions="Center">
                 <Grid.RowDefinitions>
@@ -68,7 +68,7 @@
         <VerticalStackLayout>
             <Frame
                 Margin="0,5,0,35"
-                BackgroundColor="{StaticResource Chamoisee}"
+                BackgroundColor="{StaticResource RawUmber}"
                 BorderColor="Transparent"
                 CornerRadius="25"
                 HeightRequest="175"
@@ -119,11 +119,11 @@
             </Frame>
             <Rectangle
                 Margin="0,-55,0,0"
-                BackgroundColor="{StaticResource Chamoisee}"
+                BackgroundColor="{StaticResource RawUmber}"
                 HeightRequest="55" />
             <Frame
                 Margin="0,-50,0,35"
-                BackgroundColor="{StaticResource RawUmber}"
+                BackgroundColor="{StaticResource Coyote}"
                 BorderColor="Transparent"
                 CornerRadius="25"
                 HeightRequest="165"
@@ -146,7 +146,7 @@
                     </HorizontalStackLayout>
 
                     <!--  Telemetry Interval  -->
-                    <Grid Margin="0,5,0,0">
+                    <Grid Margin="0,5,0,0" RowSpacing="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="*" />
@@ -158,7 +158,6 @@
                         <Label
                             Grid.Row="0"
                             Grid.Column="0"
-                            Margin="0,0,0,2"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
                             Text="Current Interval"
@@ -167,7 +166,7 @@
                             x:Name="TelemetryIntervalLabel"
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="0,0,0,2"
+                            Margin="0,0,0,3"
                             FontAttributes="Bold"
                             FontFamily="OpenSansBold"
                             FontSize="Body"
@@ -188,10 +187,10 @@
                             x:Name="TelemetryIntervalEntry"
                             Grid.Row="1"
                             Grid.Column="1"
-                            Margin="1,0,0,0"
                             BackgroundColor="Transparent"
                             FontFamily="OpenSansRegular"
                             FontSize="Body"
+                            HeightRequest="40"
                             HorizontalOptions="End"
                             HorizontalTextAlignment="End"
                             Keyboard="Numeric"
@@ -205,13 +204,13 @@
             </Frame>
             <Rectangle
                 Margin="0,-55,0,0"
-                BackgroundColor="{StaticResource RawUmber}"
+                BackgroundColor="{StaticResource Coyote}"
                 HeightRequest="55" />
 
             <!--  Notification Center  -->
             <Frame
                 Margin="0,-50,0,0"
-                BackgroundColor="{StaticResource Coyote}"
+                BackgroundColor="{StaticResource MediumCoffee}"
                 BorderColor="Transparent"
                 CornerRadius="40"
                 HeightRequest="300"
