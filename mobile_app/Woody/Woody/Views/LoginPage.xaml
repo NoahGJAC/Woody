@@ -115,10 +115,9 @@
         <Frame
             x:Name="LogoutView"
             Margin="10"
-            BackgroundColor="Transparent"
+            BackgroundColor="{StaticResource Alabaster}"
             CornerRadius="15"
             IsVisible="false">
-
             <StackLayout>
                 <Label FontAttributes="Bold" Text="User Details:" />
                 <Label
@@ -126,10 +125,13 @@
                     Margin="0,5,0,30"
                     FontAttributes="Italic" />
                 <Button
-                    BackgroundColor="Black"
+                    BackgroundColor="{StaticResource Primary}"
                     Clicked="Btn_Logout_Clicked"
+                    FontFamily="OpenSansBold"
+                    FontSize="16"
+                    HeightRequest="50"
                     SemanticProperties.Hint="Click to log out"
-                    Text="Log Out"
+                    Text="LOG OUT"
                     VerticalOptions="CenterAndExpand" />
             </StackLayout>
         </Frame>
@@ -190,6 +192,18 @@
                         Margin="0,0,0,10"
                         HorizontalOptions="Center"
                         Spacing="10">
+                        <Button
+                            x:Name="Btn_GoBack"
+                            BackgroundColor="{StaticResource Bone}"
+                            Clicked="Btn_GoBack_Clicked"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Hint="Click to go back to the log in page."
+                            Text="GO BACK"
+                            TextColor="{StaticResource DarkestCoffee}"
+                            WidthRequest="140" />
                         <Button
                             x:Name="Btn_ResetPassword"
                             BackgroundColor="{StaticResource Primary}"

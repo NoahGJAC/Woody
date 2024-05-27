@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using SkiaSharp.Views.Maui.Controls;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Syncfusion.Maui.Core.Hosting;
+using Mopups.Hosting;
 
 #if ANDROID
 using Android.OS;
@@ -21,6 +22,7 @@ namespace Woody
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
                 .ConfigureSyncfusionCore()
+                .ConfigureMopups()
                 .UseMauiMaps()
                 .ConfigureFonts(fonts =>
                 {

@@ -31,10 +31,15 @@ public partial class LoginPage : ContentPage
     {
         base.OnAppearing();
         LoginView.IsVisible = true;
-        LogoutView.IsVisible = false;
         lblError.Text = string.Empty;
         user_name.Text = string.Empty;
         password.Text = string.Empty;
+    }
+
+    private async void Btn_GoBack_Clicked(object sender, EventArgs e) {
+        LoginView.IsVisible = true;
+        LogoutView.IsVisible = false;
+        ForgotPasswordView.IsVisible = false;
     }
 
     private async void Btn_Login_Clicked(object sender, EventArgs e)
