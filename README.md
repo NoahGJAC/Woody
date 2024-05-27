@@ -65,7 +65,210 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 
 *Color versions coming soon!*
 ### 📊 UML Diagram
-![UML Diagram](https://www.mermaidchart.com/raw/8fe4f596-027f-459b-b698-7631a75b1354?theme=dark&version=v0.1&format=svg)
+```mermaid
+classDiagram
+    GeoLocationRepo --|> FarmRepo : Is
+    SecurityRepo --|> FarmRepo : Is
+    PlantRepo --|> FarmRepo : Is
+    FleetOwner --|> User : Implements
+    FarmTechnician --|> User : Implements
+    User "1" -- "0..*" Container : manages
+    FleetOwner "1" -- "0..*" Container : owns
+    FarmTechnician "1" -- "0..*" Container : manages
+    Container o-- "1" FarmRepo : has
+    FarmRepo "1" -- "0..*" ISensor : contains
+    FarmRepo "1" -- "0..*" IActuator : controls
+    ISensor "1" -- "0..*" IReading: produces
+    IActuator "1" -- "1" ICommand: sends
+    ICommand "1" -- "1" CommandType: has
+    IReading "1" -- "1" ReadingType: has
+    IReading "1" -- "1" ReadingUnit: has
+    ICommand "1" -- "1" SubSystemType: has
+    UserType "1" -- "1" User: has
+
+    
+    class ChartsRepo{
+        + GetTemperatureChart(temperatureReadings: List[IReading]) CartesianChart
+        + GetSoilMoistureChart(soilMoistureReadings:  List[IReading]) CartesianChart
+        + GetHumidityChart(humidityReadings:  List[IReading]) CartesianChart
+        + GetNoiseChart(noiseReadings:  List[IReading]) CartesianChart
+        + GetLuminosityChart(luminosityReadings:  List[IReading]) CartesianChart
+
+    }
+    class FarmRepo{
+        -securityRepo: SecurityRepo
+        -plantRepo: PlantRepo
+        -geoLocationRepo: GeoLocationRepo
+        +SecurityRepo(): SecurityRepo
+        +PlantRepo(): PlantRepo
+        +GeoLocationRepo(): GeoLocationRepo
+        +DeserializeOldDataAsync()
+        +ValidReadingType(ReadingType)
+        +AssignDataToRepos(IReading)
+        +AssignDataToGeoLocationRepo(IReading)
+        +AssignDataToSecurityRepo(IReading)
+        +AssignDataToPlantRepo(IReading)
+        +GetNewDataAsync(PartitionContext, EventData)
+        +DeserializeNewData(string)
+    }
+    class ISensor{
+        <<interface>>
+        +string SensorID
+        +string SensorModel
+        +readSensor() List[IReading]
+    }
+    class IActuator{
+        <<interface>>
+        +string ActuatorID
+        +string State
+        +controlActuator(command: ICommand)
+    }
+    class IReading{
+        <<interface>>
+        +ReadingUnit Unit
+        +ReadingType ReadingType
+        +T Value
+        +Datetime TimeStamp
+        
+    }
+    class ICommand{
+        <<interface>>
+        +CommandType CommandType
+        +SubSystemType SubSystem
+        +T Value
+    }
+    class CommandType{
+        <<enumeration>>
+        FAN_ON_OFF,
+        LIGHT_ON_OFF,
+        LIGHT_PULSE,
+        BUZZER_ON_OFF,
+        DOOR_LOCK
+    }
+    class SubSystemType{
+    <<enumeartion>>
+    Security,
+    Geolocation,
+    Plant
+    }
+    class ReadingUnit{
+        <<enumeration>>
+        DEGREES,
+        METERS,
+        CELCIUS_HUMIDITY,
+        MILLIMETERS,
+        FARENHEIT,
+        HUMIDITY,
+        LUX,
+        LOUDNESS,
+        CELCIUS,
+        PERCENTAGE,
+        UNITLESS
+    }
+    class UserType{
+        <<enumeration>>
+        OWNER,
+        FARMER
+    }
+    class ReadingType{
+        <<enumeration>>
+        BUZZER,
+        PITCH,
+        ROLL,
+        HUMIDITY,
+        TEMPERATURE,
+        LUMINOSITY,
+        LOUDNESS,
+        DOOR,
+        DOOR_LOCK,
+        MOTION,
+        LATITUDE,
+        LONGITUDE,
+        ALTITUDE,
+        GPS,
+        VIBRATION
+    }
+    class GeoLocationRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -geoDb: ContainerDatabaseService~GeoLocationController~
+        +GeoLocationController: GeoLocationController
+        +GeoDb(): ContainerDatabaseService~GeoLocationController~
+        +Pitch: IReading~double~
+        +Roll: IReading~double~
+        +BuzzerState: IReading~bool~
+        +Vibration: IReading~bool~
+        +GPS: IReading~GPSCoordinates~
+        -AddTestData(sample_points: int)
+    }
+    class SecurityRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -securityDb: ContainerDatabaseService~SecurityController~
+        +SecurityController: SecurityController
+        +SecurityDb(): ContainerDatabaseService~SecurityController~
+        +NoiseLevels: List~IReading~float~~
+        +LuminosityLevels: List~IReading~int~~
+        +LuminosityCurrent(): IReading~int~
+        +NoiseCurrent(): IReading~float~
+        +DoorState: IReading~bool~
+        +MotionState: IReading~bool~
+        +BuzzerState: IReading~bool~
+        +LockState: IReading~bool~
+        -AddTestData(sample_points: int)
+    }
+    class PlantRepo{
+        +PropertyChanged: PropertyChangedEventHandler
+        -plantDb: ContainerDatabaseService~PlantController~
+        +PlantDb(): ContainerDatabaseService~PlantController~
+        +TemperatureLevels: List~IReading~double~~
+        +HumidityLevels: List~IReading~double~~
+        +SoilMoistureLevels: List~IReading~double~~
+        +WaterLevel: IReading~int~
+        +FanState: IReading~bool~
+        +LightState: IReading~bool~
+        +CurrentTemperature(): IReading~double~
+        +AverageTemperature(): double
+        +CurrentHumidity(): IReading~double~
+        +CurrentSoilMoisture(): IReading~double~
+        -AddTestData(sample_points: int)
+    }
+    class GPSCoordinates{
+        +IReading longitude
+        +IReading latitude
+        +IReading altitude
+    }
+    class Container{
+        +string containerID
+        +string containerName
+        +List<IController> SubSystems
+    }
+    class User {
+        +string Key
+        +string Uid
+        +string Username
+        +UserType UserType
+
+        +List<Container> managedContainers
+    }
+    class FleetOwner{
+    }
+    class FarmTechnician{
+    }
+
+    %%WIP
+    class AzureIoTHub {
+         +DeviceClient deviceClient
+        +BlobContainerClient blobContainerClient
+        +EventProcessorClient eventProcessorClient
+        +List<string> blobFile
+        +ServiceClient serviceClient
+        +ConnectToDeviceAsync()
+        +DownloadBlobAsync()
+        +ProcessEventHandler(ProcessEventArgs)
+        +ProcessErrorHandler(ProcessErrorEventArgs)
+        +GetCurrentMessageAsync()
+        +SendCommandAsync<T>(ICommand<T>)
+    }  
+```
 
 ## 🛠️ App Setup
 ### Setup
