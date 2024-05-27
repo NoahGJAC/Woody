@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:Woody.Converters"
+    Title="">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter" />
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter" />
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter" />
+            <converter:TrueFalseLevelToColorConverter x:Key="TrueFalseLevelToColorConverter" />
+            <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
+            <converter:BoolToUnlockedLockedConverter x:Key="BoolToUnlockedLockedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
+
+            <!--  Plant Wellbeing Card  -->
+            <Frame
+                x:Name="FramePlant"
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BindingContext="App.PlantRepo"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="warning.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Plant wellbeing"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <!--  Average Temperature  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout
+                                Padding="0"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="11.5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Avg. Temp." />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding AverageTemperature, StringFormat='{0:F1}'}" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="°C" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Humidity  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Humidity" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding CurrentHumidity.Value, StringFormat='{0:F0}'}" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="%" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Soil Moist.  -->
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{StaticResource WarningYellow}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Soil Moist." />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding CurrentSoilMoisture.Value, StringFormat='{0:F0}'}" />
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!--  Security Card  -->
+            <Frame
+                x:Name="FrameSecurity"
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BindingContext="App.SecurityRepo"
+                BorderColor="Transparent"
+                CornerRadius="30">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="check.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Security" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <!--  Luminosity  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{Binding Source={x:Reference LabelLuminosity}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout
+                                Padding="0"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="11.5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Luminosity" />
+                                <Label
+                                    x:Name="LabelLuminosity"
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="22"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Noise  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{Binding Source={x:Reference LabelNoise}, Path=Text, Converter={StaticResource LowHighLevelToColorConverter}}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Noise Levels" />
+                                <Label
+                                    x:Name="LabelNoise"
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="22"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Motion  -->
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{Binding Source={x:Reference LabelMotion}, Path=Text, Converter={StaticResource TrueFalseLevelToColorConverter}}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Motion Detected" />
+                                <Label
+                                    x:Name="LabelMotion"
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding MotionState.Value}" />
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!--  Door States  -->
+            <Frame
+                x:Name="FrameSecurityDoor"
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource White}"
+                BindingContext="App.SecurityRepo"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="open_door.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Door is "
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text=" and "
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding LockState.Value, Converter={StaticResource BoolToUnlockedLockedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="."
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!--  Location Card  -->
+            <Frame
+                x:Name="FrameLocation"
+                Margin="15,15,15,15"
+                BackgroundColor="{StaticResource White}"
+                BindingContext="App.GeoLocationRepo"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="check.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Location" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <!--  Roll  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout
+                                Padding="0"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="11.5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Roll Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Roll.Value, StringFormat='{0:F1}°'}" />
+
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Vibration Levels  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            Padding="0"
+                            BackgroundColor="{Binding Source={x:Reference LabelVibration}, Path=Text, Converter={StaticResource TrueFalseLevelToColorConverter}}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Vibration" />
+                                <Label
+                                    x:Name="LabelVibration"
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Vibration.Value}" />
+                            </StackLayout>
+                        </Frame>
+
+                        <!--  Pitch  -->
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{StaticResource AllGoodGreen}"
+                            BorderColor="Transparent"
+                            CornerRadius="20"
+                            HeightRequest="100"
+                            WidthRequest="100">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Pitch Angle" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontFamily="OpenSansBold"
+                                    FontSize="25"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Pitch.Value, StringFormat='{0:F1}°'}" />
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

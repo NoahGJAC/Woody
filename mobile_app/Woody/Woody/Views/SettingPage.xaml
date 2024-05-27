@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:Woody.Converters">
+    <VerticalStackLayout BackgroundColor="{DynamicResource BackgroundAccent400}">
+        <HorizontalStackLayout Margin="40,150,0,30" Spacing="40">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="70"
+                HorizontalOptions="Center"
+                Source="dummy_user.png"
+                VerticalOptions="Center"
+                WidthRequest="70">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="35,35"
+                        RadiusX="35"
+                        RadiusY="35" />
+                </Image.Clip>
+            </Image>
+            <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                <Label
+                    Margin="-15,0,0,0"
+                    FontAttributes="Bold"
+                    FontFamily="OpenSansBold"
+                    FontSize="Large"
+                    Text="{Binding Username}"
+                    VerticalOptions="Center" />
+                <Label
+                    Margin="-15,0,0,0"
+                    FontAttributes="Italic"
+                    FontFamily="OpenSansBold"
+                    FontSize="Subtitle"
+                    Text="{Binding UserType, Converter={StaticResource UserTypeToStringController}}"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout>
+            <Frame
+                Margin="0,5,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                BorderColor="Transparent"
+                CornerRadius="25">
+                <VerticalStackLayout>
+                    <!--<Label Margin="10,0,0,0" Text="Email Address" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" FontFamily="OpenSansBold"/>
+                    <Label Margin="10,0,0,0" Text="Fleet Owner" VerticalOptions="Center" FontSize="Subtitle" FontAttributes="Italic" FontFamily="OpenSansBold"/>-->
+                    <HorizontalStackLayout Margin="5,15,5,10" Spacing="50">
+                        <Button
+                            x:Name="Btn_ChangePassword"
+                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            Text="CHANGE PASSWORD"
+                            TextColor="Black"
+                            VerticalOptions="Center"
+                            Clicked="Btn_ChangePassword_Clicked"/>
+                        <Button
+                            x:Name="Btn_LogOut"
+                            BackgroundColor="{StaticResource BackgroundAccent300}"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            Text="LOG OUT"
+                            TextColor="Black"
+                            VerticalOptions="Center" 
+                            Clicked="Btn_LogOut_Clicked"/>
+                    </HorizontalStackLayout>
+                    <Button
+                        x:Name="Btn_ChangePFP"
+                        Margin="5,0,5,0"
+                        BackgroundColor="{StaticResource BackgroundAccent300}"
+                        CornerRadius="15"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="CHANGE PROFILE PICTURE"
+                        TextColor="Black"
+                        VerticalOptions="Center"
+                        Clicked="Btn_ChangePFP_Clicked"/>
+                    <Rectangle
+                        Margin="0,0,0,0"
+                        BackgroundColor="{StaticResource BackgroundAccent200}"
+                        HeightRequest="30" />
+                </VerticalStackLayout>
+            </Frame>
+            <Rectangle
+                Margin="0,-30,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent200}"
+                HeightRequest="40" />
+
+            <!--  Notification Center  -->
+            <Frame
+                Margin="0,-25,0,0"
+                BackgroundColor="{StaticResource BackgroundAccent100}"
+                BorderColor="Transparent"
+                CornerRadius="40"
+                HeightRequest="500"
+                WidthRequest="400">
+                <VerticalStackLayout Margin="10,15,0,0">
+                    <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="50"
+                            HorizontalOptions="CenterAndExpand"
+                            Source="bell.png"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="50">
+                            <Image.Clip>
+                                <EllipseGeometry
+                                    Center="25,25"
+                                    RadiusX="20"
+                                    RadiusY="20" />
+                            </Image.Clip>
+                        </Image>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Large"
+                            Text="Notification Center"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <!-- Telemetry Interval -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="TelemetryIntervalLabel"
+                        Grid.Column="0"
+                        Margin="0,0,10,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Medium"
+                        HorizontalOptions="Start"
+                        Text="Telemetry Interval"
+                        VerticalOptions="Center" />
+                        <Entry
+                        Grid.Column="1"
+                        Placeholder="Interval in seconds"
+                        TextColor="Black"
+                        PlaceholderColor="Black"
+                        Keyboard="Numeric"
+                        x:Name="TelemetryIntervalEntry"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center" 
+                            TextChanged="TelemetryIntervalEntry_TextChanged"/>
+                    </Grid>
+                    <!--  Threshold Alert  -->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Threshold Alert"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="ThesholdAlertSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Security Breach  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Security Breach"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="SecurityBreachSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Task reminder  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Task Reminder"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="TaskReminderSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Container Rotation  -->
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansBold"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="Container Rotation"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="ContainerRotationSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Frame>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

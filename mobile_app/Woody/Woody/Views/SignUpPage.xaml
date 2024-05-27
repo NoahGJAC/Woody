@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.SignUpPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:Woody.Converters"
+    xmlns:enum="clr-namespace:Woody.Enums"
+    xmlns:model="clr-namespace:Woody.Models"
+    Title="">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:UserTypeToRadioButtonConverter x:Key="UserTypeToRadioButtonConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent200}">
+        <StackLayout Margin="0,100,0,0">
+            <Image
+                Margin="0,0,0,-8"
+                HeightRequest="100"
+                Source="seed.png" />
+            <Frame
+                Margin="10,0,10,10"
+                BackgroundColor="{StaticResource BackgroundAccent300}"
+                BorderColor="Transparent"
+                VerticalOptions="Center">
+                <StackLayout x:DataType="model:User">
+                    <!--  Username  -->
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Name" />
+                    <Entry
+                        x:Name="user_name"
+                        BackgroundColor="Transparent"
+                        PlaceholderColor="Black"
+                        Text="{Binding Username}" />
+
+                    <!--  Email  -->
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Email Address" />
+                    <Entry
+                        x:Name="email"
+                        BackgroundColor="Transparent"
+                        PlaceholderColor="Black" />
+
+                    <!--  Password  -->
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Password" />
+                    <Entry
+                        x:Name="password"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        PlaceholderColor="Black" />
+
+                    <VerticalStackLayout Margin="0,3,0,0">
+                        <RadioButton Content="Farmer" IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.FARMER}}" />
+                        <RadioButton Content="Owner" IsChecked="{Binding UserType, Converter={StaticResource UserTypeToRadioButtonConverter}, ConverterParameter={x:Static enum:UserType.OWNER}}" />
+                    </VerticalStackLayout>
+                    <Button
+                        Margin="0,10,0,0"
+                        BackgroundColor="{StaticResource Primary}"
+                        Clicked="Btn_SignUp_Clicked"
+                        CornerRadius="10"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        SemanticProperties.Hint="Click to log in"
+                        Text="SIGN UP"
+                        WidthRequest="325" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

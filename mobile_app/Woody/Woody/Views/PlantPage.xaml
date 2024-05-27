@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.PlantPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+    Title="">
+
+    <ScrollView>
+
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+            <Frame
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <StackLayout>
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="30"
+                            Source="sprout.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Latest Readings" />
+                    </HorizontalStackLayout>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!--  Temperature  -->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontSize="Body"
+                            Text="TEMPERATURE" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding CurrentTemperature.Value, StringFormat='{0:F2}'}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="°C" />
+
+                        <!--  Humidity  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontSize="Body"
+                            Text="HUMIDITY" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding CurrentHumidity.Value, StringFormat='{0:F2}'}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="%" />
+
+                        <!--  Soil Moisture  -->
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontSize="Body"
+                            Text="SOIL MOISTURE" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding CurrentSoilMoisture.Value, StringFormat='{0:F0}'}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="%" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+
+            <Frame
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <StackLayout>
+
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="30"
+                            Source="sprout.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Farm Sensors" />
+                    </HorizontalStackLayout>
+
+                    <!--  Carousel for Graphs  -->
+                    <CarouselView
+                        x:Name="ChartCarousel"
+                        ItemsSource="{Binding Charts}"
+                        Loop="True">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <charts:CartesianChart
+                                    Title="{Binding Title}"
+                                    HeightRequest="280"
+                                    Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    ZoomMode="ZoomX" />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <!--  Carousel navigation  -->
+                    <IndicatorView
+                        x:Name="IndicatorView"
+                        Count="{Binding Charts.Count}"
+                        HorizontalOptions="Center"
+                        Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
+                </StackLayout>
+            </Frame>
+
+            <!--  Water Level  -->
+            <Frame
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="25"
+                        HorizontalOptions="Center"
+                        Source="water_drop.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Container water level is at "
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding WaterLevel.Value, StringFormat='{0:F0}'}"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="%"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!--  Control Panel  -->
+            <Frame
+                Margin="15,15,15,0"
+                Padding="15,15,30,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="110">
+                <StackLayout>
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="25"
+                            Source="lighting_bulb.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Control Panel" />
+                    </HorizontalStackLayout>
+
+                    <!--  Fan  -->
+                    <Grid Margin="15,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text="FAN"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="FanSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                IsToggled="{Binding FanState.Value}"
+                                Toggled="FanSwitch_Toggled"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Light  -->
+                    <Grid Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text="LIGHT"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="LightSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                IsToggled="{Binding LightState.Value}"
+                                Toggled="LightSwitch_Toggled"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

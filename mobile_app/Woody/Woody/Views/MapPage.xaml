@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.MapPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Woody.Converters"
+    xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+    Title="">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+        <Map
+            x:Name="map"
+            HeightRequest="300"
+            IsShowingUser="True"
+            MapType="Street" />
+        <!--  Container status  -->
+        <!--  TODO: Make icons bigger  -->
+        <ScrollView>
+            <Frame
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="40">
+                <StackLayout Margin="15,5,15,15">
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="30"
+                            Source="sprout.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Details" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,0,0,10" Spacing="5">
+                        <HorizontalStackLayout Margin="0,15,0,0">
+                            <!--  Roll  -->
+                            <Frame
+                                Margin="0,0,10,0"
+                                Padding="0"
+                                BackgroundColor="{StaticResource AllGoodGreen}"
+                                BorderColor="Transparent"
+                                CornerRadius="20"
+                                HeightRequest="100"
+                                WidthRequest="100">
+                                <StackLayout
+                                    Padding="0"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        Margin="0,0,0,0"
+                                        FontSize="11.5"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Roll Angle" />
+                                    <Label
+                                        Margin="0,-5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="25"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Roll.Value, StringFormat='{0:F4}'}" />
+                                </StackLayout>
+                            </Frame>
+
+                            <!--  Vibration Levels  -->
+                            <Frame
+                                Margin="0,0,10,0"
+                                Padding="0"
+                                BackgroundColor="{StaticResource MediumAllGoodGreen}"
+                                BorderColor="Transparent"
+                                CornerRadius="20"
+                                HeightRequest="100"
+                                WidthRequest="100">
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label
+                                        Margin="0,0,0,0"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Vibration" />
+
+                                    <Label
+                                        Margin="0,-5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="25"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Vibration.Value, Converter={StaticResource BoolToVibrationConverter}}" />
+                                </StackLayout>
+                            </Frame>
+
+                            <!--  Pitch  -->
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="{StaticResource LightAllGoodGreen}"
+                                BorderColor="Transparent"
+                                CornerRadius="20"
+                                HeightRequest="100"
+                                WidthRequest="100">
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label
+                                        Margin="0,0,0,0"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Pitch Angle" />
+                                    <Label
+                                        Margin="0,-5,0,0"
+                                        FontFamily="OpenSansBold"
+                                        FontSize="25"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Pitch.Value, StringFormat='{0:F4}'}" />
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout>
+                        <!--  Coordinates  -->
+                        <Frame
+                            Margin="0,0,0,0"
+                            Padding="20,0,0,0"
+                            BackgroundColor="{StaticResource MediumWarningYellow}"
+                            BorderColor="Transparent"
+                            CornerRadius="10"
+                            HeightRequest="60"
+                            WidthRequest="325">
+                            <HorizontalStackLayout>
+                                <!--  Latitude  -->
+                                <Image
+                                    HeightRequest="25"
+                                    HorizontalOptions="Center"
+                                    Source="latitude.png"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="16"
+                                    Text="Latitude is at "
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontFamily="OpenSansBold"
+                                    FontSize="16"
+                                    Text="{Binding GPS.Value.Latitude.Value, StringFormat='{0:F6}'}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+
+                        <Frame
+                            Margin="0,10,0,0"
+                            Padding="20,0,0,0"
+                            BackgroundColor="{StaticResource LightWarningYellow}"
+                            BorderColor="Transparent"
+                            CornerRadius="10"
+                            HeightRequest="60"
+                            WidthRequest="325">
+                            <HorizontalStackLayout>
+                                <!--  Longitude  -->
+                                <Image
+                                    HeightRequest="25"
+                                    HorizontalOptions="Center"
+                                    Source="longetitude.png"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="16"
+                                    Text="Longitude is at "
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontFamily="OpenSansBold"
+                                    FontSize="16"
+                                    Text="{Binding GPS.Value.Longitude.Value, StringFormat='{0:F6}'}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <!--  Buzzer  -->
+                    <Grid Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="BUZZER"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                    x:Name="BuzzerSwitch"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    IsToggled="{Binding BuzzerState.Value}"
+                                    Toggled="BuzzerSwitch_Toggled"
+                                    VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

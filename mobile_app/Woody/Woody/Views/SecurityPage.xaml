@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Woody.Views.SecurityPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+    xmlns:converter="clr-namespace:Woody.Converters"
+    Title=""
+    BindingContext="App.SecurityRepo">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolToLockUnlockConverter x:Key="BoolToLockUnlockConverter" />
+            <converter:BoolToOnOffConverter x:Key="BoolToOnOffConverter" />
+            <converter:BoolToOpenClosedConverter x:Key="BoolToOpenClosedConverter" />
+            <converter:BoolToMotionDetectedConverter x:Key="BoolToMotionDetectedConverter" />
+            <converter:BoolToDoubleConverter x:Key="BoolToDoubleConverter" />
+            <converter:LowHighLevelToColorConverter x:Key="LowHighLevelToColorConverter" />
+            <converter:LuminosityValueToLevelConverter x:Key="LuminosityToLevelConverter" />
+            <converter:NoiseValueToLevelConverter x:Key="NoiseToLevelConverter" />
+            <converter:UserTypeToBoolConverter x:Key="UserTypeToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+            <!--  Latest Graph Readings  -->
+            <Frame
+                x:Name="frame_latest_readings"
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                <!--  Header  -->
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="23"
+                            Source="lighting_bulb.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Latest Readings" />
+                    </HorizontalStackLayout>
+                    <!--  LUMINOSITY  -->
+                    <Grid Margin="15,-5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="LUMINOSITY"
+                            VerticalOptions="Center" />
+                        <Label
+                            x:Name="label_lum_current"
+                            Grid.Column="1"
+                            Padding="0"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </Grid>
+
+                    <!--  NOISE  -->
+                    <Grid Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="NOISE"
+                            VerticalOptions="Center" />
+                        <Label
+                            x:Name="label_noise_current"
+                            Grid.Column="1"
+                            Padding="0"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </Grid>
+                </StackLayout>
+
+            </Frame>
+            <Frame
+                x:Name="frame_graphs"
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                <StackLayout>
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="23"
+                            Source="security.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Sensors" />
+                    </HorizontalStackLayout>
+                    <!--  Carousel for Graphs  -->
+                    <CarouselView
+                        x:Name="ChartCarousel"
+                        ItemsSource="{Binding Charts}"
+                        Loop="True">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <charts:CartesianChart
+                                    Title="{Binding Title}"
+                                    HeightRequest="280"
+                                    Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    ZoomMode="ZoomX" />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <!--  Carousel navigation  -->
+                    <IndicatorView
+                        x:Name="IndicatorView"
+                        Count="{Binding Charts.Count}"
+                        HorizontalOptions="Center"
+                        Position="{Binding Source={x:Reference ChartCarousel}, Path=Position}" />
+                </StackLayout>
+            </Frame>
+
+
+            <Frame
+                Margin="15,15,15,0"
+                Padding="15,15,30,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="135">
+                <StackLayout>
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="5,0,0,0"
+                            HeightRequest="27"
+                            Source="lighting_bulb.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Control Panel" />
+                    </HorizontalStackLayout>
+
+                    <!--  Buzzer  -->
+                    <Grid Margin="15,0,0,0" x:Name="grid_buzzer"
+                          IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="BUZZER"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="End"
+                                Text="OFF"
+                                VerticalOptions="Center" />
+                            <Switch
+                                x:Name="BuzzerSwitch"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                IsToggled="{Binding BuzzerState.Value}"
+                                Toggled="BuzzerSwitch_Toggled"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="OpenSansBold"
+                                HorizontalOptions="Start"
+                                Text="ON"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Lock  -->
+                    <Grid Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="DOOR LOCK"
+                            VerticalOptions="Center" />
+                        <Button
+                            Grid.Column="1"
+                            Padding="0"
+                            Clicked="ButtonLock_Clicked"
+                            FontFamily="OpenSansBold"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Text="{Binding LockState.Value, Converter={StaticResource BoolToLockUnlockConverter}}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!--  Door  -->
+            <Frame
+                x:Name="frame_door_status"
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="open_door.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Door is "
+                        VerticalOptions="Center" />
+                    <Label
+                        x:Name="label_door"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+
+            <!--  Motion  -->
+            <Frame
+                x:Name="frame_motion"
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="360"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="radar.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Motion sensors detect "
+                        VerticalOptions="Center" />
+                    <Label
+                        x:Name="label_motion"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
