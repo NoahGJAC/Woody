@@ -22,85 +22,11 @@
     </ContentPage.Resources>
     <ScrollView>
 
-        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
-            <!--  Latest Graph Readings  -->
+        <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
             <Frame
                 x:Name="frame_latest_readings"
                 Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
-                BorderColor="Transparent"
-                CornerRadius="10"
-                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
-                <!--  Header  -->
-                <StackLayout>
-                    <HorizontalStackLayout>
-                        <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="23"
-                            Source="lighting_bulb.png"
-                            VerticalOptions="Center" />
-                        <Label
-                            Margin="15,0,0,0"
-                            FontFamily="OpenSansBold"
-                            FontSize="20"
-                            Text="Latest Readings" />
-                    </HorizontalStackLayout>
-                    <!--  LUMINOSITY  -->
-                    <Grid Margin="15,-5,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="12"
-                            HorizontalOptions="Start"
-                            Text="LUMINOSITY"
-                            VerticalOptions="Center" />
-                        <Label
-                            x:Name="label_lum_current"
-                            Grid.Column="1"
-                            Padding="0"
-                            FontFamily="OpenSansBold"
-                            HeightRequest="30"
-                            HorizontalOptions="End"
-                            Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}"
-                            VerticalOptions="Center"
-                            WidthRequest="100" />
-                    </Grid>
-
-                    <!--  NOISE  -->
-                    <Grid Margin="15,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="12"
-                            HorizontalOptions="Start"
-                            Text="NOISE"
-                            VerticalOptions="Center" />
-                        <Label
-                            x:Name="label_noise_current"
-                            Grid.Column="1"
-                            Padding="0"
-                            FontFamily="OpenSansBold"
-                            HeightRequest="30"
-                            HorizontalOptions="End"
-                            Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}"
-                            VerticalOptions="Center"
-                            WidthRequest="100" />
-                    </Grid>
-                </StackLayout>
-
-            </Frame>
-            <Frame
-                x:Name="frame_graphs"
-                Margin="15,15,15,0"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10"
                 IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
@@ -108,16 +34,89 @@
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="23"
+                            HeightRequest="20"
                             Source="security.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Sensors" />
+                            Text="Latest Readings"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!--  Luminosity  -->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontSize="Body"
+                            Text="Luminosity"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                        <Label
+                            x:Name="label_lum_current"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding LuminosityCurrent.Value, Converter={StaticResource LuminosityToLevelConverter}}"
+                            TextColor="{StaticResource DarkestCoffee}" />
+
+                        <!--  Noise  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontSize="Body"
+                            Text="Noise"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                        <Label
+                            x:Name="label_noise_current"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="OpenSansBold"
+                            FontSize="Body"
+                            HorizontalOptions="End"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding NoiseCurrent.Value, Converter={StaticResource NoiseToLevelConverter}}"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+
+            <Frame
+                x:Name="frame_graphs"
+                Margin="15,15,15,0"
+                BackgroundColor="{StaticResource Isabelline}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                <StackLayout>
+                    <!--  Header  -->
+                    <HorizontalStackLayout>
+                        <Image
+                            HeightRequest="25"
+                            Source="graph.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="15,0,0,0"
+                            FontFamily="OpenSansBold"
+                            FontSize="20"
+                            Text="Sensors"
+                            TextColor="{StaticResource DarkestCoffee}" />
+                    </HorizontalStackLayout>
+
                     <!--  Carousel for Graphs  -->
                     <CarouselView
                         x:Name="ChartCarousel"
@@ -144,42 +143,74 @@
                 </StackLayout>
             </Frame>
 
-
+            <!--  Motion  -->
             <Frame
-                Margin="15,15,15,0"
-                Padding="15,15,30,0"
-                BackgroundColor="{StaticResource White}"
+                x:Name="frame_motion"
+                Margin="0,15,0,0"
+                Padding="20,0,0,0"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="10"
-                HeightRequest="135">
-                <StackLayout>
+                HeightRequest="60"
+                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}"
+                WidthRequest="360">
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="25"
+                        HorizontalOptions="Center"
+                        Source="motion_sensor.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="OpenSansSemiBold"
+                        FontSize="16"
+                        Text="Motion sensors detect "
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                    <Label
+                        x:Name="label_motion"
+                        FontFamily="OpenSansBold"
+                        FontSize="16"
+                        Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}"
+                        TextColor="{StaticResource DarkestCoffee}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame
+                Margin="15,15,15,15"
+                BackgroundColor="{StaticResource Isabelline}"
+                BorderColor="Transparent"
+                CornerRadius="10"
+                HeightRequest="150">
+                <StackLayout Spacing="1">
                     <!--  Header  -->
                     <HorizontalStackLayout>
                         <Image
-                            Margin="5,0,0,0"
-                            HeightRequest="27"
-                            Source="lighting_bulb.png"
+                            HeightRequest="25"
+                            Source="gear.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Control Panel" />
+                            Text="Control Panel"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
 
                     <!--  Buzzer  -->
-                    <Grid Margin="15,0,0,0" x:Name="grid_buzzer"
-                          IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
+                    <Grid x:Name="grid_buzzer" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="12"
+                            Margin="0,0,0,0"
+                            FontSize="Body"
                             HorizontalOptions="Start"
-                            Text="BUZZER"
+                            Text="Buzzer"
+                            TextColor="{StaticResource DarkestCoffee}"
                             VerticalOptions="Center" />
                         <Grid
                             Grid.Column="1"
@@ -193,8 +224,10 @@
                             <Label
                                 Grid.Column="0"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="End"
                                 Text="OFF"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center" />
                             <Switch
                                 x:Name="BuzzerSwitch"
@@ -206,24 +239,27 @@
                             <Label
                                 Grid.Column="2"
                                 FontFamily="OpenSansBold"
+                                FontSize="Body"
                                 HorizontalOptions="Start"
                                 Text="ON"
+                                TextColor="{StaticResource DarkestCoffee}"
                                 VerticalOptions="Center" />
                         </Grid>
                     </Grid>
 
                     <!--  Lock  -->
-                    <Grid Margin="15,0,0,0">
+                    <Grid Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="12"
+                            Margin="0,0,0,0"
+                            FontSize="Body"
                             HorizontalOptions="Start"
-                            Text="DOOR LOCK"
+                            Text="Door Lock"
+                            TextColor="{StaticResource DarkestCoffee}"
                             VerticalOptions="Center" />
                         <Button
                             Grid.Column="1"
@@ -237,70 +273,6 @@
                             WidthRequest="100" />
                     </Grid>
                 </StackLayout>
-            </Frame>
-
-            <!--  Door  -->
-            <Frame
-                x:Name="frame_door_status"
-                Margin="0,15,0,0"
-                Padding="20,0,0,0"
-                BackgroundColor="{StaticResource White}"
-                BorderColor="Transparent"
-                CornerRadius="10"
-                HeightRequest="60"
-                WidthRequest="360">
-                <HorizontalStackLayout>
-                    <Image
-                        HeightRequest="30"
-                        HorizontalOptions="Center"
-                        Source="open_door.png"
-                        VerticalOptions="Center" />
-                    <Label
-                        Margin="10,0,0,0"
-                        FontFamily="OpenSansSemiBold"
-                        FontSize="16"
-                        Text="Door is "
-                        VerticalOptions="Center" />
-                    <Label
-                        x:Name="label_door"
-                        FontFamily="OpenSansBold"
-                        FontSize="16"
-                        Text="{Binding DoorState.Value, Converter={StaticResource BoolToOpenClosedConverter}}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
-            </Frame>
-
-
-            <!--  Motion  -->
-            <Frame
-                x:Name="frame_motion"
-                Margin="0,15,0,0"
-                Padding="20,0,0,0"
-                BackgroundColor="{StaticResource White}"
-                BorderColor="Transparent"
-                CornerRadius="10"
-                HeightRequest="60"
-                WidthRequest="360"
-                IsVisible="{Binding ., Converter={StaticResource UserTypeToBoolConverter}}">
-                <HorizontalStackLayout>
-                    <Image
-                        HeightRequest="30"
-                        HorizontalOptions="Center"
-                        Source="radar.png"
-                        VerticalOptions="Center" />
-                    <Label
-                        Margin="10,0,0,0"
-                        FontFamily="OpenSansSemiBold"
-                        FontSize="16"
-                        Text="Motion sensors detect "
-                        VerticalOptions="Center" />
-                    <Label
-                        x:Name="label_motion"
-                        FontFamily="OpenSansBold"
-                        FontSize="16"
-                        Text="{Binding MotionState.Value, Converter={StaticResource BoolToMotionDetectedConverter}}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
             </Frame>
         </VerticalStackLayout>
     </ScrollView>

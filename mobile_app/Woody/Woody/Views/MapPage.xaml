@@ -12,17 +12,17 @@
             <converters:BoolToVibrationConverter x:Key="BoolToVibrationConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout BackgroundColor="{StaticResource BackgroundAccent300}">
+    <VerticalStackLayout BackgroundColor="{StaticResource MapGray}">
         <Map
             x:Name="map"
-            HeightRequest="300"
+            HeightRequest="375"
             IsShowingUser="True"
             MapType="Street" />
+
         <!--  Container status  -->
-        <!--  TODO: Make icons bigger  -->
-        <ScrollView>
+        <ScrollView Margin="0,-15,0,0">
             <Frame
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Isabelline}"
                 BorderColor="Transparent"
                 CornerRadius="40">
                 <StackLayout Margin="15,5,15,15">
@@ -30,13 +30,14 @@
                         <Image
                             Margin="5,0,0,0"
                             HeightRequest="30"
-                            Source="sprout.png"
+                            Source="earth.png"
                             VerticalOptions="Center" />
                         <Label
                             Margin="15,0,0,0"
                             FontFamily="OpenSansBold"
                             FontSize="20"
-                            Text="Details" />
+                            Text="Details"
+                            TextColor="{StaticResource DarkestCoffee}" />
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Margin="0,0,0,10" Spacing="5">
                         <HorizontalStackLayout Margin="0,15,0,0">
@@ -144,11 +145,13 @@
                                     Margin="10,0,0,0"
                                     FontSize="16"
                                     Text="Latitude is at "
+                                    TextColor="{StaticResource DarkestCoffee}"
                                     VerticalOptions="Center" />
                                 <Label
                                     FontFamily="OpenSansBold"
                                     FontSize="16"
                                     Text="{Binding GPS.Value.Latitude.Value, StringFormat='{0:F6}'}"
+                                    TextColor="{StaticResource DarkestCoffee}"
                                     VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Frame>
@@ -172,60 +175,23 @@
                                     Margin="10,0,0,0"
                                     FontSize="16"
                                     Text="Longitude is at "
+                                    TextColor="{StaticResource DarkestCoffee}"
                                     VerticalOptions="Center" />
                                 <Label
                                     FontFamily="OpenSansBold"
                                     FontSize="16"
                                     Text="{Binding GPS.Value.Longitude.Value, StringFormat='{0:F6}'}"
+                                    TextColor="{StaticResource DarkestCoffee}"
                                     VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Frame>
                     </VerticalStackLayout>
-                    <!--  Buzzer  -->
-                    <Grid Margin="15,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Margin="0,0,10,0"
-                            FontSize="12"
-                            HorizontalOptions="Start"
-                            Text="BUZZER"
-                            VerticalOptions="Center" />
-                        <Grid
-                            Grid.Column="1"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                Grid.Column="0"
-                                FontFamily="OpenSansBold"
-                                HorizontalOptions="End"
-                                Text="OFF"
-                                VerticalOptions="Center" />
-                            <Switch
-                                    x:Name="BuzzerSwitch"
-                                    Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    IsToggled="{Binding BuzzerState.Value}"
-                                    Toggled="BuzzerSwitch_Toggled"
-                                    VerticalOptions="Center" />
-                            <Label
-                                Grid.Column="2"
-                                FontFamily="OpenSansBold"
-                                HorizontalOptions="Start"
-                                Text="ON"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </Grid>
                 </StackLayout>
             </Frame>
         </ScrollView>
+        <Rectangle
+            Margin="0,-35,0,0"
+            BackgroundColor="{StaticResource Isabelline}"
+            HeightRequest="70" />
     </VerticalStackLayout>
 </ContentPage>

@@ -24,7 +24,6 @@ public partial class SettingPage : ContentPage
 		InitializeComponent();
 		CheckUserBinding();
         App.UserRepo.UserDb.LoadItemsAsync();
-
     }
 
     protected override async void OnAppearing()
@@ -43,7 +42,8 @@ public partial class SettingPage : ContentPage
         if (twin != null && twin.Properties.Reported.Contains("telemetryInterval"))
         {
             var telemetryInterval = twin.Properties.Reported["telemetryInterval"].Value;
-            TelemetryIntervalLabel.Text = $"Current Interval: {telemetryInterval}";
+            TelemetryIntervalLabel.Text = $"{telemetryInterval}";
+            TelemetryIntervalEntry.Placeholder = $"{telemetryInterval}";
         }
         else
         {
@@ -75,7 +75,6 @@ public partial class SettingPage : ContentPage
             }
         }
     }
-
 
     private async void Btn_ChangePassword_Clicked(object sender, EventArgs e)
     {

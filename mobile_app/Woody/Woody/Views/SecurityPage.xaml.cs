@@ -1,6 +1,6 @@
-using LiveChartsCore.SkiaSharpView.Maui;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Woody.DataRepos;
 using Woody.Enums;
 
