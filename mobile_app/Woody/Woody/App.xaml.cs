@@ -23,7 +23,6 @@ namespace Woody
         /// Gets the settings of the application.
         /// </summary>
         public static Settings Settings { get; private set; }
-        private static SecurityRepo securityRepo;
         private static UserRepo userRepo;
         private static AzureIoTHubService ioTDevice;
         
@@ -34,7 +33,9 @@ namespace Woody
         {
             get { return userRepo ??= new UserRepo(); }
         }
-
+        /// <summary>
+        /// Gets the IoT Devices information
+        /// </summary>
         public static AzureIoTHubService IoTDevice
         {
 

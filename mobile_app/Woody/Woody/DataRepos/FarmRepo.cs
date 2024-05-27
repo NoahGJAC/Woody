@@ -21,7 +21,7 @@ namespace Woody.DataRepos
         /// </summary>
         private SecurityRepo securityRepo;
         /// <summary>
-        /// Gets the Security repository.
+        /// Gets the security repository.
         /// </summary>
         public SecurityRepo SecurityRepo { get { return securityRepo; } }
         /// <summary>
@@ -238,7 +238,7 @@ namespace Woody.DataRepos
             {
                 var tempObj = (IReading<string>)jsonObject;
                 var value = bool.Parse(tempObj.Value);
-                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.Geolocation);
+                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.GEOLOCATION);
                 geoLocationRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType,buzzerCommand);
                     
                 securityRepo.BuzzerState = geoLocationRepo.BuzzerState;
@@ -290,7 +290,7 @@ namespace Woody.DataRepos
             {
                 var tempObj = (IReading<string>)jsonObject;
                 var value = bool.Parse(tempObj.Value);
-                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.Security);
+                var buzzerCommand = new Models.Command<string>(tempObj.Value, CommandType.BUZZER_ON_OFF, SubSystemType.SECURITY);
                 securityRepo.BuzzerState = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType, buzzerCommand);
                 geoLocationRepo.BuzzerState = securityRepo.BuzzerState;
             }
@@ -300,7 +300,7 @@ namespace Woody.DataRepos
                 var value = temp.Value > 0;
                 var commandValue = value ? "on" : "off";
 
-                var doorCommand = new Models.Command<string>(commandValue, CommandType.DOOR_LOCK, SubSystemType.Security);
+                var doorCommand = new Models.Command<string>(commandValue, CommandType.DOOR_LOCK, SubSystemType.SECURITY);
                 securityRepo.LockState = new SensorReading<bool>(value,temp.TimeStamp,temp.Unit,temp.ReadingType, doorCommand);
             }
             else if(jsonObject.ReadingType == ReadingType.LOUDNESS)
@@ -340,14 +340,14 @@ namespace Woody.DataRepos
                 var fanReading = new SensorReading<bool>(value, tempObj.TimeStamp, tempObj.Unit, tempObj.ReadingType);
                 plantRepo.FanState = fanReading;
                 var commandValue = plantRepo.FanState.Value ? "on" : "off";
-                var fanCommand = new Models.Command<string>(commandValue, CommandType.FAN_ON_OFF, SubSystemType.Plant);
+                var fanCommand = new Models.Command<string>(commandValue, CommandType.FAN_ON_OFF, SubSystemType.PLANT);
                 plantRepo.FanState.Command = fanCommand;
             }
             else if(jsonObject.ReadingType == ReadingType.LED)
             {
                 plantRepo.LightState = (IReading<bool>)jsonObject;
                 var commandValue = plantRepo.LightState.Value ? "on" : "off";
-                var lightCommand = new Models.Command<string>(commandValue, CommandType.LIGHT_ON_OFF, SubSystemType.Plant);
+                var lightCommand = new Models.Command<string>(commandValue, CommandType.LIGHT_ON_OFF, SubSystemType.PLANT);
                 plantRepo.LightState.Command = lightCommand;
             }
             else if(jsonObject.ReadingType == ReadingType.TEMPERATURE)

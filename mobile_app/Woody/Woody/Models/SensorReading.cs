@@ -65,7 +65,16 @@ namespace Woody.Models
             ReadingType = readingType;
             Command = null;
         }
-        public SensorReading(T value, DateTime timeStamp, ReadingUnit unit, ReadingType readingType, Command<string> command = null)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SensorReading{T}"/> class with the specified value, timestamp, unit, reading type and command when it is a Sensor and a command
+        /// </summary>
+        /// <param name="value">The value of the sensor reading.</param>
+        /// <param name="timeStamp">The timestamp of the sensor reading.</param>
+        /// <param name="unit">The unit of the sensor reading.</param>
+        /// <param name="readingType">The type of the sensor reading.</param>
+        /// <param name="command">The command of the actuator</param>
+        public SensorReading(T value, DateTime timeStamp, ReadingUnit unit, ReadingType readingType, Command<string> command)
         {
             Value = value;
             TimeStamp = timeStamp;
@@ -73,6 +82,10 @@ namespace Woody.Models
             ReadingType = readingType;
             Command = command;
         }
+
+        /// <summary>
+        /// only want to intialize the sensorReading and will fill the properties later
+        /// </summary>
         public SensorReading()
         {
             
