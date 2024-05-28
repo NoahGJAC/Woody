@@ -393,30 +393,76 @@ namespace Woody.DataRepos
         /// <returns></returns>
         internal async Task GetNewDataAsync(PartitionContext partition, EventData data)
         {
+
+
             // get all the information from the data.body
             var jsonString = Encoding.UTF8.GetString(data.Body.ToArray());
-            var dictionary = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonString);
 
-            // get the file name that is added
-            var subjectString = dictionary[0]["subject"].ToString();
-            int subjectIndex = subjectString.IndexOf("Woody");
-            string filePath = subjectString.Substring(subjectIndex);
+            if (jsonString.Contains("value"))
+            {
+                var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
 
-            //if that file was already downloaded don't do anything
-            if (App.IoTDevice.blobFile.Contains(filePath))
+                var value = values["value"];
+                var readingTypeName = data.Properties["reading-type-name"];
+                var unitValue = values["unit"];
+                var enqueuedTime = data.EnqueuedTime.DateTime;
+                var readingType = (ReadingType)Enum.Parse(typeof(ReadingType), readingTypeName.ToString(), true);
+
+                //parse the reading unit
+                ReadingUnit unitType;
+                if (readingType == ReadingType.LOUDNESS)
+                {
+                    unitType = ReadingUnit.LOUDNESS;
+                }
+                else if (readingType == ReadingType.TEMPERATURE_HUMIDITY)
+                {
+                    unitType = ReadingUnit.CELCIUS_HUMIDITY;
+                }
+                else
+                {
+                    unitType = EnumExtensions.GetEnumFromString<ReadingUnit>(unitValue.ToString());
+                }
+
+                //get the type of the value to create a sensor reading
+                Type type = value.GetType();
+
+                //create the sensorReading
+                var sensorReadingType = typeof(SensorReading<>).MakeGenericType(type);
+                var constructorInfo = sensorReadingType.GetConstructor(new[] { type, typeof(DateTime), typeof(ReadingUnit), typeof(ReadingType) });
+                // Invoke the constructor
+                var sensorReadingInstance = constructorInfo.Invoke(new object[] { value, enqueuedTime, unitType, readingType });
+
+                AssignDataToRepos((IReading)sensorReadingInstance);
+
+
+
+            }
+            else
+            {
                 return;
+            }
+            //var dictionary = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonString);
 
-            //get the data
-            var blobClient = App.IoTDevice.blobContainerClient.GetBlobClient(filePath);
-            var memoryStream = new MemoryStream();
-            await blobClient.DownloadToAsync(memoryStream);
-            memoryStream.Position = 0;
+            //// get the file name that is added
+            //var subjectString = dictionary[0]["subject"].ToString();
+            //int subjectIndex = subjectString.IndexOf("Woody");
+            //string filePath = subjectString.Substring(subjectIndex);
 
-            var blobFile = new StreamReader(memoryStream).ReadToEnd();
-            memoryStream.Close();
+            ////if that file was already downloaded don't do anything
+            //if (App.IoTDevice.blobFile.Contains(filePath))
+            //    return;
 
-            DeserializeNewData(blobFile);
-            App.IoTDevice.blobFile.Add(filePath);
+            ////get the data
+            //var blobClient = App.IoTDevice.blobContainerClient.GetBlobClient(filePath);
+            //var memoryStream = new MemoryStream();
+            //await blobClient.DownloadToAsync(memoryStream);
+            //memoryStream.Position = 0;
+
+            //var blobFile = new StreamReader(memoryStream).ReadToEnd();
+            //memoryStream.Close();
+
+            //DeserializeNewData(blobFile);
+            //App.IoTDevice.blobFile.Add(filePath);
                 
         }
         /// <summary>

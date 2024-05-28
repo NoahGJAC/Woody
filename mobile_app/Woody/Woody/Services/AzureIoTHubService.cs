@@ -9,6 +9,8 @@ using Woody.Models;
 using Woody.Interfaces;
 using Woody.Enums;
 using Microsoft.Azure.Devices.Shared;
+using Avro.File;
+using Avro.Generic;
 
 namespace Woody.Services
 {
@@ -71,18 +73,59 @@ namespace Woody.Services
             await foreach (var blobItem in blobContainerClient.GetBlobsAsync())
             {
                 var blobClient = blobContainerClient.GetBlobClient(blobItem.Name);
+                string blobContent;
+
                 blobFile.Add(blobItem.Name);
                 var memoryStream = new MemoryStream();
                 await blobClient.DownloadToAsync(memoryStream);
                 memoryStream.Position = 0; // Reset the position to the start of the stream
 
-                // Assuming the blob contains text, read the content and add it to the list
-                var blobContent = new StreamReader(memoryStream).ReadToEnd();
+                if (blobClient.Name.Contains("avro"))
+                {
+                    blobContent = ConvertAvroToJson(memoryStream);
+                }
+                else
+                {
+                    // Assuming the blob contains text, read the content and add it to the list
+                    blobContent = new StreamReader(memoryStream).ReadToEnd();
+                }
+                
                 blobList.Add(blobContent);
                 memoryStream.Close();
             }
 
             return blobList;
+        }
+
+        public string ConvertAvroToJson(Stream memoryStream)
+        {
+            string value;
+            using (var reader = DataFileReader<GenericRecord>.OpenReader(memoryStream))
+            {
+                var records = new List<Dictionary<string, object>>();
+
+                while (reader.HasNext())
+                {
+                    var record = reader.Next();
+                    var recordDict = new Dictionary<string, object>();
+
+                    foreach (var field in record.Schema.Fields)
+                    {
+                        recordDict[field.Name] = record[field.Name];
+                    }
+
+                    records.Add(recordDict);
+                }
+
+                // Convert records to JSON string
+                string jsonString = JsonConvert.SerializeObject(records, Formatting.Indented);
+                value = jsonString;
+                Console.WriteLine(jsonString);
+            }
+
+            return value;
+
+
         }
         /// <summary>
         /// if there is a something happening in the blob while the app is running

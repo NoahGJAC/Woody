@@ -32,7 +32,7 @@ public partial class SettingPage : ContentPage
         CheckUserBinding();
         App.UserRepo.UserDb.LoadItemsAsync();
 
-        await UpdateTelemetryIntervalLabel();
+        //await UpdateTelemetryIntervalLabel();
     }
 
     private async Task UpdateTelemetryIntervalLabel()
@@ -124,9 +124,9 @@ public partial class SettingPage : ContentPage
                 { "telemetryInterval", telemetryInterval }
             };
             // Save the valid telemetry interval
-            await App.IoTDevice.UpdateDeviceTwinPropertiesAsync(properties);
-            await DisplayAlert("Success",$"Valid telemetry interval saved: {telemetryInterval}", "OK");
-            await UpdateTelemetryIntervalLabel();
+            //await App.IoTDevice.UpdateDeviceTwinPropertiesAsync(properties);
+            //await DisplayAlert("Success",$"Valid telemetry interval saved: {telemetryInterval}", "OK");
+            //await UpdateTelemetryIntervalLabel();
         }
     }
 }
