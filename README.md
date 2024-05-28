@@ -54,53 +54,66 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 ### 👀 Sneakpeek
 <table border="0" cellspacing="10" cellpadding="10">
   <tr>
-    <td><img src="https://i.imgur.com/GwyFLxr.png" alt="Log in" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/W3h3F6C.png" alt="Create Account" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/uJTRVc6.png" alt="Forgotten Password" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/w9I7uRv.png" alt="Log in" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/gGqKEQO.png" alt="Create Account" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/cf6k8Vu.png" alt="Forgotten Password" style="width: 150px; height: 325px;"></td>
   </tr>
   <tr>
-    <td><figcaption>Sign in page for user authentication.</figcaption></td>
-    <td><figcaption>Sign up page for user account creation.</figcaption></td>
-    <td><figcaption>Account retrieval page for users that have forgotten their passwords.</figcaption></td>
-  </tr>
-</table>
-
-<table border="0" cellspacing="10" cellpadding="10">
-  <tr>
-    <td><img src="https://i.imgur.com/WAtQ9tB.png" alt="Home" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/S1UOek1.png" alt="Settings" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/hUMWXax.png" alt="Dashboard" style="width:100%;"></td>
-  </tr>
-  <tr>
-    <td><figcaption>Home page with an overview of subsystem status and upcoming tasks.</figcaption></td>
-    <td><figcaption>Settings page to change user account information, telemetry interval and notification settings.</figcaption></td>
-    <td><figcaption>Dashboard page with the latest readings of their container's subsystem's sensors and actuators.</figcaption></td>
+    <td><figcaption>Sign In</figcaption></td>
+    <td><figcaption>Sign Up</figcaption></td>
+    <td><figcaption>Password Reset</figcaption></td>
   </tr>
 </table>
 
 <table border="0" cellspacing="10" cellpadding="10">
   <tr>
-    <td><img src="https://i.imgur.com/XF3ijqC.png" alt="Plant" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/cHK8l97.png" alt="Security" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/oqnJmUY.png" alt="Geolocation" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/UpR4u1Q.png" alt="Home" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/DPmVgUv.png" alt="Settings" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/LjZ0vO5.png" alt="Dashboard" style="width: 150px; height: 325px;"></td>
   </tr>
   <tr>
-    <td><figcaption>Plant page to view and control the plant subsystem's sensors and actuators.</figcaption></td>
-    <td><figcaption>Security page to view and control the security subsystem's sensors and actuators.</figcaption></td>
-    <td><figcaption>Geolocation page to view the container's location on a map and view the geolocation subsystem's sensor readings.</figcaption></td>
+    <td><figcaption>Home</figcaption></td>
+    <td><figcaption>Settings</figcaption></td>
+    <td><figcaption>Dashboard</figcaption></td>
   </tr>
 </table>
 
 <table border="0" cellspacing="10" cellpadding="10">
   <tr>
-    <td><img src="https://i.imgur.com/XF3ijqC.png" alt="Analytics" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/cHK8l97.png" alt="Security Breaches" style="width:100%;"></td>
-    <td><img src="https://i.imgur.com/oqnJmUY.png" alt="About Us" style="width:100%;"></td>
+    <td><img src="https://i.imgur.com/lgOgghS.png" alt="Plant" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/PQ0fxj7.png" alt="Security" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/DDs3hti.png" alt="Geolocation" style="width: 150px; height: 325px;"></td>
   </tr>
   <tr>
-    <td><figcaption>Analytics page to view history of plant and security subsystem's data as well as security breach history.</figcaption></td>
-    <td><figcaption>Security breach history section of the analytics page.</figcaption></td>
-    <td><figcaption>About us page containing app motivation and team member names.</figcaption></td>
+    <td><figcaption>Plant Subsystem</figcaption></td>
+    <td><figcaption>Security Subsystem</figcaption></td>
+    <td><figcaption>Geolocation Subsystem</figcaption></td>
+  </tr>
+</table>
+
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/Kr4Nfc1.png" alt="Analytics" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/zz9cvHL.png" alt="Security Breaches" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/KsDcuGT.png" alt="About Us" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Analytics</figcaption></td>
+    <td><figcaption>Analytics</figcaption></td>
+    <td><figcaption>About Us</figcaption></td>
+  </tr>
+</table>
+
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/ywYVgF0.png" alt="Tasks" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/k0uWkyC.png" alt="Create a Task" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/t63iWIv.png" alt="Splash" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Tasks</figcaption></td>
+    <td><figcaption>Create a Task</figcaption></td>
+    <td><figcaption>Splash Screen</figcaption></td>
   </tr>
 </table>
 
