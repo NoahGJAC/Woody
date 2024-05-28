@@ -67,7 +67,6 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 ### 📊 UML Diagram
 ```mermaid
 classDiagram
-classDiagram
     %% Interfaces
     class IReading~T~ {
         +T Value
