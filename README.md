@@ -52,18 +52,71 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 - **Geolocation Tracking:** Display container geolocation for fleet owners, enhancing fleet management and logistics planning.
 
 ### 👀 Sneakpeek
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/w9I7uRv.png" alt="Log in" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/gGqKEQO.png" alt="Create Account" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/cf6k8Vu.png" alt="Forgotten Password" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Sign In</figcaption></td>
+    <td><figcaption>Sign Up</figcaption></td>
+    <td><figcaption>Password Reset</figcaption></td>
+  </tr>
+</table>
 
-# TODO: ADD NEW SCREENSHOTS WITH CAPTIONS
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/UpR4u1Q.png" alt="Home" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/DPmVgUv.png" alt="Settings" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/LjZ0vO5.png" alt="Dashboard" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Home</figcaption></td>
+    <td><figcaption>Settings</figcaption></td>
+    <td><figcaption>Dashboard</figcaption></td>
+  </tr>
+</table>
 
-![Sign Up](https://i.imgur.com/Wrc5sz5.png)![Sign In](https://i.imgur.com/h3DFLd1.png)![Home](https://i.imgur.com/MwZhD1I.png)
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/lgOgghS.png" alt="Plant" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/PQ0fxj7.png" alt="Security" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/DDs3hti.png" alt="Geolocation" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Plant Subsystem</figcaption></td>
+    <td><figcaption>Security Subsystem</figcaption></td>
+    <td><figcaption>Geolocation Subsystem</figcaption></td>
+  </tr>
+</table>
 
-![Overview](https://i.imgur.com/qhQORXR.png)![Container-specific](https://i.imgur.com/Z1SObrf.png)![Container-specific Controls](https://i.imgur.com/CuVgVC6.png)
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/Kr4Nfc1.png" alt="Analytics" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/zz9cvHL.png" alt="Security Breaches" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/KsDcuGT.png" alt="About Us" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Analytics</figcaption></td>
+    <td><figcaption>Analytics</figcaption></td>
+    <td><figcaption>About Us</figcaption></td>
+  </tr>
+</table>
 
-![Map](https://i.imgur.com/XsjH901.png)![Analytics](https://i.imgur.com/ARcJx6W.png)![Tasks](https://i.imgur.com/m1L4WGQ.png) 
+<table border="0" cellspacing="10" cellpadding="10">
+  <tr>
+    <td><img src="https://i.imgur.com/ywYVgF0.png" alt="Tasks" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/k0uWkyC.png" alt="Create a Task" style="width: 150px; height: 325px;"></td>
+    <td><img src="https://i.imgur.com/t63iWIv.png" alt="Splash" style="width: 150px; height: 325px;"></td>
+  </tr>
+  <tr>
+    <td><figcaption>Tasks</figcaption></td>
+    <td><figcaption>Create a Task</figcaption></td>
+    <td><figcaption>Splash Screen</figcaption></td>
+  </tr>
+</table>
 
-![User Settings](https://i.imgur.com/xenAG0R.png)![About Us](https://i.imgur.com/p2l9vZ5.png)![Placeholder](https://i.imgur.com/BTBeYI2.png)
-
-*Color versions coming soon!*
 ### 📊 UML Diagram
 ```mermaid
 classDiagram
