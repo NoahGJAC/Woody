@@ -1,40 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Woody.Views.TasksPage"
-             Title="Tasks">
+<ContentPage
+    x:Class="Woody.Views.TasksPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
+    Title="">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="10">
-            <ImageButton Source="plus.png" Clicked="AddTask_Btn_Clicked" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="50" WidthRequest="50"/>
-            <CollectionView ItemsSource="{Binding Tasks}">
+        <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
+            <ImageButton
+                Margin="0,10,5,10"
+                Clicked="AddTask_Btn_Clicked"
+                HeightRequest="45"
+                HorizontalOptions="End"
+                Source="add.png"
+                VerticalOptions="Center" />
+            <Label
+                Margin="25,0,0,5"
+                FontFamily="OpenSansBold"
+                FontSize="Title"
+                HorizontalTextAlignment="Start"
+                Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{0:dddd, MMMM d\'th\' yyyy}'}"
+                TextColor="{StaticResource DarkestCoffee}"
+                VerticalTextAlignment="Center" />
+            <CollectionView Margin="25,10,25,15" ItemsSource="{Binding Tasks}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <!-- Define your item template here -->
-                        <!-- Example: -->
                         <VerticalStackLayout>
-                            <Frame  BackgroundColor="{StaticResource RawUmber}"
-                                     BorderColor="Transparent"
-                                     CornerRadius="40"
-                                     Opacity="20">
-                                <VerticalStackLayout Spacing="5">
-                                    <Label Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}" FontSize="Large"/>
-                                    <HorizontalStackLayout Spacing="20">
-                                        <Label Text="{Binding Title}"/>
-                                        <Frame BackgroundColor="{StaticResource AllGoodGreen}"
-                                                 BorderColor="Transparent"
-                                                 CornerRadius="40"
-                                                 Opacity="20">
-                                            <Label Text="{Binding Tag}"/>
-                                        </Frame>
-                                    </HorizontalStackLayout>
-
-                                    
-
-                                </VerticalStackLayout>
+                            <Frame
+                                Margin="0,5,0,5"
+                                Padding="15,10,15,10"
+                                BackgroundColor="White"
+                                BorderColor="Transparent"
+                                CornerRadius="10"
+                                HeightRequest="85">
+                                <HorizontalStackLayout>
+                                    <Ellipse
+                                        Fill="{StaticResource AllGoodGreen}"
+                                        HeightRequest="15"
+                                        VerticalOptions="Center"
+                                        WidthRequest="15" />
+                                    <StackLayout Margin="15,0,45,0" VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="OpenSansBold"
+                                            FontSize="16"
+                                            Text="{Binding Title}"
+                                            TextColor="{StaticResource DarkestCoffee}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}"
+                                            TextColor="{StaticResource LightCoffee}" />
+                                    </StackLayout>
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        BorderColor="Transparent"
+                                        CornerRadius="10"
+                                        HeightRequest="45"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        WidthRequest="115">
+                                        <Label
+                                            Padding="0"
+                                            FontFamily="OpenSansBold"
+                                            FontSize="14"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Tag}"
+                                            TextColor="{StaticResource White}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </Frame>
+                                </HorizontalStackLayout>
                             </Frame>
-                            
-                            <!-- Add more labels or UI elements to display other properties -->
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
