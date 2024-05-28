@@ -1,67 +1,139 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Woody.Views.AddTaskPage"
-             xmlns:model="clr-namespace:Woody.Models"
-             xmlns:enum="clr-namespace:Woody.Enums"
-             Title="Add Task">
-
-    <ScrollView>
-        <VerticalStackLayout>
-            <VerticalStackLayout Margin="0,30,0,0" x:DataType="model:Tasks">
-                <Frame Margin="10,0,10,10"
-                        BackgroundColor="{StaticResource BackgroundAccent300}"
-                        BorderColor="Transparent"
-                        VerticalOptions="Center">
-                    <StackLayout>
-                        <!--  Title  -->
-                        <Label
-                            FontAttributes="Bold"
-                            FontFamily="OpenSansBold"
-                            FontSize="Subtitle"
-                            Text="Title" />
-                        <Entry
-                            x:Name="title"
-                            BackgroundColor="Transparent"
-                            PlaceholderColor="Black"
-                            Text="{Binding Title}" />
-                    </StackLayout>
-                </Frame>
-                <!--  Date  -->
-                <Frame Margin="10,0,10,10"
-                        BackgroundColor="{StaticResource BackgroundAccent300}"
-                        BorderColor="Transparent"
-                        VerticalOptions="Center">
-                    <StackLayout>
-                        <Label Text="Date" 
-                               FontAttributes="Bold"
-                               FontFamily="OpenSansBold"
-                               FontSize="Subtitle"/>
-                        <TimePicker x:Name="timePicker" PropertyChanged="DateTimePicker_PropertyChanged" />
-                        <DatePicker x:Name="datePicker" Format="dddd MM,yyyy" PropertyChanged="DateTimePicker_PropertyChanged"/>
-                    </StackLayout>
-                </Frame>
-
-                <Frame 
-                        Margin="10,0,10,10"
-                        BackgroundColor="{StaticResource BackgroundAccent300}"
-                        BorderColor="Transparent"
-                        VerticalOptions="Center">
-                    <StackLayout>
-                        <Label Text="Tags" FontSize="Medium" FontAttributes="Bold"/>
-                        <Grid ColumnDefinitions="3*,*">
-                            <Picker x:Name="PickerTags" 
-                            SelectedItem="{Binding Tag, Converter={StaticResource IntEnumTagToTagNameConverter}}"
-                            SelectedIndexChanged="PickerTags_SelectedIndexChanged"  />
-                        </Grid>
-                    </StackLayout>
-                </Frame>
-
-            </VerticalStackLayout>
-            <HorizontalStackLayout>
-                <Button Text="Add" Clicked="Add_Btn_Clicked" BackgroundColor="{StaticResource BackgroundAccent100}"/>
-                <Button Text="Cancel" Grid.Column="1" Clicked="Cancel_btn_Clicked" BackgroundColor="{StaticResource BackgroundAccent200}"/>
+<ContentPage
+    x:Class="Woody.Views.AddTaskPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:enum="clr-namespace:Woody.Enums"
+    xmlns:model="clr-namespace:Woody.Models"
+    Title="">
+    <VerticalStackLayout BackgroundColor="{StaticResource Bone}">
+        <VerticalStackLayout Margin="0,75,0,0">
+            <HorizontalStackLayout
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                WidthRequest="340">
+                <Image
+                    Margin="155,0,20,0"
+                    HeightRequest="65"
+                    HorizontalOptions="Start"
+                    Source="watering_can.png" />
+                <Image
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    Source="plant_pot.png"
+                    VerticalOptions="End" />
             </HorizontalStackLayout>
+            <Frame
+                Margin="10,-6,10,10"
+                BackgroundColor="{StaticResource Alabaster}"
+                BorderColor="Transparent"
+                CornerRadius="15"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="340">
+                <StackLayout x:DataType="model:Tasks">
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Title"
+                        Text="Create a new task"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <Label
+                        Margin="0,5,0,25"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansLight"
+                        FontSize="Body"
+                        Text="Fill out the details in the form below."
+                        TextColor="{StaticResource DarkCoffee}" />
+
+                    <!--  Name  -->
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Name"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <Entry
+                        x:Name="title"
+                        BackgroundColor="Transparent"
+                        PlaceholderColor="{StaticResource DarkestCoffee}"
+                        Text="{Binding Title}"
+                        TextColor="{StaticResource DarkestCoffee}" />
+
+                    <!--  Date  -->
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Date"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <DatePicker
+                        x:Name="datePicker"
+                        FontSize="Body"
+                        Format="dddd MM,yyyy"
+                        PropertyChanged="DateTimePicker_PropertyChanged"
+                        TextColor="{StaticResource DarkestCoffee}" />
+
+                    <!--  Time  -->
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Date"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <TimePicker
+                        x:Name="timePicker"
+                        FontSize="Body"
+                        PropertyChanged="DateTimePicker_PropertyChanged"
+                        TextColor="{StaticResource DarkestCoffee}" />
+
+                    <!--  Tag  -->
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansBold"
+                        FontSize="Subtitle"
+                        Text="Tag"
+                        TextColor="{StaticResource DarkestCoffee}" />
+                    <Grid ColumnDefinitions="3*,*">
+                        <Picker
+                            x:Name="PickerTags"
+                            SelectedIndexChanged="PickerTags_SelectedIndexChanged"
+                            SelectedItem="{Binding Tag, Converter={StaticResource IntEnumTagToTagNameConverter}}" />
+                    </Grid>
+
+                    <HorizontalStackLayout>
+                        <Button
+                            Margin="0,10,10,0"
+                            BackgroundColor="{StaticResource Bone}"
+                            Clicked="Cancel_btn_Clicked"
+                            CornerRadius="10"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Hint="Click to log in"
+                            Text="CANCEL"
+                            TextColor="{StaticResource DarkestCoffee}"
+                            WidthRequest="145" />
+                        <Button
+                            Margin="0,10,0,0"
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="Add_Btn_Clicked"
+                            CornerRadius="10"
+                            FontFamily="OpenSansBold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Hint="Click to log in"
+                            Text="CREATE"
+                            WidthRequest="145" />
+                    </HorizontalStackLayout>
+
+                </StackLayout>
+            </Frame>
         </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
