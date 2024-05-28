@@ -67,207 +67,139 @@ The Woody app revolutionizes traditional container farming by integrating smart 
 ### 📊 UML Diagram
 ```mermaid
 classDiagram
-    GeoLocationRepo --|> FarmRepo : Is
-    SecurityRepo --|> FarmRepo : Is
-    PlantRepo --|> FarmRepo : Is
-    FleetOwner --|> User : Implements
-    FarmTechnician --|> User : Implements
-    User "1" -- "0..*" Container : manages
-    FleetOwner "1" -- "0..*" Container : owns
-    FarmTechnician "1" -- "0..*" Container : manages
-    Container o-- "1" FarmRepo : has
-    FarmRepo "1" -- "0..*" ISensor : contains
-    FarmRepo "1" -- "0..*" IActuator : controls
-    ISensor "1" -- "0..*" IReading: produces
-    IActuator "1" -- "1" ICommand: sends
-    ICommand "1" -- "1" CommandType: has
-    IReading "1" -- "1" ReadingType: has
-    IReading "1" -- "1" ReadingUnit: has
-    ICommand "1" -- "1" SubSystemType: has
-    UserType "1" -- "1" User: has
-
-    
-    class ChartsRepo{
-        + GetTemperatureChart(temperatureReadings: List[IReading]) CartesianChart
-        + GetSoilMoistureChart(soilMoistureReadings:  List[IReading]) CartesianChart
-        + GetHumidityChart(humidityReadings:  List[IReading]) CartesianChart
-        + GetNoiseChart(noiseReadings:  List[IReading]) CartesianChart
-        + GetLuminosityChart(luminosityReadings:  List[IReading]) CartesianChart
-
-    }
-    class FarmRepo{
-        -securityRepo: SecurityRepo
-        -plantRepo: PlantRepo
-        -geoLocationRepo: GeoLocationRepo
-        +SecurityRepo(): SecurityRepo
-        +PlantRepo(): PlantRepo
-        +GeoLocationRepo(): GeoLocationRepo
-        +DeserializeOldDataAsync()
-        +ValidReadingType(ReadingType)
-        +AssignDataToRepos(IReading)
-        +AssignDataToGeoLocationRepo(IReading)
-        +AssignDataToSecurityRepo(IReading)
-        +AssignDataToPlantRepo(IReading)
-        +GetNewDataAsync(PartitionContext, EventData)
-        +DeserializeNewData(string)
-    }
-    class ISensor{
-        <<interface>>
-        +string SensorID
-        +string SensorModel
-        +readSensor() List[IReading]
-    }
-    class IActuator{
-        <<interface>>
-        +string ActuatorID
-        +string State
-        +controlActuator(command: ICommand)
-    }
-    class IReading{
-        <<interface>>
+classDiagram
+    %% Interfaces
+    class IReading~T~ {
+        +T Value
+        +DateTime TimeStamp
         +ReadingUnit Unit
         +ReadingType ReadingType
-        +T Value
-        +Datetime TimeStamp
-        
+        +Models.Command~string~ Command
     }
-    class ICommand{
-        <<interface>>
+    class ICommand~T~ {
         +CommandType CommandType
         +SubSystemType SubSystem
         +T Value
     }
-    class CommandType{
-        <<enumeration>>
-        FAN_ON_OFF,
-        LIGHT_ON_OFF,
-        LIGHT_PULSE,
-        BUZZER_ON_OFF,
-        DOOR_LOCK
+    class IDataStore~T~ {
+        +AddItemsAsync(T item): bool
+        +UpdateItemsAsync(T item): bool
+        +DeleteItemsAsync(T item): bool
+        +GetItemsAsync(forceRefresh: bool): IEnumerable~T~
+        +ObservableCollection~T~ Items
     }
-    class SubSystemType{
-    <<enumeartion>>
-    Security,
-    Geolocation,
-    Plant
+    class IHasUKey {
+        +string Key
     }
-    class ReadingUnit{
-        <<enumeration>>
-        DEGREES,
-        METERS,
-        CELCIUS_HUMIDITY,
-        MILLIMETERS,
-        FARENHEIT,
-        HUMIDITY,
-        LUX,
-        LOUDNESS,
-        CELCIUS,
-        PERCENTAGE,
-        UNITLESS
+
+    class INotifyPropertyChanged {
+        +event PropertyChangedEventHandler PropertyChanged
     }
-    class UserType{
-        <<enumeration>>
-        OWNER,
-        FARMER
+    
+    %% Classes implementing interfaces
+    class BlobReadings {
+        +string Value
+        +string Body
+        +DateTime TimeStamp
+        +ReadingUnit Unit
+        +ReadingType ReadingType
     }
-    class ReadingType{
-        <<enumeration>>
-        BUZZER,
-        PITCH,
-        ROLL,
-        HUMIDITY,
-        TEMPERATURE,
-        LUMINOSITY,
-        LOUDNESS,
-        DOOR,
-        DOOR_LOCK,
-        MOTION,
-        LATITUDE,
-        LONGITUDE,
-        ALTITUDE,
-        GPS,
-        VIBRATION
+    BlobReadings --|> IReading~T~
+    
+    class Command~T~ {
+        +T Value
+        +CommandType CommandType
+        +SubSystemType SubSystem
     }
-    class GeoLocationRepo{
-        +PropertyChanged: PropertyChangedEventHandler
-        -geoDb: ContainerDatabaseService~GeoLocationController~
-        +GeoLocationController: GeoLocationController
-        +GeoDb(): ContainerDatabaseService~GeoLocationController~
-        +Pitch: IReading~double~
-        +Roll: IReading~double~
-        +BuzzerState: IReading~bool~
-        +Vibration: IReading~bool~
-        +GPS: IReading~GPSCoordinates~
-        -AddTestData(sample_points: int)
+    Command~T~ --|> ICommand~T~
+    
+    class GPSCoordinates {
+        +IReading~double~ Longitude
+        +IReading~double~ Latitude
+        +IReading~double~ Altitude
     }
-    class SecurityRepo{
-        +PropertyChanged: PropertyChangedEventHandler
-        -securityDb: ContainerDatabaseService~SecurityController~
-        +SecurityController: SecurityController
-        +SecurityDb(): ContainerDatabaseService~SecurityController~
-        +NoiseLevels: List~IReading~float~~
-        +LuminosityLevels: List~IReading~int~~
-        +LuminosityCurrent(): IReading~int~
-        +NoiseCurrent(): IReading~float~
-        +DoorState: IReading~bool~
-        +MotionState: IReading~bool~
-        +BuzzerState: IReading~bool~
-        +LockState: IReading~bool~
-        -AddTestData(sample_points: int)
+    GPSCoordinates --|> IReading~T~
+    
+    class SensorReading~T~ {
+        +T Value
+        +DateTime TimeStamp
+        +ReadingUnit Unit
+        +ReadingType ReadingType
+        +Models.Command~string~ Command
     }
-    class PlantRepo{
-        +PropertyChanged: PropertyChangedEventHandler
-        -plantDb: ContainerDatabaseService~PlantController~
-        +PlantDb(): ContainerDatabaseService~PlantController~
-        +TemperatureLevels: List~IReading~double~~
-        +HumidityLevels: List~IReading~double~~
-        +SoilMoistureLevels: List~IReading~double~~
-        +WaterLevel: IReading~int~
-        +FanState: IReading~bool~
-        +LightState: IReading~bool~
-        +CurrentTemperature(): IReading~double~
-        +AverageTemperature(): double
-        +CurrentHumidity(): IReading~double~
-        +CurrentSoilMoisture(): IReading~double~
-        -AddTestData(sample_points: int)
-    }
-    class GPSCoordinates{
-        +IReading longitude
-        +IReading latitude
-        +IReading altitude
-    }
-    class Container{
-        +string containerID
-        +string containerName
-        +List<IController> SubSystems
-    }
+    SensorReading~T~ --|> IReading~T~
+    
     class User {
         +string Key
         +string Uid
         +string Username
         +UserType UserType
+    }
+    User --|> IHasUKey
+    
+    %% Existing classes
+    class PlantRepo {
+        +event PropertyChangedEventHandler PropertyChanged
+        -List~IReading~ TemperatureLevels
+        -List~IReading~ HumidityLevels
+        -List~IReading~ SoilMoistureLevels
+        -IReading~int~ WaterLevel
+        -IReading~bool~ FanState
+        -IReading~bool~ LightState
+        +IReading~double~ CurrentTemperature
+        +double AverageTemperature
+        +IReading~double~ CurrentHumidity
+        +IReading~double~ CurrentSoilMoisture
+    }
+    
+    class FarmRepo {
+        -SecurityRepo securityRepo
+        -PlantRepo plantRepo
+        -GeoLocationRepo geoLocationRepo
+        +Task DeserializeOldDataAsync()
+        +bool ValidReadingType(ReadingType type)
+        +void AssignDataToRepos(IReading jsonObject)
+        +void AssignDataToGeoLocationRepo(IReading jsonObject)
+        +void AssignDataToSecurityRepo(IReading jsonObject)
+        +void AssignDataToPlantRepo(IReading jsonObject)
+        +Task GetNewDataAsync(PartitionContext partition, EventData data)
+        +void DeserializeNewData(string blobfile)
+    }
+    
+    class SecurityRepo {
+        +event PropertyChangedEventHandler PropertyChanged
+        -List~IReading~float~ NoiseLevels
+        -List~IReading~int~ LuminosityLevels
+        +IReading~int~ LuminosityCurrent
+        +IReading~float~ NoiseCurrent
+        -IReading~bool~ DoorState
+        -IReading~bool~ MotionState
+        -IReading~bool~ BuzzerState
+        -IReading~bool~ LockState
+    }
+    class GeoLocationRepo {
+        +event PropertyChangedEventHandler PropertyChanged
+        +IReading~double~ Pitch
+        +IReading~double~ Roll
+        +IReading~bool~ BuzzerState
+        +IReading~bool~ Vibration
+        +IReading~GPSCoordinates~ GPS
+    }
+    GeoLocationRepo --|> INotifyPropertyChanged
 
-        +List<Container> managedContainers
+    class UserRepo {
+        -User User
+        -UserDatabaseService~User~ userDb
+        +UserDatabaseService~User~ UserDb
     }
-    class FleetOwner{
-    }
-    class FarmTechnician{
-    }
+    
+    %% Relationships
+    PlantRepo --|> INotifyPropertyChanged
+    SecurityRepo --|> INotifyPropertyChanged
+    FarmRepo -- PlantRepo
+    FarmRepo -- SecurityRepo
+    FarmRepo -- GeoLocationRepo
 
-    %%WIP
-    class AzureIoTHub {
-         +DeviceClient deviceClient
-        +BlobContainerClient blobContainerClient
-        +EventProcessorClient eventProcessorClient
-        +List<string> blobFile
-        +ServiceClient serviceClient
-        +ConnectToDeviceAsync()
-        +DownloadBlobAsync()
-        +ProcessEventHandler(ProcessEventArgs)
-        +ProcessErrorHandler(ProcessErrorEventArgs)
-        +GetCurrentMessageAsync()
-        +SendCommandAsync<T>(ICommand<T>)
-    }  
 ```
 
 ## 🛠️ App Setup
@@ -304,6 +236,7 @@ Required configurations needed to run the app.
     - Creating Multiple Containers
     - Tasks
     - Geolocation 3D Visualization
+    - Filter Graphs by dates
 - Bugs
     - [App Carousel Swiping](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/issues/133)
     - [IndicatorView delay](https://github.com/JAC-Final-Project-W24-6A6-6P3/final-project-woody/issues/137)
