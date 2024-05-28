@@ -30,30 +30,37 @@
                             <Frame
                                 Margin="0,5,0,5"
                                 Padding="15,10,15,10"
-                                BackgroundColor="White"
+                                BackgroundColor="{StaticResource Isabelline}"
                                 BorderColor="Transparent"
                                 CornerRadius="10"
                                 HeightRequest="85">
-                                <HorizontalStackLayout>
-                                    <Ellipse
-                                        Fill="{StaticResource AllGoodGreen}"
-                                        HeightRequest="15"
-                                        VerticalOptions="Center"
-                                        WidthRequest="15" />
-                                    <StackLayout Margin="15,0,45,0" VerticalOptions="Center">
-                                        <Label
-                                            FontFamily="OpenSansBold"
-                                            FontSize="16"
-                                            Text="{Binding Title}"
-                                            TextColor="{StaticResource DarkestCoffee}"
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <HorizontalStackLayout Grid.Column="0">
+                                        <Ellipse
+                                            Fill="{StaticResource AllGoodGreen}"
+                                            HeightRequest="15"
                                             VerticalOptions="Center"
-                                            VerticalTextAlignment="Center" />
-                                        <Label
-                                            FontSize="12"
-                                            Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}"
-                                            TextColor="{StaticResource LightCoffee}" />
-                                    </StackLayout>
+                                            WidthRequest="15" />
+                                        <StackLayout Margin="15,0,0,0" VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="OpenSansBold"
+                                                FontSize="16"
+                                                Text="{Binding Title}"
+                                                TextColor="{StaticResource DarkestCoffee}"
+                                                VerticalOptions="Center"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                FontSize="12"
+                                                Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}"
+                                                TextColor="{StaticResource LightCoffee}" />
+                                        </StackLayout>
+                                    </HorizontalStackLayout>
                                     <Frame
+                                        Grid.Column="1"
                                         Padding="0"
                                         BackgroundColor="{StaticResource Primary}"
                                         BorderColor="Transparent"
@@ -73,7 +80,7 @@
                                             VerticalOptions="Center"
                                             VerticalTextAlignment="Center" />
                                     </Frame>
-                                </HorizontalStackLayout>
+                                </Grid>
                             </Frame>
                         </VerticalStackLayout>
                     </DataTemplate>
