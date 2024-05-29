@@ -28,7 +28,7 @@ namespace Woody.DataRepos
         /// </summary>
         /// <param name="temperatureReadings">The list of temperature readings to plot.</param>
         /// <returns>A <see cref="CartesianChart"/> configured to display temperature readings.</returns>
-        public static CartesianChart GetTemperatureChart(List<IReading<double>> temperatureReadings)
+        public static CartesianChart GetTemperatureChart(ObservableCollection<IReading<double>> temperatureReadings)
         {
             var dateTimePoints = temperatureReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
@@ -91,7 +91,7 @@ namespace Woody.DataRepos
         /// <param name="soilMoistureReadings">The list of soil moisture readings to plot.</param>
         /// <returns>A <see cref="CartesianChart"/> configured to display soil moisture readings.</returns>
         public static CartesianChart GetSoilMoistureChart(
-            List<IReading<double>> soilMoistureReadings
+            ObservableCollection<IReading<double>> soilMoistureReadings
         )
         {
             var dateTimePoints = soilMoistureReadings
@@ -149,7 +149,7 @@ namespace Woody.DataRepos
             return cartesianChart;
         }
 
-        public static CartesianChart GetHumidityChart(List<IReading<double>> humidityReadings)
+        public static CartesianChart GetHumidityChart(ObservableCollection<IReading<double>> humidityReadings)
         {
             var dateTimePoints = humidityReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))
@@ -213,7 +213,7 @@ namespace Woody.DataRepos
         /// </summary>
         /// <param name="noiseReadings">The list of noise readings to plot.</param>
         /// <returns>A <see cref="CartesianChart"/> configured to display noise readings.</returns>
-        public static CartesianChart GetNoiseChart(List<IReading<float>> noiseReadings)
+        public static CartesianChart GetNoiseChart(ObservableCollection<IReading<float>> noiseReadings)
         {
             var dateTimePoints = noiseReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value/10))
@@ -274,7 +274,7 @@ namespace Woody.DataRepos
         /// </summary>
         /// <param name="luminosityReadings">The list of luminosity readings to plot.</param>
         /// <returns>A <see cref="CartesianChart"/> configured to display luminosity readings.</returns>
-        public static CartesianChart GetLuminosityChart(List<IReading<int>> luminosityReadings)
+        public static CartesianChart GetLuminosityChart(ObservableCollection<IReading<int>> luminosityReadings)
         {
             var dateTimePoints = luminosityReadings
                 .Select(x => new DateTimePoint(x.TimeStamp, x.Value))

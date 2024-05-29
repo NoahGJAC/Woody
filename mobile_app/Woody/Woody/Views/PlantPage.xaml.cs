@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Woody.DataRepos;
@@ -30,6 +32,10 @@ public partial class PlantPage : ContentPage
     public PlantPage()
     {
         InitializeComponent();
+        App.FarmRepo.PlantRepo.PropertyChanged += PlantRepo_PropertyChanged;
+        App.FarmRepo.PlantRepo.TemperatureLevels.CollectionChanged += Levels_CollectionChanged;
+        App.FarmRepo.PlantRepo.HumidityLevels.CollectionChanged += Levels_CollectionChanged;
+        App.FarmRepo.PlantRepo.SoilMoistureLevels.CollectionChanged += Levels_CollectionChanged;
         Charts = new ObservableCollection<CartesianChart>
         {
             ChartsRepo.GetTemperatureChart(App.FarmRepo.PlantRepo.TemperatureLevels),
@@ -68,5 +74,34 @@ public partial class PlantPage : ContentPage
         }
         App.FarmRepo.PlantRepo.LightState.Value = e.Value;
         await App.IoTDevice.SendCommandAsync(App.FarmRepo.PlantRepo.LightState.Command);
+    }
+
+    private void PlantRepo_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(App.FarmRepo.SecurityRepo.NoiseLevels) ||
+            e.PropertyName == nameof(App.FarmRepo.SecurityRepo.LuminosityLevels))
+        {
+            UpdatePlantCharts();
+        }
+    }
+
+    private void Levels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        UpdatePlantCharts();
+    }
+
+    private void UpdatePlantCharts()
+    {
+        if (App.FarmRepo.PlantRepo.TemperatureLevels.Count%500==0)
+        {
+            Charts = new ObservableCollection<CartesianChart>
+            {
+                ChartsRepo.GetTemperatureChart(App.FarmRepo.PlantRepo.TemperatureLevels),
+                ChartsRepo.GetHumidityChart(App.FarmRepo.PlantRepo.HumidityLevels),
+                ChartsRepo.GetSoilMoistureChart(App.FarmRepo.PlantRepo.SoilMoistureLevels)
+            };
+        }
+
+
     }
 }

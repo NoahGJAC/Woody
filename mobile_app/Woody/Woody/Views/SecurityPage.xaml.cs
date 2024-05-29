@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Woody.DataRepos;
@@ -27,14 +29,17 @@ public partial class SecurityPage : ContentPage
     /// Initializes a new instance of the <see cref="SecurityPage"/> class.
     /// </summary>
     public SecurityPage()
-	{
-		InitializeComponent();
-		Charts = new ObservableCollection<CartesianChart>
-		{
-			ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
-			ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
-		};
-		SetBindingContext();
+    {
+        InitializeComponent();
+        App.FarmRepo.SecurityRepo.PropertyChanged += SecurityRepo_PropertyChanged;
+        App.FarmRepo.SecurityRepo.NoiseLevels.CollectionChanged += Levels_CollectionChanged;
+        App.FarmRepo.SecurityRepo.LuminosityLevels.CollectionChanged += Levels_CollectionChanged;
+        Charts = new ObservableCollection<CartesianChart>
+        {
+            ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
+            ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
+        };
+        SetBindingContext();
     }
 
     private void SetBindingContext()
@@ -64,7 +69,7 @@ public partial class SecurityPage : ContentPage
         }
         else
         {
-            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";  
+            App.FarmRepo.SecurityRepo.BuzzerState.Command.Value = "off";
         }
         App.FarmRepo.SecurityRepo.BuzzerState.Value = e.Value;
         await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.BuzzerState.Command);
@@ -72,8 +77,8 @@ public partial class SecurityPage : ContentPage
 
     private async void ButtonLock_Clicked(object sender, EventArgs e)
     {
-        
-		App.FarmRepo.SecurityRepo.LockState.Value = !App.FarmRepo.SecurityRepo.LockState.Value;
+
+        App.FarmRepo.SecurityRepo.LockState.Value = !App.FarmRepo.SecurityRepo.LockState.Value;
 
         if (App.FarmRepo.SecurityRepo.LockState.Value)
         {
@@ -85,5 +90,32 @@ public partial class SecurityPage : ContentPage
         }
 
         await App.IoTDevice.SendCommandAsync(App.FarmRepo.SecurityRepo.LockState.Command);
+    }
+
+    private void SecurityRepo_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if ((e.PropertyName == nameof(App.FarmRepo.SecurityRepo.NoiseLevels) ||
+            e.PropertyName == nameof(App.FarmRepo.SecurityRepo.LuminosityLevels)))
+        {
+            UpdateSecurityCharts();
+        }
+    }
+
+    private void Levels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        UpdateSecurityCharts();
+    }
+
+    private void UpdateSecurityCharts()
+    {
+        if (App.FarmRepo.SecurityRepo.LuminosityLevels.Count % 1000 == 0)
+        {
+            Charts = new ObservableCollection<CartesianChart>
+            {
+                ChartsRepo.GetNoiseChart(App.FarmRepo.SecurityRepo.NoiseLevels),
+                ChartsRepo.GetLuminosityChart(App.FarmRepo.SecurityRepo.LuminosityLevels)
+            };
+        }
+
     }
 }

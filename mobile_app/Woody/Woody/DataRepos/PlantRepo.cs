@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -27,20 +29,81 @@ namespace Woody.DataRepos
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private ObservableCollection<IReading<double>> _temperatureLevels;
+        private ObservableCollection<IReading<double>> _humidityLevels;
+        private ObservableCollection<IReading<double>> _soilMoistureLevels;
+
         /// <summary>
         /// Gets or sets the temperature level readings.
         /// </summary>
-        public List<IReading<double>> TemperatureLevels { get; set; }
+        public ObservableCollection<IReading<double>> TemperatureLevels
+        {
+            get => _temperatureLevels;
+            set
+            {
+                if (_temperatureLevels != value)
+                {
+                    if (_temperatureLevels != null)
+                    {
+                        _temperatureLevels.CollectionChanged -= OnCollectionChanged;
+                    }
+                    _temperatureLevels = value;
+                    if (_temperatureLevels != null)
+                    {
+                        _temperatureLevels.CollectionChanged += OnCollectionChanged;
+                    }
+                    OnPropertyChanged(nameof(TemperatureLevels));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the humidity level readings.
         /// </summary>
-        public List<IReading<double>> HumidityLevels { get; set; }
+        public ObservableCollection<IReading<double>> HumidityLevels
+        {
+            get => _humidityLevels;
+            set
+            {
+                if (_humidityLevels != value)
+                {
+                    if (_humidityLevels != null)
+                    {
+                        _humidityLevels.CollectionChanged -= OnCollectionChanged;
+                    }
+                    _humidityLevels = value;
+                    if (_humidityLevels != null)
+                    {
+                        _humidityLevels.CollectionChanged += OnCollectionChanged;
+                    }
+                    OnPropertyChanged(nameof(HumidityLevels));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the soil moisture readings.
         /// </summary>
-        public List<IReading<double>> SoilMoistureLevels { get; set; }
+        public ObservableCollection<IReading<double>> SoilMoistureLevels
+        {
+            get => _soilMoistureLevels;
+            set
+            {
+                if (_soilMoistureLevels != value)
+                {
+                    if (_soilMoistureLevels != null)
+                    {
+                        _soilMoistureLevels.CollectionChanged -= OnCollectionChanged;
+                    }
+                    _soilMoistureLevels = value;
+                    if (_soilMoistureLevels != null)
+                    {
+                        _soilMoistureLevels.CollectionChanged += OnCollectionChanged;
+                    }
+                    OnPropertyChanged(nameof(SoilMoistureLevels));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the water level reading.
@@ -94,9 +157,21 @@ namespace Woody.DataRepos
         /// </summary>
         public PlantRepo()
         {
-            TemperatureLevels = new List<IReading<double>>();
-            SoilMoistureLevels = new List<IReading<double>>();
-            HumidityLevels = new List<IReading<double>>();
+            TemperatureLevels = new ObservableCollection<IReading<double>>();
+            SoilMoistureLevels = new ObservableCollection<IReading<double>>();
+            HumidityLevels = new ObservableCollection<IReading<double>>();
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(sender == TemperatureLevels ? nameof(TemperatureLevels) :
+                            sender == HumidityLevels ? nameof(HumidityLevels) :
+                            nameof(SoilMoistureLevels));
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
