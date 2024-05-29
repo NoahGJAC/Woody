@@ -2,9 +2,9 @@
 
 ## 🚀 Team Information
 - **Team Woody**
-  - **Noah Groleau: 2028706**
-  - **Diana Karpeev: 2059788**
-  - **Katchenin Cindy Coulibaly: 2126537**
+  - **Noah Groleau**
+  - **Diana Karpeev**
+  - **Katchenin Cindy Coulibaly**
 
 
 
