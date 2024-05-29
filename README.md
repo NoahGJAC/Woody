@@ -2,9 +2,9 @@
 
 ## 🚀 Team Information
 - **Team Woody**
-  - **Noah Groleau**
-  - **Diana Karpeev**
-  - **Katchenin Cindy Coulibaly**
+  - **[Noah Groleau](https://github.com/NoahGJAC)**
+  - **[Diana Karpeev](https://github.com/dianakarpeev)**
+  - **[Katchenin Cindy Coulibaly](https://github.com/Cindy-Coulibaly)**
 
 
 
